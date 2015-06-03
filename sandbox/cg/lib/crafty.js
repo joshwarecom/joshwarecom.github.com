@@ -7619,7 +7619,7 @@ var Crafty = require('./core.js'),
      * @comp Crafty.support
      * Is HTML5 `Audio` supported?
      */
-    support.audio = ('Audio' in window);
+    support.audio = ('canPlayType' in document.createElement('audio'));
 
     /**@
      * #Crafty.support.prefix
