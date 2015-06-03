@@ -5,7 +5,8 @@ Game = {
     Crafty.background('rgb(0, 128, 0)');
     Crafty.scene('Loading');
     Crafty.bind('ViewportResize', function(e) {
-        Crafty.viewport.scale(Crafty.DOM.window.width/800);
+        window.setTimeout("Crafty.viewport.scale(Crafty.DOM.window.width/800);", 3000);
+        /*
         if (Crafty.DOM.window.width/Crafty.DOM.window.height < 1.8) {
             ratio = Crafty.DOM.window.width/400;
             perfectheight = 200 * ratio;
@@ -18,6 +19,7 @@ Game = {
         else {
             document.body.style.marginTop = '0px';
         }
+        */
     })   
   }
 }
