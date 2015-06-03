@@ -1,3 +1,9 @@
+var autoRescale = true;
+
+if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+    autoRescale = false;
+}
+
 Game = {
   start: function() {
     // Start crafty and set a background color so that we can see it's working
@@ -5,7 +11,9 @@ Game = {
     Crafty.background('rgb(0, 128, 0)');
     Crafty.scene('Loading');
     Crafty.bind('ViewportResize', function(e) {
-        window.setTimeout("Crafty.viewport.scale(Crafty.DOM.window.width/800);", 3000);
+        if (autoRescale) {
+            Crafty.viewport.scale(Crafty.DOM.window.width/800);
+        }
         /*
         if (Crafty.DOM.window.width/Crafty.DOM.window.height < 1.8) {
             ratio = Crafty.DOM.window.width/400;
