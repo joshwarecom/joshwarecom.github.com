@@ -1,5 +1,5 @@
-var preloadSound = false;
-var preloadGraphics = false;
+var preloadSound = true;
+var preloadGraphics = true;
 
 var audioList = {
         "gasp": ["assets/gasp.aac", "assets/gasp.ogg", "assets/gasp.mp3"],
@@ -8,6 +8,10 @@ var audioList = {
 };
 
 var graphicsList = ["assets/cbat.gif", "assets/minibanana.gif", "assets/minibanana_green.gif"];
+
+if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+    preloadSound = false;
+}
 
 var assetsObj = {
     "audio": preloadSound ? audioList : null,
