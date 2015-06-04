@@ -7,7 +7,7 @@ var audioList = {
         "yuck": ["assets/yuck.aac", "assets/yuck.ogg", "assets/yuck.mp3"]    
 };
 
-var graphicsList = ["assets/cbat.gif", "assets/minibanana.gif", "assets/minibanana_green.gif"];
+var graphicsList = ["assets/cbat.gif", "assets/minibanana.gif", "assets/minibanana_green.gif", "assets/owlLeft.gif", "assets/owlRight.gif"];
 
 if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
     preloadSound = false;
@@ -41,6 +41,7 @@ Crafty.scene('Loading', function() {
 
 Crafty.scene('SimpleGame', function() {
     this.square = Crafty.e('Banana');
+    this.enemyOwl = Crafty.e('EnemyOwl');
     this.pc = Crafty.e('PC');
     this.gamebordersouth = Crafty.e('GameborderSouth');
 

@@ -31,12 +31,12 @@ Crafty.c('Banana',  {
     this.requires('2D, Canvas, HTML, Collision, Gravity')
     //.color('rgb(255, 0, 0)')
     .attr({
-      w: 50,
-      h: 50,
+      w: 35,
+      h: 35,
       x: 0,
       y: 0
     })
-    .append("<img src='assets/minibanana.gif' style='width: 50px; height: 50px; z-index: 11000;'>")
+    .append("<img src='assets/minibanana.gif' style='width: 35px; height: 35px; z-index: 11000;'>")
     .bind('Move', function(e) { 
         this.stopDropAtDestination();
     })        
@@ -76,12 +76,12 @@ Crafty.c('GreenBanana',  {
     this.requires('2D, Canvas, HTML, Collision, Gravity')
     //.color('rgb(255, 0, 0)')
     .attr({
-      w: 50,
-      h: 50,
+      w: 35,
+      h: 35,
       x: 0,
       y: 0
     })
-    .append("<img src='assets/minibanana_green.gif' style='width: 50px; height: 50px; z-index: 11000;'>")
+    .append("<img src='assets/minibanana_green.gif' style='width: 35px; height: 35px; z-index: 11000;'>")
     .bind('Move', function(e) { 
         this.stopDropAtDestination();
     })        
@@ -146,8 +146,8 @@ Crafty.c('PC',  {
     init: function() {
     this.requires('2D, Canvas, HTML, Fourway')
     .attr({
-      w: 70,
-      h: 70,
+      w: 35,
+      h: 35,
       x: 0,
       y: 0
     })
@@ -174,6 +174,42 @@ Crafty.c('PC',  {
             });            
         }
     })
-    .append("<img src='assets/cbat.gif' style='margin-top: -55px; margin-left: -80px; z-index: 12000;'>");
+    .append("<img src='assets/cbat.gif' style='margin-top: -35px; margin-left: -50px; z-index: 12000; width: 150; height: 85;'>");
+    },
+});
+
+Crafty.c('EnemyOwl',  {
+    init: function() {
+    this.requires('2D, Canvas, Grid, HTML')
+    .attr({
+      w: 180,
+      h: 180,
+      x: 100,
+      y: 120,
+      velocity_x: 3,
+      velocity_y: 3
+    })
+    //.color('rgb(0, 0, 255)')    
+    .replace("<img src='assets/owlRight.gif' style='margin-top: -65px; margin-left: -60px; z-index: 12000; width: 300px; height: 300px;'>");
+    this.x = (Math.random()*600);
+    this.y = (Math.random()*400);                
+    
+    this.bind("EnterFrame", function(e) {
+        this.x += this.velocity_x;
+        this.y += this.velocity_y;
+        if (this.y >= (Crafty.gamebordersouth.y-this.h) && this.velocity_y > 0) { this.velocity_y = -3;}
+        else if (this.y <= 0 && this.velocity_y < 0) { this.velocity_y = 3;}
+
+        if (this.x >= (800-this.w) && this.velocity_x > 0) { 
+            this.replace("<img src='assets/owlLeft.gif' style='margin-top: -65px; margin-left: -60px; z-index: 12000; width: 300px; height: 300px;'>");
+            this.velocity_x = -3;
+        }
+        else if (this.x <= 0 && this.velocity_x < 0) { 
+            this.replace("<img src='assets/owlRight.gif' style='margin-top: -65px; margin-left: -60px; z-index: 12000; width: 300px; height: 300px;'>");
+            this.velocity_x = 3;
+        }
+    
+    });
+    
     },
 });
