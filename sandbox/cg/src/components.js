@@ -28,7 +28,7 @@ Crafty.c('GameborderSouth',  {
 
 Crafty.c('Banana',  {
     init: function() {
-    this.requires('2D, Canvas, HTML, Collision, Gravity')
+    this.requires('2D, Canvas, HTML, Gravity, GoodBanana, Collision')
     //.color('rgb(255, 0, 0)')
     .attr({
       w: 35,
@@ -40,7 +40,7 @@ Crafty.c('Banana',  {
     .bind('Move', function(e) { 
         this.stopDropAtDestination();
     })        
-    .consumable() 
+    .consumable()
     },
     freshPosition: function() {
         this.x = 100+(Math.random()*600);
@@ -54,26 +54,37 @@ Crafty.c('Banana',  {
             this.stopFalling();
         }
     },    
-    consumable: function() {
-        this.onHit('PC', function(e) {
-            Crafty.audio.play('gasp');
-            Crafty.audio.play('yummy');
-            this.freshPosition();
-            
-            if (this.originalBanana) {
+    consumeMe: function() {
+        this.freshPosition();
+        if (this.originalBanana) {
+            if (Crafty.bananaCount < Crafty.maxBananaCount) {
                 newBanana = Crafty.e('Banana');
                 newBanana.freshPosition();
-
+                Crafty.bananaCount++;
+            }
+ 
+            if (Crafty.greenBananaCount < Crafty.maxGreenBananaCount) {
                 newGreenBanana = Crafty.e('GreenBanana');
                 newGreenBanana.freshPosition();
+                Crafty.greenBananaCount++;                
             }
-        })
+        }
+    },
+    consumable: function() {
+        this.onHit('PC', function(e) {
+            this.consumeMe();
+            Crafty.audio.play('yummy');
+        });
+        this.onHit('EnemyOwl', function(e) {
+            this.consumeMe();
+            Crafty.audio.play('burp');
+        });        
     },
 });
 
 Crafty.c('GreenBanana',  {
     init: function() {
-    this.requires('2D, Canvas, HTML, Collision, Gravity')
+    this.requires('2D, Canvas, HTML, Gravity, BadBanana, Collision')
     //.color('rgb(255, 0, 0)')
     .attr({
       w: 35,
@@ -84,8 +95,8 @@ Crafty.c('GreenBanana',  {
     .append("<img src='assets/minibanana_green.gif' style='width: 35px; height: 35px; z-index: 11000;'>")
     .bind('Move', function(e) { 
         this.stopDropAtDestination();
-    })        
-    .consumable() 
+    })
+    .consumable()   
     },
     freshPosition: function() {
         this.x = 100+(Math.random()*600);
@@ -99,13 +110,20 @@ Crafty.c('GreenBanana',  {
             this.stopFalling();
         }
     },    
+    consumeMe: function() {
+        this.freshPosition();
+    },
     consumable: function() {
         this.onHit('PC', function(e) {
-            Crafty.audio.play('gasp');
+            this.consumeMe();
             Crafty.audio.play('yuck');
-            this.freshPosition();
-        })
+        });
+        this.onHit('EnemyOwl', function(e) {
+            this.consumeMe();
+            Crafty.audio.play('cough');
+        });        
     },
+
 });
 
 Crafty.c('PC',  {
@@ -143,13 +161,16 @@ Crafty.c('PC',  {
                         }
                         return this.mouseMovement = true;
   },
+
     init: function() {
     this.requires('2D, Canvas, HTML, Fourway')
     .attr({
       w: 35,
       h: 35,
       x: 0,
-      y: 0
+      y: 0,
+      yuck: 'yuck',
+      yum: 'yummy'
     })
     //.color('rgb(0, 0, 255)')    
     .fourway(4)
@@ -174,18 +195,27 @@ Crafty.c('PC',  {
             });            
         }
     })
-    .append("<img src='assets/cbat.gif' style='margin-top: -35px; margin-left: -50px; z-index: 12000; width: 150; height: 85;'>");
-    },
+    .append("<img src='assets/cbat.gif' style='margin-top: -35px; margin-left: -50px; z-index: 12000; width: 150; height: 85;'>")
+    }
+    /*,
+    eatBananas: function(e) {
+        this.onHit('GoodBanana', function(e) {
+            Crafty.audio.play('yummy');
+        });
+        this.onHit('BadBanana', function(e) {
+            Crafty.audio.play('yuck');
+        });        
+    },*/
 });
 
 Crafty.c('EnemyOwl',  {
     init: function() {
-    this.requires('2D, Canvas, Grid, HTML')
+    this.requires('2D, Canvas, Grid, HTML, Collision')
     .attr({
       w: 180,
       h: 180,
-      x: 100,
-      y: 120,
+      x: 0,
+      y: 0,
       velocity_x: 3,
       velocity_y: 3
     })
@@ -213,3 +243,6 @@ Crafty.c('EnemyOwl',  {
     
     },
 });
+
+//            Crafty.audio.play('yuck');
+//            Crafty.audio.play('yuck');

@@ -4,7 +4,9 @@ var preloadGraphics = true;
 var audioList = {
         "gasp": ["assets/gasp.aac", "assets/gasp.ogg", "assets/gasp.mp3"],
         "yummy": ["assets/yummy.aac", "assets/yummy.ogg", "assets/yummy.mp3"],
-        "yuck": ["assets/yuck.aac", "assets/yuck.ogg", "assets/yuck.mp3"]    
+        "yuck": ["assets/yuck.aac", "assets/yuck.ogg", "assets/yuck.mp3"],
+        "burp": ["assets/burp.aac", "assets/burp.ogg", "assets/burp.mp3"],
+        "cough": ["assets/cough.aac", "assets/cough.ogg", "assets/cough.mp3"]
 };
 
 var graphicsList = ["assets/cbat.gif", "assets/minibanana.gif", "assets/minibanana_green.gif", "assets/owlLeft.gif", "assets/owlRight.gif"];
@@ -40,7 +42,12 @@ Crafty.scene('Loading', function() {
 });
 
 Crafty.scene('SimpleGame', function() {
-    this.square = Crafty.e('Banana');
+    Crafty.maxBananaCount = 10;
+    Crafty.maxGreenBananaCount = 10;    
+    Crafty.bananaCount = 0;
+    Crafty.greenBananaCount = 0;
+    
+    this.banana1 = Crafty.e('Banana');
     this.enemyOwl = Crafty.e('EnemyOwl');
     this.pc = Crafty.e('PC');
     this.gamebordersouth = Crafty.e('GameborderSouth');
@@ -49,7 +56,8 @@ Crafty.scene('SimpleGame', function() {
     this.pc.mouseTrigger = this.mouseTrigger;
     this.pc.mouseTrigger.pc = this.pc;    
 
-    this.square.freshPosition();
-    this.square.originalBanana = true;
+    this.banana1.freshPosition();
+    this.banana1.originalBanana = true;
+    Crafty.bananaCount++;
 }, function() {
 });
