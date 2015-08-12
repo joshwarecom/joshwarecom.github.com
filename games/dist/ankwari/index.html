@@ -6,6 +6,11 @@
 		<link rel="stylesheet" type="text/css" href="ankwari.css" />
 		<script language="javascript">
 		var apostles=["SGATHAICH","BOUDICCA","NIAMH","MACHA","MEDB","AIFE","LIATH LUACHRA","MUIRISC","ANANN","BANAGHAISGEICH","MORRIGAN","BADB"];
+                
+                var moveHistory = new Array();
+                var moveHistoryPos = 0;
+                var mostRecentPos = -1;
+                var historyIsVisible = false;
 
 		var wariBoard = new Array();
 		for (var i = 0; i < 12; i++) {
@@ -19,6 +24,23 @@
 		bottomScoreScore = 0;
 
 		var currentBoard = "A";
+                
+                function updateHistory() {
+                    e = document.getElementById("waridata");                    
+                    e.innerHTML = getMoveHistoryAsHTML();
+                }
+                
+                function toggleHistory() {
+                    e = document.getElementById("waridata");
+                    if (historyIsVisible) {
+                        e.style.display = "none";
+                        historyIsVisible = false;
+                    }
+                    else {
+                        e.style.display = "block";
+                        historyIsVisible = true;
+                    }
+                }
 
 		function renderBoardA() {
 			currentBoard = "A";
@@ -26,7 +48,7 @@
 				for (y = 0; y <= 5; y++) {
 					h= "h" + x + y;
 					e = document.getElementById(h);
-					e.innerHTML = "<div class=\"wariboardhouseid\"><p style=\"font-size: large;\">" + apostles[(x*6)+y] + "</p></div><p style=\"font-size: xx-large;\">" + (wariBoard[(x*6)+y]) + "</p>";
+					e.innerHTML = "<div class=\"wariboardhouseid\"><p style=\"font-size: large;\">" + apostles[(x*6)+y] + "</p></div><p style=\"font-size: xx-large;\">" + (wariBoard[(x*6)+y]) + "<br><img src=\"img/spcr.gif\" width=\"164\" height=\"1\"></p>";
 					if (x == 0) {
 						e.style.backgroundColor = "#FFFFFF";
 					}
@@ -50,7 +72,7 @@
 				for (y = 0; y <= 5; y++) {
 					h= "h" + x + (5-y);
 					e = document.getElementById(h);
-					e.innerHTML = "<div class=\"wariboardhouseid\"><p style=\"font-size: large;\">" + apostles[11-((x*6)+y)] + "</p></div><p style=\"font-size: xx-large;\">" + (wariBoard[11-((x*6)+y)]) + "</p>";
+					e.innerHTML = "<div class=\"wariboardhouseid\"><p style=\"font-size: large;\">" + apostles[11-((x*6)+y)] + "</p></div><p style=\"font-size: xx-large;\">" + (wariBoard[11-((x*6)+y)]) + "<br><img src=\"img/spcr.gif\" width=\"164\" height=\"1\"></p>";
 					if (x == 0) {
 						e.style.backgroundColor = "#66CC99";
 					}
@@ -85,9 +107,30 @@
 					co2 = h.substring(2,3);
 					pos = 6+(parseInt(co1)*-6)+parseInt(co2);
 				}
+                                mostRecentPos = pos;
 				doMove(pos);
 			}
 		}
+                
+                function recordMove(pos) {
+                    moveHistory[moveHistoryPos++] = apostles[pos];
+                }
+                
+                function getMoveHistoryAsText() {
+                    tmp = "";
+                    for (i = 0; i < moveHistoryPos; i++) {
+                        tmp += (i+1) + ". " + moveHistory[i] + "\n";
+                    }
+                    return tmp;
+                }
+                
+                function getMoveHistoryAsHTML() {
+                    tmp = "";
+                    for (i = 0; i < moveHistoryPos; i++) {
+                        tmp += (i+1) + ". " + moveHistory[i] + "<br>";
+                    }
+                    return tmp;
+                }                
 
 		function doMove(pos) {
 			if (pos >= 0 && pos <= 11) {
@@ -111,6 +154,8 @@
 						stop = true;
 					}
 				}
+                                recordMove(mostRecentPos);
+                                updateHistory();
 				eval("renderBoard" + currentBoard + "();");
 			}
 		}
@@ -126,9 +171,15 @@
 		</script>
 	</head>
 	<body>
+		<div class="waritable">                    
 
-		<div class="waritable">
-		<div class="warimat">
+                <div class="warihistory" onclick="toggleHistory();">
+                <b> toggle history </b>
+                <div class="waridata" id="waridata">
+                </div>
+                </div>
+
+                <div class="warimat">
 
 		<div class="wariscorespace" style="background-color: #FFFFFF; margin: 2px auto;" id="topScoreSpace">
 		Player A:
