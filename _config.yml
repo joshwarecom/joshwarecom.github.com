@@ -9,7 +9,7 @@ relative_permalinks: false
 # Setup
 title:            joshware.com
 tagline:          'diary of a technocentric exegete'
-description:      'diary of a technocentric exegete'
+description:      'All you want to know about technocentric exegesis but are afraid to ask.'
 url:              http://joshware.com
 baseurl:          /
 zerohoururl:      /zerohour.html
