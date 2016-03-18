@@ -9,10 +9,10 @@ relative_permalinks: false
 # Setup
 title:            joshware.com
 tagline:          'theology, technology and sci-fi'
-description:      'All you wanted to know about technocentric exegesis but were afraid to ask...'
+description:      'All you want to know about technocentric exegesis but are afraid to ask...'
 url:              http://joshware.com
 baseurl:          /
-zerohoururl:          /zerohour.html
+zerohoururl:      /zerohour.html
 
 author:
   name:           'Joshua Wilson'
