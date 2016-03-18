@@ -1,32 +1,73 @@
-# ----------------------- #
-#      Main Configs       #
-# ----------------------- #
+# Dependencies
+markdown:         kramdown
+highlighter:      pygments
 
-url: http://joshware.com
-title: the joshware experimental blorg
-email: josh@joshware.com
-author: Joshua Wilson
-description: > # "Write an awesome description for your new site here. 
-  You can edit this line in _config.yml. It will appear in your document 
-  head meta (for Google search results) and in your feed.xml site 
-  description."
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
 
-# ----------------------- #
-#    Jekyll & Plugins     #
-# ----------------------- #
+# Setup
+title:            joshware.com
+tagline:          'theology, technology and sci-fi'
+description:      'All you wanted to know about technocentric exegesis but were afraid to ask...'
+url:              http://joshware.com
+baseurl:          /
 
-# Build settings
-markdown: kramdown
-permalink: pretty
+author:
+  name:           'Joshua Wilson'
+  url:            http://joshware.com
 
-# ----------------------- #
-#   3rd Party Settings    #
-# ----------------------- #
+paginate:         5
 
-social:
-#  - title: twitter
-#    url: https://twitter.com/SBootstrap
-#  - title: github
-#    url: https://github.com/IronSummitMedia/startbootstrap
-#  - title: linkedin
-#    url: 
+# Custom vars
+version:          2.1.0
+
+#github:
+#  repo:           https://github.com/poole/hyde
+
+##
+# Parameters for WikiToJekyll
+# Used by Rake:wikisub, Rake:wiki and wikiLinks generator plugin
+##
+wikiToJekyll:
+
+  # your user Github Name
+  user_name: joshwarecom
+
+  # your repository Name
+  repository_name: joshwarecom.github.com
+
+  # set your remote name. 'origin' is the default name set
+  # when you do a 'git init'
+  # if you changed this name be sure to change this parameter
+  deploy_remote: "origin"
+
+  # for an organization / user, publication branch is master
+  # for a project, publication branch is gh-pages
+  deploy_branch: "master"
+
+  # wiki repository url
+  # if you live this blank, it will be derived from you code
+  # user_name and repository_name
+  #   eg : wiki_repository_url = user_name/repository_name/wiki'
+  #
+  # If you're importing a wiki from another code repository
+  # you MUST set this url
+  #
+  # IMPORTANT: no git@github.com: in front
+  #            You MUST use the htpps:// url or it will
+  #            cause a submodule error on github
+  #
+  # Example : https://github.com/userName/repositoryName.wiki.git
+
+  wiki_repository_url: # https://github.com/joshwarecom/joshwarecom.github.com/wiki
+
+  # wiki submodule folder
+  # the underscore makes sure that this folder is ignored by Jekyll
+  wiki_source: "_wiki"
+
+  # wiki Jekyll generated pages destination folder
+  wiki_dest: "wiki"
+
+  # commit and push to Jekyll repository after wiki synchronisation
+  commit_and_push: false
