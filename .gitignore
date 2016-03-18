@@ -3,6 +3,9 @@ _site
 _ide
 /_ide/nbproject/private/
 
+# Ignore wikibuild submodule folder
+_wiki
+
 # Ignore docs files
 _gh_pages
 _site

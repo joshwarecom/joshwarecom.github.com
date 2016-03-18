@@ -134,7 +134,7 @@ task :wikisub do |t|
   wiki_repository = get_wiki_repository_url
   command = 'git submodule add ' + wiki_repository + ' ' + g('wiki_source')
   command += ' && git submodule init'
-  command += ' && git submodule update'
+  command += ' && git submodule update --force'
   puts 'command : ' + command
 
   output = `#{command}`

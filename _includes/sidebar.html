@@ -10,7 +10,12 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}">Home</a>
+      {% if site.zerohoururl != null %}
+        <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.zerohoururl }}">Home</a>
+      {% endif %}
+      {% if site.zerohoururl == null %}
+        <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}">Home</a>
+      {% endif %}
 
       {% comment %}
         The code below dynamically generates a sidebar nav of pages with
@@ -21,15 +26,10 @@
       {% for node in pages_list %}
         {% if node.title != null %}
           {% if node.layout == "page" %}
-          {% if node.menu != "wiki" %}
-          {% if node.url == "/" %}
-            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="/zerohour.html">{{ node.title }}</a>
-          {% endif %}
-          {% if node.url != "/" %}          
+          {% if node.menu != "wiki" %}          
             <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
           {% endif %}
           {% endif %}
-          {% endif %}          
         {% endif %}
       {% endfor %}
 
