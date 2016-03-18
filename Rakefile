@@ -77,8 +77,10 @@ def copy_wiki_pages
       regexTarget += CONFIG['baseurl']
       regexTarget += (g('wiki_dest'))
       regexTarget += '/\2)'
-
-      finalContent = fileContent.gsub(/(\[.*\])\(([A-Za-z0-9_' -]*)\)/,regexTarget)
+      
+      while ((tmpContent = fileContent.gsub(/(\[.*\])\(([A-Za-z0-9_' -]*)\)/,regexTarget)) != fileContent)
+        fileContent = tmpContent
+      end
 
       puts "generating #{wikiPagePath}"
 
@@ -93,7 +95,7 @@ def copy_wiki_pages
         newWikiPage.puts "menu: wiki"
         newWikiPage.puts "---"
         newWikiPage.puts ""
-        newWikiPage.puts finalContent
+        newWikiPage.puts fileContent
       end
 
     end
