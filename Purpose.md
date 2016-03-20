@@ -1,6 +1,7 @@
 ---
 layout: page
-title: Another
+title: The Purpose of this Site
+navtext: PURPOSE
 ---
 
 <p class="message">
