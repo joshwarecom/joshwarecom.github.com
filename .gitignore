@@ -1,5 +1,6 @@
 # Ignore wikibuild submodule folder
 _wiki
+_ide
 
 # Ignore docs files
 _gh_pages

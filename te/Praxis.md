@@ -1,6 +1,8 @@
 ---
 layout: page
-title: About
+title: Praxis&colon; Words are not enough
+navtext: praxis
+subsite: te/
 ---
 
 <p class="message">

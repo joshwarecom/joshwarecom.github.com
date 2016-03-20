@@ -7,9 +7,10 @@ permalink:        pretty
 relative_permalinks: false
 
 # Setup
-title:            joshware.com
-tagline:          'diary of a technocentric exegete'
-description:      'diary of a<br/>technocentric<br/>exegete'
+shortcut:         joshware.com/te
+title:            technocentric exegesis
+tagline:          'resources, experiments &amp; idea journal'
+description:      'resources, experiments &amp; idea journal'
 url:              http://joshware.com
 baseurl:          /
 
