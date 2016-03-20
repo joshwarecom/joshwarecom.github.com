@@ -3,7 +3,7 @@
     <p class="masthead-title">{{ site.shortcut }}</p>      
     <div class="sidebar-about">
       <h1>
-        <a href="{{ site.baseurl }}">
+        <a href="{{ site.baseurl }}te/">
           {{ site.title }}
         </a>
       </h1>
@@ -12,10 +12,10 @@
 
     <nav class="sidebar-nav">
       {% if site.zerohoururl != null %}
-        <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.zerohoururl }}">projects</a>
+      <a class="sidebar-nav-item{% if page.url == '/te/' %} active{% endif %}" href="{{ site.zerohoururl }}"><li>projects</li></a>
       {% endif %}
       {% if site.zerohoururl == null %}
-        <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}te/">projects</a>
+      <a class="sidebar-nav-item{% if page.url == '/te/' %} active{% endif %}" href="{{ site.baseurl }}te/"><li>projects</li></a>
       {% endif %}
 
       {% comment %}
@@ -28,7 +28,7 @@
         {% if node.title != null %}
           {% if node.layout == "page" %}
           {% if node.menu != "wiki" %}          
-          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</a>
+          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li>{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a>
           {% endif %}
           {% endif %}
         {% endif %}

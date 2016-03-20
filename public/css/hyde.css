@@ -58,6 +58,8 @@ html {
   padding: 2rem 1rem;
   color: rgba(255,255,255,.5);
   background-color: #202020;
+  background-image: url(/public/img/violet_sidebar.png);
+  list-style-image: url(/public/img/right_arrow.png);
 }
 @media (min-width: 48em) {
   .sidebar {
