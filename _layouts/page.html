@@ -3,6 +3,7 @@ layout: default
 ---
 
 <div class="page">
-  <h1 class="page-title">{{ page.title }}</h1>
+  {% if page.heading != null %}<h1 class="page-title">{{ page.heading }}</h1>{% endif %}
+  {% if page.heading == null %}<h1 class="page-title">{{ page.title }}</h1>{% endif %}  
   {{ content }}
 </div>

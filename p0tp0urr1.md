@@ -1,8 +1,9 @@
 ---
 layout: page
-title: p0tp0urr1&colon; stuff that doesn't fit other categories
+title: add a dash of coordinated chaos
 navtext: p0tp0urr1
-subsite: te/
+rootlink: true
+menu: root
 ---
 
 <p class="message">

@@ -1,8 +1,8 @@
 ---
 layout: page
-title: praxis&colon; thought, word, action
+title: harmony of faith, word, and action
 navtext: praxis
-subsite: te/
+subsite: te
 ---
 
 <p class="message">

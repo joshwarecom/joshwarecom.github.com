@@ -1,8 +1,8 @@
 ---
 layout: page
-title: the purpose of this web site
-navtext: purpose
-subsite: te/
+title: topic&colon; technocentric exegesis
+heading: what is technocentric exegesis?
+menu: root
 ---
 
 <p class="message">
