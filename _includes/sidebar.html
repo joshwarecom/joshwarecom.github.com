@@ -7,7 +7,14 @@
     {% if page.rootlink == true %}
     {% assign isrootlink = true %}    
     {% endif %} 
-    <p class="masthead-title">{% if isrootlink != true %}<li style="list-style-image: url(/public/img/left_arrow_grey.png);">{% endif %}<a style="color: #505050;" href="{{ site.baseurl}}">{{ site.shortcut }}</a>{% if isrootlink != true %}{{ site.baseurl}}{{ pathcomponents[1]}}{% endif %}{% if isrootlink != true %}</li>{% endif %}</p>      
+    {% if site.zhdebug == true %}
+    {% assign rooturl = '/zh/' %}    
+    {% endif %} 
+    {% if site.zhdebug != true %}
+    {% assign rooturl = site.baseurl %}    
+    {% endif %} 
+    
+    <p class="masthead-title">{% if isrootlink != true %}<li style="list-style-image: url(/public/img/left_arrow_grey.png);">{% endif %}<a style="color: #505050;" href="{{ rooturl }}">{{ site.shortcut }}</a>{% if isrootlink != true %}{{ site.baseurl}}{{ pathcomponents[1]}}{% endif %}{% if isrootlink != true %}</li>{% endif %}</p>      
     <div class="sidebar-about">
       {% if page.rootlink != true %}
       {% for subsite in site.subsites %}  
@@ -25,7 +32,7 @@
       {% endif %}  
       {% if page.rootlink == true %}
       <h1>
-        <a href="{{ site.baseurl}}">
+        <a href="{{ rooturl }}">
           {{ site.title }}       
         </a>
       </h1>
@@ -42,7 +49,7 @@
       <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == '/' && pathcomponents[1] == null %} active{% endif %}{% if (page.url == homepage) %} active{% endif %}" href="{% if page.url == '/' && pathcomponents[1] == null %}{{ site.baseurl}}{{ subsite.component }}{% endif %}{% if (page.url != '/')%}{{ homepage }}{% endif %}"><li style="float: left;">{{ homelinktxt }}</li></a><br/>
       {% endif %}        
       {% if page.rootlink == true %}
-      <a style="display: inline-block; width: 275px;" class="sidebar-nav-item" href="{{ site.baseurl}}"><li style="float: left;">{{ homelinktxt }}</li></a><br/>
+      <a style="display: inline-block; width: 275px;" class="sidebar-nav-item" href="{{ rooturl }}"><li style="float: left;">{{ homelinktxt }}</li></a><br/>
       {% endif %}        
       {% comment %}
         The code below dynamically generates a sidebar nav of pages with
@@ -52,6 +59,7 @@
       {% assign pages_list = site.pages %}
       {% for node in pages_list %}
         {% if node.title != null %}
+          {% if node.secondpass == null %}        
           {% if node.layout == "page" %}
           {% if node.menu != "wiki" %}          
           {% if node.subsite == pathcomponents[1] %}          
@@ -61,6 +69,27 @@
           {% if page.rootlink == true %}
           {% if node.menu == 'root' %}
           <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li style="float: left;">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
+          {% endif %}
+          {% endif %}
+          {% endif %}
+          {% endif %}
+          {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}     
+      {% for node in pages_list %}
+        {% if node.title != null %}
+          {% if node.secondpass != null %}        
+          {% if node.layout == "page" %}
+          {% if node.menu != "wiki" %}          
+          {% if node.subsite == pathcomponents[1] %}          
+          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li style="float: left; padding-left: 25px;">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
+          {% endif %}
+          {% if node.subsite != pathcomponents[1] %}
+          {% if page.rootlink == true %}
+          {% if node.menu == 'root' %}
+          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li style="float: left; padding-left: 25px;">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
+          {% endif %}
           {% endif %}
           {% endif %}
           {% endif %}

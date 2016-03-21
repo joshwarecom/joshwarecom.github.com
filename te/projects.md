@@ -1,9 +1,8 @@
 ---
 layout: page
-title: ...and a dash of coordinated chaos
-navtext: p0tp0urr1
-rootlink: true
-menu: root
+title: can you smell what this technocentric exegete is cooking?
+navtext: projects
+subsite: te
 ---
 
 <p class="message">

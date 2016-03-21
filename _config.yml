@@ -14,13 +14,14 @@ description:      'open-source repository of web-aware witness'
 homelinktxt: recent updates
 url:              http://joshware.com
 baseurl:          /
+zhdebug:            true
 
 subsites:
     - component: te
       title: technocentric exegesis
       tagline:     'resources, experiments, essays &amp; media'
       description: 'resources, experiments, essays &amp; media'
-      homelinktxt: projects
+      homelinktxt: primer
     - component: 
       title: cloud + theology
       tagline:     'open-source repository of web-aware witness'

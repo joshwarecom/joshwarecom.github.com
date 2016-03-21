@@ -1,6 +1,6 @@
 ---
 layout: page
-title: the obligatory mission statement
+title: obligatory mission statement
 navtext: mission statement
 rootlink: true
 menu: root

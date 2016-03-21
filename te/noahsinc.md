@@ -1,9 +1,9 @@
 ---
 layout: page
-title: ...and a dash of coordinated chaos
-navtext: p0tp0urr1
-rootlink: true
-menu: root
+title: noahs, inc.
+navtext: noahs, inc.
+subsite: te
+secondpass: true
 ---
 
 <p class="message">
