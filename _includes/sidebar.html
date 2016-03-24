@@ -57,7 +57,7 @@
       {% endcomment %}
 
       {% assign pages_list = site.pages %}
-      {% for node in pages_list %}
+      {% for node in pages_list reversed%}
         {% if node.title != null %}
           {% if node.secondpass == null %}        
           {% if node.layout == "page" %}
