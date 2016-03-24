@@ -19,8 +19,8 @@ zhdebug:            true
 subsites:
     - component: te
       title: technocentric exegesis
-      tagline:     excavating the high-tech heritage of the Bible
-      description: excavating the high-tech heritage of the Bible
+      tagline:     excavating the Bible's high-tech heritage
+      description: excavating the Bible's high-tech heritage
       homelinktxt: primer
     - component: 
       title: cloud + theology
