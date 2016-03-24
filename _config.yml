@@ -8,9 +8,9 @@ relative_permalinks: false
 
 # Setup
 shortcut:         joshware.com
-title:            cloud + theology
-tagline:          'open source repository of web-aware witness'
-description:      'open source repository of web-aware witness'
+title:            cloudy + theology
+tagline:          'an open source witness wiki &amp; blog'
+description:      'an open source witness wiki &amp; blog'
 homelinktxt: recent updates
 url:              http://joshware.com
 baseurl:          /
@@ -24,8 +24,8 @@ subsites:
       homelinktxt: primer
     - component: 
       title: cloud + theology
-      tagline:     'open source repository of web-aware witness'
-      description: 'open source repository of web-aware witness'
+      tagline:     'an open source witness wiki &amp; blog'
+      description: 'an open source witness wiki &amp; blog'
       homelinktxt: recent updates
       
 author:
