@@ -19,8 +19,8 @@ zhdebug:            true
 subsites:
     - component: te
       title: technocentric exegesis
-      tagline:     'excavating the high-tech heritage of the people of God'
-      description: 'excavating the high-tech heritage of the people of God'
+      tagline:     'excavating the high-tech heritage of God\'s people'
+      description: 'excavating the high-tech heritage of God\'s people'
       homelinktxt: primer
     - component: 
       title: cloud + theology
