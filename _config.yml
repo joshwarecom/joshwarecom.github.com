@@ -19,8 +19,8 @@ zhdebug:            true
 subsites:
     - component: te
       title: technocentric exegesis
-      tagline:     'excavating a symbiosis of faith and technology'
-      description: 'excavating a symbiosis of faith and technology'
+      tagline:     'excavating the high-tech heritage of the people of God'
+      description: 'excavating the high-tech heritage of the people of God'
       homelinktxt: primer
     - component: 
       title: cloud + theology
