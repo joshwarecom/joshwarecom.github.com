@@ -1,7 +1,7 @@
 ---
 layout: page
-title: idea journal and bibliography
-navtext: idea kitchen
+title: idea journal, blog and living bibliography
+navtext: the idea kitchen
 rootlink: true
 menu: root
 ---
