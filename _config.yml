@@ -8,7 +8,7 @@ relative_permalinks: false
 
 # Setup
 shortcut:         joshware.com
-title:            cloudy + theology
+title:            cloudy theology +
 tagline:          'a web-aware witness wiki'
 description:      'a web-aware witness wiki'
 homelinktxt: recent updates
@@ -23,7 +23,7 @@ subsites:
       description: excavating the Bible's high-tech heritage
       homelinktxt: primer
     - component: 
-      title: cloudy + theology
+      title: cloudy theology +
       tagline:     'a web-aware witness wiki'
       description: 'a web-aware witness wiki'
       homelinktxt: recent updates
