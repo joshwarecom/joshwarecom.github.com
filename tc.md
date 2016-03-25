@@ -1,7 +1,7 @@
 ---
 layout: page
-title: topic&colon; technocentric exegesis
-heading: what is technocentric exegesis?
+title: topic&colon; technocentric criticism
+heading: what is technocentric criticism?
 menu: root
 ---
 
