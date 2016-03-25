@@ -2,7 +2,7 @@
 layout: page
 title: essays
 navtext: essays
-subsite: te
+subsite: tc
 secondpass: true
 ---
 
