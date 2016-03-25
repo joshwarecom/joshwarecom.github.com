@@ -2,7 +2,7 @@
 layout: page
 title: can you smell what this technocentric exegete is cooking?
 navtext: projects
-subsite: te
+subsite: tc
 ---
 
 <p class="message">
