@@ -17,8 +17,8 @@ baseurl:          /
 zhdebug:            true
 
 subsites:
-    - component: te
-      title: technocentric exegesis
+    - component: tc
+      title: technocentric criticism
       tagline:     excavating the Bible's high-tech heritage
       description: excavating the Bible's high-tech heritage
       homelinktxt: primer
