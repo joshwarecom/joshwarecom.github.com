@@ -2,7 +2,7 @@
 layout: page
 title: the book of Genesis
 navtext: genesis
-subsite: te
+subsite: tc
 secondpass: true
 ---
 
