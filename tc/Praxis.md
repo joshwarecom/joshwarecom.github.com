@@ -2,7 +2,7 @@
 layout: page
 title: harmony of faith, word, and action
 navtext: praxis
-subsite: te
+subsite: tc
 ---
 
 <p class="message">
