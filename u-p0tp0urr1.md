@@ -1,6 +1,6 @@
 ---
 layout: page
-title: ...and a dash of coordinated chaos
+title: ...dash of coordinated chaos
 navtext: p0tp0urr1
 rootlink: true
 menu: root

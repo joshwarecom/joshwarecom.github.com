@@ -1,6 +1,6 @@
 ---
 layout: page
-title: can you smell what this technocentric exegete is cooking?
+title: can you smell...
 navtext: projects
 subsite: tc
 ---

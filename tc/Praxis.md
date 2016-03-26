@@ -1,6 +1,6 @@
 ---
 layout: page
-title: harmony of faith, word, and action
+title: faith, word, and action
 navtext: praxis
 subsite: tc
 ---
