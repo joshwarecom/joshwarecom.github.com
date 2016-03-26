@@ -1,6 +1,6 @@
 ---
 layout: page
-title: idea journal
+title: idea journal, blog and living bibliography
 navtext: the idea kitchen
 rootlink: true
 menu: root

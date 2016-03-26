@@ -1,3 +1,7 @@
+# Ignore wikibuild submodule folder
+_wiki
+_ide
+
 # Ignore docs files
 _gh_pages
 _site
@@ -39,4 +43,3 @@ validation-report.json
 
 # Folders to ignore
 node_modules
-bower_components
