@@ -1,6 +1,6 @@
 ---
 layout: page
-title: the cloud theology + decalogue
+title: the cloudy theology decalogue
 navtext: the ct+ decalogue
 rootlink: true
 menu: root
