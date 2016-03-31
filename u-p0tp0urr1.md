@@ -1,13 +1,14 @@
 ---
 layout: page
-title: ...and a dash of coordinated chaos
+title: a dash of coordinated chaos
 navtext: p0tp0urr1
 rootlink: true
 menu: root
+secondpass: true
 ---
 
 <p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
+  Anything cooked up in the idea kitchen that doesn't fit elsewhere will finds its way here.
 </p>
 
 Page text.

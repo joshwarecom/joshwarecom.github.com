@@ -1,9 +1,10 @@
 ---
 layout: page
-title: tube
-navtext: tube
-subsite: tc
-secondpass: true
+title: projects
+navtext: <u>projects and topics</u>
+rootlink: true
+menu: root
+nosblink: true
 ---
 
 <p class="message">

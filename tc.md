@@ -1,8 +1,10 @@
 ---
 layout: page
-title: topic&colon; technocentric criticism
-heading: what is technocentric criticism?
+title: technocentric criticism
+navtext: technocentric criticism
+rootlink: true
 menu: root
+secondpass: true;
 ---
 
 <p class="message">

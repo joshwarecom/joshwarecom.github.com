@@ -59,16 +59,24 @@
       {% assign pages_list = site.pages %}
       {% for node in pages_list%}
         {% if node.title != null %}
+          {% if node.nosblink != true %}
+          {% assign hrefcode = 'href' %}
+          {% assign liblank = '' %}          
+          {% endif %}        
+          {% if node.nosblink == true %}
+          {% assign hrefcode = 'id' %}          
+          {% assign liblank = 'list-style-image: url(/public/img/blank_bullet.png);' %}
+          {% endif %}        
           {% if node.secondpass == null %}        
           {% if node.layout == "page" %}
           {% if node.menu != "wiki" %}          
           {% if node.subsite == pathcomponents[1] %}          
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li style="float: left;">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
+          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
           {% endif %}
           {% if node.subsite != pathcomponents[1] %}
           {% if page.rootlink == true %}
           {% if node.menu == 'root' %}
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li style="float: left;">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
+          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
           {% endif %}
           {% endif %}
           {% endif %}
@@ -79,16 +87,24 @@
       {% endfor %}     
       {% for node in pages_list %}
         {% if node.title != null %}
+          {% if node.nosblink != true %}
+          {% assign hrefcode = 'href' %}
+          {% assign liblank = '' %}          
+          {% endif %}        
+          {% if node.nosblink == true %}
+          {% assign hrefcode = 'id' %}
+          {% assign liblank = 'list-style-image: url(/public/img/blank_bullet.png);' %}
+          {% endif %}        
           {% if node.secondpass != null %}        
           {% if node.layout == "page" %}
           {% if node.menu != "wiki" %}          
           {% if node.subsite == pathcomponents[1] %}          
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li style="float: left; padding-left: 25px;">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
+          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; padding-left: 0px; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
           {% endif %}
           {% if node.subsite != pathcomponents[1] %}
           {% if page.rootlink == true %}
           {% if node.menu == 'root' %}
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}"><li style="float: left; padding-left: 25px;">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
+          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; padding-left: 0px; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
           {% endif %}
           {% endif %}
           {% endif %}

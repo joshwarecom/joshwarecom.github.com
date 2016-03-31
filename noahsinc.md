@@ -1,8 +1,10 @@
 ---
 layout: page
-title: can you smell what this technocentric exegete is cooking?
-navtext: projects
-subsite: tc
+title: noahs, inc.
+navtext: noahs, inc.
+rootlink: true
+menu: root
+secondpass: true;
 ---
 
 <p class="message">

@@ -1,9 +1,10 @@
 ---
 layout: page
-title: essays
-navtext: essays
-subsite: tc
-secondpass: true
+title: projects
+navtext: ''
+rootlink: true
+menu: root
+nosblink: true
 ---
 
 <p class="message">

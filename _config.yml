@@ -11,7 +11,7 @@ shortcut:         joshware.com
 title:            cloudy theology +
 tagline:          'a web-aware witness wiki'
 description:      'a web-aware witness wiki'
-homelinktxt: recent updates
+homelinktxt: recent posts
 url:              http://joshware.com
 baseurl:          /
 zhdebug:            true
@@ -26,7 +26,7 @@ subsites:
       title: cloudy theology +
       tagline:     'a web-aware witness wiki'
       description: 'a web-aware witness wiki'
-      homelinktxt: recent updates
+      homelinktxt: recent posts
       
 author:
   name:           'Joshua Wilson'

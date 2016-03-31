@@ -1,9 +1,10 @@
 ---
 layout: page
-title: the book of Genesis
-navtext: genesis
-subsite: tc
-secondpass: true
+title: tea tube
+navtext: tea tube
+rootlink: true
+menu: root
+secondpass: true;
 ---
 
 <p class="message">

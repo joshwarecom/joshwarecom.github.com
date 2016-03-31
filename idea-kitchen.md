@@ -1,9 +1,10 @@
 ---
 layout: page
-title: idea journal, blog and living bibliography
-navtext: the idea kitchen
+title: idea journal and living bibliography
+navtext: idea kitchen
 rootlink: true
 menu: root
+secondpass: true
 ---
 
 <p class="message">

@@ -1,13 +1,20 @@
 ---
 layout: page
-title: obligatory mission statement
-navtext: mission statement
+title: surgeon general's warning
+navtext: about this site
 rootlink: true
 menu: root
 ---
-
 <p class="message">
-  ZHey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
+This wiki contains interactive discussions and writings on Christian theology, scripture and praxis in a mechanized world.  And a webcomic.
 </p>
-
-Page text.
+<p>
+<h2>...still interested?</h2>
+</p>
+<p>
+<ul>
+  <li><a href="/ct+/">click here to start at the beginning</a></li>
+  <li style="list-style: none;">or</li>
+  <li>select a project to dive right in:</li>
+</dl>
+</p>
