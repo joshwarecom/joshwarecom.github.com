@@ -3,7 +3,7 @@ layout: page
 title: tea tube
 navtext: tea tube
 rootlink: true
-menu: root
+menu: notroot
 secondpass: true;
 ---
 
