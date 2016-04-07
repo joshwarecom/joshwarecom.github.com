@@ -9,9 +9,9 @@ relative_permalinks: false
 # Setup
 shortcut:         joshware.com
 title:            cloudy theology
-tagline:          '...'
-description:      '...'
-homelinktxt: recent posts
+tagline:          'blog + wiki + comic'
+description:      'blog + wiki + comic'
+homelinktxt: blog
 url:              http://joshware.com
 baseurl:          /
 zhdebug:            true
