@@ -3,7 +3,7 @@ layout: page
 title: a dash of coordinated chaos
 navtext: p0tp0urr1
 rootlink: true
-menu: root
+menu: notroot
 secondpass: true
 ---
 
