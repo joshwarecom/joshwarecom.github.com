@@ -56,7 +56,7 @@ html {
 .sidebar {
   text-align: center;
   padding: 2rem 1rem;
-  color: rgba(0,0,255,.5);
+  color: rgba(255,255,255,.5);
   background-color: #202020;
   background-image: url(/public/img/violet_sidebar.png);
   list-style-image: url(/public/img/right_arrow.png);
@@ -82,7 +82,7 @@ html {
   color: #fff;
   margin-top: 0;
   font-family: "Inconsolata", serif;
-  font-size: 2.0rem;
+  font-size: 1.75rem;
 }
 
 /* Sidebar nav */
