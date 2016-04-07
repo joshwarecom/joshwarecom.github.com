@@ -1,7 +1,7 @@
 ---
 layout: page
 title: noahs, inc.
-navtext: comic
+navtext: comics
 rootlink: true
 menu: root
 ---
