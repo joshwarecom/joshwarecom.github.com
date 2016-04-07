@@ -3,7 +3,7 @@ layout: page
 title: projects
 navtext: <u>projects and topics</u>
 rootlink: true
-menu: root
+menu: notroot
 nosblink: true
 ---
 
