@@ -1,10 +1,9 @@
 ---
 layout: page
 title: noahs, inc.
-navtext: noahs, inc.
+navtext: comic
 rootlink: true
 menu: root
-secondpass: true;
 ---
 
 <p class="message">
