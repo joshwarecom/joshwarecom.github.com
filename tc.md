@@ -3,7 +3,7 @@ layout: page
 title: technocentric criticism
 navtext: technocentric criticism
 rootlink: true
-menu: root
+menu: notroot
 secondpass: true;
 ---
 
