@@ -67,7 +67,7 @@ html {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 18rem;
+    width: 10rem;
     text-align: left;
   }
 }
@@ -79,7 +79,7 @@ html {
 
 /* About section */
 .sidebar-about h1 {
-  color: #f00;
+  color: #ff0000;
   margin-top: 0;
   font-family: "Inconsolata", serif;
   font-size: 2.0rem;
