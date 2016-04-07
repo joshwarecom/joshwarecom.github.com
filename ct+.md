@@ -3,7 +3,7 @@ layout: page
 title: the cloudy theology decalogue
 navtext: the ct+ decalogue
 rootlink: true
-menu: root
+menu: notroot
 secondpass: true
 ---
 <p class="message">
