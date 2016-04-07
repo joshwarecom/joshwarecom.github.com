@@ -9,8 +9,8 @@ relative_permalinks: false
 # Setup
 shortcut:         
 title:            cloudy theology
-tagline:          '+blog +wiki +comic'
-description:      '+blog +wiki +comic'
+tagline:          ''
+description:      ''
 homelinktxt: blog
 url:              http://joshware.com
 baseurl:          /
@@ -24,8 +24,8 @@ subsites:
       homelinktxt: primer
     - component: 
       title: cloudy theology
-      tagline:     '...'
-      description: '...'
+      tagline:     ''
+      description: ''
       homelinktxt: blog
       
 author:
