@@ -1,7 +1,7 @@
 ---
 layout: page
 title: surgeon general's warning
-navtext: about this site
+navtext: wiki
 rootlink: true
 menu: root
 ---
