@@ -9,8 +9,8 @@ relative_permalinks: false
 # Setup
 shortcut:         joshware.com
 title:            cloudy theology
-tagline:          'wiki + blog'
-description:      'wiki + blog'
+tagline:          '...'
+description:      '...'
 homelinktxt: recent posts
 url:              http://joshware.com
 baseurl:          /
@@ -24,9 +24,9 @@ subsites:
       homelinktxt: primer
     - component: 
       title: cloudy theology
-      tagline:     'a web-aware witness wiki'
-      description: 'a web-aware witness wiki'
-      homelinktxt: recent posts
+      tagline:     '...'
+      description: '...'
+      homelinktxt: blog
       
 author:
   name:           'Joshua Wilson'
