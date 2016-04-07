@@ -3,7 +3,7 @@ layout: page
 title: idea journal and living bibliography
 navtext: idea kitchen
 rootlink: true
-menu: root
+menu: notroot
 secondpass: true
 ---
 
