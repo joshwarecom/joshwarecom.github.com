@@ -1,120 +1,32 @@
-<div class="sidebar">
-  <div class="container sidebar-sticky">
-    {% assign pathcomponents = page.url | split: '/' %}
-    {% if page.url == '/' %}
-    {% assign isrootlink = true %}    
-    {% endif %} 
-    {% if page.rootlink == true %}
-    {% assign isrootlink = true %}    
-    {% endif %} 
-    {% if site.zhdebug == true %}
-    {% assign rooturl = '/zh/' %}    
-    {% endif %} 
-    {% if site.zhdebug != true %}
-    {% assign rooturl = site.baseurl %}    
-    {% endif %} 
-    
-    <p class="masthead-title">{% if isrootlink != true %}<li style="list-style-image: url(/public/img/left_arrow_grey.png);">{% endif %}<a style="color: #505050;" href="{{ rooturl }}">{{ site.shortcut }}</a>{% if isrootlink != true %}{{ site.baseurl}}{{ pathcomponents[1]}}{% endif %}{% if isrootlink != true %}</li>{% endif %}</p>      
-    <div class="sidebar-about">
-      {% if page.rootlink != true %}
-      {% for subsite in site.subsites %}  
-      {% if ((subsite.component == pathcomponents[1])) %}
-      <h1>
-        <a href="{{ site.baseurl}}{{ subsite.component }}">
-          {{ subsite.title }}       
-        </a>
-      </h1>
-      <p class="lead">{{ subsite.description }}</p>
-      {% assign homelinktxt = subsite.homelinktxt %}
-      {% assign topicheading = subsite.topicheading %}      
-      {% endif %}      
-      {% endfor %}
-      {% endif %}  
-      {% if page.rootlink == true %}
-      <h1>
-        <a href="{{ rooturl }}">
-          {{ site.title }}       
-        </a>
-      </h1>
-      <p class="lead">{{ site.description }}</p>
-      {% assign homelinktxt = site.homelinktxt %}
-      {% assign topicheading = site.topicheading %}      
-      {% endif %}        
-    </div>
+<!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
 
-    <nav class="sidebar-nav">
-      {% capture homepage %}/{{ pathcomponents[1] }}/{% endcapture %}
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <img src="/public/img/warning.png" alt="These pages explore Christian faith through the lenses and language of our networked, mechanized world.">
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item{% if page.url == site.baseurl %} active{% endif %}" href="{{ site.baseurl }}/zh/">+ recent updates</a>
+    {% comment %}
+      The code below dynamically generates a sidebar nav of pages with
+      `layout: page` in the front-matter. See readme for usage.
+    {% endcomment %}
 
-      {% if page.rootlink != true %}
-      <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == '/' && pathcomponents[1] == null %} active{% endif %}{% if (page.url == homepage) %} active{% endif %}" href="{% if page.url == '/' && pathcomponents[1] == null %}{{ site.baseurl}}{{ subsite.component }}{% endif %}{% if (page.url != '/')%}{{ homepage }}{% endif %}"><li style="float: left;">{{ homelinktxt }}</li></a><br/>
-      {% endif %}        
-      {% if page.rootlink == true %}
-      <a style="display: inline-block; width: 275px;" class="sidebar-nav-item" href="{{ rooturl }}"><li style="float: left;">{{ homelinktxt }}</li></a><br/>
-      {% endif %}        
-      {% comment %}
-        The code below dynamically generates a sidebar nav of pages with
-        `layout: page` in the front-matter. See readme for usage.
-      {% endcomment %}
-
-      {% assign pages_list = site.pages %}
-      {% for node in pages_list%}
-        {% if node.title != null %}
-          {% if node.nosblink != true %}
-          {% assign hrefcode = 'href' %}
-          {% assign liblank = '' %}          
-          {% endif %}        
-          {% if node.nosblink == true %}
-          {% assign hrefcode = 'id' %}          
-          {% assign liblank = 'list-style-image: url(/public/img/blank_bullet.png);' %}
-          {% endif %}        
-          {% if node.secondpass == null %}        
-          {% if node.layout == "page" %}
-          {% if node.menu != "wiki" %}          
-          {% if node.subsite == pathcomponents[1] %}          
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
-          {% endif %}
-          {% if node.subsite != pathcomponents[1] %}
-          {% if page.rootlink == true %}
-          {% if node.menu == 'root' %}
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endif %}
+    {% assign pages_list = site.pages | sort:"url" %}
+    {% for node in pages_list reversed %}
+      {% if node.title != null %}
+        {% if node.layout == "page" %}
+            {% if node.menu != "wiki" %}        
+          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{% if node.ltitle != null %}{{ node.ltitle }} {% else %}{{ node.title }}{% endif %}</a>
+            {% endif %}
         {% endif %}
-      {% endfor %}     
-      {% for node in pages_list %}
-        {% if node.title != null %}
-          {% if node.nosblink != true %}
-          {% assign hrefcode = 'href' %}
-          {% assign liblank = '' %}          
-          {% endif %}        
-          {% if node.nosblink == true %}
-          {% assign hrefcode = 'id' %}
-          {% assign liblank = 'list-style-image: url(/public/img/blank_bullet.png);' %}
-          {% endif %}        
-          {% if node.secondpass != null %}        
-          {% if node.layout == "page" %}
-          {% if node.menu != "wiki" %}          
-          {% if node.subsite == pathcomponents[1] %}          
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; padding-left: 0px; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
-          {% endif %}
-          {% if node.subsite != pathcomponents[1] %}
-          {% if page.rootlink == true %}
-          {% if node.menu == 'root' %}
-          <a style="display: inline-block; width: 275px;" class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" {{hrefcode}}="{{ node.url }}"><li style="float: left; padding-left: 0px; {{liblank}}">{% if node.navtext != nil %}{{ node.navtext }}{% endif %}{% if node.navtext == nil %}{{ node.title }}{% endif %}</li></a><br/>
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endif %}
-          {% endif %}
-        {% endif %}
-      {% endfor %}     
-    </nav>
-    <img src="/public/img/warning.png">
-    <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; {{ site.time | date: '%Y' }}. All rights reserved.
+    </p>
   </div>
 </div>

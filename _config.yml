@@ -1,44 +1,25 @@
-# Dependencies
-markdown:         kramdown
-highlighter:      rouge
-
 # Permalinks
-permalink:        pretty
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
 relative_permalinks: false
 
 # Setup
-shortcut:         
-title:            cloudy theology
-tagline:          ''
-description:      ''
-homelinktxt: blog
-url:              http://joshware.com
-baseurl:          /
-zhdebug:            true
+title:               cloudy theology +
+tagline:             'do { ... } while (true);'
+description:         'These pages explore Christian faith through the lenses and language of our networked, mechanized world.'
+url:                 http://cloudytheology.com
+baseurl:             ''
+paginate:            2
 
-subsites:
-    - component: tc
-      title: technocentric criticism
-      tagline:     excavating the Bible's high-tech heritage
-      description: excavating the Bible's high-tech heritage
-      homelinktxt: primer
-    - component: 
-      title: cloudy theology
-      tagline:     ''
-      description: ''
-      homelinktxt: blog
-      
+# About/contact
 author:
-  name:           'Joshua Wilson'
-  url:            http://joshware.com
-
-paginate:         5
+  name:              Joshua Wilson
+  url:               http://cloudytheology.com
+  email:             josh@joshware.com
 
 # Custom vars
-version:          2.1.0
-
-github:
-  repo:           https://github.com/joshwarecom/joshwarecom.github.com
+version:             1.0.0
 
 ##
 # Parameters for WikiToJekyll
@@ -50,7 +31,7 @@ wikiToJekyll:
   user_name: joshwarecom
 
   # your repository Name
-  repository_name: joshwarecom.github.com
+  repository_name: cloudytheology
 
   # set your remote name. 'origin' is the default name set
   # when you do a 'git init'
@@ -59,7 +40,7 @@ wikiToJekyll:
 
   # for an organization / user, publication branch is master
   # for a project, publication branch is gh-pages
-  deploy_branch: "master"
+  deploy_branch: "gh-pages"
 
   # wiki repository url
   # if you live this blank, it will be derived from you code
@@ -75,7 +56,7 @@ wikiToJekyll:
   #
   # Example : https://github.com/userName/repositoryName.wiki.git
 
-  wiki_repository_url: # https://github.com/joshwarecom/joshwarecom.github.com/wiki
+  wiki_repository_url: # https://github.com/joshwarecom/cloudytheology/wiki
 
   # wiki submodule folder
   # the underscore makes sure that this folder is ignored by Jekyll

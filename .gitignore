@@ -1,5 +1,7 @@
 # Ignore wikibuild submodule folder
 _wiki
+
+# Ignore netbeans utility scripts
 _ide
 
 # Ignore docs files
@@ -43,3 +45,4 @@ validation-report.json
 
 # Folders to ignore
 node_modules
+bower_components
