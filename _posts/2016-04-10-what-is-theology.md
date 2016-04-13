@@ -1,9 +1,7 @@
 ---
 layout: post
-ltitle: + blog
 title: what is theology? and why ask?
 summary:  an introduction to the content and purpose of this blog.
-date: 2016-4-11 00:00:00 +0000
 ---
 
 The title "theologian" evokes images of preachers, professors, ancient sages and televangelists.  But what about a <a href="http://www.cnn.com/2015/09/16/politics/donald-trump-bible-favorite-verse-2016-republican-debate/" target="_blank">man who invents his own bible verses</a> - is he a theologian?
