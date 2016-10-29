@@ -55,5 +55,6 @@ Crafty.scene('SimpleGame', function() {
     this.banana1.freshPosition();
     this.banana1.originalBanana = true;
     Crafty.bananaCount++;
+    Crafty.audio.play('laugh');
 }, function() {
 });
