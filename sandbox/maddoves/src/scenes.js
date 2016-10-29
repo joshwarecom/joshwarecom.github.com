@@ -38,6 +38,7 @@ Crafty.scene('Loading', function() {
 });
 
 Crafty.scene('SimpleGame', function() {
+    /*
     Crafty.maxBananaCount = 10;
     Crafty.maxGreenBananaCount = 10;    
     Crafty.bananaCount = 0;
@@ -55,6 +56,7 @@ Crafty.scene('SimpleGame', function() {
     this.banana1.freshPosition();
     this.banana1.originalBanana = true;
     Crafty.bananaCount++;
-    Crafty.audio.play('laugh');
+    */
+    Crafty.audio.play('laugh',-1);
 }, function() {
 });
