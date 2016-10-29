@@ -38,25 +38,6 @@ Crafty.scene('Loading', function() {
 });
 
 Crafty.scene('SimpleGame', function() {
-    /*
-    Crafty.maxBananaCount = 10;
-    Crafty.maxGreenBananaCount = 10;    
-    Crafty.bananaCount = 0;
-    Crafty.greenBananaCount = 0;
-    
-    this.banana1 = Crafty.e('Banana');
-    this.enemyOwl = Crafty.e('EnemyOwl');
-    this.pc = Crafty.e('PC');
-    this.gamebordersouth = Crafty.e('GameborderSouth');
-
-    this.mouseTrigger = Crafty.e('MouseTrigger');
-    this.pc.mouseTrigger = this.mouseTrigger;
-    this.pc.mouseTrigger.pc = this.pc;    
-
-    this.banana1.freshPosition();
-    this.banana1.originalBanana = true;
-    Crafty.bananaCount++;
-    */
-    Crafty.audio.play('laugh',-1);
+    //Crafty.audio.play('laugh',-1);
 }, function() {
 });
