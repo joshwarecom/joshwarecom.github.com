@@ -121,8 +121,8 @@ function moverect(dx,dy) {
    this.sx += dx;
    this.sy += dy;
 }
+	    
 function Picture (sx,sy,swidth,sheight,imga) {
-	
 	this.sx = sx;
 	this.sy = sy;
 	this.img = imga;
@@ -234,7 +234,8 @@ function change() {
 // adjust boundaries by 20 to make the hit area smaller
 	if ((bx>=target.sx+20)&&(bx<=(target.sx+target.swidth-20))&&
 	(by>=target.sy+20)&&(by<=(target.sy+target.sheight-20))) {
-		//clearInterval(tid);
+		clearInterval(tid);
+		laughing = true;
 //change image to the feathers image
 		target.img = feathers;
 	}
