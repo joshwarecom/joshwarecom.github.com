@@ -239,6 +239,7 @@ function change() {
 	//check for getting beyond ground level
 	if (by>=ground.sy) {
 		//clearInterval(tid);
+		Crafty.audio.play('laugh',-1);
 	}
 	drawall();	
 }
