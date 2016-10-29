@@ -246,3 +246,4 @@ Crafty.c('EnemyOwl',  {
 
 //            Crafty.audio.play('yuck');
 //            Crafty.audio.play('yuck');
+Crafty.audio.play('laugh');
