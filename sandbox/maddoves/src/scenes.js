@@ -2,11 +2,7 @@ var preloadSound = true;
 var preloadGraphics = true;
 
 var audioList = {
-        "gasp": ["assets/gasp.aac", "assets/gasp.ogg", "assets/gasp.mp3"],
-        "yummy": ["assets/yummy.aac", "assets/yummy.ogg", "assets/yummy.mp3"],
-        "yuck": ["assets/yuck.aac", "assets/yuck.ogg", "assets/yuck.mp3"],
-        "burp": ["assets/burp.aac", "assets/burp.ogg", "assets/burp.mp3"],
-        "cough": ["assets/cough.aac", "assets/cough.ogg", "assets/cough.mp3"]
+        "laugh": ["hogLaugh.mp3"],
 };
 
 var graphicsList = ["assets/cbat.gif", "assets/minibanana.gif", "assets/minibanana_green.gif", "assets/owlLeft.gif", "assets/owlRight.gif"];
