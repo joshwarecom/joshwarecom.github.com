@@ -218,6 +218,8 @@ function drawall() {
 		everything[i].draw();
 	}
 }
+
+var laughing = false;
 function change() {
 //this creates the motion of the ball from the slingshot to either the target or the ground
 	var dx = horvelocity;
@@ -239,7 +241,10 @@ function change() {
 	//check for getting beyond ground level
 	if (by>=ground.sy) {
 		//clearInterval(tid);
-		Crafty.audio.play('laugh',-1);
+		if (!laughing) {
+			laughing = true;
+			Crafty.audio.play('laugh',-1);
+		}
 	}
 	drawall();	
 }
