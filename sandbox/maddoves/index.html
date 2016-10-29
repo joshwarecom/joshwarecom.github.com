@@ -237,9 +237,9 @@ function change() {
 	var bx = cball.sx;
 	var by = cball.sy;
 	//check for inside of target
-// adjust boundaries by 40 to make the hit area smaller
-	if ((bx>=target.sx+40)&&(bx<=(target.sx+target.swidth-40))&&
-	(by>=target.sy+40)&&(by<=(target.sy+target.sheight-40))) {
+// adjust boundaries by 20 to make the hit area smaller
+	if ((bx>=target.sx+20)&&(bx<=(target.sx+target.swidth-20))&&
+	(by>=target.sy+20)&&(by<=(target.sy+target.sheight-20))) {
 		//clearInterval(tid);
 //change image to the feathers image
 		target.img = feathers;
