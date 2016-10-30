@@ -183,6 +183,8 @@ var pred_angleradians;
 var pred_horvelocity;
 var pred_verticalvel1;
 var pred_verticalvel2;
+var pred_cball_sx;
+var pred_cball_sy;
 	    
 function moveit(ev) {
 	var mx;
@@ -201,6 +203,9 @@ function moveit(ev) {
 	cball.sy = my;
 	mysling.bx = mx;
 	mysling.by = my;
+		
+	pred_cball_sx = cball.sx;
+	pred_cball_sy = cball.sy;
 		
 	pred_outofcannon = distsq(mysling.bx,mysling.by,mysling.s1x,mysling.s1y)/700;
 	pred_angleradians = -Math.atan2(mysling.s1y-mysling.by,mysling.s1x-mysling.bx);
@@ -234,11 +239,12 @@ function drawall() {
 	for (i=0;i<everything.length;i++) {
 		everything[i].draw();
 	}
-	//ctx.fillStyle= rgb(0,0,0);
-	//ctx.beginPath();
-	//ctx.arc(cball.sx+pred_horvelocity,cball.sy+pred_verticalvel1,10,0,Math.PI*2,true);
-	//ctx.arc(0,0,500,0,Math.PI*2,true);	
-	//ctx.fill();		
+	
+	ctx.fillStyle= rgb(0,0,0);
+	ctx.beginPath();
+	ctx.arc(pred_cball_sx+pred_horvelocity,pred_cball_sy+pred_verticalvel1,10,0,Math.PI*2,true);
+	ctx.arc(0,0,500,0,Math.PI*2,true);	
+	ctx.fill();		
 }
 	    
 function predictArc() {
