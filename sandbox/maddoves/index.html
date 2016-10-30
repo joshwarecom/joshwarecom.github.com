@@ -209,10 +209,10 @@ function moveit(ev) {
 	pred_verticalvel1 = - pred_outofcannon*Math.sin(pred_angleradians);
 	pred_verticalvel2 = pred_verticalvel1 + gravity;
 
-	ctx.fillStyle=this.fillstyle;
+	ctx.fillStyle= rgb(0,0,0);
 	ctx.beginPath();
-	//ctx.fillStyle= rgb(0,0,0);
-	ctx.arc(cball.sx+pred_horvelocity,cball.sy+pred_verticalvel1,this.rad,0,Math.PI*2,true);
+	ctx.arc(cball.sx+pred_horvelocity,cball.sy+pred_verticalvel1,10,0,Math.PI*2,true);
+	//ctx.arc(cball.sx+pred_horvelocity,cball.sy+pred_verticalvel1,this.rad,0,Math.PI*2,true);	
 	ctx.fill();	
 
 	}
