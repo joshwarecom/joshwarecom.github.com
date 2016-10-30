@@ -95,12 +95,7 @@ function Ball(sx,sy,rad,stylestring) {
   this.fillstyle = stylestring;
 }
 function drawball() {
-	ctx.fillStyle=this.fillstyle;
-	ctx.beginPath();
-	//ctx.fillStyle= rgb(0,0,0);
-	ctx.arc(this.sx,this.sy,this.rad,0,Math.PI*2,true);
-	ctx.fill();	
-}
+c}
 function moveball(dx,dy) {
 	this.sx +=dx;
 	this.sy +=dy;
@@ -176,6 +171,12 @@ function distsq(x1,y1,x2,y2) {
 	return (x1-x2)*(x1-x2)+(y1-y2)*(y1-y2);
 }
 //for dragging of ball and modification of mysling
+var pred_outofcannon;
+var pred_angleradians;
+var pred_horvelocity;
+var pred_verticalvel1;
+var pred_verticalvel2;
+	    
 function moveit(ev) {
 	var mx;
 	var my;
@@ -194,6 +195,19 @@ function moveit(ev) {
 	mysling.bx = mx;
 	mysling.by = my;
 	drawall();
+		
+	pred_outofcannon = distsq(mysling.bx,mysling.by,mysling.s1x,mysling.s1y)/700;
+	pred_angleradians = -Math.atan2(mysling.s1y-mysling.by,mysling.s1x-mysling.bx);
+	pred_horvelocity =  pred_outofcannon*Math.cos(pred_angleradians);
+	pred_verticalvel1 = - pred_outofcannon*Math.sin(pred_angleradians);
+	pred_verticalvel2 = pred_verticalvel1 + gravity;
+
+	ctx.fillStyle=this.fillstyle;
+	ctx.beginPath();
+	//ctx.fillStyle= rgb(0,0,0);
+	ctx.arc(cball.sx+pred_horvelocity,cball.sy+pred_verticalvel1,this.rad,0,Math.PI*2,true);
+	ctx.fill();	
+
 	}
 }
 function finish(ev) {
@@ -219,6 +233,9 @@ function drawall() {
 	for (i=0;i<everything.length;i++) {
 		everything[i].draw();
 	}
+}
+	    
+function predictArc() {
 }
 
 var laughing = false;
