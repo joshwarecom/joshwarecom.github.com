@@ -239,18 +239,17 @@ function drawall() {
 	for (i=0;i<everything.length;i++) {
 		everything[i].draw();
 	}
-	
+		
 	ctx.beginPath();
-	ctx.arc(pred_cball_sx+pred_horvelocity,pred_cball_sy+pred_verticalvel1,5,0,Math.PI*2,true);
+	ctx.arc(pred_cball_sx,pred_cball_sy,5,0,Math.PI*2,true);
 	ctx.fill();
 	
-	pred_dx = pred_horvelocity;
-	pred_verticalvel2 = pred_verticalvel1 + gravity;
-	pred_dy = (pred_verticalvel1 + pred_verticalvel2)*.5;
-	pred_verticalvel1 = pred_verticalvel2;
+	pred_cball_sx += pred_horvelocity;
+	pred_verticalvel1 += gravity;
+	pred_cball_sy += pred_verticalvel1;	
 	
 	ctx.beginPath();
-	ctx.arc(pred_cball_sx+pred_horvelocity,pred_cball_sy+pred_verticalvel1,5,0,Math.PI*2,true);
+	ctx.arc(pred_cball_sx,pred_cball_sy,5,0,Math.PI*2,true);
 	ctx.fill();
 
 }
