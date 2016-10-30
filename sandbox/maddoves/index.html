@@ -251,7 +251,8 @@ function change() {
 			tmp.src = "output_e9eHIO.gif";
 			tmp.style.width=179;
 			tmp.style.height = 209;
-			tmp.x = 50;
+			tmp.style.top = 50;
+			tmp.style.left = 50;
 		}
 	}
 	drawall();	
@@ -268,6 +269,6 @@ Mouse down and drag ball. Releasing the mouse button will shoot the slingshot.  
 <script>
 window.addEventListener('load', Game.start);
 </script>
-<img src="Transparent.gif" id="finalImg" width="209" height="179">
+<img src="Transparent.gif" id="finalImg" width="209" height="179" style="position:absolute;">
 </body>
 </html>
