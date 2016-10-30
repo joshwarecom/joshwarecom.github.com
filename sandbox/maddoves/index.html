@@ -94,8 +94,15 @@ function Ball(sx,sy,rad,stylestring) {
   this.moveit = moveball;
   this.fillstyle = stylestring;
 }
+
 function drawball() {
-c}
+	ctx.fillStyle=this.fillstyle;
+	ctx.beginPath();
+	//ctx.fillStyle= rgb(0,0,0);
+	ctx.arc(this.sx,this.sy,this.rad,0,Math.PI*2,true);
+	ctx.fill();	
+}
+	    
 function moveball(dx,dy) {
 	this.sx +=dx;
 	this.sy +=dy;
@@ -195,13 +202,13 @@ function moveit(ev) {
 	mysling.bx = mx;
 	mysling.by = my;
 	drawall();
-/*	
+
 	pred_outofcannon = distsq(mysling.bx,mysling.by,mysling.s1x,mysling.s1y)/700;
 	pred_angleradians = -Math.atan2(mysling.s1y-mysling.by,mysling.s1x-mysling.bx);
 	pred_horvelocity =  pred_outofcannon*Math.cos(pred_angleradians);
 	pred_verticalvel1 = - pred_outofcannon*Math.sin(pred_angleradians);
 	pred_verticalvel2 = pred_verticalvel1 + gravity;
-
+/*
 	ctx.fillStyle=this.fillstyle;
 	ctx.beginPath();
 	//ctx.fillStyle= rgb(0,0,0);
