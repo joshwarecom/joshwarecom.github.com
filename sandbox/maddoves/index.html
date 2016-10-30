@@ -251,12 +251,24 @@ function drawall() {
 	
 	tmp_pred_cball_sx += tmp_pred_horvelocity;
 	tmp_pred_verticalvel1 += gravity;
-	tmp_pred_cball_sy += tmp_pred_verticalvel1;	
-	
+	tmp_pred_cball_sy += tmp_pred_verticalvel1;		
 	ctx.beginPath();
 	ctx.arc(tmp_pred_cball_sx,tmp_pred_cball_sy,5,0,Math.PI*2,true);
 	ctx.fill();
 
+	tmp_pred_cball_sx += tmp_pred_horvelocity;
+	tmp_pred_verticalvel1 += gravity;
+	tmp_pred_cball_sy += tmp_pred_verticalvel1;		
+	ctx.beginPath();
+	ctx.arc(tmp_pred_cball_sx,tmp_pred_cball_sy,5,0,Math.PI*2,true);
+	ctx.fill();
+
+	tmp_pred_cball_sx += tmp_pred_horvelocity;
+	tmp_pred_verticalvel1 += gravity;
+	tmp_pred_cball_sy += tmp_pred_verticalvel1;		
+	ctx.beginPath();
+	ctx.arc(tmp_pred_cball_sx,tmp_pred_cball_sy,5,0,Math.PI*2,true);
+	ctx.fill();
 }
 	    
 function predictArc() {
