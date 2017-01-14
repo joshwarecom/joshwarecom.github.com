@@ -26,13 +26,14 @@
     }
     
     function playVideo() {
-      alert(123);
+      var e = document.getElementById("vidEmbed");
+      alert(e);
     }
   </script>
 </head>
 <body bgcolor="#FF0000" onload="playVideo();">
 <center>
-<iframe width="90%" height="90%" src="" frameborder="0" allowfullscreen autoplay></iframe>
+<iframe width="90%" height="90%" src="" id="vidEmbed" frameborder="0" allowfullscreen autoplay></iframe>
 </center>
 </body>
 </html>
