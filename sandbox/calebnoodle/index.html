@@ -27,7 +27,9 @@
     
     function playVideo() {
       var e = document.getElementById("vidEmbed");
-      alert(e);
+      if (srcPath != "") {
+        e.src = srcPath;
+      }
     }
   </script>
 </head>
