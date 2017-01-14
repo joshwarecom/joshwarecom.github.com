@@ -21,6 +21,10 @@
     var srcPath = "";
     
     var vidLength = supportedVids[qs["ytid"]];
+    alert(qs);
+    alert(qs["ytid"]);
+    alert(vidLength);
+    
     if (vidLength != null) {
       srcPath = "https://www.youtube.com/embed/" + qs["ytid"] + "?autoplay=1";
     }
