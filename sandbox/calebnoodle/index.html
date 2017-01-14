@@ -3,8 +3,10 @@
   <script>    
     alert(1);
     function getParameterByName(name) {
+      try{
         var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+      } catch(e) { alert(e);}
     }    
     alert(2);
     
@@ -13,7 +15,8 @@
       
       var supportedVids;
       supportedVids["a2dHU7ePtlk"] = 101;
-
+      alert(4);
+      
       var srcPath = "";
 
       var vidLength = supportedVids[getParameterByName("ytid")];
