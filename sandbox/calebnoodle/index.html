@@ -1,29 +1,18 @@
 <html>
 <head>
   <script>    
+    function getParameterByName(name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }    
+    
     function playVideo() {
-      var qs = (function(a) {
-          if (a == "") return {};
-          var b = {};
-          for (var i = 0; i < a.length; ++i)
-          {
-              var p=a[i].split('=', 2);
-              if (p.length == 1)
-                  b[p[0]] = "";
-              else
-                  b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
-          }
-          return b;
-      })(window.location.search.substr(1).split('&'));    
-
       var supportedVids;
       supportedVids["a2dHU7ePtlk"] = 101;
 
       var srcPath = "";
 
-      var vidLength = supportedVids[qs["ytid"]];
-      alert(qs);
-      alert(qs["ytid"]);
+      var vidLength = supportedVids[getParameterByName("ytid")];
       alert(vidLength);
 
       if (vidLength != null) {
