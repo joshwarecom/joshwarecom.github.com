@@ -1,12 +1,16 @@
 <html>
 <head>
   <script>    
+    alert(1);
     function getParameterByName(name) {
         var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     }    
+    alert(2);
     
     function playVideo() {
+      alert(3);
+      
       var supportedVids;
       supportedVids["a2dHU7ePtlk"] = 101;
 
