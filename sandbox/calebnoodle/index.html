@@ -22,7 +22,7 @@
     
     function playVideo() {
       var supportedVids = {};
-      supportedVids["a2dHU7ePtlk"] = 101;
+      supportedVids["a2dHU7ePtlk"] = 5;
 
       var srcPath = "";
       var vidLength = supportedVids[qs["ytid"]];
@@ -35,8 +35,7 @@
       if (srcPath != "") {
         e.src = srcPath;
         alert("setting timeout");
-        enablePrizeButton();
-        setTimeout("enablePrizeButton", vidLength*1000);
+        setTimeout("enablePrizeButton", vidLength);
       }
     }
   </script>
