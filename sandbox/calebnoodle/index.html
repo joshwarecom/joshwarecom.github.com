@@ -21,21 +21,14 @@
 
       var srcPath = "";
       var vidLength = supportedVids[qs["ytid"]];
-      alert(vidLength);
 
       if (vidLength != null) {
         srcPath = "https://www.youtube.com/embed/" + qs["ytid"] + "?autoplay=1";
-        alert("Srcpath is " + srcPath);
       }
 
       var e = document.getElementById("vidEmbed");
       if (srcPath != "") {
-        alert(srcPath);
         e.src = srcPath;
-        alert(e.src);
-      }
-      else {
-        alert("srcPath was blank");
       }
     }
   </script>
