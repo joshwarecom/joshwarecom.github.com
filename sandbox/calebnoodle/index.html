@@ -1,29 +1,31 @@
 <html>
 <head>
   <script>    
-    alert(1);
-    function getParameterByName(name) {
-      try{
-        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-      } catch(e) { alert(e);}
-    }    
-    alert(2);
+    var qs = (function(a) {
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i)
+        {
+            var p=a[i].split('=', 2);
+            if (p.length == 1)
+                b[p[0]] = "";
+            else
+                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    })(window.location.search.substr(1).split('&'));
     
     function playVideo() {
-      alert(3);
-      
       var supportedVids = {};
       supportedVids["a2dHU7ePtlk"] = 101;
-      alert(4);
-      
-      var srcPath = "";
 
-      var vidLength = supportedVids[getParameterByName("ytid")];
+      var srcPath = "";
+      var vidLength = supportedVids[qs["ytid"]];
       alert(vidLength);
 
       if (vidLength != null) {
         srcPath = "https://www.youtube.com/embed/" + qs["ytid"] + "?autoplay=1";
+        alert("Srcpath is " + srcPath);
       }
 
       var e = document.getElementById("vidEmbed");
@@ -31,6 +33,9 @@
         alert(srcPath);
         e.src = srcPath;
         alert(e.src);
+      }
+      else {
+        alert("srcPath was blank");
       }
     }
   </script>
