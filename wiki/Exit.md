@@ -7,4 +7,4 @@ menu: wiki
 
 Goodbye, wiki world.
 
-[Return Home](/wiki/Home)
+[Return Home](wiki/Home)

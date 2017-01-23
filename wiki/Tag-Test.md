@@ -5,4 +5,4 @@ wikiPageName: Tag-Test
 menu: wiki
 ---
 
-[Return Home](/wiki/Home)
+[Return Home](wiki/Home)

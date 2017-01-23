@@ -5,9 +5,9 @@ permalink:           pretty
 relative_permalinks: false
 
 # Setup
-title:               cloudy theology +
-tagline:             'do { ... } while (true);'
-description:         'These pages explore Christian faith through the lenses and language of our networked, mechanized world.'
+title:               'cloudy theology'
+tagline:             'church &amp; information technology intersect.'
+description:         'church &amp; information technology intersect.'
 url:                 http://cloudytheology.com
 baseurl:             ''
 paginate:            2
