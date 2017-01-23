@@ -27,7 +27,7 @@ title: Home
 {% endif %}
 
 
-{% for post in site.posts limit:1 %}
+{% for post in site.posts limit:2 %}
 <h5>latest <a href="/blog/">blog</a> post</h5>
 <div class="posts">
   <div class="post-summary">
@@ -38,7 +38,7 @@ title: Home
     </h2>
     <a href="{{ site.baseurl }}{{ post.url }}"><span class="post-date">{{ post.date | date_to_string }}</span></a>
     <h5>{{post.summary}}</h5>
-    <span style="float: right;"><a href="{{ site.baseurl }}{{ post.url }}">read this post</a></span>
+    <span style="float: left;"><a href="{{ site.baseurl }}{{ post.url }}">read this post</a></span>
   </div>
 </div>
 {% endfor %}
