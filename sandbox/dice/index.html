@@ -1,0 +1,155 @@
+<html>
+<head>
+    <title>Ferven's Special Dice 1.0</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="lib/crafty.js"></script>
+    <script src="src/dice.js"></script>
+    <script src="src/scenes.js"></script>
+<style>
+.button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #0000FF;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+    
+</head>
+<body bgcolor="#CCCCCC">  
+<article>
+<section id="fullscreen">
+<img src="assets/x.gif" id="gif">
+</section>
+</article>
+<div id="dice">
+    <table cellpadding='0' cellspacing='0' border='0'>
+        <tr><td rowspan='2'><img src='assets/cat.png'></td>
+            <td># of Sides<br>
+                <select style='width: 100px;'>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                </select>
+            </td>
+            <td># of Dice<br>
+                <select style='width: 100px;'>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                </select>
+            </td>
+            <td>Name of DM you wish to goad<br>
+                <select style='width: 200px;'>
+                    <option></option>
+                    <option>Luke</option>
+                    <option>Luke</option>
+                    <option>Luke</option>
+                    <option>Luke</option>
+                    <option>Luke</option>
+                    <option>Luke</option>
+                </select>
+            </td>
+        </tr>
+        <tr><td></td>
+            <td colspan='3'><input type="button" onclick="go();" class="button" value="LET'S ROLL!" style="width: 350px; height:50px;">
+            </td>
+        </tr>
+    </table>
+</div>
+<script>
+var e = document.getElementById("fullscreen");
+function go() {
+if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
+RunPrefixMethod(document, "CancelFullScreen");
+}
+else {
+RunPrefixMethod(e, "RequestFullScreen");
+}
+e = document.getElementById('gif');
+e.src = "assets/skull.gif";
+e.style.width = "100%";
+e.style.height="100%";
+toggleDisplay("dice",0);
+Crafty.audio.play('laugh',-1);
+}
+
+function toggleDisplay(id, displayvalue)
+{
+if ( displayvalue == 1 ) {
+document.getElementById(id).style.display = 'block';
+} else if ( displayvalue == 0 ) {
+document.getElementById(id).style.display = 'none';
+}
+}
+var pfx = ["webkit", "moz", "ms", "o", ""];
+function RunPrefixMethod(obj, method) {	
+var p = 0, m, t;
+while (p < pfx.length && !obj[m]) {
+m = method;
+if (pfx[p] == "") {
+m = m.substr(0,1).toLowerCase() + m.substr(1);
+}
+m = pfx[p] + m;
+t = typeof obj[m];
+if (t != "undefined") {
+pfx = [pfx[p]];
+return (t == "function" ? obj[m]() : obj[m]);
+}
+p++;
+}
+}
+window.addEventListener('load', Game.start);
+</script>
+</body>
+</html>
