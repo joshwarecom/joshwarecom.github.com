@@ -141,4 +141,4 @@ wikiToJekyll:
 
   # for an organization / user, publication branch is master
   # for a project, publication branch is gh-pages
-  deploy_branch: "gh-pages"
+  #deploy_branch: "gh-pages"
