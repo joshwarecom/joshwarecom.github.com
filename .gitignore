@@ -46,3 +46,9 @@ validation-report.json
 # Folders to ignore
 node_modules
 bower_components
+
+# Additional ignores per the Simple Blog Theme
+.sass-cache
+.bundle
+.jekyll-metadata
+Gemfile.lock

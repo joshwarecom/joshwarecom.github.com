@@ -72,11 +72,12 @@ def copy_wiki_pages
       wikiPageName    = wikiPageFileName.sub(/.[^.]+\z/,'')
       wikiPageTitle   = wikiPageName.gsub("-"," ")
       fileContent      = File.read(wikiPage)
+      modTime = File.mtime(wikiPage)
 
       regexTarget = '\1('
-      regexTarget += CONFIG['baseurl']
-      regexTarget += (g('wiki_dest'))
-      regexTarget += '/\2)'
+      regexTarget += CONFIG['baseurl'] + '/'
+      regexTarget += (g('wiki_dest')) 
+      regexTarget += '/\2.html)'
       
       while ((tmpContent = fileContent.gsub(/(\[.*\])\(([A-Za-z0-9_' -]*)\)/,regexTarget)) != fileContent)
         fileContent = tmpContent
@@ -87,8 +88,12 @@ def copy_wiki_pages
       # write the new file with yaml front matter
       open(wikiPagePath, 'w') do |newWikiPage|
         newWikiPage.puts "---"
-        newWikiPage.puts "layout: page"
+        newWikiPage.puts "layout: wikipage"
         newWikiPage.puts "title: #{wikiPageTitle}"
+        newWikiPage.puts "ref: wiki"
+        newWikiPage.puts "lang: en"
+        newWikiPage.puts "updated: #{modTime}"
+
         # used to transform links
         newWikiPage.puts "wikiPageName: #{wikiPageName}"
         # used to generate a wiki specific menu. see readme
@@ -96,6 +101,7 @@ def copy_wiki_pages
         newWikiPage.puts "---"
         newWikiPage.puts ""
         newWikiPage.puts fileContent
+
       end
 
     end

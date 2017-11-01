@@ -2,25 +2,60 @@
 layout: default
 ---
 
-<div class="post">
-  <h1 class="post-title">{{ page.title }}</h1>
-  <span class="post-date">{{ page.date | date_to_string }}</span>
-  {{ content }}
-</div>
-<!--
-<div class="related">
-  <h2>Related Posts</h2>
-  <ul class="related-posts">
-    {% for post in site.related_posts limit:3 %}
-      <li>
-        <h3>
-          <a href="{{ site.baseurl }}{{ post.url }}">
-            {{ post.title }}
-            <small>{{ post.date | date_to_string }}</small>
-          </a>
-        </h3>
-      </li>
-    {% endfor %}
-  </ul>
-</div>
--->
+{% if page.navigation.topbio %}
+{% include article-author-bio-small.html %}
+{% endif }
+<article itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div itemprop="articleBody">
+    {% include facebook-like-post.html %}
+    {% if page.navigation.is_comic_page %}
+    <img src="{{ page.navigation.asset }}" style="width: 100%; height: 100%;">
+    <br />
+    {% assign previous_post = nil %}    
+    {% assign posts_lang = site.categories['comics'] | where:"lang", page.lang %}
+    {% assign first_post = posts_lang | size %}
+    {% assign first_nav = first_post | minus:1 %}    
+    {% assign i = 0 %}
+        {% for post in posts_lang %}
+        {% assign i = i | plus:1 %} 
+        {% assign next_i = i | minus:2 %}
+        {% if next_i == -1 %}
+        {% assign next_i = i | minus:1 %}        
+        {% endif %}
+        {% if post == page %}
+        {% if previous_post == nil %}
+        <table style="width: 100%;"><tr><td style="width: 20%;"><a href="{{posts_lang[first_nav].url}}">|&lt;</a></td><td style="width: 20%;"><a href="{{posts_lang[i].url}}">&lt;</a></td><td style="width: 20%;"> </td><td style="width: 20%;"><a href="{{posts_lang[next_i].url}}">&gt;</a></td><td style="width: 20%;"><a href="{{posts_lang[0].url}}">&gt;|</a></td></tr></table>
+        {% else %}
+        {% if i == first_post %}
+        <table style="width: 100%;"><tr><td style="width: 20%;"><a href="{{posts_lang[first_nav].url}}">|&lt;</a></td><td style="width: 20%;"><a href="{{posts_lang[i].url}}">&lt;</a></td><td style="width: 20%;"> </td><td style="width: 20%;"><a href="{{posts_lang[next_i].url}}">&gt;</a></td><td style="width: 20%;"><a href="{{posts_lang[0].url}}">&gt;|</a></td></tr></table>
+        {% else %}
+        <table style="width: 100%;"><tr><td style="width: 20%;"><a href="{{posts_lang[first_nav].url}}">|&lt;</a></td><td style="width: 20%;"><a href="{{posts_lang[i].url}}">&lt;</a></td><td style="width: 20%;"> </td><td style="width: 20%;"><a href="{{posts_lang[next_i].url}}">&gt;</a></td><td style="width: 20%;"><a href="{{posts_lang[0].url}}">&gt;|</a></td></tr></table>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% assign previous_post = post %}
+        {% endfor %}
+    <br />
+    {% endif %}
+    <br />
+    {{ content }}
+    <br />
+    {% include facebook-like-post.html %}
+    {% include facebook-comments.html %}
+  </div>
+
+  {% if site.disqus.shortname %}
+    {% include disqus_comments.html %}
+  {% endif %}
+
+  {% if site.facebook.pixelcode %}
+  <!-- Facebook Pixel Code -->
+  <script>
+  fbq('track', 'ViewContent');
+  </script>
+  <!-- End Facebook Pixel Code -->
+  {% endif %}
+
+
+</article>
