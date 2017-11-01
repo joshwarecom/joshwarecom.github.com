@@ -24,7 +24,7 @@ google_analytics:
 jekyll-theme-simple-blog:
   date_format: "%b %-d, %Y"
 
-theme: # leave it empty
+theme: jekyll-theme-cayman
 
 show_post_image_posts_list: false
 
