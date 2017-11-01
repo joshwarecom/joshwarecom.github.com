@@ -1,3 +1,4 @@
+theme: jekyll-theme-cayman
 # Site settings
 title: cloudy theology
 email: josh@joshware.com
@@ -47,21 +48,21 @@ image: /assets/img/profile-225.png
 #linkedin_username: lorepirri
 
 #  site:
-facebook:
-  publisher_id: 1474191545979552
-  profile_id: 1474191545979552
-  app_id: 126080721296732
-  authors: [1474191545979552]
+#facebook:
+#  publisher_id: 1474191545979552
+#  profile_id: 1474191545979552
+#  app_id: 126080721296732
+#  authors: [1474191545979552]
   #pixelcode: 1670622619859349
 
 
 # gitlab on site
-gitlab:
-  owner_url: https://gitlab.com/lorepirri
+#gitlab:
+#  owner_url: https://gitlab.com/lorepirri
 
 # github on site
-github:
-  owner_url: https://github.com/lorepirri
+#github:
+#  owner_url: https://github.com/lorepirri
 
 
 # translation
