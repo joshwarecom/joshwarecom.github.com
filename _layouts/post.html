@@ -17,22 +17,6 @@ layout: default
     {% assign first_nav = first_post | minus:1 %}    
     {% assign i = 0 %}
         {% for post in posts_lang %}
-        {% assign i = i | plus:1 %} 
-        {% assign next_i = i | minus:2 %}
-        {% if next_i == -1 %}
-        {% assign next_i = i | minus:1 %}        
-        {% endif %}
-        {% if post == page %}
-        {% if previous_post == nil %}
-        <table style="width: 100%;"><tr><td style="width: 20%;"><a href="{{posts_lang[first_nav].url}}">|&lt;</a></td><td style="width: 20%;"><a href="{{posts_lang[i].url}}">&lt;</a></td><td style="width: 20%;"> </td><td style="width: 20%;"><a href="{{posts_lang[next_i].url}}">&gt;</a></td><td style="width: 20%;"><a href="{{posts_lang[0].url}}">&gt;|</a></td></tr></table>
-        {% else %}
-        {% if i == first_post %}
-        <table style="width: 100%;"><tr><td style="width: 20%;"><a href="{{posts_lang[first_nav].url}}">|&lt;</a></td><td style="width: 20%;"><a href="{{posts_lang[i].url}}">&lt;</a></td><td style="width: 20%;"> </td><td style="width: 20%;"><a href="{{posts_lang[next_i].url}}">&gt;</a></td><td style="width: 20%;"><a href="{{posts_lang[0].url}}">&gt;|</a></td></tr></table>
-        {% else %}
-        <table style="width: 100%;"><tr><td style="width: 20%;"><a href="{{posts_lang[first_nav].url}}">|&lt;</a></td><td style="width: 20%;"><a href="{{posts_lang[i].url}}">&lt;</a></td><td style="width: 20%;"> </td><td style="width: 20%;"><a href="{{posts_lang[next_i].url}}">&gt;</a></td><td style="width: 20%;"><a href="{{posts_lang[0].url}}">&gt;|</a></td></tr></table>
-        {% endif %}
-        {% endif %}
-        {% assign previous_post = post %}
         {% endfor %}
     <br />
     {% endif %}
