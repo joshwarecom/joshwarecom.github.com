@@ -10,3 +10,60 @@ url: "https://joshware.com" # change this to the base hostname & protocol for yo
 
 # Build settings
 markdown: kramdown
+
+# Make sure to exclude 'vendor' from the build
+exclude: [vendor, "Gemfile", "Gemfile.lock"]
+
+# permalink: /:categories/:year/:month/:day/:title.html
+# none is equivalent to /:title.html
+# https://jekyllrb.com/docs/permalinks
+permalink: /:title.html
+
+google_analytics:
+
+# jekyll-theme-simple-blog date format
+# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
+jekyll-theme-simple-blog:
+  date_format: "%b %-d, %Y"
+
+theme: # leave it empty
+
+show_post_image_posts_list: false
+
+header:
+  image: /assets/patterns/symphony.png
+
+# social
+author:
+  name: "Simple Blog Theme"
+  short_bio:
+    en: Jekyll Blog Theme, Responsive, SEO and Facebook enabled
+    it: Jekyll Blog Theme, Responsive, con SEO e integrazione Facebook
+  picture: assets/img/profile-60.png
+
+image: /assets/img/profile-225.png
+#twitter:
+#  username:
+#instagram_username:
+
+#linkedin_username: lorepirri
+
+#  site:
+facebook:
+  publisher_id: 1474191545979552
+  profile_id: 1474191545979552
+  app_id: 126080721296732
+  authors: [1474191545979552]
+  #pixelcode: 1670622619859349
+
+
+# gitlab on site
+gitlab:
+  owner_url: https://gitlab.com/lorepirri
+
+# github on site
+github:
+  owner_url: https://github.com/lorepirri
+
+
+# translation
