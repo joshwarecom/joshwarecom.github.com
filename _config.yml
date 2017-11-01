@@ -121,3 +121,24 @@ defaults:
     values:
       lang: "en"
       category: articles
+
+##
+# Parameters for WikiToJekyll
+# Used by Rake:wikisub, Rake:wiki and wikiLinks generator plugin
+##
+wikiToJekyll:
+
+  # your user Github Name
+  user_name: joshwarecom
+
+  # your repository Name
+  repository_name: cloudytheology
+
+  # set your remote name. 'origin' is the default name set
+  # when you do a 'git init'
+  # if you changed this name be sure to change this parameter
+  deploy_remote: "origin"
+
+  # for an organization / user, publication branch is master
+  # for a project, publication branch is gh-pages
+  deploy_branch: "gh-pages"
