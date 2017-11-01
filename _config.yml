@@ -65,5 +65,107 @@ gitlab:
 github:
   owner_url: https://github.com/lorepirri
 
-
 # translation
+# translation
+
+t:
+  en:
+    latest-posts:  "Latest Posts"
+    read-more:  "read more"
+    on-word: "on"
+    contact: "Contact"
+    contact-page: "contact.md"
+    read-time: "min read"
+    comments: "comments"
+    go-to-home-page: "Go to the Home Page"
+    months:
+      january: "Jan"
+      february: "Feb"
+      march: "Mar"
+      april: "Apr"
+      may: "May"
+      june: "Jun"
+      july: "Jul"
+      august: "Aug"
+      september: "Sep"
+      october: "Oct"
+      november: "Nov"
+      december : "Dec"
+  it:
+    latest-posts:  "Ultimi Posts"
+    read-more:  "leggi"
+    on-word: "su"
+    contact: "Contatta"
+    contact-page: "contatta.md"
+    read-time: "min di lettura"
+    comments: "commenti"
+    go-to-home-page: "Vai alla Pagina Iniziale"
+    months:
+      january: "Gen"
+      february: "Feb"
+      march: "Mar"
+      april: "Apr"
+      may: "Mag"
+      june: "Giu"
+      july: "Lug"
+      august: "Ago"
+      september: "Set"
+      october: "Ott"
+      november: "Nov"
+      december : "Dic"
+
+defaults:
+  -
+    scope:
+      type: "posts"
+    values:
+      lang: "en"
+      category: articles
+
+
+##
+# Parameters for WikiToJekyll
+# Used by Rake:wikisub, Rake:wiki and wikiLinks generator plugin
+##
+wikiToJekyll:
+
+  # your user Github Name
+  user_name: joshwarecom
+
+  # your repository Name
+  repository_name: cloudytheology
+
+  # set your remote name. 'origin' is the default name set
+  # when you do a 'git init'
+  # if you changed this name be sure to change this parameter
+  deploy_remote: "origin"
+
+  # for an organization / user, publication branch is master
+  # for a project, publication branch is gh-pages
+  deploy_branch: "gh-pages"
+
+  # wiki repository url
+  # if you live this blank, it will be derived from you code
+  # user_name and repository_name
+  #   eg : wiki_repository_url = user_name/repository_name/wiki'
+  #
+  # If you're importing a wiki from another code repository
+  # you MUST set this url
+  #
+  # IMPORTANT: no git@github.com: in front
+  #            You MUST use the htpps:// url or it will
+  #            cause a submodule error on github
+  #
+  # Example : https://github.com/userName/repositoryName.wiki.git
+
+  wiki_repository_url: # https://github.com/joshwarecom/cloudytheology/wiki
+
+  # wiki submodule folder
+  # the underscore makes sure that this folder is ignored by Jekyll
+  wiki_source: "_wiki"
+
+  # wiki Jekyll generated pages destination folder
+  wiki_dest: "wiki"
+
+  # commit and push to Jekyll repository after wiki synchronisation
+  commit_and_push: false
