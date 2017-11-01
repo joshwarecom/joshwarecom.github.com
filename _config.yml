@@ -132,7 +132,7 @@ wikiToJekyll:
   user_name: joshwarecom
 
   # your repository Name
-  repository_name: joshwarecom.github.com
+  #repository_name: joshwarecom.github.com
 
   # set your remote name. 'origin' is the default name set
   # when you do a 'git init'
