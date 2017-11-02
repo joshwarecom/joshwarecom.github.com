@@ -132,7 +132,7 @@ wikiToJekyll:
   user_name: joshwarecom
 
   # your repository Name
-  repository_name: cloudytheology
+  repository_name: joshwarecom.github.com
 
   # set your remote name. 'origin' is the default name set
   # when you do a 'git init'
@@ -157,7 +157,7 @@ wikiToJekyll:
   #
   # Example : https://github.com/userName/repositoryName.wiki.git
 
-  wiki_repository_url: # https://github.com/joshwarecom/cloudytheology/wiki
+  wiki_repository_url: # https://github.com/joshwarecom/joshwarecom.github.com.wiki.git
 
   # wiki submodule folder
   # the underscore makes sure that this folder is ignored by Jekyll
