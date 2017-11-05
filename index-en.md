@@ -25,6 +25,5 @@ Evaluate whether the facebook pixel code would be useful.
 
 ---
 
-<h2>Latest 3 Projects</h2>
-<div>&nbsp;</div>
-{% include list-category-posts.html lang=page.lang category="comics" max=3 %}
+<h2>Latest Comic</h2>
+{% include list-category-posts-nolink.html lang=page.lang category="comics" max=1 %}
