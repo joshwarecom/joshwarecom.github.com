@@ -4,7 +4,7 @@ title: blog
 tagline: A few more words about this theme
 excerpt: >
   A few more words about this theme. This goes SEO!
-permalink: /about.html
+permalink: /blog.html
 header:
   image: /assets/patterns/upfeathers.png
 ref: blog
