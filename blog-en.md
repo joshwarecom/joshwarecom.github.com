@@ -12,8 +12,6 @@ lang: en
 order: 1
 ---
 
-This is the _Simple Blog_ Jekyll theme. You can find out more info about customizing this theme, as well as basic usage documentation, and source code at: [jekyll-theme-simple-blog](https://github.com/lorepirri/jekyll-theme-simple-blog)
-
-You can find the source code for _Jekyll_ at [jekyll](https://github.com/jekyll/jekyll)
+{% include list-category-posts.html lang=page.lang category="blog" max=10%}
 
 {% include go-to-home-page.html %}

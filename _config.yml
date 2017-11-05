@@ -54,7 +54,6 @@ t:
     on-word: "on"
     contact: "Contact"
     contact-page: "contact.md"
-    read-time: "min read"
     comments: "comments"
     go-to-home-page: "Go to the Home Page"
     months:
@@ -76,7 +75,6 @@ t:
     on-word: "su"
     contact: "Contatta"
     contact-page: "contatta.md"
-    read-time: "min di lettura"
     comments: "commenti"
     go-to-home-page: "Vai alla Pagina Iniziale"
     months:
@@ -99,7 +97,7 @@ defaults:
       type: "posts"
     values:
       lang: "en"
-      category: articles
+      category: undefined
 
 
 ##

@@ -21,8 +21,7 @@ Evaluate whether the facebook pixel code would be useful.
 {%endcomment%}
 
 <h2>Latest Post</h2>
-<div>&nbsp;</div>
-{% include list-category-posts.html lang=page.lang category="articles" %}
+{% include list-category-posts.html lang=page.lang category="blog" max=1 %}
 
 ---
 

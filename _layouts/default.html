@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 {% assign page-lang = page.lang | default: site.lang | default: "en" %}
 <html lang="{{ page-lang }}">
 
@@ -56,18 +56,6 @@
 
   </head>
   <body>
-    {% if site.facebook.app_id %}
-
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/{{ page-lang-country }}/sdk.js#xfbml=1&version=v2.10&appId={{ site.facebook.app_id }}";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-    {% endif %}
-
     {% include site-header.html %}
 
     {% if page.layout == 'home' %}
