@@ -48,7 +48,6 @@ end
 def clean_wiki_folders
   if File.exist?(g('wiki_dest'))
     puts "remove older wiki pages"
-
     Dir.glob("#{g('wiki_dest')}/*.md") do |wikiPage|
       puts "removing #{g('wiki_dest')}"
       rm_rf wikiPage
@@ -156,7 +155,7 @@ end
 
 task :wikibuild do |t|
   puts 'rake:wikibuild'
-  clean_wiki_folders
+  #clean_wiki_folders
   copy_wiki_pages
   build_jekyll
 end
