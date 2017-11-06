@@ -11,8 +11,17 @@ ref: wiki
 lang: en
 order: 2
 ---
-This is a [now page](http://nownownow.com/about){:target="_blank"}, and it was inspired by [the /now movement](https://sivers.org/nowff){:target="_blank"}. If you have your own site, [you should make one](http://nownownow.com/about){:target="_blank"}, too.
-
-_Updated on_ **25 Settembre 2017**.
-
-Here write what you are up to now.
+{% assign previous_post = nil %}
+{% assign wiki_pages = site.pages | where:"ref", "wikipage" | where:"lang", page.lang %}
+{% assign  first_wiki = wiki_pages | size %}
+{% assign first_nav = first_wiki | minus:1 %}
+{% assign i = 0 %}
+{% for x in wiki_pages %}
+{% assign i = i | plus:1 %}
+{% assign next_i = i | minus:2 %}
+{% if next_i == -1 %}
+{% assign next_i = i | minus:1 %}
+{% endif %}
+{{ wiki_pages[i].title }}
+{% endfor %}
+<br />    

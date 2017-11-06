@@ -1,7 +1,7 @@
 ---
 layout: wikipage
 title: Tag Test
-ref: wiki
+ref: wikipage
 lang: en
 category: wiki
 updated: 2017-11-06 16:52:00 -0500

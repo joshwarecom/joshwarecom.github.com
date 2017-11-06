@@ -89,7 +89,7 @@ def copy_wiki_pages
         newWikiPage.puts "---"
         newWikiPage.puts "layout: wikipage"
         newWikiPage.puts "title: #{wikiPageTitle}"
-        newWikiPage.puts "ref: wiki"
+        newWikiPage.puts "ref: wikipage"
         newWikiPage.puts "lang: en"
         newWikiPage.puts "category: wiki"
         newWikiPage.puts "updated: #{modTime}"
