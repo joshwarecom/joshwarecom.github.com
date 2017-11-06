@@ -1,6 +1,3 @@
-<!-- Update your html tag to include the itemscope and itemtype attributes. -->
-<html itemscope itemtype="http://schema.org/Article">
-
 {% if page.title and page.layout == 'page' %}
   {% assign page_title = page.title | append: ' | ' | append: site.title | escape %}
 {% elsif page.title and page.layout == 'category' %}
