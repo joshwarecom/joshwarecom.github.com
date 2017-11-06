@@ -91,6 +91,7 @@ def copy_wiki_pages
         newWikiPage.puts "title: #{wikiPageTitle}"
         newWikiPage.puts "ref: wiki"
         newWikiPage.puts "lang: en"
+        newWikiPage.puts "category: wiki"
         newWikiPage.puts "updated: #{modTime}"
 
         # used to transform links
