@@ -91,13 +91,18 @@ def copy_wiki_pages
         newWikiPage.puts "title: #{wikiPageTitle}"
         newWikiPage.puts "ref: wikipage"
         newWikiPage.puts "lang: en"
-        newWikiPage.puts "category: wiki"
+        newWikiPage.puts "category: appendix"
         newWikiPage.puts "updated: #{modTime}"
+        newWikiPage.puts "cattitle: true"
 
         # used to transform links
         newWikiPage.puts "wikiPageName: #{wikiPageName}"
         # used to generate a wiki specific menu. see readme
         newWikiPage.puts "menu: wiki"
+        newWikiPage.puts "---"
+        newWikiPage.puts ""
+        newWikiPage.puts "<h2>{{page.title}}</h2>"
+        newWikiPage.puts ""
         newWikiPage.puts "---"
         newWikiPage.puts ""
         newWikiPage.puts fileContent

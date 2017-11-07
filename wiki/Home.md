@@ -3,10 +3,15 @@ layout: wikipage
 title: Home
 ref: wikipage
 lang: en
-category: wiki
+category: appendix
 updated: 2017-11-06 17:11:27 -0500
+cattitle: true
 wikiPageName: Home
 menu: wiki
+---
+
+<h2>{{page.title}}</h2>
+
 ---
 
 Hello, wiki world....

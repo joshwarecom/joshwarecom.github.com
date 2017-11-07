@@ -1,9 +1,9 @@
 ---
 layout: page
 title: blog
-tagline: A few more words about this theme
+tagline: thought journal, updated weekly
 excerpt: >
-  A few more words about this theme. This goes SEO!
+  thought journal, updated weekly
 permalink: /blog.html
 header:
   image: /assets/img/blog-header.jpg
