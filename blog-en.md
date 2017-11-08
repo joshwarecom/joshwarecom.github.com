@@ -1,7 +1,7 @@
 ---
 layout: page
 title: blog
-tagline: thought journal, updated weekly
+tagline: thoughts and reviews, updated weekly
 excerpt: >
   thought journal, updated weekly
 permalink: /blog.html
