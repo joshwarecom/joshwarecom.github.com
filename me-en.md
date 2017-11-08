@@ -1,9 +1,9 @@
 ---
 layout: page
-title: me
-tagline: author bio and contact methods
+title: who, me?
+tagline: miscellaneous personal details
 excerpt: >
-  author bio and contact methods
+  miscellaneous personal details
 permalink: /me.html
 header:
   image: /assets/img/me-header.jpg
