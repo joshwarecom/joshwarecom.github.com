@@ -19,7 +19,7 @@
 
     {% if page.title and page.layout == 'page' %}
       {% assign page_title = page.title | append: ' | ' | append: site.title | escape %}
-    {% elsif page.title and page.layout == 'post' %}
+    {% elsif page.title and page.layout == 'post' || page.category == 'appendix'%}
       {% assign page_title = page.category | append: ' | ' | append: page.title | escape %}
     {% elsif page.title %}
       {% assign page_title = page.title | escape %}
