@@ -4,9 +4,9 @@ permalink: /index-en.html
 header:
   image: /assets/img/home-header.jpg
 tagline: > # this means to ignore newlines until "repository:"
-  a hacker writes on faith, technology and conscience.
+  a hacker writes on faith, technology and conscience
 excerpt: >
-  a hacker writes on faith, technology and conscience.
+  a hacker writes on faith, technology and conscience
 ref: home
 lang: en
 ---
