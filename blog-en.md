@@ -1,7 +1,7 @@
 ---
 layout: page
 title: blog
-tagline: reflections, reviews & projects
+tagline: reflections, reviews and projects
 excerpt: >
   reflections,  reviews & projects
 permalink: /blog.html
