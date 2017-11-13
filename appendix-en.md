@@ -9,7 +9,7 @@ header:
   image: /assets/img/appendix-header.jpg
 ref: wiki
 lang: en
-order: 3
+order: 2
 ---
 {% assign previous_post = nil %}
 {% assign wiki_pages = site.pages | where:"ref", "wikipage" | where:"lang", page.lang %}
