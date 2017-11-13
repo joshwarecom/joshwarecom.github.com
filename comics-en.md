@@ -9,7 +9,7 @@ header:
   image: /assets/img/comics-header.jpg
 ref: comics
 lang: en  
-order: 2
+order: 3
 ---
 
 {% include list-category-posts.html lang=page.lang category="comics" max=1%}
