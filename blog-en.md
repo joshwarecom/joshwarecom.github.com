@@ -1,9 +1,9 @@
 ---
 layout: page
 title: blog
-tagline: reflections, reviews &amp; projects
+tagline: reflections, reviews & projects
 excerpt: >
-  reflections,  reviews &amp; projects
+  reflections,  reviews & projects
 permalink: /blog.html
 header:
   image: /assets/img/blog-header.jpg
