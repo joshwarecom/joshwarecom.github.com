@@ -64,8 +64,25 @@ function initializeClock(id, endtime) {
   updateClock();
   var timeinterval = setInterval(updateClock, 1000);
 }
-var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
-initializeClock('clockdiv', deadline);
+var schedule = [
+    ['Dec 01 2017', 'Dec 25 2017']
+];
+
+// iterate over each element in the schedule
+for(var i=0; i<schedule.length; i++){
+  var startDate = schedule[i][0];
+  var endDate = schedule[i][1];
+
+  // put dates in milliseconds for easy comparisons
+  var startMs = Date.parse(startDate);
+  var endMs = Date.parse(endDate);
+  var currentMs = Date.parse(new Date());
+
+  // if current date is between start and end dates, display clock
+  if(endMs > currentMs && currentMs >= startMs ){
+      initializeClock('clockdiv', endDate);
+  }
+}
 </script>
 </body>
 </html>
