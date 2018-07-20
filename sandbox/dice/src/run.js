@@ -1,18 +1,3 @@
-var autoRescale = true;
-
-if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-    autoRescale = false;
-}
-
-Game = {
-  start: function() {
-    // Start crafty and set a background color so that we can see it's working
-    Crafty.init();
-    //Crafty.background('rgb(0, 128, 0)');
-    Crafty.scene('Loading');   
-  }
-}
-
 var e = document.getElementById("fullscreen");
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
@@ -37,7 +22,6 @@ document.getElementById(id).style.display = 'block';
 document.getElementById(id).style.display = 'none';
 }
 }
-alert(4);
 
 var pfx = ["webkit", "moz", "ms", "o", ""];
 function RunPrefixMethod(obj, method) {
@@ -58,6 +42,18 @@ p++;
 }
 
 try {
+var autoRescale = true;
+if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+    autoRescale = false;
+}
+Game = {
+  start: function() {
+    // Start crafty and set a background color so that we can see it's working
+    Crafty.init();
+    //Crafty.background('rgb(0, 128, 0)');
+    Crafty.scene('Loading');   
+  }
+}
 window.addEventListener('load', Game.start);
 alert('init');
 } catch (e) {
