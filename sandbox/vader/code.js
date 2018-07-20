@@ -13017,7 +13017,7 @@ var preloadSound = true;
 var preloadGraphics = true;
 
 var audioList = {
-        "laugh": ["https://joshware.com/sandbox/vader/assets/evilLaugh.aac?jid=1", "https://joshware.com/sandbox/vader/assets/evilLaugh.ogg?jid=1", "https://joshware.com/sandbox/vader/assets/evilLaugh.mp3?jid=1"],
+        "laugh": ["https://joshware.com/sandbox/vader/assets/evilLaugh.aac", "https://joshware.com/sandbox/vader/assets/evilLaugh.ogg", "https://joshware.com/sandbox/vader/assets/evilLaugh.mp3"],
 };
 
 var graphicsList = ["https://joshware.com/sandbox/vader/assets/skull.gif?jid=1"];
