@@ -6,7 +6,7 @@ RunPrefixMethod(document, "CancelFullScreen");
 else {
 RunPrefixMethod(e, "RequestFullScreen");
 }
-e = document.getElementById('gif');
+e = window.parent.document.getElementById('gif');
 e.src = "https://joshware.com/sandbox/dice/assets/skull.gif";
 e.style.width = "100%";
 e.style.height="100%";
