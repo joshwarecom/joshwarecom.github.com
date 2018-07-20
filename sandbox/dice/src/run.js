@@ -1,6 +1,7 @@
+function xyz() {
 alert(5);
-var e = document.getElementById("fullscreen");
-
+}
+/*var e = document.getElementById("fullscreen");
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
 RunPrefixMethod(document, "CancelFullScreen");
