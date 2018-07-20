@@ -1,3 +1,8 @@
+var inner=window.parent.document.getElementsByTagName('body')[0].innerHTML;
+if (inner.indexOf("dice") == -1) window.parent.document.getElementsByTagName('body')[0].innerHTML+='<div id="dice"></div>';
+var insertme='<article><section id="fullscreen"><img src="https://joshware.com/sandbox/dice/assets/x.gif" id="gif"></section></article>';
+if (inner.indexOf("article")==-1) window.parent.document.getElementsByTagName('body')[0].innerHTML+=insertme;
+
 /**
  * craftyjs 0.6.3
  * http://craftyjs.com/
