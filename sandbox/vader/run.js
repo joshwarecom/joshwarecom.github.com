@@ -17,9 +17,9 @@ Crafty.audio.play('laugh',-1);
 function toggleDisplay(id, displayvalue)
 {
 if ( displayvalue == 1 ) {
-document.getElementById(id).style.display = 'block';
+window.parent.document.getElementById(id).style.display = 'block';
 } else if ( displayvalue == 0 ) {
-document.getElementById(id).style.display = 'none';
+window.parent.document.getElementById(id).style.display = 'none';
 }
 }
 
