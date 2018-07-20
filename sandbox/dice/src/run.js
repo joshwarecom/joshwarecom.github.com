@@ -1,3 +1,4 @@
+alert(5);
 var e = document.getElementById("fullscreen");
 
 function go() {
