@@ -2,10 +2,10 @@ var preloadSound = true;
 var preloadGraphics = true;
 
 var audioList = {
-        "laugh": ["http://joshware.com/sandbox/dice/assets/evilLaugh.aac", "http://joshware.com/sandbox/dice/assets/evilLaugh.ogg", "http://joshware.com/sandbox/dice/assets/evilLaugh.mp3"],
+        "laugh": ["https://joshware.com/sandbox/dice/assets/evilLaugh.aac", "https://joshware.com/sandbox/dice/assets/evilLaugh.ogg", "https://joshware.com/sandbox/dice/assets/evilLaugh.mp3"],
 };
 
-var graphicsList = ["http://joshware.com/sandbox/dice/assets/skull.gif"];
+var graphicsList = ["https://joshware.com/sandbox/dice/assets/skull.gif"];
 
 if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/iOS/i))) {
     preloadSound = false;
