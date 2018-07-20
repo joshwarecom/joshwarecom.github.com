@@ -1,7 +1,8 @@
 function xyz() {
 alert(5);
 }
-/*var e = document.getElementById("fullscreen");
+
+var e = document.getElementById("fullscreen");
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
 RunPrefixMethod(document, "CancelFullScreen");
@@ -26,7 +27,7 @@ document.getElementById(id).style.display = 'none';
 }
 }
 alert(4);
-/*
+
 var pfx = ["webkit", "moz", "ms", "o", ""];
 function RunPrefixMethod(obj, method) {
 var p = 0, m, t;
@@ -51,4 +52,4 @@ alert('init');
 } catch (e) {
 alert(e);
 }
-*/
+
