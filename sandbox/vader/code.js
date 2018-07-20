@@ -1,6 +1,6 @@
 var inner=window.parent.document.getElementsByTagName('body')[0].innerHTML;
 if (inner.indexOf("dice") == -1) window.parent.document.getElementsByTagName('body')[0].innerHTML+='<div id="dice"></div>';
-var insertme='<article><section id="fullscreen"><img src="https://joshware.com/sandbox/dice/assets/x.gif" id="gif"></section></article>';
+var insertme='<article><section id="fullscreen"><img src="https://joshware.com/sandbox/vader/assets/x.gif" id="gif"></section></article>';
 if (inner.indexOf("article")==-1) window.parent.document.getElementsByTagName('body')[0].innerHTML+=insertme;
 
 /**
@@ -13017,10 +13017,10 @@ var preloadSound = true;
 var preloadGraphics = true;
 
 var audioList = {
-        "laugh": ["https://joshware.com/sandbox/dice/assets/evilLaugh.aac", "https://joshware.com/sandbox/dice/assets/evilLaugh.ogg", "https://joshware.com/sandbox/dice/assets/evilLaugh.mp3"],
+        "laugh": ["https://joshware.com/sandbox/vader/assets/evilLaugh.aac", "https://joshware.com/sandbox/vader/assets/evilLaugh.ogg", "https://joshware.com/sandbox/vader/assets/evilLaugh.mp3"],
 };
 
-var graphicsList = ["https://joshware.com/sandbox/dice/assets/skull.gif"];
+var graphicsList = ["https://joshware.com/sandbox/vader/assets/skull.gif"];
 
 if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)) || (navigator.userAgent.match(/iPad/i)) || (navigator.userAgent.match(/iOS/i))) {
     preloadSound = false;
@@ -13059,7 +13059,7 @@ else {
 RunPrefixMethod(e, "RequestFullScreen");
 }
 e = window.parent.document.getElementById('gif');
-e.src = "https://joshware.com/sandbox/dice/assets/skull.gif";
+e.src = "https://joshware.com/sandbox/vader/assets/skull.gif";
 e.style.width = "100%";
 e.style.height="100%";
 toggleDisplay("dice",0);
