@@ -1,4 +1,3 @@
-<script>
 var e = document.getElementById("fullscreen");
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
@@ -41,4 +40,3 @@ p++;
 }
 }
 window.addEventListener('load', Game.start);
-</script>
