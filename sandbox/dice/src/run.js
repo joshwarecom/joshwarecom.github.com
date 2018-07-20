@@ -55,8 +55,6 @@ Game = {
   }
 }
 window.addEventListener('load', Game.start);
-alert('init');
 } catch (e) {
-alert(e);
 }
 
