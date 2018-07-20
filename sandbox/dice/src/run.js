@@ -1,5 +1,4 @@
 var e = document.getElementById("fullscreen");
-alert(123);
 
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
@@ -25,6 +24,7 @@ document.getElementById(id).style.display = 'none';
 }
 }
 alert(4);
+/*
 var pfx = ["webkit", "moz", "ms", "o", ""];
 function RunPrefixMethod(obj, method) {
 var p = 0, m, t;
@@ -49,4 +49,4 @@ alert('init');
 } catch (e) {
 alert(e);
 }
-
+*/
