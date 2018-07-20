@@ -13109,3 +13109,5 @@ Game = {
 window.addEventListener('load', Game.start);
 } catch (e) {
 }
+
+window.parent.document.btn = this; window.parent.document.getElementsByTagName('form')[0].action = 'javascript:document.btn.go();';
