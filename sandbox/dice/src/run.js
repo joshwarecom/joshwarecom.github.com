@@ -1,4 +1,4 @@
-var e = document.getElementById("fullscreen");
+//var e = document.getElementById("fullscreen");
 alert(123);
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
