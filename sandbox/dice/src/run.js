@@ -1,6 +1,6 @@
 var e = document.getElementById("fullscreen");
 alert(123);
-/*
+
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
 RunPrefixMethod(document, "CancelFullScreen");
@@ -41,5 +41,5 @@ return (t == "function" ? obj[m]() : obj[m]);
 p++;
 }
 }
-window.addEventListener('load', Game.start);
-*/
+//window.addEventListener('load', Game.start);
+
