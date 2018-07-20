@@ -13045,7 +13045,7 @@ Crafty.scene('Loading', function() {
     );
 });
 
-var e = document.getElementById("fullscreen");
+var e = window.parent.document.getElementById("fullscreen");
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
 RunPrefixMethod(document, "CancelFullScreen");
