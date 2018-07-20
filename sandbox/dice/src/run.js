@@ -41,5 +41,11 @@ return (t == "function" ? obj[m]() : obj[m]);
 p++;
 }
 }
-//window.addEventListener('load', Game.start);
+
+try {
+window.addEventListener('load', Game.start);
+alert('init');
+} catch (e) {
+alert(e);
+}
 
