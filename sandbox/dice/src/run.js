@@ -1,5 +1,6 @@
 //var e = document.getElementById("fullscreen");
 alert(123);
+/*
 function go() {
 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
 RunPrefixMethod(document, "CancelFullScreen");
@@ -41,3 +42,4 @@ p++;
 }
 }
 window.addEventListener('load', Game.start);
+*/
