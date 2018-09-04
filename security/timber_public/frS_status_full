@@ -1,0 +1,1 @@
+awk -v OCODE=$STATUS '{ if ($2 == "S") { if ($16 == OCODE) { print $0;}} else if ($2 == "r") { if ($14 == OCODE) { print $0;}} else if ($2 == "f") { if ($15 == OCODE) { print $0; }}}'

@@ -1,0 +1,2 @@
+awk '{ if ($2 == "S") { if ($12 == "GET") { print $0 }} else if ($2 == "r") { if ($12 == "GET") {print $0}} else if ($2 == "f") { if ($13 == "GET") {print $0}}}'
+

@@ -1,0 +1,1 @@
+awk -v OREF=$REFERER '{ if ($2 == "S") { if ($35 == OREF) { print $0 }} else if ($2 == "r") { if ($20 == OREF) { print $0 }}}'

@@ -1,0 +1,1 @@
+awk '{ if ($2 == "S") { print $36 } else if ($2 == "r") { print $21}}'

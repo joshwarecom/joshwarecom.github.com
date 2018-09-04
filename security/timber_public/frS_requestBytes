@@ -1,0 +1,1 @@
+awk '{ if ($2 == "S") { if ($23 != "-") { tally[$3] += $23; } if ($44 != "-") { tally[$3] += $44; } } else if ($2 == "r") { if ($57 != "-") { tally[$3] += $57; } if ($26 != "-") { tally[$3] += $26; }  } else if ($2 == "f") { tally[$3] += $26; }} END { for (item in tally) { print tally[item] " " item } }'

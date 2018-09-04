@@ -1,0 +1,2 @@
+awk -v OX=$X '{ totals[$0]++; } END { for (item in totals) { print totals[item] "\t" item }}' | sort -rn | head -n $X
+

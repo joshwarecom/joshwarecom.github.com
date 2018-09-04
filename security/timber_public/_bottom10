@@ -1,0 +1,2 @@
+awk '{ totals[$0]++; } END { for (item in totals) { print totals[item] "\t" item }}' | sort -rn | tail -n 10
+

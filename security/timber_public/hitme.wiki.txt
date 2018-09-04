@@ -1,0 +1,45 @@
+
+= About This Script =
+
+HITME is a perl script that chains awklets together to answer common log questions and lists a quick survey of Top 10 hit patterns visible in the HTTP log file for emergency log analysis conclusions in real time.
+
+All awklet scripts, including those utilized by HITME, are documented in awklets.wiki.txt.
+
+HITME can read gzip compressed or raw text files. Raw text can also be piped to HITME from other scripts or processes.
+
+= Example Syntax =
+
+./hitme.pl logfile.gz
+
+./hitme.pl logfile.txt
+
+zcat logfile.gz | ./hitme.pl
+
+<br/>
+
+= Current HITME Outputs =
+
+*Top 10 Edge-to-Origin Status Codes (r S)
+*Top 10 Edge Request Status Codes (r S)
+*Top 10 Forward-to-Origin Methods (f)
+*Top 10 Edge Request Methods (r S)
+*Top 10 Edge Request IPs (r S)
+*Top 10 Edge Request ARLs (r)
+*Top 10 Edge Request Paths (S)
+*Top 10 Forward-to-Origin ARLs (f)
+*Top 10 Edge Request Agents (r S)
+*Top 10 Edge-to-Origin Agents (r S)
+*Top 10 Edge Request Referers (r S)
+*Top 10 Edge Request 404s (r)
+*Top 10 Edge Request 404s (S)
+*Top 10 Forward-to-Origin 404s (f)
+
+<br/>
+
+NOTE: HITME will only return outputs if the awklet chain returns at least one record; therefore, if the input to hitme does not include any relevant records, then HITME will not include it in the output.<br/>
+
+For example, the command "zcat logfile.gz | ./f2o_full | ./hitme.pl" filters out all log lines except f lines to the origin before piping them to hitme. As a result, HITME will only output results for the items which return f lines.<br/>
+
+...
+
+<br/>

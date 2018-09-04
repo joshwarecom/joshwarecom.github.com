@@ -1,0 +1,337 @@
+
+= About These Scripts =
+
+These stand-alone awk scripts can be used to filter HTTP logs and/or extract specific fields in an effort to divine specific, detailed information from arbitrary log lines in an emergency when other tools are unavailable, but logs are available via SSH.
+
+The field positions invoked by these scripts can be updated to accomodate any space delimited log file format.
+
+= About Awklet Chains =
+
+The purpose of the scripts below is to add a layer of abstraction between 1) the data to be extracted from the log file, and 2) lower level details such as field positions. By chaining them together in a single command, detailed information can be extracted without having to type the awk code directly, or create new custom awk scripts.  This makes log analysis much quicker and cleaner when time is of the essence.
+
+<br/>
+
+= Naming Convention =
+
+The naming convention is intended to be human readable. &nbsp;Example script names:<br/>frS_clientip<br/>S_path<br/>frS_get_full
+
+<br/>
+
+The script names contain the following components separated by underscore (_):<br/>
+
+'''record type''': which HTTP log record types will be accepted by the script? this may be any combination of f, r, or S in alphabetical order. Records of any other type will be ignored by the script.&nbsp; If the script accepts all lines regardless of record type, then this component is omitted and the name is prefixed with an underscore (_).<br/>
+
+''Example 1: the record type of the script "'''frS_clientip'''" is "'''frS'''"; this scripts accepts all f, r and S lines.''
+
+''Example 2: the record type of the script "'''S_path'''" is "'''S'''"; this scripts accepts S lines only, and will ignore all others.''
+
+<br/>'''salient fact''': what fact pertaining to the data is important to the script? This may be the specific field that the script either returns or matches on; or if the script match criteria is more complex, this may be a brief description of the criteria. If the only salient fact is the record type, then this component is omitted.
+
+''Example 3: the salient fact of the script "'''frS_clientip'''" is "'''clientip'''"; this script deals with the client ip field of f, r and S lines.''
+
+''Example 4: the salient fact of the script "'''S_path'''" is "'''path'''"; this scripts deals with the path field of S lines only, and will ignore all other record types.''
+
+<br/>'''output format''': specifies whether the script outputs the full record, or something else; if the script is only outputting a single field or a custom combination of fields, this component may be omitted.
+
+''Example 5: the script "'''frS_clientip'''" omits the output format because this script simply outputs the client ip.''
+
+''Example 6: the output format of the script "'''frS_get_full'''" is "'''full'''"; this script outputs the full record of all GET request f, r and S lines.''
+
+<br/><br/>
+
+<br/>
+
+= Script Index =
+
+{| width="100%" cellspacing="1" cellpadding="1" border="1" align="left" summary="List of existing misc awklets" class="wikitable sortable"
+|-
+! scope="col" | name
+! scope="col" | &nbsp; example syntax
+! scope="col" | description of output
+! scope="col" | input lines
+! scope="col" | params
+|-
+| S_full
+| zcat logfile.gz &#124; ./S_full<br/>
+| Full record for all S lines<br/>
+| S lines<br/>
+| <br/>
+|-
+| S_path
+| zcat logfile.gz &#124; ./S_path<br/>
+| "path" field for all S lines<br/>
+| S lines<br/>
+| <br/>
+|-
+| S_path_full<br/>
+| zcat logfile.gz &#124; PATH=page.html ./S_path_full<br/>
+| Full record where path field matches PATH param<br/>
+| S lines<br/>
+| PATH = path to match<br/>
+|-
+| _add1<br/>
+| zcat logfile.gz &#124; ./_add1
+| Full record, with an additional field added to the beginning of each row.<br/>
+| All lines<br/>
+| <br/>
+|-
+| _bottom10<br/>
+| zcat logfile.gz &#124; ./_bottom10
+| The 10 least frequently recurring input values, sorted in reverse order.<br/>
+| All lines<br/>
+| <br/>
+|-
+| _bottom10r<br/>
+| zcat logfile.gz &#124;./_bottom10r
+| The 10 least frequently recurring input values, sorted in reverse order, with&nbsp;% listed.<br/>
+| All lines<br/>
+| <br/>
+|-
+| _hitspm<br/>
+| zcat logfile.gz &#124; ./_hitspm
+| Number of hits per minute in chronological order; each input line counts as a hit.<br/>
+| All lines; field 3 must be epoch time<br/>
+| <br/>
+|-
+| _ignore1<br/>
+| zcat logfile.gz &#124; ./_ignore1
+| Full record, with the first column removed from each row.<br/>
+| All lines<br/>
+| <br/>
+|-
+| _top10<br/>
+| zcat logfile.gz &#124; ./_top10
+| The 10 most frequently recurring input values, sorted in reverse order.<br/>
+| All lines<br/>
+| <br/>
+|-
+| _top10r<br/>
+| zcat logfile.gz &#124; ./_top10r
+| The 10 most frequently recurring input values, sorted in reverse order, with&nbsp;% listed.<br/>
+| All lines<br/>
+| <br/>
+|-
+| _topx<br/>
+| zcat logfile.gz &#124; X=25 ./_topx<br/>
+| The X most frequently recurring input values, sorted in reverse order.
+| All lines<br/>
+| X = how many slots to return<br/>
+|-
+| _topxr<br/>
+| zcat logfile.gz &#124; X=25 ./_topxr<br/>
+| The X most frequently recurring input values, sorted in reverse order, with&nbsp;% listed.
+| All lines<br/>
+| <br/>
+|-
+| f2o_full<br/>
+| zcat logfile.gz &#124; ./f2o_full<br/>
+| Full record for all f lines corresponding to requests forwarded to the origin.<br/>
+| f lines<br/>
+| <br/>
+|-
+| f2p_full<br/>
+| zcat logfile.gz &#124; ./f2p_full
+| Full record for all f lines corresponding to requests forwarded to a cache parent.<br/>
+| f lines<br/>
+| <br/>
+|-
+| f_forwardip<br/>
+| zcat logfile.gz &#124; ./f_forwardip
+| Forward ip field from all f lines.<br/>
+| f lines<br/>
+| <br/>
+|-
+| f_full<br/>
+| zcat logfile.gz &#124; ./f_full
+| Full record for all f lines.<br/>
+| f lines<br/>
+| <br/>
+|-
+| frS_bytesServed<br/>
+| zcat logfile.gz &#124; ./frS_bytesServed
+| For each f, r and&nbsp;S line: 1) the total number of bytes served in the response, and 2) the epoch time of the transaction.<br/>
+| f, r and S lines<br/>
+| <br/>
+|-
+| frS_clientip<br/>
+| zcat logfile.gz &#124; ./frS_clientip
+| The client ip field for all f, r and S lines.<br/>
+| f, r and S lines
+| <br/>
+|-
+| frS_clientip_full<br/>
+| zcat logfile.gz &#124; IP=192.168.168.86 ./frS_clientip_full<br/>
+| Full record where client ip field matches IP param
+| f, r and S lines
+| IP = client ip to match<br/>
+|-
+| frS_err<br/>
+| zcat logfile.gz &#124; ./frS_err
+| The error field for all f, r and S lines.
+| f, r and S lines
+| <br/>
+|-
+| frS_get_full<br/>
+| zcat logfile.gz &#124; ./frS_get_full
+| Full record for all f, r and S GET&nbsp;requests.<br/>
+| f, r and S lines
+| <br/>
+|-
+| frS_head_full<br/>
+| zcat logfile.gz &#124; ./frS_head_full
+| Full record for all f, r and S HEAD requests.
+| f, r and S lines
+| <br/>
+|-
+| frS_method<br/>
+| zcat logfile.gz &#124; ./frS_method
+| The method field for all f, r and S lines.
+| f, r and S lines
+| <br/>
+|-
+| frS_post_full<br/>
+| zcat logfile.gz &#124; ./frS_post_full
+| Full record for all f, r and S POST requests.
+| f, r and S lines
+| <br/>
+|-
+| frS_requestBytes<br/>
+| zcat logfile.gz &#124; ./frS_requestBytes
+| For each f, r and&nbsp;S line: 1) the total number of bytes in the request, and 2) the epoch time of the transaction.
+| f, r and S lines
+| <br/>
+|-
+| frS_requestid<br/>
+| zcat logfile.gz &#124; ./frS_requestid
+| Request id field for all f, r and S lines.<br/>
+| f, r and S lines
+| <br/>
+|-
+| frS_status<br/>
+| zcat logfile.gz &#124; ./frS_status
+| HTTP&nbsp;status code for all f, r and S lines.<br/>
+| f, r and S lines
+| <br/>
+|-
+| frS_status_full<br/>
+| zcat logfile.gz &#124; STATUS=404 ./frS_status_full<br/>
+| Full record where HTTP&nbsp;status code field matches STATUS param
+| f, r and S lines
+| STATUS&nbsp;= http status code to match<br/>
+|-
+| frS_time<br/>
+| zcat logfile.gz &#124; ./frS_time<br/>
+| Epoch time for all f, r and S lines.<br/>
+| f, r and S lines
+| <br/>
+|-
+| frS_v6client_full<br/>
+| zcat logfile.gz &#124; ./frS_v6client_full
+| Full record for all f, r and S lines where the client ip is an IPv6 address<br/>
+| f, r and S lines
+| <br/>
+|-
+| fr_arl<br/>
+| zcat logfile.gz &#124; ./fr_arl
+| Arl field for all f and r lines.<br/>
+| f and r lines<br/>
+| <br/>
+|-
+| fr_arl_full<br/>
+| zcat logfile.gz &#124; ARL=/L/12345/67890/15m/domain.gov/robots.txt ./fr_arl_full
+| Full record for all f, r and&nbsp;S lines where the arl matches the ARL param<br/>
+| f and r lines
+| ARL = arl to match<br/>
+|-
+| rS2o_full<br/>
+| zcat logfile.gz &#124; ./rS2o_full
+| Full record for r and S lines which were forwarded to the origin<br/>
+| r and S lines<br/>
+| <br/>
+|-
+| rS_edgeonly_full<br/>
+| zcat logfile.gz &#124; ./rS_edgeonly_full
+| Full record for all r and S lines for client requests to the edge.<br/>
+| r and S lines
+| <br/>
+|-
+| rS_referer<br/>
+| zcat logfile.gz &#124; ./rS_referer
+| Referer field for all r and S lines.<br/>
+| r and S lines
+| <br/>
+|-
+| rS_referer_full<br/>
+| zcat logfile.gz &#124; REFERER="[http://www.google.com/ http://www.google.com/]" ./rS_referer_full<br/>
+| Full record for all r and S lines where the referer field matches the REFERER param<br/>
+| r and S lines
+| REFERER = referer to match<br/>
+|-
+| rS_trueclientip<br/>
+| zcat logfile.gz &#124; ./rS_trueclientip
+| True client ip field for all r and S lines<br/>
+| r and S lines
+| <br/>
+|-
+| rS_useragent<br/>
+| zcat logfile.gz &#124; ./rS_useragent
+| User agent field for all r and S lines<br/>
+| r and S lines
+| <br/>
+|-
+| rS_useragent_full<br/>
+| zcat logfile.gz &#124; AGENT=libwww-perl/5.834 ./rS_useragent_full<br/>
+| Full record for all r and S lines where the user agent field matches the AGENT param<br/>
+| r and S lines
+| AGENT = agent to match<br/>
+|-
+| r_full<br/>
+| zcat logfile.gz &#124; ./r_full
+| Full record for all r lines.<br/>
+| r lines<br/>
+| <br/>
+|-
+| w3c_arl<br/>
+| zcat logfile.gz &#124; ./w3c_arl
+| URL from w3c log file.<br/>
+| w3c lines<br/>
+| <br/>
+|-
+| w3c_clientip<br/>
+| zcat logfile.gz &#124; ./w3c_clientip
+| Client IP from w3c log file.<br/>
+| w3c lines<br/>
+| <br/>
+|-
+| w3c_method<br/>
+| zcat logfile.gz &#124; ./w3c_method
+| HTTP method from w3c log file.<br/>
+| w3c lines<br/>
+| <br/>
+|-
+| w3c_path<br/>
+| zcat logfile.gz &#124; ./w3c_path
+| Path from w3c log file.<br/>
+| w3c lines<br/>
+| <br/>
+|-
+| w3c_status<br/>
+| zcat logfile.gz &#124; ./w3c_status
+| Status code from w3c log file.<br/>
+| w3c lines<br/>
+| <br/>
+|-
+| w3c_time<br/>
+| zcat logfile.gz &#124; ./w3c_time
+| Transaction time from w3c log file.<br/>
+| w3c lines<br/>
+| <br/>
+|-
+| w3c_useragent<br/>
+| zcat logfile.gz &#124; ./w3c_useragent
+| User agent from w3c log file.<br/>
+| w3c lines<br/>
+| <br/>
+|}
+
+<br/><br/>...

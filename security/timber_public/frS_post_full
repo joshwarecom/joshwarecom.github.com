@@ -1,0 +1,1 @@
+awk '{ if ($2 == "S") { if ($12 == "POST") { print $0 }} else if ($2 == "r") { if ($12 == "POST") {print $0}} else if ($2 == "f") { if ($13 == "POST") {print $0}}}'

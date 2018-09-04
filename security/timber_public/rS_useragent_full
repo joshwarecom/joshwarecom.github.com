@@ -1,0 +1,1 @@
+awk -v OAGENT=$AGENT '{ if ($2 == "S") { if ($36 == OAGENT) { print $0 }} else if ($2 == "r") { if ($21 == OAGENT) { print $0 }}}'

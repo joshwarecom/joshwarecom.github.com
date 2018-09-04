@@ -1,0 +1,1 @@
+awk -v OPATH=$IPATH '{if ($2 == "S") { if ($31 == OPATH) { print $0 }}}'

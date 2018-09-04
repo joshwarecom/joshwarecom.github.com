@@ -1,0 +1,1 @@
+awk -v OPP=$PP '{ if ($2 == "S") { print OPP $38 " " $0 } else if ($2 == "r") { print OPP $32 " " $0 } else if ($2 == "f") { print OPP $29 " " $0}}'

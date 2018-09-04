@@ -1,0 +1,18 @@
+
+= About This Script =
+
+TIMBER is a perl script that pulls HTTP log files via the existing log_collector script, in order to simplify and speed up emergency log analysis during attacks.  TIMBER automatically supports for the following features:<br/>
+*Pull multiple batches simultaneously
+*Extract a random sample from the logs while it pulls to increase efficiency
+*Consistent naming convention to identify who, when & why the logs were pulled
+*Automatically launch a screen session so the download continues if the connection is lost.
+*Preliminary benchmarking shows completion time is comparable to a single batch.
+*Can run interactively or automatically via command line options
+
+<br/>
+
+= Example Syntax =
+
+== Run interactively ==
+
+./timber.pl

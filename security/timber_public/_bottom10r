@@ -1,0 +1,2 @@
+awk '{ totals[$0]++; count++; } END { for (item in totals) { print totals[item] "\t" item " (" int(((totals[item]/count))*100) "%)" }}' | sort -rn | tail -n 10
+

@@ -1,0 +1,2 @@
+awk -v OIP=$IP '{if ($2 == "S") { if ($11 == OIP) { print $0 }} else if ($2 == "r") { if ($11 == OIP) { print $0 }} else if ($2 == "f") { if ($12 == OIP) { print $0 }}}'
+

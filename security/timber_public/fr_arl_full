@@ -1,0 +1,1 @@
+awk -v OARL=$ARL '{if ($2 == "r") { if ($13 == OARL) { print $0 }} else if ($2 == "f") { if ($14 == OARL) { print $0 }}}'
