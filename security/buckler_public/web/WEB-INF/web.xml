@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>Dispatcher</servlet-name>
+        <servlet-class>com.internal.pubsector.civilian.buckler.Dispatcher</servlet-class>
+        <init-param> 
+         <description>Application states will be saved to files in this directory.  These files are not publically web accessible.</description> 
+         <param-name>LocalDataRoot</param-name> 
+         <param-value>/data/tomcat/buckler.data</param-value> 
+        </init-param>               
+        <init-param> 
+         <description>Publically accessible files will be saved to this directory; they will be deleted whenever the war is refreshed, the app will need to restore them from files in the PersistentFileRoot</description>
+         <param-name>LocalWebRoot</param-name>
+         <param-value>/usr/local/apache-tomcat-7.0.34/webapps/buckler/static</param-value> 
+        </init-param>               
+        <init-param> 
+         <description>This is a path to the symbolic link to the key file which should be use to access internal servers.</description>
+         <param-name>DeployedSymKeyPath</param-name>
+         <param-value>/usr/local/apache-tomcat-7.0.34/.ssh/sym.key.deployed</param-value> 
+        </init-param>
+        <init-param> 
+         <description>Comma separated list of local text files that override specific values for testing purposes.</description>
+         <param-name>OverrideSettings</param-name> 
+         <param-value>/data/tomcat/buckler.data/overrides.data</param-value> 
+        </init-param>                 
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Dispatcher</servlet-name>
+        <url-pattern>/Dispatcher</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+      <filter-name>DispatchFilter</filter-name>
+      <filter-class>com.internal.pubsector.civilian.buckler.DispatchFilter</filter-class>
+      <init-param> 
+         <description>Any request paths that are not on this comma separated list will not be allowed.</description> 
+         <param-name>AllowedRequestURIs</param-name> 
+         <param-value>/buckler/Dispatcher,/buckler/</param-value> 
+      </init-param>           
+      <init-param> 
+         <description>Requests for files within this directory will be allowed, as they are static files and do not execute server side code.</description>
+         <param-name>AllowedStaticRoot</param-name> 
+         <param-value>/buckler/static/</param-value> 
+      </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DispatchFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>
