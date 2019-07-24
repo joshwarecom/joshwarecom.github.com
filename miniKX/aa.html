@@ -1,0 +1,1587 @@
+
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+  <title>Handling Customer Pressure to Move Quickly</title>
+  <meta name="viewport" content="width=device-width">
+  <style type="text/css">
+
+  /* background images from http://undum.com/ */
+
+  @font-face {
+    font-family: "CustomFont";
+    font-style: normal;
+    /*font-weight: 800;*/
+    /*font-size: 30px;*/
+    /*src: url('http://themes.googleusercontent.com/static/fonts/tangerine/v2/HGfsyCL5WASpHOFnouG-RD8E0i7KZn-EPnyo3HZu7kw.woff') format('woff');*/
+    src: url('http://themes.googleusercontent.com/static/fonts/imfellenglish/v2/xwIisCqGFi8pff-oa9uSVEGbiRUdT7ySew84y3CmKhM.ttf') format('truetype');
+
+}
+
+
+html {
+		Background-color: #512A21;
+		/* For WebKit (Safari, Google Chrome etc) */
+		background: -webkit-gradient(linear, left top, left bottom, from(#512A21), to(#170804));
+		/* For Mozilla/Gecko (Firefox etc) */
+		background: -moz-linear-gradient(top, #512A21, #170804);
+		/* For Internet Explorer 5.5 - 7 */
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF512A21, endColorstr=#FF170804);
+		/* For Internet Explorer 8 */
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF512A21, endColorstr=#FF170804)";
+        background: #170804 url("body_bg.jpg") repeat-x left top;
+        }
+body {
+	Font-size: 1.4em;
+	Width: 800px;
+	Margin: 1.5em auto;
+	Padding: 1.5em;
+	/*Background-color: #E9E1CE;*/
+	background: #E9E1CE url("text_bg.jpg") ;
+	Color: black;
+	Border: 1px solid black;
+	Border-right-width: 2px;
+	Border-bottom-width: 2px;
+	-webkit-box-shadow: 4px 4px 4px #170804;
+	-moz-box-shadow: 4px 4px 4px #170804;
+	Box-shadow: 4px 4px 4px #170804;
+	Font-family: CustomFont,Palatino,serif;
+	Position: relative;
+}
+a { Color: #006699; text-decoration:none; }
+a.external { Font-variant: small-caps; }
+a.external:visited { Color: #990066; }
+h1, h2, h3, h4, h5, h6 { Font-weight: bold; Font-family: CustomFont,Palatino,sans-serif; }
+h1 { Font-size: 1.6em; Border-bottom: 1px solid black; }
+h2 { Font-size: 1.5em; }
+h3 { Font-size: 1.4em; }
+h4 { Font-size: 1.3em; }
+h5 { Font-size: 1.2em; }
+h6 { Font-size: 1.1em; }
+#transcript table { Margin: 1em auto; }
+#transcript th, #transcript td {
+	Margin: 0; Padding: 0.5em;
+	Border: 1px solid #808080; Border-collapse: collapse;
+}
+#transcript th { Color: #ffffff; Background-color: #808080; Font-family: CustomFont,Palatino,sans-serif; }
+#transcript hr { Color: #808080; }
+address { Font-size: 0.9em; }
+dt { Font-weight: bold; }
+
+.wrap, .wrap_left {
+    float: left;
+    margin-top: 0;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    border: 1px solid #000;
+    padding: 2px;
+}
+
+.wrap_right {
+    float: right;
+    margin-top: 0;
+    margin-right: 0px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    border: 1px solid #000;
+    padding: 2px;
+}
+  </style>
+ </head>
+
+ <body>
+  <table>
+      <tr><td><h1>Handling Customer Pressure to Move Quickly<br><small><small>A Choose Your Own Akamai Adventure<br></small></small></h1></td><td><img src="buckler.png" width="100px" height="100px"></td></tr>
+      <tr><td style="text-align: right; color: crimson;"><small><small>7/24/2019</small></small><br><br><br><br></td></tr>      
+  </table>
+  <address>
+   <a href="/bbb/2016.html">http://joshware.com/miniKX/aa.html</a>
+  </address>
+  <div id="story" style="Display: none;">
+   <div id="start">
+       <h1>
+       <small><a rel="prologue">Click Here to Start!</a></small><br>
+       </h1>
+   </div>
+
+   <div id="prologue">
+	[?do clear_text(); ?]
+    <h1><small>Case Study #1: The Dos and Dont's of Artifical Fire</small></h1>
+    NEANDERTHAL ENGINEER: I've invented artificial fire!<br><br>
+    NEANDERTHAL BUSINESS OWNER: Whoah - you mean that stuff that comes out of the trees when <a rel="lightning">they're struck by lightning?</a><br><br>
+   </div>
+   
+   <div id="lightning">
+	<hr>
+    NEANDERTHAL ENGINEER: Yup!<br><br>
+    NEANDERTHAL BUSINESS OWNER: We can totally <a rel="sellit">sell access to Fire As A Service!</a><br><br>
+   </div>
+   
+   <div id="sellit">
+	<hr>
+    NEANDERTHAL ENGINEER: Yeah, I guess so...just don't crowd too many in until we expand the cave capacity.<br><br>
+    NEANDERTHAL BUSINESS OWNER: Can't we just work with what we have and <a rel="crowd">crowd them in and expand at the same time?</a><br><br>
+   </div>
+      
+   <div id="crowd">
+	<hr>
+    NEANDERTHAL ENGINEER:<br><br>
+    A. <a rel="mistake1">Yeah, I guess so...</a><br><br>
+    B. <a rel="success1">No, we need to slow down...</a><br><br>
+   </div>
+
+   <div id="mistake1">
+	<hr>
+    WHOOPS!!!!!<br><br>
+    <a rel="crowd">Try again...</a>
+   </div>
+   
+   <div id="success1">
+	<hr>
+    HUZZAH!!!!!<br><br>
+    <a rel="casestudy2">Continue...</a>
+   </div>
+   
+   <div id="casestudy2">
+    <h1><small>Case Study #2: The Dos and Dont's Of Sandwich Logic (Strategic Fail!)</small></h1>
+    AKAMAI SA: The extraordinarilly complicated configuration is ready for approval.  Be very thorough with the user acceptance testing...<br><br>
+    BUSINESS OWNER: Okourtestingiscompleteitsfinedeployitrightaway!!!!!!!<br><br>
+    AKAMAI SA:<br><br>
+    A. <a rel="casestudy2b">Ok, here goes...</a><br><br>
+    B. <a rel="success2">No, we need to slow down...</a><br><br>
+   </div>
+   
+   <div id="casestudy2b">
+    <h1><small>...and then, the next time...</small></h1>
+    AKAMAI SA: The extraordinarilly complicated configuration is ready for approval.  Be very thorough with the user acceptance testing...<br><br>
+    BUSINESS OWNER: Okourtestingiscompleteitsfinedeployitrightaway!!!!!!!<br><br>
+    AKAMAI SA:<br><br>
+    A. <a rel="casestudy2c">Ok, here goes...</a><br><br>
+    B. <a rel="success2">No, we need to slow down...</a><br><br>
+   </div>
+   
+   <div id="casestudy2c">
+    <h1><small>...and then, the next time...</small></h1>
+    AKAMAI SA: The extraordinarilly complicated configuration is ready for approval.  Be very thorough with the user acceptance testing...<br><br>
+    BUSINESS OWNER: Okourtestingiscompleteitsfinedeployitrightaway!!!!!!!<br><br>
+    AKAMAI SA:<br><br>
+    A. <a rel="casestudy2d">Ok, here goes...</a><br><br>
+    B. <a rel="success2">No, we need to slow down...</a><br><br>
+   </div>
+   
+   <div id="casestudy2d">
+    <h1><small>...and then, the next time...</small></h1>
+    AKAMAI SA: The extraordinarilly complicated configuration is ready for approval.  Be very thorough with the user acceptance testing...<br><br>
+    BUSINESS OWNER: Okourtestingiscompleteitsfinedeployitrightaway!!!!!!!<br><br>
+    AKAMAI SA:<br><br>
+    A. <a rel="casestudy2e">Ok, here goes...</a><br><br>
+    B. <a rel="success2">No, we need to slow down...</a><br><br>
+   </div>
+   
+   <div id="casestudy2e">
+    <h1><small>...and eventually we had an SI.</small></h1>
+    <a rel="casestudy2">Try again...</a>    
+   </div>
+   
+   <div id="success2">
+	<hr>
+    HUZZAH!!!!!<br><br>
+    <a rel="casestudy3">Continue...</a>
+   </div>
+
+
+   <div id="casestudy3">
+    <h1><small>Case Study #3: The Dos and Dont's HSTS Headers (Strategic Success!)</small></h1>
+    BUSINESS OWNER: HSTS is where it's at! Implement HSTS with 1 year TTL and enable on subdomains right now!<br><br>
+    AKAMAI SA:  That change is nearly impossible to reverse if end users that experience a problem and may result in a partial DoS.<br><br>
+    BUSINESS OWNER: Nah, it's fine.  GO GO GO GO GO!<br><br>
+    AKAMAI SA:<br><br>
+    A. <a rel="nothanks">Ok, here goes...</a><br><br>
+    B. <a rel="anyway">No, we need to slow down...</a><br><br>
+   </div>
+   
+   <div id="nothanks">
+   You're joking right? Pick the other one.
+   </div>
+
+   <div id="anyway">
+    BUSINESS OWNER: Ok fine, do what you need to do but we're going to implement it on our toplevel anyway!<br><br>
+    AKAMAI SA:<br><br>
+    A. <a rel="nothanks">Sounds good - you do that.</a><br><br>
+    B. <a rel="pleasedont">No, we need to slow down...</a><br><br>    
+   </div>
+   
+   <div id="pleasedont">
+    BUSINESS OWNER: We just noticed something.  All of our pre-prod test sites are down.  We should not have done what we did.  The Akamai SAs are wise and knowledgeable and we will listen to them more in the future.<br><br>
+    <font size="+2">THE END</font>
+   </div>
+
+
+   <div id="guesswho4">
+	<hr>
+	<i>Wiry, clawlike hands seize Albert's wrists - his weapons clatter to the floor.</i><br><br>
+	HOODED FIGURE: AAAAAAAAAAAAAAAAALLLLLLLBEEERRRRRRRRRRRRRRRRRT!<br><br>
+	<i>Rosie must act now, but Albert is in the way! Her eyes dart feverishly between <a rel="hesitate">her husband</a> and the <a rel="strike">dark invader</a>.</i><br><br>
+   </div>      
+
+   <div id="hesitate">
+	<hr>
+	ROSIE: Sorry honey, you'll thank me for this later.<br><br>
+        <b>CLANG!</b> <i>Albert groans and drops like a stone.</i><br><br>
+        HOODED FIGURE: GRRRRRRRRRRR!<br><br>
+        <i>It leaps at Rose.  She ducks, spins and slams the door as the monster sails passed her into the bathroom.</i><br><br>
+        ALBERT: <a rel="whawha">Wha....?</a><br><br>
+   </div>
+
+   <div id="whawha">
+	<hr>
+        <b>CLICK.</b><i>  Rosie locks the bathroom door from the outside.</i><br><br>
+        ROSIE: We'll finish that thing off later - there's no time now.<br><br>
+        <i>She pulls Albert to his feet.</i><br><br>
+        ALBERT: You...hit me?<br><br>
+	ROSIE: NO TIME!<br><br>
+        <i>She darts out the front door.</i><br><br>
+        <i>Growls and crashes resound ominously from the locked bathroom.</i><br><br>        
+        <i><a rel="whereexactly">Albert follows unsteadily,</a> probing the lump on his head with the side of his handgun.</i><br><br>
+   </div>
+      
+   <div id="strike">
+	<hr>
+        <b>CLANG!</b> <i>Rose knocks the creature back four feet against the door.  It's sequined hood flies up.</i><br><br>
+        <i><a rel="umma">Albert's eyes widen with recognition.</a></i><br><br>
+   </div>
+      
+   <div id="umma">
+	<hr>
+	ALBERT: Ma? What on earth are you doing outside in that ridiculous outfit?<br><br>
+        <i>Mae steps into the light rubbing a lump on her forehead.</i><br><br>
+        MAE: I'm here to save you Albert!<br><br>
+	ALBERT: Save me from...?<br><br>
+        <i>Mae glares at Rose.  <a rel="glare">Rose glares right back.</a></i><br><br>
+   </div>
+   <div id="glare">
+	<hr>
+        <i>Rose indicates the skillet in her hand with a threatening glance.</i><br><br>
+        <i>Mae winces and <a rel="winces">returns her attention to Albert.</a></i><br><br>
+   </div>
+
+   <div id="winces">
+	<hr>
+        MAE: You mean besides <i>her</i>?<br><br>
+        ALBERT: Not now Ma, <a rel="overthis">we've been over this...</a><br><br>
+   </div>
+
+   <div id="overthis">
+	<hr>
+        MAE: Fine.  Still, you  have to come with me.  Some nice young men are giving us a ride to the base, and <i>she's</i> not invited.<br><br>
+        ALBERT: Base?<br><br>
+        ROSIE: Ignore her Albert, <a rel="worsethan">you'll both end up worse than dead...</a><br><br>
+   </div>
+      
+   <div id="worsethan">
+	<hr>
+        MAE: You're one to talk! If you knew what was good for you'd be out of the city by now.<br><br>
+        ROSIE: You're wrong Mae, the city is the <b>only</b> safe place right n...<br><br>
+        <i>Mae shushes an indignant Rose with an equally indignant left hand and hurries to the corner.  <a rel="shushnow">She turns on the radio.</a></i><br><br>
+   </div>
+   <div id="shushnow">
+	<hr>
+        RADIO: ...NOT PANIC.  RESIDENTS OF PUMPKIN FALLS ARE ADVISED TO SEEK SHELTER AT NEARBY FORT ACORN AND AWAIT THE EVACUATION TEAMS.  REPEAT: DO NOT PANIC...<br><br>
+        <b>CLICK</b>.  <i>Mae turns off the radio.</i><br><br>
+        MAE: There, see? They've crashed some sort of experimental weather balloon and the city is being evacuated just in case.<br><br>
+        ROSIE: Surely you don't believe the hooey about the weather balloon...<br><br>
+        <i>Mae gives a start as she realizes that <a rel="heisarmed">Albert is heavily armed.</a></i><br><br>
+   </div>
+   <div id="heisarmed">
+	<hr>
+        MAE: Um.  You can leave those behind dear.  You've been fidgety about weapons ever since you got back from the war.<br><br>
+        ROSIE: Albert is just fine, now Mae.  He was debriefed and discharged with honours years ago, the nightmares hardly happen at all these days.  And we're going to need those.<br><br>
+        <i>Albert is looking back and forth <a rel="confusedly">between Rose and Mae confusedly.</a></i><br><br>
+   </div>
+   <div id="confusedly">
+	<hr>
+        ALBERT: Clearly, this squabbling is getting us nowhere.  I shall make a Command Decision.<br><br>
+        <i>He looks again at Rose, who wants to <a rel="headtown">head into town.</a></i><br><br>
+        <i>Then again at Mae, who is going <a rel="fortacorn">to Fort Acorn.</a></i><br><br>
+   </div>
+      
+   <div id="fortacorn">
+	<hr>
+        ALBERT: We're heading to Fort Acorn.  The Leader has spoken.<br><br>
+        MAE: There's my smart little sonny boy!  Mama always knows best.<br><br>
+        <i>Mae takes Albert by the hand and leads him out the front door.</i><br><br>
+        <i>Rosie groans and follows them out.</i><br><br>
+        ROSIE: <a rel="unbelieve">Unbelievable</a>...<br><br>
+   </div>
+      
+   <div id="recap_fortacorn">
+	<hr>
+        <i><b><small><font style="color: green;">Previously On BITE! BITE! BIRDIE!...</font></small></b></i><br><br>               
+        ALBERT: We're heading to Fort Acorn.  The Leader has spoken.<br><br>
+        MAE: There's my smart little sonny boy!  Mama always knows best.<br><br>
+        <i>Mae takes Albert by the hand and leads him out the front door.</i><br><br>
+        <i>Rosie groans and follows them out.</i><br><br>
+        ROSIE: <a rel="unbelieve">Unbelievable</a>...<br><br>
+   </div>
+
+   <div id="unbelieve">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene I Branch 4/4:<br><b><i>The Fort End of the Stick</i></b><br><br>
+    <a rel="tothefort"><b>You may continue</b></a>, scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+
+   <div id="headtown">
+	<hr>
+        ALBERT: We're heading into town.  The Leader has spoken.<br><br>
+        <i>Outraged, Mae blocks the way to the door.</i><br><br>
+        MAE: Oh no you don't, Rose! I'm not losing my boy to you again!<br><br>
+        ROSIE: Really Mae?<a rel="reallyreally">Really?</a><br><br>
+   </div>
+   <div id="reallyreally">
+	<hr>
+        <b><a rel="reallyclang">CLANG!</a></b><br><br>
+   </div>
+   <div id="reallyclang">
+	<hr>
+        <i>Mae drops like a stone, a second lump swelling on her forehead.</i><br><br>
+        <i>Rose drags her into the bathroom and locks the door from the outside.</i><br><br>
+        <i>Albert is speechless.</i><br><br>
+        ROSIE: Trust me Albert, she'll be safer in there.  We'll come back for  her later.<br><br>
+        <i>Rose heads out the door, Albert follows slowly.</i><br><br>
+        ALBERT: Well, uh, now that The Leader has spoken...<a rel="whereexactly"> where exactly are we going Rose?</a><br><br>
+   </div>
+   <div id="whereexactly">
+	<hr>
+        <i>Rose looks back at Albert.</i><br><br>
+        ROSIE: Get the lead out Albert, we need to high-tail it to City Hall!<br><br>
+        ALBERT: ...Got it.  City Hall.<br><br>
+        ROSIE: And whatever you do Albert, <a rel="avoidteams">avoid the Evacuation Teams!</a><br><br>
+   </div>
+   
+   <div id="recap_whereexactly">
+	<hr>
+        <i><b><small><font style="color: green;">Previously On BITE! BITE! BIRDIE!...</font></small></b></i><br><br>               
+        <i>Rose looks back at Albert.</i><br><br>
+        ROSIE: Get the lead out Albert, we need to high-tail it to City Hall!<br><br>
+        ALBERT: ...Got it.  City Hall.<br><br>
+        ROSIE: And whatever you do Albert, <a rel="avoidteams">avoid the Evacuation Teams!</a><br><br>
+   </div>
+
+   <div id="avoidteams">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene I Branch 3/4:<br><b><i>A City Way To Spend the Day</i></b><br><br>
+    <a rel="cityway"><b>You may continue</b></a>, scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+
+      
+   <div id="barricade">
+	<hr>
+	ROSIE: Quick! Nail those chairs to the door frame!  Wait, what was that...?<br><br>
+	<i>Another flash of crimson light, and a shapeless mass attached to a solitary rocket skate tumbles down the stairs into the room and lies still.</i><br><br>
+	ALBERT: Rosie...is that...is that who...is that what I think it is???</a><br><br>
+	ROSIE: Downstairs! <a rel="zombiealbert">Downstairs now!</a><br><br>
+   </div>
+
+   <div id="zombiealbert">
+	<hr>
+	<i>The mass unfurls itself and a hand reaches out and grabs Albert's ankle before he can move.</i><br><br>
+	ZOMBIE ALBERT: GrraAAAAAAGghgkakkk...<br><br>
+	REGULAR ALBERT: I feel strangely conflicted about this...<br><br>
+	<i>In a flash, Albert <a rel="overandout">raises his machete</a> over his shoulder.</i><br><br>
+   </div>
+
+   <div id="overandout">
+    <h1><small> </small></h1>
+    <i>Many years ago, Albert escaped from a POW camp armed with only a machete and a semiautomatic handgun.  Think he's still got what it takes? Stay tuned!</i><br><br>
+    Congratulations! You have completed Prologue 3/4 and unlocked:<br><b><i>Pave Paradox and Put up a Parking Lot.</i></b><br><br>
+    <a rel="paveparadox"><b>You may continue</b></a>, scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+      
+   <div id="paveparadox">
+	<hr>
+        <b>WOOSH-CHOK!</b><i> A surprisingly graceful slash sends a pale, slimy head sliding across the floor.</i><br><br>
+	REGULAR ALBERT: It looks just like me...<br><br>
+        <i>The head rolls its eyes gnashes its teeth viciously.</i><br><br>
+        ZOMBIE ALBERT HEAD: Gnash! Gnash! Gnash!<br><br>
+        ROSIE: It is you Albert.  Or another you, anyway.<br><br>
+        <i><a rel="archeye">Albert arches his eyebrow at Rose.</a></i><br><br>
+   </div>
+
+   <div id="archeye">
+	<hr>
+	ALBERT: Duplicate Alberts can only mean one thing Rose.<br><br>
+        <i>Rose blinks at him innocently.</i><br><br>        
+        ROSIE: Hmmm?<br><br>
+	ALBERT: You've been using the Time Skates again, haven't you?<br><br>
+        ROSIE: ...<br><br>
+	ALBERT: Rosie, you promised me it was the last time!<br><br>
+        ROSIE: <a rel="lasttimep">But Albert...</a><br><br>
+   </div>      
+      
+   <div id="lasttimep">
+	<hr>
+	ALBERT: No "Buts" Rose.  I'm disappointed.<br><br>
+        ROSIE: You don't understand Albert! It was necessary this time.<br><br>
+	ALBERT: Oh? Like the time you said you were going to warn yourself about that speeding ticket?<br><br>
+        ROSIE: No, not like that...<br><br>
+        ALBERT: You think I didn't notice that the next day someone discovered a Rennaissance painting of a woman <a rel="wholookslike">who looks just like you?</a><br><br>
+   </div>      
+
+      
+   <div id="wholookslike">
+	<hr>
+        ROSIE: It's different this time, Albert! It's necessary!<br><br>        
+        ALBERT: Time travel is never necessary Rose.  The Professor asked us to keep those skates safe until he got back - <b>not</b> to use them.<br><br>
+        ROSIE: Are you saying that you want to end up like that?<br><br>
+        <i>Rose gestures at the rotting head rocking on the ground nearby.</i><br><br>        
+        ZOMBIE ALBERT HEAD: <a rel="ggg">Gnash! Gnash! Gnash!</a><br><br>
+   </div>
+      
+   <div id="ggg">
+	<hr>
+        ALBERT: Hmm.  Well I suppose it's alright this time.  Get it? This 'time'?<br><br>
+        ROSIE: <a rel="bugboo2">Not now Albert.</a><br><br>
+   </div>      
+      
+      
+   <div id="worldwarsquee">
+       <h1><small><small>A pitch black night, several desolate years later,...</small></small></h1>
+       BOOMING VOICE: You! You who dares approach Mount Macafee in the dead of night! Identify yourself!<br><br>
+       ALBERT: It's...uh...it's Albert J. Peterson.<br><br>
+       BOOMING VOICE: <a rel="business">State your business.</a><br><br>
+   </div>
+
+   <div id="business">
+	<hr>
+        ALBERT: Trading for supplies.<br><br>
+        BOOMING VOICE: Come back in the morning.  No commerce after curfew.<br><br>
+        ALBERT: Are you sure? I'm having a sale - fifty tortillas for a quart of water - they're selling fast?<br><br>
+        BOOMING VOICE: ...hmmm.  Actually yes, that's a very good deal.  <a rel="watertime">Kim? Light the walkway!</a><br><br>
+   </div>            
+
+   <div id="watertime">
+	<hr>
+        <i>Fire spreads across a gargantuan mound of foul tires, casting a rancid flicker in all directions.</i><br><br>
+        ALBERT: Thank you sir.<br><br>
+        <i>A makeshift drawbridge lowers and the imposing form of Mr. MacAfee carves a silhouette against the light of the ignited garbage.</i><br><br>
+        ALBERT: You won't regret this Mr. MacAfee, my tortillas are the best.<br><br>
+        MR MACAFEE: I do not know this Mr. MacAfee of whom you speak.  <a rel="emperor">I am Emperor Sullivan I</a>!<br><br>
+   </div>            
+      
+   <div id="emperor">
+	<hr>
+        ALBERT: Of course, Emperor, of course.<br><br>
+        EMPEROR SULLIVAN: Now, about those tortillas...<br><br>
+        ALBERT: Right here.  No need to count them.  <a rel="haggle">Two hundred tortillas for one gallon of water.</a><br><br>
+   </div>            
+   <div id="haggle">
+	<hr>
+        EMPEROR SULLIVAN: Thief! You said it would be fifty for one quart!<br><br>
+        ALBERT: That's the same price, Emperor.  It's...oh nevermind, how about if we count out four groups of fifty and four quarts?<br><br>        
+        EMPEROR SULLIVAN: Oh yes, I'm going to count them all twice.  And they had better be fresh.<br><br>
+        <i>The self-styled Emperor begins the laborious effort of counting tortillas in the dark.</i>        
+        <i>A barely noticeable shadow slips past him, across the drawbridge.</i><br><br>
+        <i><a rel="counting1">Albert watches it furtively</a>.</i><br><br>             
+   </div>            
+
+   <div id="counting1">
+	<hr>
+        <i>The counting continues.</i>   <br><br>     
+        <i><a rel="counting2">Minutes pass...</a></i><br><br>           
+   </div>            
+
+   <div id="counting2">
+	<hr>
+        <i>Alarm bells sound and Rosie comes careening across the drawbridge toward Albert.</i> <br><br>       
+        ROSIE: I have them Albert! Go-go-go!<br><br>
+        <i>Albert drops the sack of tortillas and runs after Rosie into the night.</i>                <br><br>
+        EMPEROR SULLIVAN: Treachery! I'll have your hide for this <a rel="counting3">Albert J. Peterson!</a><br><br>        
+   </div>            
+
+   <div id="counting3">
+	<hr>
+        <i>After five minutes of chase, Albert and Rosie are a little worse for the wear.</i><br><br>
+        ALBERT: I don't know how long we can run like this! Those MacAfees are much faster than I expected!<br><br>
+        ROSIE: You're right.  We have to hide.  And around here, there's only one option...<br><br>
+        ALBERT: Oh no.  Not there.<br><br>        
+        ROSIE: No choice, Albert.  We either <a rel="cannibals">end up on Sullivan's dinner table</a>, or <a rel="icehouse">we hide in the Ice House.</a><br><br>
+   </div>            
+
+   <div id="recap_counting3">
+	<hr>
+        <i><b><small><font style="color: green;">Previously On BITE! BITE! BIRDIE!...</font></small></b></i><br><br>       
+        <i>After five minutes of chase, Albert and Rosie are a little worse for the wear.</i><br><br>
+        ALBERT: I don't know how long we can run like this! Those MacAfees are much faster than I expected!<br><br>
+        ROSIE: You're right.  We have to hide.  And around here, there's only one option...<br><br>
+        ALBERT: Oh no.  Not there.<br><br>        
+        ROSIE: No choice, Albert.  We either <a rel="cannibals">end up on Sullivan's dinner table</a>, or <a rel="icehouse">we hide in the Ice House.</a><br><br>
+   </div>            
+      
+   <div id="cannibals">
+	<hr>
+        <i>Note from the author: you didn't really think that you could choose to be cannibalized did you? That was just a joke.  <a rel="icehouse">Hide in the Ice House.</a></i> <br><br>       
+   </div>            
+      
+      
+   <div id="icehouse">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene I Branch 1/4:<br><b><i>Ice, House, Baby!</i></b><br><br>
+    <a rel="aftericehouse"><b>You may continue</b></a>, scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+
+    <div id="aftericehouse">
+        <i>The air in the ice house is moist and frigid.  Rose and Albert can barely see their own feet as they descend the steps.</i><br><br>
+        ALBERT: Do you think he saw us head this way?<br><br>
+        ROSIE: Only if he can see in the dark.  But keep quiet, he can't be far.<br><br>
+        ALBERT: Please tell me <a rel="stillhaveem">you still have them</a>!<br><br>        
+    </div>            
+
+    <div id="stillhaveem">
+	<hr>	  
+        <i>Rose pats her satchel confidently.</i><br><br>
+        ROSIE: Safe and sound, if a tad shook up.<br><br>
+        <i>Albert fumbles in his pockets and retrieves a paper packet of matches.</i><br><br>
+        ROSIE: There's usually a lamp by the far door.  Keep it covered.<br><br>
+        ALBERT: I know, I know...I just want to be sure <a rel="onlyones">we're the only ones hiding in here.</a></a><br><br>        
+    </div>            
+
+
+    <div id="onlyones">
+	<hr>	  
+        <i>Albert shakily strikes the match on the stubble of his jaw.  The lamp coughs.  A palid puddle of light oozes out from beneath it, spilling acros the floor and quickly dripping away into foreboding corners and crevices nearby.</i><br><br>
+        ALBERT: I can see my breath more clearly than my hands but it's better than nothing.<br><br>
+        <i>Albert gropes his way along the wall back toward the stairwell.</i><br><br>
+        ALBERT: Take my hand, would you Rose? The floor is slippery.<br><br>
+		<i>Rose extends her hand toward Albert's shambling shadow as <a rel="shambshad">her eyes adjust to the gloom.</a></i><br><br>
+    </div>            
+
+    <div id="shambshad">
+	<hr>
+        ROSIE: Be careful not to trip, there's junk scattered everywhere.  Someone was here recently.<br><br>
+        ALBERT: Oh, yes - I see it now.  <a rel="thanksstep">Thanks.</a><br><br>
+    </div>            
+
+    <div id="thanksstep">
+	<hr>	  
+        <i>Albert proceeds to step gingerly over the dessicated face of <a rel="hihugo">Hugo Peabody...</a></i><br><br>
+    </div>            
+
+    <div id="hihugo">
+	<hr>	  
+        ALBERT: AIEEEEE! That's not junk, Rose - that's a punk...</a><br><br>
+        ROSIE: I thought something stunk!<br><br>
+        ALBERT: He appears <a rel="doghugo">chained to that trunk</a>...</a><br><br>
+    </div>            
+
+    <div id="doghugo">
+	<hr>
+		ROSIE: Is he a zombie or just dead?<br><br>	
+	    <i>Albert is discinclined to <a rel="leancloser">lean closer</a> and check.  He considers <a rel="ignorequestion">ignoring the question</a> and returning to the stairwell.</i><br><br>
+    </div>            
+
+    <div id="ignorequestion">
+	<hr>
+        ALBERT: Nah.  What I don't know can't hurt me.</a><br><br>
+		<i>Rose is dumbfounded.</a></i><br><br>		
+        ROSIE: You're so right Albert.  It can't hurt you.  It can only eat you alive and/or turn you into a ravenous revenant.<br><br>
+        ALBERT: <a rel="mcaffee">My thoughts exactly!</a></a><br><br>
+    </div>            
+
+    <div id="leancloser">
+	<hr>
+        <i>Albert squints his eyes and leans in <a rel="leancloser2">for a closer look.</a></i><br><br>
+    </div>
+	
+    <div id="leancloser2">
+	<hr>
+        <i>Hugo snares Albert's necktie in a grasping claw and snaps at his face with a menacing growl!</i><br><br>
+        ALBERT: WHY THE HELL DID YOU ASK ME TO DO THIS ROSE?<br><br>
+		ROSIE: WHY THE HELL ARE YOU WEARING A NECKTIE?<br><br>
+		<i>Rose decisively draws a ball peen hammer and <a rel="leapfray">leaps into the fray.</a></i><br><br>				
+    </div>
+
+    <div id="leapfray">
+	<hr>
+        <i>Albert twists Hugo up into a half nelson but gesticulates wildly at Rose.</i><br><br>
+        ALBERT: Wait Rose, don't do it!<br><br>
+		ROSIE: I love you Albert but you are out of your mind, get clear!<br><br>
+		ALBERT: Don't do it! He's <a rel="heshuman">alive</a>!<br><br>
+    </div>
+
+    <div id="heshuman">
+	<hr>
+        HUGO: Am not! I'm a zombie! RAWR!<br><br>
+		<i>She lowers her hammer.</i><br><br>		
+		ROSIE: Oh my lord, how did you know?<br><br>
+		ALBERT: See his breath? It's hot! <a rel="heshuman2">Hugo is human</a>.<br><br>
+    </div>
+
+    <div id="heshuman2">
+	<hr>
+	    <i>With a rapid whirl, Hugo torques his shoulders and Albert sails into the air.  Albert <a rel="heshuman3">lands lightly on his feet</a> with the reflexes of a cat.</i><br><br>			
+    </div>
+
+    <div id="heshuman3">
+	<hr>
+	    <i>And then, flailing his arms and legs wildly, Albert crashes to the floor with the reflexes of a cat who just landed on a <a rel="heshuman4">patch of ice and lamp oil</a>.</i><br><br>
+    </div>
+
+    <div id="heshuman4">
+	<hr>
+        HUGO: You're not the only one who learned some tricks during the war, Peterson! Now get out - we don't want your kind nesting here.<br><br>
+		ALBERT: What are you talking about, Hugo? We're the same kind!<br><br>
+        HUGO: You too, Rose.  No humans allowed in the Ice House unless we're keeping you chilled for later.  This is Zombie Turf!<br><br>
+		ROSIE: "Zombie turf?" Little man, <a rel="heshuman5">there is something very wrong with you</a>.<br><br>
+    </div>
+
+    <div id="heshuman5">
+	<hr>
+	    <i>Hugo takes a swing at Rosie.  The chain around his neck jerks him backward.  Rosie notices he is missing two fingers from each hand.</i><br><br>
+            ROSIE: Hugo, what happened to your fingers?<br><br>
+	    <i>Hugo does not reply.  He points at Rose's satchel.</i><br><br>
+            HUGO: <a rel="isthatit">Is that what I think it is</a>?<br><br>
+    </div>
+
+    <div id="isthatit">
+	<hr>
+	    <i>A scratching and scrabbling at the door interrupts the conversation.  Hugo grins.</i><br><br>
+            HUGO: Hold that thought Rose.  Honey, come on down! You'll never guess who stopped by for dinner!<br><br>
+            ROSIE: Albert, can you still <a rel="stillwt">war trance</a>?<br><br>
+    </div>
+
+    <div id="stillwt">
+	<hr>
+            ALBERT: Not like I used to Rose, not for a year or more.<br><br>
+            ROSIE: THEN BAR THE DOOR! IT'S HER! IT'S BEEN HER ALL ALONG! FROM THE VERY BEGINNING!<br><br>
+	    <i>Albert dashes toward the steps, but Hugo trips him and wraps the <a rel="wrapit">chain around his neck</a>.</i><br><br>
+    </div>
+
+    <div id="wrapit">
+	<hr>
+	    <i>Seconds crawl by.  The door creeks open.  Hugo breaks the silence.</i><br><br>
+            HUGO: You'll be so proud of me, Kim - <a rel="hugodone">I caught a big one this time!</a><br><br>
+    </div>
+
+      
+   <div id="hugodone">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene II Branch 3/6:<br><b><i>Hugo Girl!</i></b><br><br>
+    Scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+
+    <div id="mcaffee">
+	<hr>
+        <i>Unfortunately, Albert catches his foot in Hugo's chain and skids back across the slippery floor.</i><br><br>
+        <i>He crashes against a stack of crates, <a rel="tumble">which tumble rapidly toward the far wall...</a>.</i><br><br>
+    </div>            
+	
+    <div id="tumble">
+	<hr>        
+        <i>...knocking the lamp from its perch.  The blaze grows quickly and the room fills with smoke and flame.</i><br><br>
+        <i>Hugo starts to cough.</i><br><br>
+        HUGO: What in the blazes have you done?<br><br>
+        ALBERT and ROSIE: AAAAIIEEEEE!!! <a rel="hesaliveok">You're alive?</a><br><br>
+    </div>            
+
+    <div id="hesaliveok">
+	<hr>        
+        HUGO: Not for long if we can't do something about this chain!<br><br>
+        <i>Hugo tugs pathetically at the chain around his neck.</i><br><br>
+        ROSIE: I have just the thing!<br><br>
+        <i>Rosie draws a ball peen hammer and goes to work on the chain.  <a rel="chaingone">Seconds later, Hugo is free.</a></i><br><br>
+    </div>            
+
+    <div id="chaingone">
+	<hr>        
+        ALBERT: Now, let's get out of here!<br><br>
+        ROSIE: Easier said than done.  If Emperor Sullivan didn't know where we were before, he's seen the smoke by now...<br><br>
+        ALBERT: We must chance it Rose.  <a rel="chanceit">We can't stay down here much longer.</a><br><br>
+    </div>            
+      
+    <div id="chanceit">
+	<hr>        
+        <i>But, from outside the door...</i><br><br>
+        EMPEROR SULLIVAN I: Fee! Fi! Fo! Fum! I smell the blood of a Peterson!<br><br>
+        ALBERT: On second thought, I think I'll take a nap.  There are worse ways to go...<br><br>
+        HUGO: No, there's another way out. There are tunnels beneath the Ice House for easy access to the underground wells.<br><br>
+        <i><a rel="downthewell">Hugo points at the trap door.</a></i><br><br>
+    </div>            
+
+    <div id="downthewell">
+	<hr>        
+        <i>The group descends and is lost underground for over an hour, but eventually the tunnels curve toward the surface and they emerge into the midst of a frigid swamp.</i><br><br>
+        ROSIE: I don't hear MacAfee, I think we lost him for now.<br><br>
+        ALBERT: Good enough for me.  Hugo, you saved our lives.  <a rel="thanksboy">Thank you.</a><br><br>
+    </div>            
+
+
+      
+    <div id="thanksboy">
+	<hr>        
+        <i>Albert's gratitude is met by silence.</i><br><br>
+        ROSIE: Hugo? Where are you?<br><br>
+        ALBERT: I think he's gone Rose!<br><br>
+        <i>Rose puts her hand to her shoulder and feels a flush of panic rise to greet the chilly breeze blowing off surface of the bog.</i><br><br>
+        ROSIE: <a rel="notjusthim">Not just him, Albert</a>...<br><br>
+    </div>            
+
+      
+    <div id="notjusthim">
+	<hr>        
+        ROSIE: I don't have the satchel, Albert.  <a rel="hugotook">Hugo took the Time Skates</a>!<br><br>
+    </div>            
+
+    <div id="hugotook">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene II Branch 4/6:<br><b><i>Must Hugo So Soon?</i></b><br><br>
+    Scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+
+    <div id="eatwhoyoumeet">
+        <b>Current Horde Strength: 3</b><br><br>
+        The starving Peterson crew chances upon a pair of lovebirds engaging in a moonlight swim.  <a rel="seafood">Seafood is the order of the evening.</a><br><br>
+    </div>            
+
+    <div id="seafood">
+	<hr>        
+        <b>Current Horde Strength: 5</b><br><br>
+        Burnt out lampposts make for great zombie climbing practice.  A fresh faced group of newly recruited soldiers forgets to look up.  <a rel="gamey">Basic training leaves the flesh a tad gamey, but it'll do.</a><br><br>
+    </div>            
+
+    <div id="gamey">
+	<hr>        
+        <b>Current Horde Strength: 11</b><br><br>
+        A father of four is changing a flat tire in the pouring rain while his wife and children shiver in their ancient Buick.  <a rel="yummy">Beef and veal in the same meal.  Yum.</a><br><br>
+    </div>            
+      
+    <div id="yummy">
+	<hr>        
+        <b>Current Horde Strength: 17</b><br><br>
+        A double feature at the town drive-in. <a rel="findpeople">Dagnabbit! The concessions stand is fresh out of human organs - where can we find some at this time of night?</a><br><br>
+    </div>            
+
+    <div id="findpeople">
+	<hr>        
+        <b>Current Horde Strength: 34</b><br><br>
+        Anachronistically gothy teens in black poodle skirts and Omega letter jackets are holding a seance at the town cemetery. <a rel="theyasked">  Okay.  These kids are literally asking for it.</a><br><br>
+    </div>            
+      
+    <div id="theyasked">
+	<hr>        
+        <b>Current Horde Strength: 45</b><br><br>
+        <i>Not bad, but not nearly enough to capture Fort Acorn yet.</i><br><br>
+        <i>Don't worry.  <a rel="youngnight">The night is young.</a></i><br><br>
+    </div>            
+      
+   <div id="youngnight">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene II Branch 6/6:<br><b><i>A Great Way to Meat People</i></b><br><br>
+    Scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+            
+
+    <div id="cityway">
+        <i>The streets of Pumpkin Falls are swarming with soldiers.  A dark green Humvee speeds by carrying a quartet of young men swathed head-to-town in thick green plastic suits.</i><br><br>
+        ROSIE: There are more here than I expected; something has changed...<br><br>
+        <i>Albert pulls Rosie into an alley as a search light beam blazes across their path.</i><br><br>
+        ALBERT: I very much look forward to your <i>detailed</i> account of what you know, how you know it...<br><br>
+        <i>He glances at his weapons, <a rel="followlead">currently tucked into his belt.</a></i><br><br>
+    </div>            
+
+    <div id="followlead">
+	<hr>
+        ALBERT: ...and where these came from.  But you may want to follow my lead for just a few minutes.<br><br>
+        <i>The duo presses their backs to the wall and hold their breaths while a sentry marches past the alleyway entrance.</i><br><br>
+        ALBERT: This is not my first rodeo.<br><br>
+		ROSIE: Gotcha, Albert.  By <a rel="takepoint">all means, take point</a>.<br><br>
+    </div>            
+
+    <div id="takepoint">
+	<hr>
+        <i>Albert continues.</i><br><br>
+        ALBERT: I'm the veritable legend of survival, evasion, resistance and escape.<br><br>
+		ROSIE: I know, honey.  I'm <a rel="rightbehind">right behind you</a>.<br><br>
+    </div>            
+
+    <div id="rightbehind">
+	<hr>
+        <i>It appears he isn't listening.  To her voice, at least.</i><br><br>
+        ALBERT: Wanna know how I escaped that camp? Raw instinct.  I'd say watch and learn, but it doesn't work that way.  You've either got it, or you don't.<br><br>
+        <i>Rose's countenance begins to harden.</i><br><br>
+		ROSIE: Less talk, more survive-and-evade dear.  <a rel="pleasego">Please.</a><br><br>
+    </div>            
+
+    <div id="pleasego">
+	<hr>
+        ALBERT: See? That's what I mean.  Patience is key Rose.  Patience.<br><br>
+        <i>Rose closes her eyes and takes a deep breath.</i><br><br>
+		ALBERT: A false step? An ill-considered blink? A <a rel="soldiervoice">single careless sound</a>...</a><br><br>
+    </div>            
+
+    <div id="soldiervoice">
+	<hr>
+        SOLDIER: Halt! Who goes there!<br><br>
+		ALBERT: ...and all is lost.  Hey, did you hear something?</a><br><br>
+        <i>Rose's horrified eyes dart from Albert to the encroaching submachine-gun-toting shadow.</i><br><br>
+        SOLDIER: <a rel="identifyyou">Identify yourself</a>!<br><br>
+    </div>
+
+    <div id="identifyyou">
+	<hr>
+        <i>Albert looks startled, but foolishly calm.</i><br><br>		
+		ALBERT: Who, me? I'm Albert.  Albert. J. Peterson, sir.<br><br>
+        <i>The soldier takes one hand off of his gun and <a rel="radioreach">reaches for his radio.</a></i><br><br>
+    </div>
+
+    <div id="radioreach">
+	<hr>
+        <i>Rose <a rel="headbutts">headbutts Albert in the face</a>!</i><br><br>
+    </div>
+
+    <div id="headbutts">
+	<hr>
+        <i>Albert's eyes roll back into his head and he falls completely silent.  He doesn't even turn <a rel="turntohim">toward the soldier</a>.</i><br><br>	
+    </div>
+
+    <div id="turntohim">
+	<hr>
+        <i>In the time it takes Albert's left ear to twitch, the enemy is out cold on the ground and Albert is pulling the M-16 off of his body and engaging the safety.</i><br><br>	
+        <i>He blinks a few times and <a rel="heblinks">looks up at Rose</a> suspiciously.</i><br><br>	
+    </div>
+
+    <div id="heblinks">
+	<hr>
+		ALBERT: Did you trigger my war trance, Rose? I can taste blood in my mouth - you could have at least warned me...<br><br>
+		ROSIE: I know! I hated to do it honey, but we needed your war trance - he would have killed us or worse!<br><br>
+        <i>A commotion echoes into the alleyway.  The thud of combat boots mounts an aural assault.</i><br><br>	
+		ALBERT: I see your point.  We'll <a rel="cutacross">cut across the grounds</a> of Pumpkin Falls High and head to City Hall from there.<br><br>
+    </div>
+
+    <div id="cutacross">
+	<hr>
+		ROSIE: There's a fallout shelter under City Hall, if we can just make it through the night I know I can fix this!<br><br>
+        <i>Albert stops and glares at Rose.</i><br><br>	
+		ALBERT: No, we are going to City Hall to speak to the Mayor and offer our assistance.  Rose, under no circustances shall I permit you to use time travel.  Understand?<br><br>
+        <i>Rose arches an eyebrow at her dearest husband.</i><br><br>	
+		ROSIE: <a rel="permithoney">"Permit," my love?</a><br><br> 
+    </div>
+
+    <div id="permithoney">
+	<hr>
+		ALBERT: That's right.  Promise me.<br><br>
+        <i>Rose crosses her fingers behind her back.</i><br><br>	
+		ROSIE: <a rel="fineipromise">I promise.</a><br><br>
+    </div>
+
+    <div id="fineipromise">
+	<hr>
+		ALBERT: We'll find the Mayor.  He'll know what to do.<br><br>
+        <i>The pair hurry down the alley and turn a corner.  As luck would have it, they come <a rel="facetoface">face to face with the Mayor</a>!</i><br><br>
+    </div>
+
+    <div id="facetoface">
+	<hr>
+        <i>Well, most of the Mayor anyway.  He has a lot less flesh than they remember him having.  And gaping cavities where his stomach and bowels used to be.</i><br><br>
+        ALBERT: He still drips about the same amount of drool though.<br><br>
+        <i>Yes.  <a rel="drooly">Yes he does.</a></i><br><br>
+    </div>
+
+    <div id="drooly">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene II Branch 5/6:<br><b><i>Night Mayor On Elm Street</i></b><br><br>
+    Scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+      
+      
+    <div id="tothefort">
+                <i>The trenchant triad sets out for the corner bus station at a brisk pace.</i><br><br>	
+		MAE: All of the buses are serving as express shuttles to Fort Acorn all night.  We'll be there in no time at all.<br><br>
+                ROSIE: <i>(whispering hurriedly)</i> You don't understand Albert - Fort Acorn is where this whole mess started! I'm sure of it...<br><br>
+                MAE: What's that, Rhubarb? I didn't hear you.<br><br>
+                ALBERT: How are you so sure, Rose? The radio broadcast <a rel="safethere">says it's safe there</a>.<br><br>
+    </div>
+
+    <div id="safethere">
+	<hr>
+        <i>Rose fixes Mae with an icy stair.</i><br><br>
+        ROSIE: What did you just call me, Mae?<br><br>
+        ALBERT: Oh, for crying out loud - don't you two even start.<br><br>
+        <i>Mae just keeps on prattling.</i><br><br>
+        MAE: See? There's the <a rel="weatherballoon">weather balloon right there.</a>
+    </div>
+
+    <div id="weatherballoon">
+	<hr>
+        ROSIE: That's not a weather balloon, dear.<br><br>
+        ALBERT: She's right Ma, that's a quarantine tent.  Wow - they've covered the whole bus station!<br><br>
+        MAE: Excuse me, young man! We're looking for the shuttle to Fort Acorn.<br><br>
+        SOLDIER ON GUARD: The line is <a rel="justinside">just inside this door</a>, ma'am.<br><br>
+    </div>
+      
+    <div id="justinside">
+	<hr>
+        <i>The guard moves the "door" - a heavy, plastic curtain - to the side as they enter and get in line.</i><br><br>
+        CLERK: Name?<br><br>
+        FIRST IN LINE: Hello Mr. Desk Clerk - this is Harvey Johnson.<br><br>
+        CLERK: City of residence?<br><br>
+        HARVEY: Pumpkin Falls.<br><br>
+        CLERK: Please step through the red door on the left sir.<br><br>
+        <i>Harvey complies, and <a rel="moveline">the line moves forward.</a></i><br><br>
+    </div>
+
+    <div id="moveline">
+	<hr>
+        CLERK: Name?<br><br>
+        SECOND IN LINE, A COUPLE: Mr. and Mrs. Martin Merkle.<br><br>
+        CLERK: City of residence?<br><br>
+        MR. MERKLE: Gourd Straits.<br><br>
+        CLERK: Yellow door, shuttle leaves in eight minutes.<br><br>
+        <i>Meanwhile, a gunshot rings out from behind the red door, <a rel="wetthud">followed by a wet thud</a>.</i><br><br>
+    </div>
+
+    <div id="wetthud">
+	<hr>
+        <i>The wait continues for half an hour.  Albert and Rosie are whispering to each other, while Mae obliviously hums to herself.</i><br><br>        
+        ROSIE: I counted four from Gourd Straits, twelve from Butterburg, all sent to the yellow door....<br><br>
+        ALBERT: Twenty five from Pumpkin Falls, red door all of them...<br><br>
+        ROSIE and ALBERT TOGETHER: ...and twenty five gunshots.<br><br>
+        CLERK: Next.<br><br>
+        ROSIE: <a rel="stationalive">It's our turn, Albert!</a>
+    </div>
+      
+    <div id="stationalive">
+	<hr>
+        CLERK: Name?<br><br>
+        ALBERT: Mr. and Mrs. Albert J. Peterson.<br><br>
+        CLERK: City of residence?<br><br>
+        <i>Decision time Albert.  <a rel="truthcity">Tell the truth</a> or <a rel="liecity">lie through your teeth</a>?</i><br><br>        
+    </div>
+      
+    <div id="truthcity">
+	<hr>
+        ALBERT: Pumpkin Falls.<br><br>
+        CLERK: Red door.<br><br>
+        ROSIE: I hope you know what you're doing, Albert.<br><br>
+        ALBERT: So do I.<br><br>
+        <i>Albert and Rosie step through the red door, with Mae hurrying behind them.</i><br><br>        
+        MAE: <a rel="waitformenow">Wait for me</a>!<br><br>
+    </div>
+
+    <div id="waitformenow">
+	<hr>
+        <i>As expected, the room is piled high with the corpses of Pumpkin Falls' best and brightest.</i><br><br>        
+        MAE: ...you know on second thought I'm not actually from Pumpkin Falls.  See ya!<br><br>
+        <i>May fiddles with the door but finds that it is sealed from the inside.</i><br><br>
+        ARMED SOLDIER: Well, well well.  <a rel="smallworldeh">Small world, eh Petersons</a>?<br><br>
+    </div>
+
+    <div id="smallworldeh">
+	<hr>
+        ALBERT: Randy? Little Randolph MacAfee?<br><br>
+        RANDY: That's Lieutenant MacAfee to you.  You know, usually I hate decontamination duty.  This time, not so much...<br><br>
+        ALBERT: Please, <a rel="takeiteasy">take it easy Lieutenant</a>!<br><br>
+    </div>
+
+    <div id="takeiteasy">
+	<hr>
+        LT. MACAFEE: Everything was fine until you came to town! You ruined everything! Kim ran away and disappeared!<br><br>
+        ALBERT: I'm sorry son, I'm sorry for everything...<br><br>
+        LT. MACAFEE: Mother lost herself to the ravages of an Ed Sullivan Show Rerun!<br><br>
+        ALBERT: <a rel="edrerun">Wait, did you say a single rerun?</a>?<br><br>
+    </div>
+
+    <div id="edrerun">
+	<hr>
+        LT. MACAFEE: The same episode over and over and over again, all day, every day! I swore on my father's grave I'd get revenge!<br><br>
+        ALBERT: Your father is dead?<br><br>
+        LT. MACAFEE: No, of course not.  He had his grave dug early to make sure we know how to tend it properly.<br><br>
+        ALBERT: <a rel="graveearly">You don't have to do this, son.</a><br><br>
+    </div>
+
+    <div id="graveearly">
+	<hr>
+        LT. MACAFEE: Oh yes, yes I do.  For more reasons than you know.  Ladies first!<br><br>
+        <i>Lieutenant Randolph MacAfee takes aim at Mae.</i><br><br>        
+        ALBERT: I didn't want this, Randolph.<br><br>
+        <i>Albert bites his tongue hard and draws his machete.  <a rel="tranceagain">His eyes roll back into his head</a>.</i><br><br>
+    </div>
+
+    <div id="tranceagain">
+	<hr>
+        <i>Three rapid shots are fired, one at each target.</i><br><br>        
+        <i>Albert whips his blade in a smooth figure eight, gracefully deflecting the rounds in midair.  They whistle through the pliable plastic walls of the quarantine tent.  Warm air rushes in from outside.</i><br><br>
+        <i>With another whirl of motion, the young soldier's hand is <a rel="loppedoff">lopped off at the wrist</a>...</i><br><br>
+    </div>
+
+    <div id="loppedoff">
+	<hr>
+        <i>...or at least it would have been if the Lieutenant did not sidestep and clock Albert in the back of the head with the butt of his pistol.</i><br><br>        
+        LT. MACAFEE: You think I've never seen a war trance before? Father wakes up that way every morning!<br><br>
+        <i>The young man draws a machete of his own and <a rel="squareoff">squares off against Albert</a>.</i><br><br>
+    </div>
+
+    <div id="squareoff">
+	<hr>
+        <i>Suddenly the lights in the room fade to red and a siren starts to wail.  Randolph looks around confused.</i><br><br>        
+        LT. MACAFEE: We're compromised.  They smelled us.  How? This system is hermetically sealed...<br><br>
+        <i>He notices the three holes in the tent walls.</i><br><br>        
+        LT. MACAFEE: Oh.  <a rel="ohnoohno">Oh no...</a><br><br>
+    </div>
+
+    <div id="ohnoohno">
+	<hr>
+        <i>Putrid fingers appear in one of the perforations and begin to tear the wall to shreds.</i><br><br>        
+        <i>Something groaning, and grinning, and green starts to shoulder unsteadily through the tattered plastic.</i><br><br>        
+        <i>Albert, Mae, and Rosie freeze in place.  But Lieutenant Randolph MacAfee is the <a rel="mostf1">most frightened of all</a>.</i><br><br>        
+    </div>
+
+    <div id="mostf1">
+	<hr>
+        <i>His eyes bulge from their sockets.</i><br><br>        
+        LT. MACAFEE: <a rel="mostf2">...can it be...</a><br><br>        
+    </div>
+
+    <div id="mostf2">
+	<hr>
+        LT. MACAFEE: <a rel="mostf3">...is it really you...</a><br><br>        
+    </div>
+
+    <div id="mostf3">
+	<hr>
+        LT. MACAFEE: <a rel="mostf4">...is it really you, Kim?</a><br><br>        
+    </div>
+            
+   <div id="mostf4">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene II Branch 2/6:<br><b><i>The Real Kim Shady</i></b><br><br>
+    Scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+
+    <div id="liecity">
+	<hr>
+        ALBERT: Gourdburg!<br><br>
+        <i>The clerk eyes Albert warily.</i><br><br>        
+        CLERK: I'm sorry, what was that?<br><br>
+        ALBERT: I meant Gourd Straits!<br><br>
+        <i>The clerk eyes Albert again, wearily this time, and checks his watch.</i><br><br>        
+        CLERK: Yellow door, <a rel="nextshuttlego">the shuttle is leaving now</a>.<br><br>
+    </div>
+
+    <div id="nextshuttlego">
+	<hr>
+        <i>Albert and Rose hurry through the door and board the crowded transport.</i><br><br>                
+        ALBERT: This is more like a cattle truck than a city bus...<br><br>
+        DRIVER: Well pardon me, Your Majesty! Perhaps you'd like to go back and take the red door?<br><br>
+        ROSIE: You mean you'll let us off?<br><br>
+        DRIVER: <a rel="peelaway">Nope</a>.<br><br>
+    </div>
+      
+    <div id="peelaway">
+	<hr>
+        <i>As the shuttle peels toward the highway, <a rel="anothershot">another gunshot rings out</a>.</i><br><br>                
+    </div>
+      
+    <div id="anothershot">
+	<hr>
+        ALBERT: <a rel="weforgot">WE FORGOT MY MOTHER!</a><br><br>
+    </div>
+      
+   <div id="weforgot">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene II Branch 1/6:<br><b><i>Thou Are Well and Truly Trucked</i></b><br><br>
+    Scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+
+    <div id="matchmade">
+	<hr>
+        <i>Zombie Albert and Zombie Rosie creep up the stairs to find Mae Peterson fiddling with the radio.</i><br><br>
+        MAE: There you are you two! Next time leave the door unlocked, I had to break the window to get in.<br><br>
+        ZOMBIE ROSIE: <a rel="bitemae2">Grrrrahc gggg djiiii...</a><br><br>
+    </div>            
+
+    <div id="bitemae">
+	<hr>
+        MAE: You know very well I don't speak Spanish.  I haven't the faintest idea what you are saying.<br><br>        
+        ZOMBIE ROSIE: <a rel="bitemae2">BRACKGGJJQUAGNZ</a>!!<br><br> 
+    </div>            
+
+    <div id="bitemae2">
+	<hr>
+        <i>Zombie Rosie sinks her teeth into Mae's shoulder.</i><br><br>
+        MAE: That hurts! <a rel="achomp">What is wrong with you people?</a><br><br>
+    </div>            
+
+    <div id="achomp">
+	<hr>
+        <i>Zombie Albert chomps into her other shoulder.  It gets kinda grisly after that.  No need to <a rel="bitmae1">dwell on the details.</a></i><br><br>
+    </div>            
+
+    <div id="bitmae1">
+	<hr>
+        <i>Then, after a few <a rel="bitmae2">minutes of silence...</a></i><br><br>        
+    </div>            
+
+    <div id="bitmae2">
+	<hr>
+        ZOMBIE MAE: Brbrbrbrbrbrqueeeeeegrak!<br><br>
+        ZOMBIE ALBERT: Zzzhghghghghg.<br><br>
+        ZOMBIE ROSIE: THBKBKBKBBLBLBLBLB!?</a>!!<br><br> 
+        <i>The dysfunctional zombie trio shuffles out the front door and <a rel="intothenight">into the night.</a></i><br><br>
+    </div>            
+
+    <div id="recap_bitmae2">
+	<hr>
+        <i><b><small><font style="color: green;">Previously On BITE! BITE! BIRDIE!...</font></small></b></i><br><br>        
+        ZOMBIE MAE: Brbrbrbrbrbrqueeeeeegrak!<br><br>
+        ZOMBIE ALBERT: Zzzhghghghghg.<br><br>
+        ZOMBIE ROSIE: THBKBKBKBBLBLBLBLB!?</a>!!<br><br> 
+        <i>The dysfunctional zombie trio shuffles out the front door and <a rel="intothenight">into the night.</a></i><br><br>
+    </div>            
+
+   <div id="intothenight">
+    <h1><small> </small></h1>
+    Congratulations! You have found Scene I Branch 2/4:<br><b><i>Don't Forget to Try the Priest</i></b><br><br>
+    <b>BONUS! You've unlocked the mini-game: EAT WHO YOU MEET</b><br>
+    <a rel="eatwhoyoumeet"><b>You may continue</b></a>, scroll back up to try other choices, or <a rel="start_alt">display the main menu</a>.<br>
+    <h1><small> </small></h1>
+   </div>
+      
+  </div>
+     
+     
+  <div id="transcript">
+  <div class="turn">
+      Disclaimer: this work likely to appeal to a very limited audience.<br>
+  </div>
+  </div>
+
+  <!-- You shouldn't need to edit below this line. -->
+
+  <script type="text/javascript">
+var transcript = null;
+var templates = {};
+
+window.onload = function () {
+	transcript = document.getElementById("transcript");
+
+	//transcript.innerHTML = document.getElementById("start").innerHTML;
+	transcript.appendChild(render_content(get_elements("start")));
+	var links = transcript.getElementsByTagName("a");
+	setup_links(links);
+};
+
+function get_elements(ids) {
+        ids = ids.split(" ");
+        var elements = [];
+        for (var i = 0; i < ids.length; i++) {
+                var elt = document.getElementById(ids[i]);
+                if (elt) elements.push(elt);
+        }
+        return elements;
+}
+
+function render_content(elements) {
+	var turn = document.createElement("div");
+	turn.className = "turn";
+	for (var i = 0; i < elements.length; i++) {
+                var elt = elements[i];
+                if (!templates[elt.id])
+                        templates[elt.id] = Mold.bake(elt.innerHTML);
+                Mold.castAppend(turn, templates[elt.id]);
+	}
+	return turn;
+}
+
+function setup_links(links) {
+	for (var i = 0; i < links.length; i++) {
+		var a = links[i];
+		if (!a.href) a.href = "#"; else a.className = "external";
+		if (a.rel) a.onclick = function () {
+                        this.parentNode.replaceChild(this.firstChild, this);
+			var turn = render_content(get_elements(this.rel));
+			setup_links(turn.getElementsByTagName("a"));
+                        turn.style.opacity = 0;
+			transcript.appendChild(turn);
+			//transcript.lastChild.scrollIntoView();
+			smoothScrollTo(transcript.lastChild);
+                        emile(turn, "Opacity: 1;", {duration: 1000});
+			return false;
+		};
+	}
+}
+
+function clear_links() {
+        var links = transcript.getElementsByTagName("a");
+
+        for (var i = 0; i < links.length; ) {
+                var a = links[i];
+                if (a.rel)
+                        a.parentNode.replaceChild(a.firstChild, a);
+                else
+                        i++;
+        }
+}
+
+function clear_text() {
+        transcript.innerHTML = "";
+}
+
+// emile.js (c) 2009 Thomas Fuchs
+// Licensed under the terms of the MIT license.
+
+(function(emile, container){
+  var parseEl = document.createElement('div'),
+    props = ('backgroundColor borderBottomColor borderBottomWidth borderLeftColor borderLeftWidth '+
+    'borderRightColor borderRightWidth borderSpacing borderTopColor borderTopWidth bottom color fontSize '+
+    'fontWeight height left letterSpacing lineHeight marginBottom marginLeft marginRight marginTop maxHeight '+
+    'maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineWidth paddingBottom paddingLeft '+
+    'paddingRight paddingTop right textIndent top width wordSpacing zIndex').split(' ');
+
+  function interpolate(source,target,pos){ return (source+(target-source)*pos).toFixed(3); }
+  function s(str, p, c){ return str.substr(p,c||1); }
+  function color(source,target,pos){
+    var i = 2, j, c, tmp, v = [], r = [];
+    while(j=3,c=arguments[i-1],i--)
+      if(s(c,0)=='r') { c = c.match(/\d+/g); while(j--) v.push(~~c[j]); } else {
+        if(c.length==4) c='#'+s(c,1)+s(c,1)+s(c,2)+s(c,2)+s(c,3)+s(c,3);
+        while(j--) v.push(parseInt(s(c,1+j*2,2), 16)); }
+    while(j--) { tmp = ~~(v[j+3]+(v[j]-v[j+3])*pos); r.push(tmp<0?0:tmp>255?255:tmp); }
+    return 'rgb('+r.join(',')+')';
+  }
+
+  function parse(prop){
+    var p = parseFloat(prop), q = prop.replace(/^[\-\d\.]+/,'');
+    return isNaN(p) ? { v: q, f: color, u: ''} : { v: p, f: interpolate, u: q };
+  }
+
+  function normalize(style){
+    var css, rules = {}, i = props.length, v;
+    parseEl.innerHTML = '<div style="'+style+'"></div>';
+    css = parseEl.childNodes[0].style;
+    while(i--) if(v = css[props[i]]) rules[props[i]] = parse(v);
+    return rules;
+  }
+
+  container[emile] = function(el, style, opts, after){
+    el = typeof el == 'string' ? document.getElementById(el) : el;
+    opts = opts || {};
+    var target = normalize(style), comp = el.currentStyle ? el.currentStyle : getComputedStyle(el, null),
+      prop, current = {}, start = +new Date, dur = opts.duration||200, finish = start+dur, interval,
+      easing = opts.easing || function(pos){ return (-Math.cos(pos*Math.PI)/2) + 0.5; };
+    for(prop in target) current[prop] = parse(comp[prop]);
+    interval = setInterval(function(){
+      var time = +new Date, pos = time>finish ? 1 : (time-start)/dur;
+      for(prop in target)
+        el.style[prop] = target[prop].f(current[prop].v,target[prop].v,easing(pos)) + target[prop].u;
+      if(time>finish) { clearInterval(interval); opts.after && opts.after(); after && setTimeout(after,1); }
+    },10);
+  }
+})('emile', this);
+
+var Mold = {};
+
+// Evaluate something in a relatively clean environment, to prevent
+// name clashing.
+Mold.cleanEval = function(__string) {
+  return window.eval(__string);
+};
+
+(function() {
+  function splitTemplate(template) {
+    var parts = [];
+    function addString(string) {
+      if (string.length)
+        parts.push(string);
+    }
+
+    while (true) {
+      var open = template.search(/[\[<]\?/);
+      if (open == -1) {
+        addString(template);
+        break;
+      }
+      else {
+        addString(template.slice(0, open));
+        var close = template.indexOf("?" + (template.charAt(open) == "<" ? ">" : "]"), open + 2);
+        if (close == -1) throw new Error("'<?' without matching '?>' in template.");
+        var content = template.slice(open + 2, close), match = content.match(/^([\w\.]+)(?:\s+((?:\r|\n|.)+))?$/);
+        if (!match) throw new Error("Template command ('" + content + "') does not follow 'command [arguments]' format.");
+        parts.push({command: match[1], args: match[2]});
+        template = template.slice(close + 2);
+      }
+    }
+
+    return parts;
+  }
+
+  var snippets, snippet;
+  Mold.addSnippet = function addSnippet(f) {
+    if (snippets) {
+      snippets.push(f);
+      return snippets.length - 1;
+    }
+  };
+
+  var labels;
+  Mold.setLabel = function setLabel(name) {
+    return function(node) {
+      if (!labels) labels = {};
+
+      if (forDepth > 0) {
+        var array = labels[name] || (labels[name] = []);
+        if (array.push) array.push(node);
+      }
+      else {
+        labels[name] = node;
+      }
+    };
+  };
+
+  Mold.forDepth = 0;
+  var casting = false;
+
+  var HTMLspecial = {"<": "&lt;", "&": "&amp;", "\"": "&quot;"};
+  Mold.escapeHTML = function escapeHTML(text) {
+    return String(text).replace(/[<&\"]/g, function(ch) {return HTMLspecial[ch];});
+  };
+  var JSspecial = {"\"": "\\\"", "\\": "\\\\", "\f": "\\f", "\b": "\\b",
+                   "\n": "\\n", "\t": "\\t", "\r": "\\r", "\v": "\\v"};
+  function escapeString(text) {
+    return String(text).replace(/[\"\\\f\b\n\t\r\v]/g, function(ch) {return JSspecial[ch];});
+  }
+
+  Mold.attachEvent = null;
+  Mold._attachEvent = function(node, eventName, func) {
+    var wrapped = function(event) {func(event || window.event, node);};
+    if (eventName == "enter") {
+      var origFunc = func;
+      func = function(event, node){if ((event.charCode || event.keyCode) == 13) origFunc(event, node);};
+      eventName = "keydown";
+    }
+
+    if (Mold.attachEvent)
+      Mold.attachEvent(node, eventName, wrapped);
+    else if (node.addEventListener)
+      node.addEventListener(eventName, wrapped, false);
+    else
+      node.attachEvent("on" + eventName, wrapped);
+  };
+
+  Mold.forEach = function forEach(array, f) {
+    for (var i = 0; i < array.length; i++)
+      f(array[i], i);
+  };
+  var hop = Object.prototype.hasOwnProperty;
+  Mold.forEachIn = function forEachIn(obj, f) {
+    var i = 0;
+    for (var n in obj) {
+      if (hop.call(obj, n))
+        f(n, obj[n], i++);
+    }
+  };
+
+  var custom = {};
+  Mold.define = function(name, func) {
+    custom[name] = func;
+  };
+  Mold.dispatchCustom = function(name, arg, output) {
+    if (!custom.hasOwnProperty(name))
+      throw new Error("Unrecognised template command: '" + name + "'.");
+    output.push(custom[name](arg, output));
+  };
+
+  Mold.bake = function bake(template) {
+    var parts = splitTemplate(template);
+    var func = ["[function templateFunction($arg, __output){\nvar __out = __output || [];\n"];
+    var stack = [], match;
+
+    while (parts.length) {
+      var cur = parts.shift();
+      if (typeof cur == "string") {
+        func.push("__out.push(\"" + escapeString(cur) + "\");\n");
+        continue;
+      }
+      switch (cur.command) {
+
+      case "text": case "t":
+        func.push("__out.push(Mold.escapeHTML(" + cur.args + "));\n");
+        break;
+      case "html": case "h":
+        func.push("__out.push(" + cur.args + ");\n");
+        break;
+      case "do": case "d":
+        func.push(cur.args + "\n");
+        break;
+
+      case "if":
+        stack.push("if");
+        func.push("if (" + cur.args + ") {\n");
+        break;
+      case "elif":
+        if (stack[stack.length - 1] != "if") throw new Error("'elif' without matching 'if' in template.");
+        func.push("} else if (" + cur.args + ") {\n");
+        break;
+      case "else":
+        if (stack[stack.length - 1] != "if") throw new Error("'else' without matching 'if' in template.");
+        func.push("} else {\n");
+        break;
+      case "if.":
+        if (stack.pop() != "if") throw new Error("'if.' without matching 'if' in template.");
+        func.push("}\n");
+        break;
+
+      case "for":
+        stack.push("for");
+        if (match = cur.args.match(/^([\w\$_]+)(?:,\s*([\w\$_]+))?\s+in\s+((?:\r|\n|.)+)$/))
+          func.push("Mold.forDepth++;\nMold.forEachIn(" + match[3] + ", function(" + match[1] + ", " +
+                    (match[2] || "$dummy") + ", $i) {\n");
+        else if (match = cur.args.match(/^([\w\$_]+)\s+((?:\r|\n|.)+)$/))
+          func.push("Mold.forDepth++;\nMold.forEach(" + match[2] + ", function(" + match[1] + ", $i) {\n");
+        else
+          throw new Error("Malformed arguments to 'for' form in template -- expected variable name followed by expression.");
+        break;
+      case "for.":
+        if (stack.pop() != "for") throw new Error("'for.' without matching 'for' in template.");
+        func.push("});\nMold.forDepth--;\n");
+        break;
+
+      case "event":
+        if (match = cur.args.match(/^(\w+)\s+((?:\r|\n|.)+)$/))
+          func.push("__out.push(\"<var class=\\\"__mold \" + Mold.addSnippet(function(__node){Mold._attachEvent(__node, \"" +
+                    match[1] + "\", function($event, $node) {\n" + match[2] + "\n});}) + \"\\\"></var>\");\n");
+        else
+          throw new Error("Malformed arguments to 'event' form in template -- expected event name followed by handler body.");
+        break;
+      case "run": case "r":
+        func.push("__out.push(\"<var class=\\\"__mold \" + Mold.addSnippet(function($node){" + cur.args + "}) + \"\\\"></var>\");\n");
+        break;
+      case "label": case "l":
+        func.push("__out.push(\"<var class=\\\"__mold \" + Mold.addSnippet(Mold.setLabel(\"" + escapeString(cur.args) +
+                  "\")) + \"\\\"></var>\");\n");
+        break;
+      case "call":
+        var f = cur.args, arr = f.indexOf("->"), arg = "null";
+        if (arr != -1) {arg = f.slice(arr + 2); f = f.slice(0, arr);}
+        func.push(f + "(" + arg + ", __out);");
+        break;
+
+      default:
+        func.push("Mold.dispatchCustom(\"" + escapeString(cur.command) + "\", " + (/^\s*$/.test(cur.args) ? "null" : cur.args) + ", __out);\n");
+      }
+    }
+    if (stack.length) throw new Error("Unclosed blocks in template (" + stack.join() + ").");
+
+    func.push("return __output ? \"\" : __out.join(\"\");\n}]");
+    // The brackets are there to work around some weird IE6 behaviour.
+    return Mold.cleanEval(func.join(""))[0];
+  };
+
+  Mold.cast = function cast(target, mold, arg) {
+    if (casting) throw new Error("Mold.cast must not be called recursively.");
+
+    snippets = [], snippet = 0, labels = null, forDepth = 0, casting = true;
+    try {
+      target.innerHTML = mold(arg);
+      var varTags = target.getElementsByTagName("VAR"), array = [];
+      // Copy tags into array -- FF modifies the varTags collection when you delete nodes in it.
+      for (var i = 0; i < varTags.length; i++)
+        array.push(varTags[i]);
+      for (var i = 0; i < array.length; i++) {
+        var varTag = array[i], match = varTag.className.match(/^__mold (\d+)$/);
+        if (match) {
+          var prev = varTag.previousSibling;
+          while (prev && prev.nodeType == 3) prev = prev.previousSibling;
+          snippets[match[1]](prev || varTag.parentNode);
+          varTag.parentNode.removeChild(varTag);
+        }
+      }
+
+      var result = labels;
+    }
+    finally {
+      labels = snippets = null;
+      casting = false;
+    }
+    return result;
+  };
+
+  Mold.castAppend = function castAppend(target, mold, arg) {
+    var temp = target.ownerDocument.createElement("DIV");
+    var result = Mold.cast(temp, mold, arg);
+    while (temp.firstChild)
+      target.appendChild(temp.firstChild);
+    return result;
+  };
+})();
+
+// Based on the tutorial at
+// http://www.itnewb.com/v/Creating-the-Smooth-Scroll-Effect-with-JavaScript
+
+function currentYPosition() {
+	// Firefox, Chrome, Opera, Safari
+	if (window.pageYOffset) return window.pageYOffset;
+	// Internet Explorer 6 - standards mode
+	if (document.documentElement && document.documentElement.scrollTop)
+		return document.documentElement.scrollTop;
+	// Internet Explorer 6, 7 and 8
+	if (document.body.scrollTop) return document.body.scrollTop;
+	return 0;
+}
+
+function elementYPosition(elt) {
+	var y = elt.offsetTop;
+	while (elt.offsetParent && elt.offsetParent != document.body) {
+		elt = elt.offsetParent;
+		y += node.offsetTop;
+	}
+	return y;
+}
+
+function smoothScrollTo(element) {
+	var startY = currentYPosition();
+	var stopY = elementYPosition(element);
+	var distance = Math.abs(startY - stopY);
+	if (distance < 100) {
+		scrollTo(0, stopY);
+		return;
+	}
+	var speed = Math.round(distance / 100);
+	if (speed > 20) speed = 20;
+	var step = Math.round(distance / 25);
+	var leapY = stopY > startY ? startY + step : startY - step;
+	var timer = 0;
+	if (stopY > startY) {
+		for (var i = startY; i < stopY; i += step) {
+			setTimeout(
+				"window.scrollTo(0, " + leapY + ")",
+				timer * speed);
+			leapY += step;
+			if (leapY > stopY) leapY = stopY;
+			timer++;
+		}
+	} else {
+		for (var i = startY; i > stopY; i -= step) {
+			setTimeout(
+				"window.scrollTo(0, " + leapY + ")",
+				timer * speed);
+			leapY -= step;
+			if (leapY < stopY) leapY = stopY;
+			timer++;
+		}
+	}
+}
+  </script>
+
+
+</body></html>
