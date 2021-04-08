@@ -1,0 +1,1602 @@
+Scenes:
+1. Log on.
+
+Practice
+2. Calibrate the ShameBOT
+For a given tone:
+Condemn
+Accuse
+Discuss
+Forgive
+Reconcile
+
+set:
+intensity
+positivity
+posture
+
+Facial features correspond to each intensity/positivity/posture combination
+Triggering a specific tone moves target toward the target categories.
+
+3. Play
+- autocalibrated
+OR
+- manually configured
+OR
+- calibration code
+
+can spend a point to FREEZE intensity, positivity or posture for one round
+
+
+Intensity Levels:
+Resigned
+Mellow
+Neutral
+Lively
+Excited
+
+Positivity Levels:
+Dark
+Discouraged
+Receptive
+Happy
+Bright
+
+Postures:Levels: dissonance vs harmony? Percussion? Randomized flourishes? Instrument/texture?
+Imposing
+Willful
+Unreactive
+Contrite
+Repentant
+
+Action:
+Condemn <-> Forgive
+
+<script>
+bpm = 60;
+function getBpm() {
+return bpm;
+}
+intensity_oldValue = "Neutral";
+intensity_newValue = "Neutral";
+
+intensity = new Array();
+intensity[0] = "Resigned";
+intensity[1] = "Mellow";
+intensity[2] = "Neutral";
+intensity[3] = "Lively";
+intensity[4] = "Excited";
+
+positivity_oldValue = "Receptive";
+positivity_newValue = "Receptive";
+
+positivity = new Array();
+positivity[0] = "Dark";
+positivity[1] = "Discouraged";
+positivity[2] = "Receptive";
+positivity[3] = "Happy";
+positivity[4] = "Bright";
+
+
+posture_oldValue = "Relaxed";
+posture_newValue = "Relaxed";
+
+posture = new Array();
+posture[0] = "Imposing";
+posture[1] = "Willful";
+posture[2] = "Relaxed";
+posture[3] = "Contrite";
+posture[4] = "Repentant";
+
+function intensityUpdated() {
+e = document.getElementsByName("intensity");
+for (i = 0; i < e.length; i++) {
+	if (e[i].checked) {
+		intensity_newValue = e[i].value;
+	}
+}
+}
+
+function setIntensity(val) {
+	intensity_oldValue = val;
+}
+
+function adjustIntensity(cb) {
+	var randomNumber = Math.floor(Math.random() * 5);
+	intensity_newValue = intensity[randomNumber];
+	e = document.getElementsByName("intensity");
+	for (i = 0; i < e.length; i++) {
+		e[i].checked = false;
+		if (e[i].value == intensity_newValue) {
+			e[i].checked = true;
+		}
+	}
+	if (cb)
+	setTimeout(function(){adjustIntensity(cb)}, 4000);
+
+}
+
+function positivityUpdated() {
+e = document.getElementsByName("positivity");
+for (i = 0; i < e.length; i++) {
+	if (e[i].checked) {
+		positivity_newValue = e[i].value;
+	}
+}
+}
+
+function setPositivity(val) {
+	positivity_oldValue = val;
+}
+
+function adjustPositivity(cb) {
+	var randomNumber = Math.floor(Math.random() * 5);
+	positivity_newValue = positivity[randomNumber];
+
+	e = document.getElementsByName("positivity");
+	for (i = 0; i < e.length; i++) {
+		e[i].checked = false;
+		if (e[i].value == positivity_newValue) {
+			e[i].checked = true;
+		}
+	}
+
+	if (cb)
+	setTimeout(function(){adjustPositivity(cb)}, 4000);
+
+}
+
+function postureUpdated() {
+e = document.getElementsByName("posture");
+for (i = 0; i < e.length; i++) {
+	if (e[i].checked) {
+		posture_newValue = e[i].value;
+	}
+}
+}
+
+function setPosture(val) {
+	posture_oldValue = val;
+}
+
+function adjustPosture(cb) {
+	var randomNumber = Math.floor(Math.random() * 5);
+	posture_newValue = posture[randomNumber];
+
+	e = document.getElementsByName("posture");
+	for (i = 0; i < e.length; i++) {
+		e[i].checked = false;
+		if (e[i].value == posture_newValue) {
+			e[i].checked = true;
+		}
+	}
+
+	if (cb)
+	setTimeout(function(){adjustPosture(cb)}, 4000);
+
+}
+
+</script>
+
+Intensity denoted by durations<br>
+Positivity denoted by key and pitch<br>
+Posture denoted by percussion<br>
+<br>
+
+<table border=1>
+<tr>
+<td>condemn</td>
+<td>accuse</td>
+<td>discuss</td>
+<td>empathize</td>
+<td>forgive</td>
+</tr>
+<tr>
+<td>
+Intensity<br><hr>
+Resigned:
+<input type="radio" name="intensity" value="Resigned" onchange="intensityUpdated();"><br>
+Mellow:
+<input type="radio" name="intensity" value="Mellow" onchange="intensityUpdated();"><br>
+Neutral:
+<input type="radio" name="intensity" value="Neutral" checked onchange="intensityUpdated();"><br>
+Lively:
+<input type="radio" name="intensity" value="Lively" onchange="intensityUpdated();"><br>
+Excited:
+<input type="radio" name="intensity" value="Excited" onchange="intensityUpdated();"><br>
+<br>
+Positivity:<br><hr>
+Dark:
+<input type="radio" name="positivity" value="Dark" onchange="positivityUpdated();"><br>
+Discouraged:
+<input type="radio" name="positivity" value="Discouraged" onchange="positivityUpdated();"><br>
+Receptive:
+<input type="radio" name="positivity" value="Receptive" checked onchange="positivityUpdated();"><br>
+Happy:
+<input type="radio" name="positivity" value="Happy" onchange="positivityUpdated();"><br>
+Bright:
+<input type="radio" name="positivity" value="Bright" onchange="positivityUpdated();"><br>
+<br>
+Posture:<br><hr>
+Imposing:
+<input type="radio" name="posture" value="Imposing" onchange="postureUpdated();"><br>
+Willful:
+<input type="radio" name="posture" value="Willful" onchange="postureUpdated();"><br>
+Relaxed:
+<input type="radio" name="posture" value="Relaxed" checked onchange="postureUpdated();"><br>
+Contrite:
+<input type="radio" name="posture" value="Contrite" onchange="postureUpdated();"><br>
+Repentant:
+<input type="radio" name="posture" value="Repentant" onchange="postureUpdated();"><br>
+<br>
+</td>
+<td>
+
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr></table>
+<script>
+
+function loadLoop_Percussion_Imposing_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+}
+
+function loadLoop_Percussion_Imposing_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+}
+
+function loadLoop_Percussion_Imposing_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+}
+
+
+function loadLoop_Percussion_Willful_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+}
+
+function loadLoop_Percussion_Willful_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+}
+
+function loadLoop_Percussion_Willful_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "4n",now+=.5);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+syn.triggerAttackRelease("C1", "32n",now+=.25*q);
+syn.triggerAttackRelease("C1", "32n",now+=.125*q);
+syn.triggerAttackRelease("C1", "4n",now+=.125*q);
+}
+
+
+function loadLoop_Percussion_Relaxed_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+}
+
+function loadLoop_Percussion_Relaxed_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+}
+
+function loadLoop_Percussion_Relaxed_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "4n",now+=0);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+syn.triggerAttackRelease("C1", "4n",now+=1.0*q);
+}
+
+function loadLoop_Percussion_Contrite_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "2n",now+=0);
+syn.triggerAttackRelease("C1", "2n",now+=2.0*q);
+}
+
+function loadLoop_Percussion_Contrite_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "2n",now+=0);
+syn.triggerAttackRelease("C1", "2n",now+=2.0*q);
+}
+
+function loadLoop_Percussion_Contrite_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "2n",now+=0);
+syn.triggerAttackRelease("C1", "2n",now+=2.0*q);
+}
+
+function loadLoop_Percussion_Repentant_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "2n",now+=0);
+syn.triggerAttackRelease("C1", "16n",now+=1.75*q);
+syn.triggerAttackRelease("C1", "2n",now+=.25*q);
+}
+
+function loadLoop_Percussion_Repentant_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "2n",now+=0);
+syn.triggerAttackRelease("C1", "16n",now+=1.75*q);
+syn.triggerAttackRelease("C1", "2n",now+=.25*q);
+}
+
+function loadLoop_Percussion_Repentant_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C1", "2n",now+=0);
+syn.triggerAttackRelease("C1", "16n",now+=1.75*q);
+syn.triggerAttackRelease("C1", "2n",now+=.25*q);
+}
+
+function loadLoop_Percussion_Global_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G2", "1m",now+=0);
+}
+
+function loadLoop_Percussion_Global_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("A2", "1m",now+=0);
+}
+
+
+function loadLoop_Bass_Global_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G2", "1m",now+=0);
+syn.triggerAttackRelease("D3", "1m",now+=0);
+}
+
+function loadLoop_Bass_Global_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G2", "1m",now+=0);
+syn.triggerAttackRelease("C3", "1m",now+=0);
+}
+
+function loadLoop_Bass_Global_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("A2", "1m",now+=0);
+syn.triggerAttackRelease("D2", "1m",now+=0);
+}
+
+
+
+function loadLoop_Theme_Resigned_Dark_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "2n",now+=0);
+syn.triggerAttackRelease("D3", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Dark_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "2n",now+=0);
+syn.triggerAttackRelease("G3", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Dark_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "2n",now+=0);
+syn.triggerAttackRelease("A3", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Discouraged_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "2n",now+=0);
+syn.triggerAttackRelease("Bb3", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Discouraged_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "2n",now+=0);
+syn.triggerAttackRelease("Eb4", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Discouraged_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "2n",now+=0);
+syn.triggerAttackRelease("F#4", "2n",now+=2.0*q);
+}
+
+
+function loadLoop_Theme_Resigned_Receptive_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "2n",now+=0);
+syn.triggerAttackRelease("A3", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Receptive_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "2n",now+=0);
+syn.triggerAttackRelease("D4", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Receptive_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "2n",now+=0);
+syn.triggerAttackRelease("E4", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Happy_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "2n",now+=0);
+syn.triggerAttackRelease("D4", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Happy_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "2n",now+=0);
+syn.triggerAttackRelease("G4", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Happy_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "2n",now+=0);
+syn.triggerAttackRelease("A4", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Bright_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "2n",now+=0);
+syn.triggerAttackRelease("G4", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Bright_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "2n",now+=0);
+syn.triggerAttackRelease("C5", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Resigned_Bright_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "2n",now+=0);
+syn.triggerAttackRelease("D5", "2n",now+=2.0*q);
+}
+
+function loadLoop_Theme_Mellow_Dark_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "4n",now+=0);
+syn.triggerAttackRelease("F3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("Eb3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("D3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Dark_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "4n",now+=0);
+syn.triggerAttackRelease("Bb3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("Ab3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("G3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Dark_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "4n",now+=0);
+syn.triggerAttackRelease("C4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("Bb3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("A3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Discouraged_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "4n",now+=0);
+syn.triggerAttackRelease("Bb3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("D4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("Bb3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Discouraged_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "4n",now+=0);
+syn.triggerAttackRelease("Eb4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("G4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("Eb4", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Discouraged_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "4n",now+=0);
+syn.triggerAttackRelease("F#4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("A4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("F#4", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Receptive_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "4n",now+=0);
+syn.triggerAttackRelease("B3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("D4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("B3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Receptive_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "4n",now+=0);
+syn.triggerAttackRelease("E4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("G4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("E4", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Receptive_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "4n",now+=0);
+syn.triggerAttackRelease("F#4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("A4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("F#4", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Happy_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "4n",now+=0);
+syn.triggerAttackRelease("D3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("A3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("D3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Happy_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "4n",now+=0);
+syn.triggerAttackRelease("G3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("E4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("G3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Happy_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "4n",now+=0);
+syn.triggerAttackRelease("A3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("F#4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("A3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Bright_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "4n",now+=0);
+syn.triggerAttackRelease("C4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("B3", "4n",now+=1.0*q);
+syn.triggerAttackRelease("G3", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Bright_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G4", "4n",now+=0);
+syn.triggerAttackRelease("F#4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("E4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("C4", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Mellow_Bright_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("A4", "4n",now+=0);
+syn.triggerAttackRelease("G4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("F#4", "4n",now+=1.0*q);
+syn.triggerAttackRelease("D4", "4n",now+=1.0*q);
+}
+
+function loadLoop_Theme_Neutral_Dark_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "8n",now+=0);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Bb3", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D3", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+syn.triggerAttackRelease("Bb3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Dark_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "8n",now+=0);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Eb4", "8n",now+=.5*q);
+syn.triggerAttackRelease("C4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+syn.triggerAttackRelease("C4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Eb4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Dark_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "8n",now+=0);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("F4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("F4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Discouraged_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "8n",now+=0);
+syn.triggerAttackRelease("Bb3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Bb3", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Discouraged_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "8n",now+=0);
+syn.triggerAttackRelease("Eb4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Eb4", "8n",now+=.5*q);
+syn.triggerAttackRelease("C4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Discouraged_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "8n",now);
+syn.triggerAttackRelease("F#4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("F#4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A3", "8n",now+=.5*q);
+}
+
+
+function loadLoop_Theme_Neutral_Receptive_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "8n",now+=0);
+syn.triggerAttackRelease("B3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("B3", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Receptive_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "8n",now+=0);
+syn.triggerAttackRelease("E4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("E4", "8n",now+=.5*q);
+syn.triggerAttackRelease("C4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Receptive_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "8n",now+=0);
+syn.triggerAttackRelease("F#4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("F#4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Happy_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "8n",now+=0);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("B4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+syn.triggerAttackRelease("B4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Happy_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "8n",now+=0);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("C5", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("E5", "8n",now+=.5*q);
+syn.triggerAttackRelease("C5", "8n",now+=.5*q);
+syn.triggerAttackRelease("G5", "8n",now+=.5*q);
+syn.triggerAttackRelease("E5", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Happy_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "8n",now+=0);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("F#5", "8n",now+=.5*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+syn.triggerAttackRelease("A5", "8n",now+=.5*q);
+syn.triggerAttackRelease("F#5", "8n",now+=.5*q);
+}
+
+
+function loadLoop_Theme_Neutral_Bright_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D5", "8n",now+=0);
+syn.triggerAttackRelease("B4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+syn.triggerAttackRelease("B4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("B3", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Bright_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G5", "8n",now+=0);
+syn.triggerAttackRelease("E5", "8n",now+=.5*q);
+syn.triggerAttackRelease("C5", "8n",now+=.5*q);
+syn.triggerAttackRelease("G5", "8n",now+=.5*q);
+syn.triggerAttackRelease("E5", "8n",now+=.5*q);
+syn.triggerAttackRelease("C5", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("E4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Neutral_Bright_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("A5", "8n",now+=0);
+syn.triggerAttackRelease("F#5", "8n",now+=.5*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+syn.triggerAttackRelease("A5", "8n",now+=.5*q);
+syn.triggerAttackRelease("F#5", "8n",now+=.5*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("F#4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Dark_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb4", "8n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G4", "16n",now+=.5*q);
+syn.triggerAttackRelease("Bb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb5", "8n",now+=.25*q);
+syn.triggerAttackRelease("G5", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Dark_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C3", "16n",now+=0);
+syn.triggerAttackRelease("Eb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("G3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "8n",now+=.25*q);
+syn.triggerAttackRelease("G3", "8n",now+=.5*q);
+syn.triggerAttackRelease("C4", "16n",now+=.5*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb5", "8n",now+=.25*q);
+syn.triggerAttackRelease("C5", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Dark_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D3", "16n",now+=0);
+syn.triggerAttackRelease("F3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "8n",now+=.25*q);
+syn.triggerAttackRelease("A3", "8n",now+=.5*q);
+syn.triggerAttackRelease("D4", "16n",now+=.5*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("F5", "8n",now+=.25*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Discouraged_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb3", "8n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.5*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "8n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Discouraged_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "16n",now+=0);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "8n",now+=.25*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Ab4", "16n",now+=.5*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.25*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Discouraged_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "16n",now+=0);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "8n",now+=.25*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("Bb4", "16n",now+=.5*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "8n",now+=.25*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Receptive_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B3", "8n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("E4", "16n",now+=.5*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "8n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Receptive_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "16n",now+=0);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "8n",now+=.25*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "16n",now+=.5*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.25*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Receptive_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "16n",now+=0);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "8n",now+=.25*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("B4", "16n",now+=.5*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "8n",now+=.25*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Happy_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.25*q);
+syn.triggerAttackRelease("D4", "8n",now+=.5*q);
+syn.triggerAttackRelease("E4", "16n",now+=.5*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "8n",now+=.25*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Happy_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "16n",now+=0);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "8n",now+=.25*q);
+syn.triggerAttackRelease("G4", "8n",now+=.5*q);
+syn.triggerAttackRelease("A4", "16n",now+=.5*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "8n",now+=.25*q);
+syn.triggerAttackRelease("D5", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Happy_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "16n",now+=0);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "8n",now+=.25*q);
+syn.triggerAttackRelease("A4", "8n",now+=.5*q);
+syn.triggerAttackRelease("B4", "16n",now+=.5*q);
+syn.triggerAttackRelease("C#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#5", "8n",now+=.25*q);
+syn.triggerAttackRelease("E5", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Bright_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G4", "16n",now+=0);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "8n",now+=.25*q);
+syn.triggerAttackRelease("B4", "8n",now+=.5*q);
+syn.triggerAttackRelease("G5", "16n",now+=.5*q);
+syn.triggerAttackRelease("B5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A5", "8n",now+=.25*q);
+syn.triggerAttackRelease("D6", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Bright_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C5", "16n",now+=0);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "8n",now+=.25*q);
+syn.triggerAttackRelease("E5", "8n",now+=.5*q);
+syn.triggerAttackRelease("C6", "16n",now+=.5*q);
+syn.triggerAttackRelease("E6", "16n",now+=.25*q);
+syn.triggerAttackRelease("D6", "16n",now+=.25*q);
+syn.triggerAttackRelease("C6", "16n",now+=.25*q);
+syn.triggerAttackRelease("D6", "8n",now+=.25*q);
+syn.triggerAttackRelease("G6", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Lively_Bright_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D5", "16n",now+=0);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A5", "8n",now+=.25*q);
+syn.triggerAttackRelease("F#5", "8n",now+=.5*q);
+syn.triggerAttackRelease("D6", "16n",now+=.5*q);
+syn.triggerAttackRelease("F#6", "16n",now+=.25*q);
+syn.triggerAttackRelease("E6", "16n",now+=.25*q);
+syn.triggerAttackRelease("D6", "16n",now+=.25*q);
+syn.triggerAttackRelease("E6", "8n",now+=.25*q);
+syn.triggerAttackRelease("A6", "8n",now+=.5*q);
+}
+
+function loadLoop_Theme_Excited_Dark_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D3", "16n",now+=.25*q);
+syn.triggerAttackRelease("G3", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#3", "16n",now+=.25*q);
+syn.triggerAttackRelease("G3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D3", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Dark_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "16n",now+=0);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Ab4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G3", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Dark_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "16n",now+=0);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Db4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Discouraged_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Discouraged_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "16n",now+=0);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Ab4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Eb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Discouraged_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "16n",now+=0);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Db5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("Bb4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("Fb4", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Receptive_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Receptive_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "16n",now+=0);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Receptive_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "16n",now+=0);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Happy_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G3", "16n",now+=0);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G3", "16n",now+=.25*q);
+syn.triggerAttackRelease("B3", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A3", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Happy_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("C4", "16n",now+=0);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Happy_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D4", "16n",now+=0);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E4", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Bright_K1(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("D5", "16n",now+=0);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("D4", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("B4", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Bright_K2(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("G5", "16n",now+=0);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("F5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("C5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G4", "16n",now+=.25*q);
+syn.triggerAttackRelease("A5", "16n",now+=.25*q);
+syn.triggerAttackRelease("F5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("F5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+}
+
+function loadLoop_Theme_Excited_Bright_K3(syn) {
+now = Tone.now();
+q = (1.0)*(60/getBpm());
+syn.triggerAttackRelease("A5", "16n",now+=0);
+syn.triggerAttackRelease("F#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("D5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A4", "16n",now+=.25*q);
+syn.triggerAttackRelease("B5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A5", "16n",now+=.25*q);
+syn.triggerAttackRelease("F#5", "16n",now+=.25*q);
+syn.triggerAttackRelease("G5", "16n",now+=.25*q);
+syn.triggerAttackRelease("B5", "16n",now+=.25*q);
+syn.triggerAttackRelease("A5", "16n",now+=.25*q);
+syn.triggerAttackRelease("E5", "16n",now+=.25*q);
+}
+
+currentKey = 1;
+currentLoop = 0;
+currentKeyOffset = 0;
+
+function play(cb) {
+
+if (cb) {
+	adjustIntensity(cb);
+	adjustPositivity(cb);
+	adjustPosture(cb);
+}
+
+const synth = new Tone.Synth().toDestination();
+Tone.Transport.bpm.value = getBpm();
+synth.oscillator.type = "triangle";
+
+const synth3 =new Tone.MembraneSynth().toDestination();
+const loop3 = new Tone.Loop((time) => {
+	eval("loadLoop_Percussion_" + posture_newValue + "_K" + (currentKey-currentKeyOffset) + "(synth3);");
+}, "1m").start(0);
+
+const synth2 = new Tone.PolySynth(Tone.Synth).toDestination();
+const loop2 = new Tone.Loop((time) => {
+	eval("loadLoop_Bass_Global_K" + (currentKey-currentKeyOffset) + "(synth2);");
+}, "1m").start(0);
+
+const loop = new Tone.Loop((time) => {
+	currentLoop++;
+	console.log(time + " " + currentLoop);
+	if (intensity_newValue != intensity_oldValue) {
+		setIntensity(intensity_newValue);
+	}
+	if (positivity_newValue != positivity_oldValue) {
+		setPositivity(positivity_newValue);
+	}
+	//currentKey = 3;
+	//currentKeyOffset = 0;
+
+	if (intensity_newValue == intensity_oldValue) {
+		if (intensity_newValue == "Resigned") {
+			eval("loadLoop_Theme_Resigned_" + positivity_newValue + "_K" + (currentKey-currentKeyOffset) + "(synth);");
+		}
+		if (intensity_newValue == "Mellow") {
+			eval("loadLoop_Theme_Mellow_" + positivity_newValue + "_K" + (currentKey-currentKeyOffset) + "(synth);");
+		}
+		if (intensity_newValue == "Neutral") {
+			eval("loadLoop_Theme_Neutral_" + positivity_newValue + "_K" + (currentKey-currentKeyOffset) + "(synth);");
+		}
+		if (intensity_newValue == "Lively") {
+			eval("loadLoop_Theme_Lively_" + positivity_newValue + "_K" + (currentKey-currentKeyOffset) + "(synth);");
+		}
+		if (intensity_newValue == "Excited") {
+			eval("loadLoop_Theme_Excited_" + positivity_newValue + "_K" + (currentKey-currentKeyOffset) + "(synth);");
+		}
+	}
+	if (currentLoop >= 4) {
+		currentLoop = 0;
+		currentKey++;
+	}
+	if (currentKey > 4) {
+		currentKey = 1;
+	}
+	if (currentKey == 4) {
+		currentKeyOffset = 3;
+	}
+	else {
+		currentKeyOffset = 0;
+	}
+}, "1m").start(0);
+
+
+Tone.Transport.start();
+Tone.start(0);
+}
+
+publicNote="D4";
+function playTetris2() {
+const synth = new Tone.Synth().toDestination();
+const loop = new Tone.Loop((time) => {
+	// triggered every eighth note.
+	console.log(time);
+const now = Tone.now();
+if (publicNote != "")
+//play a middle 'C' for the duration of an 8th note
+synth.triggerAttackRelease(publicNote, "2n",now);
+}, "1m").start(0);
+Tone.Transport.start();
+}
+
+</script>
+<script src="lib/tone-14-7-77.js"></script>
+<button id="tetris" onclick="play();">Play</button>
+<button id="tetris" onclick="play(true);">Vary</button>
