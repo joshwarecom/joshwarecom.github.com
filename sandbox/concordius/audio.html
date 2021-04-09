@@ -1646,8 +1646,5 @@ Tone.Transport.start();
 
 </script>
 <script src="lib/tone-14-7-77.js"></script>
-<button id="tetris1" disabled onclick="play();this.disabled=true;document.getElementById('tetris2').disabled=true;">Play</button>
-<button id="tetris2" disabled onclick="play(true);this.disabled=true;document.getElementById('tetris1').disabled=true;">Vary</button>
-<script>
-	play(true);
-</script>
+<button id="tetris1" onclick="play();this.disabled=true;document.getElementById('tetris2').disabled=true;">Play</button>
+<button id="tetris2" onclick="play(true);this.disabled=true;document.getElementById('tetris1').disabled=true;">Vary</button>
