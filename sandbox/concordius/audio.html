@@ -1,3 +1,4 @@
+<!--
 Scenes:
 1. Log on.
 
@@ -51,7 +52,7 @@ Repentant
 
 Action:
 Condemn <-> Forgive
-
+-->
 <script>
 bpm = 60;
 function getBpm() {
@@ -177,7 +178,7 @@ function adjustPosture(cb) {
 }
 
 </script>
-
+<!--
 Intensity denoted by durations<br>
 Positivity denoted by key and pitch<br>
 Posture denoted by percussion<br>
@@ -237,6 +238,53 @@ Repentant:
 <td></td>
 <td></td>
 </tr></table>
+-->
+
+<table border=1>
+<tr>
+<td>
+Intensity<br><hr>
+Resigned:
+<input type="radio" name="intensity" value="Resigned" onchange="intensityUpdated();"><br>
+Mellow:
+<input type="radio" name="intensity" value="Mellow" onchange="intensityUpdated();"><br>
+Neutral:
+<input type="radio" name="intensity" value="Neutral" checked onchange="intensityUpdated();"><br>
+Lively:
+<input type="radio" name="intensity" value="Lively" onchange="intensityUpdated();"><br>
+Excited:
+<input type="radio" name="intensity" value="Excited" onchange="intensityUpdated();"><br>
+<br>
+</td><td>
+Positivity:<br><hr>
+Dark:
+<input type="radio" name="positivity" value="Dark" onchange="positivityUpdated();"><br>
+Discouraged:
+<input type="radio" name="positivity" value="Discouraged" onchange="positivityUpdated();"><br>
+Receptive:
+<input type="radio" name="positivity" value="Receptive" checked onchange="positivityUpdated();"><br>
+Happy:
+<input type="radio" name="positivity" value="Happy" onchange="positivityUpdated();"><br>
+Bright:
+<input type="radio" name="positivity" value="Bright" onchange="positivityUpdated();"><br>
+<br>
+</td><td>
+Posture:<br><hr>
+Imposing:
+<input type="radio" name="posture" value="Imposing" onchange="postureUpdated();"><br>
+Willful:
+<input type="radio" name="posture" value="Willful" onchange="postureUpdated();"><br>
+Relaxed:
+<input type="radio" name="posture" value="Relaxed" checked onchange="postureUpdated();"><br>
+Contrite:
+<input type="radio" name="posture" value="Contrite" onchange="postureUpdated();"><br>
+Repentant:
+<input type="radio" name="posture" value="Repentant" onchange="postureUpdated();"><br>
+<br>
+</td>
+</tr></table>
+
+
 <script>
 
 function loadLoop_Percussion_Imposing_K1(syn) {
@@ -1598,5 +1646,8 @@ Tone.Transport.start();
 
 </script>
 <script src="lib/tone-14-7-77.js"></script>
-<button id="tetris" onclick="play();">Play</button>
-<button id="tetris" onclick="play(true);">Vary</button>
+<button id="tetris1" disabled onclick="play();this.disabled=true;document.getElementById('tetris2').disabled=true;">Play</button>
+<button id="tetris2" disabled onclick="play(true);this.disabled=true;document.getElementById('tetris1').disabled=true;">Vary</button>
+<script>
+	play(true);
+</script>
