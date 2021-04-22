@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Joshua Wilson - Djinn on the Rocks - Beta Test Build</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <meta name="author" content="Joshua Wilson">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="interpreter/glkote.css" type="text/css">
+<link rel="stylesheet" href="interpreter/dialog.css" type="text/css">
+<script src="interpreter/jquery.min.js"></script>
+<script src="interpreter/main.js"></script>
+<script src="interpreter/ie.js" nomodule></script>
+<script src="interpreter/resourcemap.js" type="text/javascript"></script>
+<script>
+parchment_options = {
+default_story: [ "interpreter/Sandbox.zblorb.js" ],
+lib_path: 'interpreter/',
+};
+</script>
+ </head>
+<body class="play">
+<div class="container">
+<div class="coverimage"><span><a href="Cover.jpg"><img src="Small Cover.jpg" border="1"></a></span></div>
+<div class="links">
+<div class="smalltitle">Djinn on the Rocks</div>
+<ul>
+<li><input type="button" id="btn" value="View Transcript" onclick="transcriptForm();"></li>
+</ul>
+</div>
+
+<div id="gameport">
+<div id="windowport">
+<noscript>
+<p>You'll need to turn on Javascript in your web browser to play this game.</p>
+</noscript>
+</div>
+<div id="loadingpane">
+<img src="interpreter/waiting.gif" alt="LOADING"><br>
+<em>&nbsp;&nbsp;&nbsp;Loading...</em>
+</div>
+<div id="errorpane" style="display:none;"><div id="errorcontent">...</div></div>
+</div>
+
+</div>
+<div class="interpretercredit"><a href="https://github.com/curiousdannii/parchment">Parchment for Inform 7 (2020.10)</a></div>
+<div id="transcriptDiv" style="position: absolute; width: 500px; height: 500px; z-order: 100; background-color: grey; top: 50px; left: 300px; display: none; margin-top: 15px; margin-left: 15px;">
+<div style="left: 50px; top: 50px; position: relative;">
+	<textarea id="gametext" style="width:400px; height: 400px;"></textarea><br>
+	<input type="button" id="btn" value="Copy Transcript" onclick="transcriptCopy();">
+</div>
+</div>
+<script>
+function transcriptForm() {
+	e = document.getElementById("transcriptDiv");
+	if (e.style.display == "none") {
+		e.style.display = "block";
+		e = document.getElementById("btn");
+		e.value = "Hide Transcript";
+		e = document.getElementById("gametext");
+		e.value = document.transcript;
+		e.disabled = true;
+	}
+	else {
+		e.style.display = "none";
+		e = document.getElementById("btn");
+		e.value = "View Transcript";
+	}
+}
+
+function transcriptCopy() {
+  copyText = document.getElementById("gametext");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+  document.execCommand("copy");
+  alert("Copy successful! Please paste that into an email and send it to me :)");
+  transcriptForm();
+}
+</script>
+</body>
+</html>
+
