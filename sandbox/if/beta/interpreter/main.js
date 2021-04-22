@@ -562,9 +562,7 @@ if (document.transcript == null) document.transcript = "";
                         break;
                     case "line":
                         ! function(t, r, n) {
-							if (r == "") {
-								document.transcript += ">\n";
-							}
+							document.transcript += (">"+r+"\n");
                             var l;
                             if (!J) return;
                             var a = null;
@@ -6372,15 +6370,24 @@ if (document.transcript == null) document.transcript = "";
 								jtmp = e.text[zjj].content;
 								if (jtmp) {
 									var jtmp = e.text[zjj].content[0];
-									if (jtmp == "input") {
-										document.transcript += ">"+e.text[zjj].content[1]+"\n";
-									}
-									else if (jtmp == "subheader") {
+									if (jtmp == "subheader") {
 										document.transcript += "["+e.text[zjj].content[1]+"]\n";
 									}
 									else if (jtmp == "normal") {
 										document.transcript += ""+e.text[zjj].content[1]+"\n";
 									}
+								}
+							}
+						}
+					}
+					else if (e.id == 108) {
+						for (var zjj = 0; e.lines && zjj < e.lines.length; zjj++) {
+							var jtmp = e.lines[zjj];
+							if (jtmp) {
+								jtmp = e.lines[zjj].content;
+								if (jtmp[2] && jtmp[2].text) {
+									var jtmp = jtmp[2].text;
+									document.transcript += jtmp+"\n";
 								}
 							}
 						}
