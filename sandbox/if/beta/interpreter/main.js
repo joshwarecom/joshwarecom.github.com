@@ -7477,3 +7477,13 @@ if (document.transcript == null) document.transcript = "";
     }
     $(launch)
 })();
+
+function downloadTranscript() {
+  var jel = document.createElement('a');
+  jel.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(document.transcript));
+  jel.setAttribute('download', "transcript.txt");
+  jel.style.display = 'none';
+  document.body.appendChild(jel);
+  jel.click();
+  document.body.removeChild(jel);
+}
