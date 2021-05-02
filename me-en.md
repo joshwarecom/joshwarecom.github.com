@@ -13,7 +13,7 @@ order: 4
 category: me
 ---
 
-Joshua Wilson (he/him) is a happilly married cis-het father of two with pink skin, thinning hair, and too many hobbies.
+Joshua Wilson (he/him) is an happilly married cis-het father of two with pink skin, thinning hair, and too many hobbies.
 
 He is a once-and-future PhD candidate in Constructive Theology and Homiletics who is a coder by day for a living and a hacker by night for life.
 
