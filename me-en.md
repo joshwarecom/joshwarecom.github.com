@@ -17,4 +17,4 @@ Joshua Wilson (he/him) is a happilly married cis-het father of two with pink ski
 
 He is a once-and-future PhD candidate in Constructive Theology and Homiletics who is a coder by day for a living and a hacker by night for life.
 
-This site is one of his ongoing experiments with the intersectionality of faith and information technology.
+This site hosts ongoing experiments with the intersectionality of faith and information technology.
