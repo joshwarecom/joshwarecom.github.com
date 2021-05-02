@@ -19,7 +19,7 @@ Evaluate whether the facebook pixel code would be useful.
 {%endcomment%}
 
 <h2>Latest Post</h2>
-{% include list-category-posts.html lang=page.lang category="blog" max=1 %}
+{% include list-category-posts.html lang=page.lang category="post" max=1 %}
 {%comment%}
 commenting out references to comic, maybe if I actuall make the comic I'll uncomment it.
 ---
