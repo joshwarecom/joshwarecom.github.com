@@ -12,4 +12,4 @@ lang: en
 order: 1
 ---
 
-{% include list-category-posts.html lang=page.lang category="blog" max=10%}
+{% include list-category-posts.html lang=page.lang category="posts" max=10%}
