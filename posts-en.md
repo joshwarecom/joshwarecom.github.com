@@ -1,10 +1,10 @@
 ---
 layout: page
-title: blog
-tagline: reflections, reviews and projects
+title: posts
+tagline: reflections and reviews
 excerpt: >
-  reflections,  reviews & projects
-permalink: /blog.html
+  reflections and reviews
+permalink: /posts.html
 header:
   image: /assets/img/blog-header.jpg
 ref: blog
