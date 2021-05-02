@@ -10,8 +10,9 @@ excerpt: >
 ref: home
 lang: en
 ---
-
-I am a theologian, humanities scholar, and hacker experimenting with the intersection of faith and information technology.
+{%comment%}
+The tagline appears sufficient setting of expectations
+{%endcomment%}
 
 {%comment%}
 Consider re-adding facebook support at a later date.
