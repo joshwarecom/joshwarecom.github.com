@@ -5,7 +5,7 @@ image: /assets/patterns/paisley.png
 header:
   image: /assets/img/blog-header.jpg
 tags: ["code","prayers","codeprayers"]
-keywords: code prayers codeprayers c++
+keywords: c++ code prayers codeprayers
 ref: codeprayer2
 lang: en
 category: posts
