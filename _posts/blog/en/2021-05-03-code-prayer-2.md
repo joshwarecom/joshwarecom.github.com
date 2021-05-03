@@ -4,7 +4,7 @@ title: "codeprayer #2/256 [00000001 / 11111111]"
 image: /assets/patterns/paisley.png
 header:
   image: /assets/img/blog-header.jpg
-tags: ["code","prayers","codeprayers"]
+tags: ["c++", "code","prayers","codeprayers"]
 keywords: c++ code prayers codeprayers
 ref: codeprayer2
 lang: en
