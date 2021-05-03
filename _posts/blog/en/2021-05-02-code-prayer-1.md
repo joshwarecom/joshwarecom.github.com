@@ -5,8 +5,8 @@ image: /assets/patterns/paisley.png
 header:
   image: /assets/img/blog-header.jpg
 tags: ["code","prayers","codeprayers"]
-keywords: code prayers codeprayers
-ref: w00t
+keywords: code prayers codeprayers c
+ref: codeprayer1
 lang: en
 category: posts
 cattitle: true
