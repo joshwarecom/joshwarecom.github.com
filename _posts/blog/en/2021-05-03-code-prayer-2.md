@@ -1,11 +1,11 @@
 ---
 layout: post
-title: "codeprayer #2/256 [00000001 / 11111111]"
+title: "codeprayer #2 [00000001 / 11111111]"
 image: /assets/patterns/paisley.png
 header:
   image: /assets/img/blog-header.jpg
-tags: ["c++", "code","prayers","codeprayers"]
-keywords: c++ code prayers codeprayers
+tags: ["c++", "codeprayers"]
+keywords: c++ codeprayers
 ref: codeprayer2
 lang: en
 category: posts
