@@ -10,7 +10,7 @@ excerpt: >
 ref: home
 lang: en
 ---
-This site hosts ongoing experiments with the intersectionality of faith and information technology.
+This site hosts <a href="/me">the author's</a> ongoing experiments with the intersectionality of faith and information technology.
 
 {%comment%}
 Consider re-adding facebook support at a later date.
