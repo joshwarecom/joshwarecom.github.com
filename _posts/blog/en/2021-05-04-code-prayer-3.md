@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "codeprayer #3/256 [00000010 / 11111111]"
+title: "codeprayer #3 [00000010 / 11111111]"
 image: /assets/patterns/paisley.png
 header:
   image: /assets/img/blog-header.jpg
