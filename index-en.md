@@ -10,9 +10,7 @@ excerpt: >
 ref: home
 lang: en
 ---
-{%comment%}
-The tagline appears sufficient setting of expectations
-{%endcomment%}
+This site hosts ongoing experiments with the intersectionality of faith and information technology.
 
 {%comment%}
 Consider re-adding facebook support at a later date.
