@@ -11,7 +11,7 @@ lang: en
 category: posts
 cattitle: true
 ---
-```
+
 #include <cstdlib>
 
 class Experience {
@@ -46,4 +46,4 @@ int main()
         }
     }
 }
-```
+
