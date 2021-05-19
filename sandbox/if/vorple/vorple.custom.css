@@ -1,0 +1,31 @@
+.container #vorple {
+	background-color: yellow;
+}
+
+#vorpleContainer {
+	background-color: orange;
+}
+
+#vorple .vorplePrompt input {
+	background-color: green;
+}
+
+#vorple input {
+	background-color: cyan;
+}
+
+#vorple {
+	position: absolute;
+	top: 200px;
+	width: 100%;
+	background-color: yellow;
+}
+
+#header_image {
+	position: fixed;
+	top: 0px;
+	height: 200px;
+	width: 100%;
+	background-color: red;
+}
+
