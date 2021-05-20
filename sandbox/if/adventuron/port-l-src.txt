@@ -1,0 +1,218 @@
+﻿loading_screen = load
+start_at = entrance
+
+booleans {
+   tmp_bool : boolean;
+}
+
+locations {
+   entrance : location "{entrance_description}" {
+      on_describe {
+         :queue_incidental "incidental_entrance_description";
+         :queue_incidental "incidental_0_25_silence";
+         :if (count("entrance") > 0) {
+            :queue_incidental "incidental_msg_on_the_ground";         
+            :iterate "_beside_listed" {
+               :if (is_final_iteration() && !is_first_iteration()) {
+                  :queue_incidental "incidental_msg_and";               
+               }
+               :queue_incidental "incidental_msg_uh";
+               :queue_incidental {("incidental_name_" + item())};
+            }         
+         }
+      }
+   }
+}
+
+strings {
+   entrance_description : string "You are standing in a cell.  The only way out is down.{in_entrance_string}";
+   in_entrance_string : dynamic_string (
+      (count("entrance") > 0) ? ("  On the ground you see "+ construct_string{ 
+         from      -> ("entrance")
+         sep       -> (", ")
+         final_sep -> (" and ")
+         mutate    -> (d(item()))
+      }
+      + ".") : ""
+   );
+   inventory_string : dynamic_string (
+      (carried() > 0) ? ("You are holding "+ construct_string{ 
+         from      -> ("_inventory")
+         sep       -> (", ")
+         final_sep -> (" and ")
+         mutate    -> (d(item()))
+      }
+      + ".") : "You find your lack of possessions disturbing."
+   );   
+   
+   desc_cube : string "A sold block of mistreated metal.";
+   desc_pistol : string "There's no trigger.  You can't tell how to fire it.";   
+} 
+
+objects {
+   cube : object "a steel cube" at="entrance" msg="A solid block of mistreated metal.";
+   pistol : object "a strange pistol" at="entrance" msg="There's no trigger.  You can't tell how to fire it."; 
+}
+
+assets {
+   sounds {
+      incidental_game_over : sound_sample "http://joshware.com/sandbox/if/adventuron/game_over.mp3";
+      incidental_entrance_description : sound_sample "http://joshware.com/sandbox/if/adventuron/entrance_description.mp3" ;
+      incidental_0_25_silence : sound_sample "http://joshware.com/sandbox/if/adventuron/0_25_silence.mp3" ;
+      
+      incidental_msg_you_are_holding : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_you_are_holding.mp3" ;      
+      incidental_msg_no_inventory : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_no_inventory.mp3" ;
+      incidental_msg_sorry : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_sorry.mp3" ;
+      incidental_msg_you_take : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_you_take.mp3" ;
+      incidental_msg_you_drop : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_you_drop.mp3" ;     
+      incidental_msg_on_the_ground : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_on_the_ground.mp3" ;      
+      incidental_msg_the : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_the.mp3" ;
+      incidental_msg_uh : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_uh.mp3" ;                  
+      incidental_msg_and : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_and.mp3" ;                  
+      
+      incidental_input_inventory : sound_sample "http://joshware.com/sandbox/if/adventuron/input_inventory.mp3" ;
+      incidental_input_look : sound_sample "http://joshware.com/sandbox/if/adventuron/input_look.mp3" ;      
+      
+      incidental_name_cube : sound_sample "http://joshware.com/sandbox/if/adventuron/name_steel_cube.mp3" ;      
+      incidental_name_pistol : sound_sample "http://joshware.com/sandbox/if/adventuron/name_pistol.mp3" ;
+      
+      incidental_desc_cube : sound_sample "http://joshware.com/sandbox/if/adventuron/desc_cube.mp3" ;      
+      incidental_desc_pistol : sound_sample "http://joshware.com/sandbox/if/adventuron/desc_pistol.mp3" ;      
+   }
+   graphics {
+      load : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAADACAYAAADr7b1mAAABhWlDQ1BJQ0MgcHJvZmlsZQAAKM+VkT1Iw1AUhU9TS6VUHOwg0iFDdbIgKuIoUSyChdJWaNXB5KV/0KQhSXFxFFwLDv4sVh1cnHV1cBUEwR8QNzcnRRcp8b6k0CJU8MLjfZz3zuG++wChWWWa1TcBaLptphOSmMuvisFXBBCCD1H4ZWYZycxiFj3r655uUt3FeRb+VwNqwWKATySeY4ZpE28Qz2zaBud94ggryyrxOfG4SQ0SP3Jd8fiNc8llgWdGzGx6njhCLJa6WOliVjY14mnimKrplC/kPFY5b3HWqnXW7pO/MFzQVzJcpxVFAktIIgURCuqooAobcdp1Uiyk6Vzq4R9x/SlyKeSqgJFjATVokF0/+B/8nq1VnJr0ksISEHhxnI9RILgLtBqO833sOK0TwP8MXOkdf60JzH6S3uhosSNgcBu4uO5oyh5wuQMMPxmyKbuSn5ZQLALvZ/RNeWDoFgiteXNrn+P0AcjSrJZvgINDYKxE2es93t3fPbc/77jzg/QDAkpyejoOpkwAAAAJcEhZcwAALiIAAC4iAari3ZIAAAAHdElNRQflBQoBHSd2pPzFAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAABIxJREFUeF7t2YuumkoAQNHj/f9/9pa0puQUR0A9KnuthLTlOWiyGezp6+vr/GsBgv778ycQJAAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQdvq1nH//9TXO538vfzpNwxrbe9xeS9e7eOZ1uc/oe9vqiN+zGQCEvdUMYE9h7z1+r1ddl21ufU/3bv90ZgAQ9vYBmAp8WWCr6al9Wfa49/h3ZwYAYVPWXvpovfcd7Nb2yWj2sLfsa657y61xbbnGnntcOub7dS9G60f2jOsnzce3dzzvfo8jZgAQNuXper5+0PcSb/333FKRl0q8dr8lo+tf88hx/cS51qx/5rh+wuhervm0exwxA4CwwwdgKu616o62Pduacc2XkdE+a46fu7b/1vNMRsfsOd87+vR7NAOAsMMHYHoPu7XwHEuf9feF1zIDgLDpBeWtMjx/Kiy9P93aPlmzz732XOOR49p6rtH+17ZtXT/ZOq5X2zPerce882diBgBhmd8Ally2zZefMrrefDyj/S5G+6w5/lnWjGu+fKLR2D/hvswAIGx6IXmrRM2LufS+dGv7klGFH3GO735yXBd7znXrmKXto/VLHnmPjzAaz3drx/du97iFGQCETXlan0TgUMwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIOz0azn//utxnM/bb+l0mj4KHm3+Xcw/42vr59Z8j3u/t3vGdSRmABA2Je52Zj/U2pofofrveg+PeNI+494eMa4jMAOAMAGAMAGAsOkl5+9Lz8GsfZ/b+z763b3Hbjn3aN9rbo3vGa59ttfWL9my71qPGNcRmAFA2JS4v8k7mLU1H+0333axdK61+83tOfe1c67Z51Md+d5ezQwAwqac/vsYOoilJ+w1j3qybtn/kU+2Iz8lj3xvr2YGAGGZAExPjtECRWYAECYAECYAECYAG0y/Rs9/kZ4bbXsHl/G98xjvVbjHRxMACJt+/j5cLtc8Afb+8j86961zbnkyvWJ87+aeJ7n/2VnHDADCpkzuzyzw0cwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIEwAIOvr63/SEhdIaegs9gAAAABJRU5ErkJggg==";
+   }
+}
+
+on_command {
+   :mask {
+      :gosub "abort_sounds";
+      :gosub "articulate_command";
+      :set_false "tmp_bool";
+      :if (verb_is "quit" || verb_is "save" || verb_is "load" || verb_is "graphics" || verb_is "sound") {
+         :set_true "tmp_bool";
+      }
+   }
+   :match "d -" {
+      :print "Indeed, for you will not go gently into that good night.  Game over, for now.";
+      :play_incidental {("incidental_game_over")};       
+      :win_game;
+   }
+   :match "l -" {
+      :redescribe;
+      :gosub "abort_command";
+   }
+   :match "x *" {
+      :if (is_present("*")) {
+         :print {(emsg(s1()))};
+         :queue_incidental {("incidental_desc_"+s1())}; 
+      }
+      :gosub "abort_command";
+   }   
+   :match "i -" {
+      :print {(inventory_string)};
+      :if (carried() == 0) {
+         :queue_incidental "incidental_msg_no_inventory"; 
+      }
+      :else {
+            :queue_incidental "incidental_msg_you_are_holding";         
+            : iterate "_inventory" {
+               :if (is_final_iteration() && !is_first_iteration()) {
+                  :queue_incidental "incidental_msg_and";               
+               }
+               :queue_incidental "incidental_msg_uh";
+               :queue_incidental {("incidental_name_" + item())};
+            }         
+      }
+      :gosub "abort_command";      
+   }
+   :match "get _" {
+      : if (s1() != "" && is_present "*") {
+         :if (is_carried "*") {
+            :print "You already have that.";
+         }
+         :else {
+            :get quiet="true";
+            :if (is_carried "*") {
+               :print {("You take " + definite(d(s1())) + ".")};
+               :queue_incidental "incidental_msg_you_take";                
+               :queue_incidental "incidental_msg_the";
+               :queue_incidental {("incidental_name_"+s1())};
+            }
+         }
+      }
+      :else {
+         :gosub "reject_command";   
+      }
+      :gosub "abort_command";
+   }
+   :match "drop _" {
+      : if (s1() != "" && is_carried "*") {
+         :drop quiet="true";
+         :if (!is_carried "*") {         
+            :print {("You drop " + definite(d(s1())) + ".")};
+            :queue_incidental "incidental_msg_you_drop";                
+            :queue_incidental "incidental_msg_the";
+            :queue_incidental {("incidental_name_"+s1())};
+         }
+      }
+      :else {
+         :gosub "reject_command";   
+      }
+      :gosub "abort_command";
+   }   
+   :if (!tmp_bool) {
+      :gosub "reject_command";
+      :gosub "abort_command";
+   }
+}
+
+subroutines {
+   reject_command : subroutine {
+      :print "Sorry, I don't understand.";
+      :queue_incidental "incidental_msg_sorry";       
+   }
+   abort_command : subroutine {
+      :done;
+   }
+   abort_sounds : subroutine {
+      :stop_incidental;
+   }   
+   
+   articulate_command : subroutine {
+   }
+}
+
+game_settings {
+   enable_standard_all_behaviour = false
+}
+
+themes {
+   primary_theme : theme {
+      lister_objects {
+         list_type = verbose
+      }
+      
+      theme_settings {
+         font              = bamburgh
+         columns           = 256
+         default_delay     = 50
+         parser_delay      = 50
+         paragraph_delay   = 0
+         layout            = D
+         shader            = scanlines
+         wait_align        = left
+      }
+   }
+}
+
+game_information {
+   game_name         = PORT L III: Introducing CanDOS
+   game_version      = 0.0.1
+   game_shortname    = PORTLIII;
+   written_by        = JOSHUA WILSON
+   uuid              = f613185a-ea03-4f28-a664-02251a43772a
+   year_of_release   = 2021
+   copyright_message = Copyright 2021 Joshua Wilson
+   short_synopsis    = Enjoy the cake!
+}
