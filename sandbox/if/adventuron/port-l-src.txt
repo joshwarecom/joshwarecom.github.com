@@ -45,7 +45,7 @@ strings {
       + ".") : "You find your lack of possessions disturbing."
    );   
    
-   desc_cube : string "A sold block of mistreated metal.";
+   desc_cube : string "A solid block of mistreated metal.";
    desc_pistol : string "There's no trigger.  You can't tell how to fire it.";   
 } 
 
