@@ -1,0 +1,437 @@
+﻿start_at = intro_safe
+
+booleans {
+   introduction : boolean "true";
+   first_look_resolved : boolean "false";   
+   first_x_resolved : boolean "false";      
+   first_take_announced : boolean "false";
+   first_take_resolved : boolean "false";   
+   
+   tmp_bool : boolean;
+   allowed_cmd : boolean;   
+   force_abort : boolean;
+}
+
+locations {
+   intro_safe : location "{intro_safe_description}" {
+      on_command {
+         :mask {
+            :set_false "force_abort";
+            :gosub "abort_sounds";         
+            :set_false "allowed_cmd";
+            :if (first_look_resolved) {
+               :if (!first_x_resolved) {
+                  :match "examine marble" {
+                     :set_true "first_x_resolved";
+                     :set_true "allowed_cmd";               
+                  }
+               }
+               :else {
+                  :match "examine bean" {
+                     :set_true "allowed_cmd";               
+                  }               
+                  :match "examine marble" {
+                     :if (is_present "bean") {
+                        :print {(nt_introduction7)};
+                        :play_incidental "incidental_na_introduction7";
+                        :set_false "allowed_cmd";
+                        :set_true "force_abort";
+                     }
+                  }               
+                  :match "take _" {
+                     :set_true "allowed_cmd";               
+                  }
+               }
+            }
+            :match "look -" {
+               :set_true "first_look_resolved";
+               :set_true "allowed_cmd";               
+            }
+         }
+         :if (force_abort) {
+            :gosub "abort_command";
+         }
+         :else_if (!allowed_cmd) {
+            :if (!first_look_resolved) {
+               :print {(nt_msg_disallowed_cmd_1)};
+               :play_incidental "incidental_na_msg_disallowed_cmd_1";
+            }
+            :else_if (!first_x_resolved) {
+               :print {(nt_msg_disallowed_cmd_2)};
+               :play_incidental "incidental_na_msg_disallowed_cmd_2";
+            }            
+            :else_if (!first_take_resolved) {
+               :print {(nt_msg_disallowed_cmd_3)};
+               :play_incidental "incidental_na_msg_disallowed_cmd_3";
+            }                 
+            :gosub "abort_command";
+         }
+         :else {
+            :if (!first_take_resolved) { 
+               :if (verb_is "take") {
+                  :if (noun1_is "bean") {
+                     :set_true "first_take_resolved";
+                  }
+                  :else {
+                     :if (verb_is "take" && noun1_is "marble" && is_present "bean") {
+                        :print {(nt_introduction7)};
+                        :play_incidental "incidental_na_introduction7";
+                        :set_false "allowed_cmd";            
+                        :gosub "abort_command";                        
+                     }                  
+                     :else {
+                        :print {(nt_msg_disallowed_cmd_3)};
+                        :play_incidental "incidental_na_msg_disallowed_cmd_3";
+                        :gosub "abort_command";
+                     }
+                  }
+               }
+            }
+         }
+      }   
+      on_describe {
+         :if (first_look_resolved) {
+            :queue_incidental "incidental_na_intro_safe_description_resolved";
+            :if (count(current_location()) > 0) {
+               :queue_incidental "incidental_0_25_silence";            
+               :queue_incidental "incidental_na_msg_on_the_ground_i_saw";         
+               :iterate "_beside_listed" {
+                  :if (is_final_iteration() && !is_first_iteration()) {
+                     :queue_incidental "incidental_msg_and";               
+                  }
+                  :queue_incidental {("incidental_na_name_a_" + item())};                  
+               }         
+               :queue_incidental "incidental_0_25_silence";
+            }
+         }
+         :else {
+            :queue_incidental "incidental_na_intro_safe_description_initial";
+         }
+      }
+      on_tick {      
+         :if (first_look_resolved) {
+            :if (!first_x_resolved) {
+               :if (verb_is "look" && noun1_is "") {
+                  :print {("\n"+nt_introduction4)};
+                  :queue_incidental "incidental_na_introduction4";
+               }
+            }
+            :else {
+               :if (verb_is "examine" && noun1_is "marble" && is_present "marble") {
+                  :queue_incidental "incidental_na_introduction5";
+                  :destroy "marble";
+                  :create "bean";
+               }
+               :if (!first_take_resolved) {
+                  :if (!first_take_announced) {
+                     :set_true "first_take_announced";
+                     :print {("\n"+nt_introduction6)};
+                     :queue_incidental "incidental_0_25_silence";
+                     :queue_incidental "incidental_na_introduction6";
+                  }
+                  :else_if (verb_is "look" && noun1_is "") {
+                     :print {("\n"+nt_introduction6)};
+                     :queue_incidental "incidental_0_25_silence";
+                     :queue_incidental "incidental_na_introduction6";
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   entrance : location "{entrance_description}" {
+      on_describe {
+         :queue_incidental "incidental_entrance_description";
+         :queue_incidental "incidental_0_25_silence";
+         :if (count("entrance") > 0) {
+            :queue_incidental "incidental_msg_on_the_ground";         
+            :iterate "_beside_listed" {
+               :if (is_final_iteration() && !is_first_iteration()) {
+                  :queue_incidental "incidental_msg_and";               
+               }
+               :queue_incidental {("incidental_name_" + item())};
+            }         
+         }
+      }
+   }
+}
+
+strings {
+   nt_msg_disallowed_cmd_1 : string "<No, first you typed LOOK.  I'm sure of it.<#ffa>>";
+   nt_msg_disallowed_cmd_2 : string "<No, next you typed EXAMINE MARBLE.<#ffa>>";
+   nt_msg_disallowed_cmd_3 : string "<Nope, I'm positive next you typed TAKE BEAN.<#ffa>>";   
+   
+   nt_introduction1 : string "Someone was murdered last night, someone already dead for decades...\n\nWelcome to Elfae Confidential, a magical murder mystery and audio extravaganza.  I am Lord Nigel Straitlaced and I shall be your host.\n\nWhen you see the flashing gold symbol, that means you should press the ENTER key to continue.";
+   nt_introduction2 : string "Lovely! And now I am pleased to introduce to you the hero of the hour, the inimitable Detective Egg.";
+   nt_introduction3 : string "<Hi there.  My friends call me Goldy.  You’ll be calling the shots during this show, so maybe we should get to know each other better.\n\nIf you’ve heard all this before, just type SKIP TUTORIAL at any time to speed straight to the prologue.\n\n Otherwise, let me tell you about this weird dream I had last night.<#ffa>>";
+   
+
+   intro_safe_description : dynamic_string (
+      first_look_resolved ? "<Thick steel walls and nearly pitch black darkness.  We were trapped in a safe in St. Petersburg!  The only light came from something glowing at my feet." + on_ground_string + "<#ffa>>" : "<It was just you and me locked in a dark room.  You were controlling me by typing words on a keyboard like some kind of adventure game!\n\nFirst, you typed the word LOOK ( or the letter L ) and pressed ENTER so as I could look around and get my bearings.<#ffa>>"
+      );
+      
+      on_ground_string : dynamic_string (
+      (count(current_location()) > 0) ? ("\n\nOn the ground I saw "+ construct_string{ 
+         from      -> (current_location())
+         sep       -> (", ")
+         final_sep -> (" and ")
+         mutate    -> (d(item()))
+      }
+      + ".") : ""
+      );
+      
+      already_holding_string : string "I was already holding ";
+
+   nt_introduction4 : string "<You typed EXAMINE MARBLE or X MARBLE so as I could take a closer look.<#ffa>>";
+   nt_introduction6 : string "<Next you typed TAKE BEAN or GET BEAN, instructing me to pick it up.<#ffa>>";
+   nt_introduction7 : string "<No marbles here, just a magic bean.<#ffa>>";      
+
+   entrance_description : string "You are standing in a cell.  The only way out is down.{in_entrance_string}";
+   in_entrance_string : dynamic_string (
+      (count("entrance") > 0) ? ("  On the ground you see "+ construct_string{ 
+         from      -> ("entrance")
+         sep       -> (", ")
+         final_sep -> (" and ")
+         mutate    -> (d(item()))
+      }
+      + ".") : ""
+   );
+   inventory_string : dynamic_string (
+      (carried() > 0) ? ("You are holding "+ construct_string{ 
+         from      -> ("_inventory")
+         sep       -> (", ")
+         final_sep -> (" and ")
+         mutate    -> (d(item()))
+      }
+      + ".") : "You find your lack of possessions disturbing."
+   );   
+} 
+
+objects {
+   cube : object "a steel cube" at="entrance" msg="A solid block of mistreated metal.";
+   pistol : object "a strange pistol" at="entrance" msg="There's no trigger.  You can't tell how to fire it."; 
+   
+   marble : object "a glowing marble" at="intro_safe" msg="<I realized upon closer inspection it wasn't a marble - it was a magic bean!<#ffa>>";
+   bean : object "a magic bean" msg="<It glowed an eerie shade of blue.<#ffa>>";
+}
+
+__na_url= https://joshware.com/sandbox/if/adventuron/ec-e1/assets/sounds/
+
+assets {
+   sounds {
+      incidental_na_msg_on_the_ground_i_saw : sound_sample "$${__na_url}na_msg_on_the_ground_i_saw.wav";
+      incidental_na_msg_I_was_already_holding : sound_sample "$${__na_url}na_msg_i_was_already_holding.wav";      
+   
+      incidental_na_introduction1 : sound_sample "$${__na_url}na_introduction1.wav";
+      incidental_na_introduction2 : sound_sample "$${__na_url}na_introduction2.wav";
+      incidental_na_introduction3 : sound_sample "$${__na_url}na_introduction3.wav";
+      incidental_na_intro_safe_description_initial : sound_sample "$${__na_url}na_intro_safe_description_initial.wav";      
+      incidental_na_intro_safe_description_resolved : sound_sample "$${__na_url}na_intro_safe_description_resolved.wav";      
+      incidental_na_msg_disallowed_cmd_1 : sound_sample "$${__na_url}na_msg_disallowed_cmd_1.wav";
+      incidental_na_msg_disallowed_cmd_2 : sound_sample "$${__na_url}na_msg_disallowed_cmd_2.wav";
+      incidental_na_msg_disallowed_cmd_3 : sound_sample "$${__na_url}na_msg_disallowed_cmd_3.wav";           
+      
+      incidental_na_introduction4 : sound_sample "$${__na_url}na_introduction4.wav";
+      incidental_na_introduction5 : sound_sample "$${__na_url}na_introduction5.wav";
+      incidental_na_introduction6 : sound_sample "$${__na_url}na_introduction6.wav";
+      incidental_na_introduction7 : sound_sample "$${__na_url}na_introduction7.wav";                  
+      
+      incidental_na_name_a_marble : sound_sample "$${__na_url}na_name_a_marble.wav";      
+      incidental_na_name_a_bean : sound_sample "$${__na_url}na_name_a_bean.wav";
+      incidental_na_name_the_bean : sound_sample "$${__na_url}na_name_the_bean.wav";      
+      incidental_na_desc_bean : sound_sample "$${__na_url}na_desc_bean.wav";      
+      
+      incidental_game_over : sound_sample "http://joshware.com/sandbox/if/adventuron/game_over.mp3";
+      incidental_entrance_description : sound_sample "http://joshware.com/sandbox/if/adventuron/entrance_description.mp3" ;
+      incidental_0_25_silence : sound_sample "http://joshware.com/sandbox/if/adventuron/0_25_silence.mp3" ;
+      
+      incidental_msg_you_are_holding : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_you_are_holding.wav" ;      
+      incidental_msg_no_inventory : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_no_inventory.mp3" ;
+      incidental_msg_sorry : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_sorry.mp3" ;
+      incidental_msg_you_take : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_you_take.mp3" ;
+      incidental_msg_you_drop : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_you_drop.mp3" ;     
+      incidental_msg_on_the_ground : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_on_the_ground.mp3" ;      
+      incidental_msg_the : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_the.wav" ;
+      incidental_msg_uh : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_uh.wav" ;                  
+      incidental_msg_and : sound_sample "http://joshware.com/sandbox/if/adventuron/msg_and.wav" ;                  
+      
+      incidental_input_inventory : sound_sample "http://joshware.com/sandbox/if/adventuron/input_inventory.mp3" ;
+      incidental_input_look : sound_sample "http://joshware.com/sandbox/if/adventuron/input_look.mp3" ;      
+      
+      incidental_name_cube : sound_sample "http://joshware.com/sandbox/if/adventuron/name_steel_cube.wav" ;      
+      incidental_name_pistol : sound_sample "http://joshware.com/sandbox/if/adventuron/name_pistol.wav" ;
+      
+      incidental_desc_cube : sound_sample "http://joshware.com/sandbox/if/adventuron/desc_cube.mp3" ;      
+      incidental_desc_pistol : sound_sample "http://joshware.com/sandbox/if/adventuron/desc_pistol.mp3" ;      
+   }
+   graphics {
+      load : base64_png "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";
+      entrance : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAEOSURBVHhe7dQxAcAwDMCwdMQDvX3GwtJjBj67ewdI+v4CQQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAWTMPTakDHPEiizkAAAAASUVORK5CYII=";
+      introduction1 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAE9SURBVHhe7d2xDoIwFEDR6o83/XJ1qHEhOjjBPWeBneTm8ULobc75GEDSfV+BIAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMD8Eubi11r77eD3zfUedCQDCBADCBADC7ABO7ugd/xc7AN5MABAmABAmABBmB3BxvgPgGxMAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhAkAhDkb8OSOzv77l7MDO0wAECYAECYAEGYHAGEmAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAMga4wk6YRuD0lTJWwAAAABJRU5ErkJggg==";
+      introduction2 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAFYSURBVHhe7dzLDsEAEEDR8uNNvxyLLkuC0sc9Z6MrG8nNzBCXcRxvA5B0nV+BIAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMP8HsDPTNM1Pn3t8pvMTvGYCgDABgDABgDA3gI0t7fzf7PBrvx/nZgKAMAGAMAGAMDeAk3ED4B0mAAgTAAgTAAgTAAgTAAgTAAgTAAjzO4CD870/3zABQJgAQJgAQJgbwMHY+VmTCQDCBADCBADC3AB2zs7PL5kAIEwAIEwAIMwNYGfs/PyTCQDCBADCBADC3AA2ZudnSyYACBMACBMACHMD2NjSDWBtbgo8YwKAMAGAMAGAMDcACDMBQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQNYw3AEhXjnqmx7laAAAAABJRU5ErkJggg==";
+      introduction3 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAFTSURBVHhe7dzLCoJQFEBR68fFL+8BChKN1IGXvRZEjpoEm+Px8Zjn+TUBSc/1GwgSAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAjzQpDBLMuyHh33+c/XI+pMABAmABAmABBmB3Bz/875z5zDX/17jM0EAGECAGECAGF2ADF2AOyZACBMACBMACBMACBMACBMACBMACDMfQCDO/J+ANf92ZgAIEwAIEwAIMwOIMazAOyZACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMAG7ue+/+7weuIgAQJgAQJgAQ5n0Ag7liB+D5fzYmAAgTAAgTAAizA4AwEwCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQBkTdMbpKkxCI6WoYIAAAAASUVORK5CYII=";
+      intro_safe : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAIvSURBVHhe7duLToMwAIZR9MWXPblKMiJpoC2Xbeh/TrJotHQUzUfV+XG73b4GINLn4y0QSAAgmABAMAGAYAIAwQ7/FeB+vz/eG4afuR7vkWz+PVHyPXItdgAQ7N+9DsCO5H1a197X5nrsACCYAPAy411/enANAgDBNv8O4Izf8C7NMR679vGa2vmsWZuztbYjaz9y7GTLWs+4br3nNZnPufXY0hnXizY7AAj21tcBLFV+PseeuZ99F1qac+k59xw7KcdtXdPW8Uu2zLG0htKeOZaO6R1HHzsACHaZHUCr9r1zHzmf0jPXVqqNP3NNk/mcLb3PeZXrRT87AAhmB1DxzLWVesbPx7T0zFE7rz1r33PMZMvaSlufi192ABBMAP6Q8U7X8xiNd9Qjd9V3WlpT7cF+AgDB4gIw3RlfeXesPV/PuUxjWuP+i9pa59eiNo4+dgAQ7NT/BSit/XxWm2M8pvX5HnvmOGNta569plJrzp65xjnm445ct3dcL9rsACDY4dcBAH+XHQAEEwAIJgAQTAAgmABAMAGAYAIAwQQAggkABBMACCYAEEwAIJgAQDABgGACAMEEAIIJAAQTAAgmABBMACCYAEAwAYBgAgDBBACCCQAEEwAIJgAQTAAgmABAMAGAYAIAwQQAggkABBMACCYAEEwAIJgAQDABgGACAMEEAIIJAAQTAAgmABBMACCYAEAwAYBgAgDBBACCCQAEEwAIJgAQTAAgmABArGH4Bu6lG/EVH9KFAAAAAElFTkSuQmCC";
+   }
+}
+
+on_command {
+   :mask {
+      :gosub "abort_sounds";
+      :gosub "articulate_command";
+      :set_false "tmp_bool";
+      :if (verb_is "quit" || verb_is "graphics" || verb_is "sound") {
+         :set_true "tmp_bool";
+      }
+   }
+   :match "d -" {
+      :print "Indeed, for you will not go gently into that good night.  Game over, for now.";
+      :play_incidental {("incidental_game_over")};       
+      :win_game;
+   }
+   :match "l -" {
+      :redescribe;
+      :gosub "abort_command";
+   }
+   :match "x *" {
+      :if (is_present("*")) {
+         :print {(emsg(s1()))};
+         :queue_incidental {("incidental_desc_"+s1())}; 
+         :queue_incidental {("incidental_na_desc_"+s1())};          
+      }
+      :else {
+         :gosub "reject_command";
+      }
+      :gosub "abort_command";
+   }   
+   :match "i -" {
+      :print {(inventory_string)};
+      :if (carried() == 0) {
+         :queue_incidental "incidental_msg_no_inventory"; 
+      }
+      :else {
+            :queue_incidental "incidental_msg_you_are_holding";         
+            : iterate "_inventory" {
+               :if (is_final_iteration() && !is_first_iteration()) {
+                  :queue_incidental "incidental_msg_and";               
+               }
+               :queue_incidental "incidental_msg_uh";
+               :queue_incidental {("incidental_name_" + item())};
+            }         
+      }
+      :gosub "abort_command";      
+   }
+   :match "get _" { 
+      : if (s1() != "" && is_present "*") {
+         :if (is_carried "*") {
+            :print {("<" + already_holding_string + definite(d(s1())) + ".<#ffa>>")};
+            :queue_incidental "incidental_na_msg_I_was_already_holding";
+            :queue_incidental {("incidental_na_name_the_"+s1())};            
+         }
+         :else {
+            :get quiet="true";
+            :if (is_carried "*") {
+               :print {("You take " + definite(d(s1())) + ".")};
+               :queue_incidental "incidental_msg_you_take";                
+               :queue_incidental "incidental_msg_the";
+               :queue_incidental {("incidental_name_"+s1())};
+            }
+         }
+      }
+      :else {
+         :gosub "reject_command";   
+      }
+      :gosub "abort_command";
+   }
+   :match "drop _" {
+      : if (s1() != "" && is_carried "*") {
+         :drop quiet="true";
+         :if (!is_carried "*") {         
+            :print {("You drop " + definite(d(s1())) + ".")};
+            :queue_incidental "incidental_msg_you_drop";                
+            :queue_incidental "incidental_msg_the";
+            :queue_incidental {("incidental_name_"+s1())};
+         }
+      }
+      :else {
+         :gosub "reject_command";   
+      }
+      :gosub "abort_command";
+   }   
+   :if (!tmp_bool) {
+      :gosub "reject_command";
+      :gosub "abort_command";
+   }
+}
+
+subroutines {
+   reject_command : subroutine {
+      :print "Sorry, I don't understand.";
+      :queue_incidental "incidental_msg_sorry";       
+   }
+   abort_command : subroutine {
+      :done;
+   }
+   abort_sounds : subroutine {
+      :stop_incidental;
+   }   
+   articulate_command : subroutine {
+   }
+}
+
+game_settings {
+   enable_standard_all_behaviour = false
+}
+
+themes {
+   primary_theme : theme {
+      lister_objects {
+         list_type = verbose
+      }
+      
+      theme_settings {
+         font              = bamburgh
+         columns           = 256
+         default_delay     = 50
+         parser_delay      = 50
+         paragraph_delay   = 0
+         layout            = G- LOCK D X
+         
+         shader            = scanlines
+         wait_align        = left
+      }
+   }
+}
+
+on_startup {
+   : clear_screen;
+   : print_graphic "introduction1";
+   : print {(nt_introduction1)};
+   : play_incidental "incidental_na_introduction1";
+   : press_any_key;
+
+   : clear_screen;
+   : print_graphic "introduction2";
+   : print {(nt_introduction2)};
+   : play_incidental "incidental_na_introduction2";
+   : press_any_key;
+   
+   : clear_screen;
+   : print_graphic "introduction3";
+   : print {(nt_introduction3)};
+   : play_incidental "incidental_na_introduction3";
+   : press_any_key;
+   
+   : gosub "abort_sounds";
+}
+
+game_information {
+   game_name         = Elfae Confidential: Who Blotted the Historian?
+   game_version      = 0.0.1
+   game_shortname    = EC-E1;
+   written_by        = JOSHUA WILSON
+   uuid              = 9a04ba7d-2ffd-4e40-9faf-8793e5ec13f5
+   year_of_release   = 2021
+   copyright_message = Copyright 2021 Joshua Wilson
+   short_synopsis    = A magical murder mystery and audio extravaganza.
+}
