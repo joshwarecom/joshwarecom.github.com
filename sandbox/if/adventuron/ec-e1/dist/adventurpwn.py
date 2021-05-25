@@ -33,8 +33,10 @@ script_4 = """
 	//@CEC new input ready for commands.  Inject init here if loaded.
 	if (cecWasJustLoaded()) {
 		var o = new Object();
-		o.a = this;
-		var cec_c = new Ove(o, "init music");
+		o.a = this;		
+		var cec_c = new Ove(o, "*screenread off");
+		Nve(cec_c);		
+		var cec_c = new Ove(o, "init audio");
 		Nve(cec_c);
 		cecResetLoadSrc();
 	}
@@ -44,6 +46,10 @@ script_5 = """
 	//@CEC reinitialize after first command
 	cecResetLoadSrc();
 """;
+
+script_6 = "/*@CEC remove enabled text*/null";
+
+script_7 = "/*@CEC remove disabled text*/null";
 
 #print("Enter path to compiled game HTML file: ")
 #game = input();
@@ -79,6 +85,14 @@ updated_data = "";
 updated_data += (htmldata[0:htmldata.index("g=b>0;")])
 updated_data += script_5
 updated_data += (htmldata[htmldata.index("g=b>0;"):])
+htmldata = updated_data;
+updated_data = "";
+
+updated_data = htmldata.replace("'Screen reading enabled (experimental)'",script_6);
+htmldata = updated_data;
+updated_data = "";
+
+updated_data = htmldata.replace("'Screen reading disabled '",script_7);
 htmldata = updated_data;
 
 f = open(f"{game}.hacked.html", "w")
