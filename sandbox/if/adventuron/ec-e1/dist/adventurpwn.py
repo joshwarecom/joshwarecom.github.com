@@ -51,6 +51,10 @@ script_6 = "/*@CEC remove enabled text*/null";
 
 script_7 = "/*@CEC remove disabled text*/null";
 
+script_8 = "/*@CEC remove savegame */null";
+
+script_9 = "/*@CEC remove loadgame text*/null";
+
 #print("Enter path to compiled game HTML file: ")
 #game = input();
 game = "game.html";
@@ -93,6 +97,14 @@ htmldata = updated_data;
 updated_data = "";
 
 updated_data = htmldata.replace("'Screen reading disabled '",script_7);
+htmldata = updated_data;
+updated_data = "";
+
+updated_data = htmldata.replace("'Save Game'",script_8);
+htmldata = updated_data;
+updated_data = "";
+
+updated_data = htmldata.replace("'Load Game'",script_9);
 htmldata = updated_data;
 
 f = open(f"{game}.hacked.html", "w")
