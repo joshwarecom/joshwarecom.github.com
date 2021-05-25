@@ -1,4 +1,5 @@
-﻿start_at = intro_safe
+﻿loading_screen = load
+start_at = intro_safe
 
 booleans {
    introduction : boolean "true";
@@ -10,6 +11,7 @@ booleans {
    tmp_bool : boolean;
    allowed_cmd : boolean;   
    force_abort : boolean;
+   load_requested : boolean "false";
 }
 
 locations {
@@ -19,7 +21,10 @@ locations {
             :set_false "force_abort";
             :gosub "abort_sounds";         
             :set_false "allowed_cmd";
-            :if (first_look_resolved) {
+            :if (verb_is "quit" || verb_is "graphics" || verb_is "sound" || verb_is "save" || verb_is "savegame" || verb_is "load" || verb_is "loadgame" || verb_is "savef" || verb_is "loadf" || (verb_is "test" && noun1_is "sound")) {
+               :set_true "allowed_cmd";
+            }            
+            :else_if (first_look_resolved) {
                :if (!first_x_resolved) {
                   :match "examine marble" {
                      :set_true "first_x_resolved";
@@ -106,6 +111,7 @@ locations {
          }
          :else {
             :queue_incidental "incidental_na_intro_safe_description_initial";
+            :update_graphic "blank";
          }
       }
       on_tick {      
@@ -135,10 +141,17 @@ locations {
                      :queue_incidental "incidental_na_introduction6";
                   }
                }
+               :else {
+                  :press_any_key;
+                  :goto "intro_seashore";
+                  :redescribe;
+               }
             }
          }
       }
    }
+   
+   intro_seashore : location "{intro_seashore_description}";
 
    entrance : location "{entrance_description}" {
       on_describe {
@@ -158,9 +171,14 @@ locations {
 }
 
 strings {
+   nt_msg_yes_or_no : string "Please enter YES or NO.";
+   nt_msg_that_was_that : string "And that, as they say, was that.";
+   nt_msg_confirm_forfeit : string "Would you like to forfeit the game?";
    nt_msg_disallowed_cmd_1 : string "<No, first you typed LOOK.  I'm sure of it.<#ffa>>";
    nt_msg_disallowed_cmd_2 : string "<No, next you typed EXAMINE MARBLE.<#ffa>>";
-   nt_msg_disallowed_cmd_3 : string "<Nope, I'm positive next you typed TAKE BEAN.<#ffa>>";   
+   nt_msg_disallowed_cmd_3 : string "<Nope, I'm positive next you typed TAKE BEAN.<#ffa>>";
+   nt_msg_take_what : string "<Take what?<#ffa>>";
+   nt_msg_i_took : string "I took ";
    
    nt_introduction1 : string "Someone was murdered last night, someone already dead for decades...\n\nWelcome to Elfae Confidential, a magical murder mystery and audio extravaganza.  I am Lord Nigel Straitlaced and I shall be your host.\n\nWhen you see the flashing gold symbol, that means you should press the ENTER key to continue.";
    nt_introduction2 : string "Lovely! And now I am pleased to introduce to you the hero of the hour, the inimitable Detective Egg.";
@@ -185,7 +203,9 @@ strings {
 
    nt_introduction4 : string "<You typed EXAMINE MARBLE or X MARBLE so as I could take a closer look.<#ffa>>";
    nt_introduction6 : string "<Next you typed TAKE BEAN or GET BEAN, instructing me to pick it up.<#ffa>>";
-   nt_introduction7 : string "<No marbles here, just a magic bean.<#ffa>>";      
+   nt_introduction7 : string "<No marbles here, just a magic bean.<#ffa>>";
+   
+   intro_seashore_description : string "The seashore.";
 
    entrance_description : string "You are standing in a cell.  The only way out is down.{in_entrance_string}";
    in_entrance_string : dynamic_string (
@@ -206,6 +226,8 @@ strings {
       }
       + ".") : "You find your lack of possessions disturbing."
    );   
+   
+   tmp_string;
 } 
 
 objects {
@@ -220,8 +242,15 @@ __na_url= https://joshware.com/sandbox/if/adventuron/ec-e1/assets/sounds/
 
 assets {
    sounds {
+      incidental_na_msg_sound_is_on : sound_sample "$${__na_url}na_msg_sound_is_on.wav";   
+      incidental_na_msg_sound_enabled : sound_sample "$${__na_url}na_msg_sound_enabled.wav";
+      incidental_na_msg_yes_or_no : sound_sample "$${__na_url}na_msg_yes_or_no.wav";         
+      incidental_na_msg_that_was_that : sound_sample "$${__na_url}na_msg_that_was_that.wav";      
+      incidental_na_msg_confirm_forfeit : sound_sample "$${__na_url}na_msg_confirm_forfeit.wav";   
       incidental_na_msg_on_the_ground_i_saw : sound_sample "$${__na_url}na_msg_on_the_ground_i_saw.wav";
-      incidental_na_msg_I_was_already_holding : sound_sample "$${__na_url}na_msg_i_was_already_holding.wav";      
+      incidental_na_msg_I_was_already_holding : sound_sample "$${__na_url}na_msg_i_was_already_holding.wav";
+      incidental_na_msg_take_what : sound_sample "$${__na_url}na_msg_take_what.wav";
+      incidental_na_msg_i_took : sound_sample "$${__na_url}na_msg_i_took.wav";                  
    
       incidental_na_introduction1 : sound_sample "$${__na_url}na_introduction1.wav";
       incidental_na_introduction2 : sound_sample "$${__na_url}na_introduction2.wav";
@@ -272,6 +301,8 @@ assets {
       introduction2 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAFYSURBVHhe7dzLDsEAEEDR8uNNvxyLLkuC0sc9Z6MrG8nNzBCXcRxvA5B0nV+BIAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMAGAMP8HsDPTNM1Pn3t8pvMTvGYCgDABgDABgDA3gI0t7fzf7PBrvx/nZgKAMAGAMAGAMDeAk3ED4B0mAAgTAAgTAAgTAAgTAAgTAAgTAAjzO4CD870/3zABQJgAQJgAQJgbwMHY+VmTCQDCBADCBADC3AB2zs7PL5kAIEwAIEwAIMwNYGfs/PyTCQDCBADCBADC3AA2ZudnSyYACBMACBMACHMD2NjSDWBtbgo8YwKAMAGAMAGAMDcACDMBQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQJgAQNYw3AEhXjnqmx7laAAAAABJRU5ErkJggg==";
       introduction3 : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAFTSURBVHhe7dzLCoJQFEBR68fFL+8BChKN1IGXvRZEjpoEm+Px8Zjn+TUBSc/1GwgSAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAgTAAjzQpDBLMuyHh33+c/XI+pMABAmABAmABBmB3Bz/875z5zDX/17jM0EAGECAGECAGF2ADF2AOyZACBMACBMACBMACBMACBMACBMACDMfQCDO/J+ANf92ZgAIEwAIEwAIMwOIMazAOyZACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMACBMAG7ue+/+7weuIgAQJgAQJgAQ5n0Ag7liB+D5fzYmAAgTAAgTAAizA4AwEwCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQCECQBkTdMbpKkxCI6WoYIAAAAASUVORK5CYII=";
       intro_safe : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAIvSURBVHhe7duLToMwAIZR9MWXPblKMiJpoC2Xbeh/TrJotHQUzUfV+XG73b4GINLn4y0QSAAgmABAMAGAYAIAwQ7/FeB+vz/eG4afuR7vkWz+PVHyPXItdgAQ7N+9DsCO5H1a197X5nrsACCYAPAy411/enANAgDBNv8O4Izf8C7NMR679vGa2vmsWZuztbYjaz9y7GTLWs+4br3nNZnPufXY0hnXizY7AAj21tcBLFV+PseeuZ99F1qac+k59xw7KcdtXdPW8Uu2zLG0htKeOZaO6R1HHzsACHaZHUCr9r1zHzmf0jPXVqqNP3NNk/mcLb3PeZXrRT87AAhmB1DxzLWVesbPx7T0zFE7rz1r33PMZMvaSlufi192ABBMAP6Q8U7X8xiNd9Qjd9V3WlpT7cF+AgDB4gIw3RlfeXesPV/PuUxjWuP+i9pa59eiNo4+dgAQ7NT/BSit/XxWm2M8pvX5HnvmOGNta569plJrzp65xjnm445ct3dcL9rsACDY4dcBAH+XHQAEEwAIJgAQTAAgmABAMAGAYAIAwQQAggkABBMACCYAEEwAIJgAQDABgGACAMEEAIIJAAQTAAgmABBMACCYAEAwAYBgAgDBBACCCQAEEwAIJgAQTAAgmABAMAGAYAIAwQQAggkABBMACCYAEEwAIJgAQDABgGACAMEEAIIJAAQTAAgmABBMACCYAEAwAYBgAgDBBACCCQAEEwAIJgAQTAAgmABArGH4Bu6lG/EVH9KFAAAAAElFTkSuQmCC";
+      intro_seashore : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAJmSURBVHhe7d2NiuIwFAbQ7r64+OS7KxgoRZukSZyZ/c4BGcH09ibKR9r5+3W73f5sQKTfz69AIAEAwQQABBMAEEwAQDABAMEEAAQTABBMAEAwAQDBBAAEEwAQTABAMAEAwQQABBMAEEwAQDABAMEEAAQTABBMAEAwAQDBhv8s+P1+fz7btn+1ns+gz/5zVPg8rWcHAMH+u38MYkfys3n/PssOAIIJAAgmACBY9z2AV3dri9Zrtnd3fK/cCT7r551PXlv29DeyfsWMGsXMWkXP+/kY+6p2a1/FyHrVjl1Z+xPsACDYl/4cwKsE3Ne4Unukn5l6+zgbX1unonVci5b+Z86xqM1hRo2iddzeldrl9ZV9XWUHAMG+zQ6gloSttUf6mWlmH721Wsbvx9S01Ji11rWavXNr6atn/MicV/Z1lR0ABLMDWGzfT827fntqHB1rtq5PzzrOmGNRO29LXz29P1yda0vtvf2xvXrP1coOAILZAXwTZ33PnFNrrRXr2FKzNmZGjaOe8b2190aOXcUOAILFBcAjhctjpVXnOau5P+fZuFk+dZ4RZ/19Ze8tfe0fq9gBQLCpvwtw9O4656zG45ja6y1m1JhhxnodrV6f4vhevKs9Y461OY3MedWxR7VaRyN9zWIHAMGGvwsA/Fx2ABBMAEAwAQDBBAAEEwAQTABAMAEAwQQABBMAEEwAQDABAMEEAAQTABBMAEAwAQDBBAAEEwAQTABAMAEAwQQABBMAEEwAQDABAMEEAAQTABBMAEAwAQDBBAAEEwAQTABAMAEAwQQABBMAEEwAQDABAMEEAMTatr8k72VP4A51qwAAAABJRU5ErkJggg==";
+      blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAEOSURBVHhe7dQxAcAwDMCwdMQDvX3GwtJjBj67ewdI+v4CQQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAWTMPTakDHPEiizkAAAAASUVORK5CYII=";
    }
 }
 
@@ -280,9 +311,49 @@ on_command {
       :gosub "abort_sounds";
       :gosub "articulate_command";
       :set_false "tmp_bool";
-      :if (verb_is "quit" || verb_is "graphics" || verb_is "sound") {
+      :if (verb_is "quit" || verb_is "graphics" || verb_is "sound" || verb_is "save" || verb_is "savegame" || verb_is "load" || verb_is "loadgame" || verb_is "savef" || verb_is "loadf") {
          :set_true "tmp_bool";
       }
+      
+      :match "load _" {
+         :set_sentence "*screenread on";
+         :submit_command "loadgame";
+      }
+      
+      :match "loadgame -" {
+         :load;
+         :set_sentence "*screenread off";
+         :submit_command "l";
+      }
+      
+      :match "save _" {
+         :set_sentence "*screenread on";
+         :submit_command "savegame";
+      }
+      
+      :match "savegame -" {
+         :save;
+         :set_sentence "*screenread off";
+         :submit_command "l";
+      }
+      
+      :match "sound _" {
+         :if (preposition1_is "on") {
+            :submit_command "TEST SOUND";
+         }
+         :else_if (preposition1_is "") {
+            :if (sysvar_bool "sysvar_sound_enabled") {
+               :play_incidental "incidental_na_msg_sound_is_on";
+            }
+         }
+      }
+   }
+   :match "test sound" {
+      :play_incidental "incidental_na_msg_sound_enabled";
+      :gosub "abort_command";      
+   }   
+   :match "quit -" {
+      :gosub "custom_command_quit";
    }
    :match "d -" {
       :print "Indeed, for you will not go gently into that good night.  Game over, for now.";
@@ -331,15 +402,15 @@ on_command {
          :else {
             :get quiet="true";
             :if (is_carried "*") {
-               :print {("You take " + definite(d(s1())) + ".")};
-               :queue_incidental "incidental_msg_you_take";                
-               :queue_incidental "incidental_msg_the";
-               :queue_incidental {("incidental_name_"+s1())};
+               :print {("<"+nt_msg_i_took + definite(d(s1())) + ".<#ffa>>")};
+               :queue_incidental "incidental_na_msg_i_took";
+               :queue_incidental {("incidental_na_name_the_"+s1())};
             }
          }
       }
       :else {
-         :gosub "reject_command";   
+         :print {(nt_msg_take_what)};
+         :play_incidental "incidental_na_msg_take_what";
       }
       :gosub "abort_command";
    }
@@ -376,6 +447,29 @@ subroutines {
       :stop_incidental;
    }   
    articulate_command : subroutine {
+   }
+   
+   custom_command_quit : subroutine {
+      :print {(nt_msg_confirm_forfeit)};
+      :play_incidental "incidental_na_msg_confirm_forfeit";  
+      :set_string var="tmp_string" value="";
+      :while (tmp_string == "") {
+         :gosub "custom_command_quit_loop";
+      }      
+   }   
+   custom_command_quit_loop : subroutine {
+      :ask_string question = "" var = "tmp_string";
+      
+      :if (tmp_string == "y" || tmp_string == "yes" || tmp_string == "1") {
+            :print {(nt_msg_that_was_that)};
+            :play_incidental "incidental_na_msg_that_was_that";              
+            :lose_game;
+         }
+      :else_if (tmp_string != "n" && tmp_string != "no" && tmp_string != "2") {
+            :print {(nt_msg_yes_or_no)};
+            :play_incidental "incidental_na_msg_yes_or_no";
+            :set_string var="tmp_string" value="";
+      }         
    }
 }
 
