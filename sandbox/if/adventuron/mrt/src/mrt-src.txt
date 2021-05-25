@@ -1,0 +1,67 @@
+﻿loading_screen = blank
+start_at = entrance
+
+locations {
+   entrance : location "The entrance.";
+   exit : location "The exit.";   
+}
+
+connections {
+   from, direction, to = [
+      entrance, north, exit
+   ]
+}
+
+on_tick {
+   : if (is_just_entered () ) {
+      : if (is_at "entrance") {
+         : play_music sound="music_entrance";
+      }
+      :else_if (is_at "exit") {
+         : play_music sound="music_exit";
+      }      
+      : else {
+         : stop_music;
+      }
+   }
+}
+
+on_command {
+   :match "init music" {
+      : if (is_at "entrance") {
+         : stop_music;      
+         : play_music sound="music_entrance";
+      }
+      :else_if (is_at "exit") {
+         : stop_music;      
+         : play_music sound="music_exit";
+      }      
+      : else {
+         : stop_music;
+      }
+   }
+}
+   
+__na_url= https://joshware.com/sandbox/if/adventuron/
+
+assets {
+   sounds {
+         music_entrance : sound_sample "$${__na_url}creepy.mp3";   
+         music_exit : sound_sample "$${__na_url}happy.wav";   
+      }
+   graphics {
+      blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAEOSURBVHhe7dQxAcAwDMCwdMQDvX3GwtJjBj67ewdI+v4CQQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAWTMPTakDHPEiizkAAAAASUVORK5CYII=";
+   }
+}
+
+
+game_information {
+   game_name         = Music Restoration Test
+   game_version      = 0.0.1
+   game_shortname    = MRT
+   written_by        = JOSHUA WILSON
+   uuid              = 2ae47219-8c2c-46d6-9e2e-e44142c2afe8
+   year_of_release   = 2021
+   copyright_message = Copyright 2021 Joshua Wilson
+   short_synopsis    = Companion test game to Adventuresong post-processor.
+}
