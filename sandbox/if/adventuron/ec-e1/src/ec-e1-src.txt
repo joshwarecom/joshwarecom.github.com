@@ -9,9 +9,11 @@ booleans {
    first_take_resolved : boolean "false";   
    
    tmp_bool : boolean;
-   allowed_cmd : boolean;   
+   allowed_cmd : boolean;
+   enabled_sound : boolean;      
    force_abort : boolean;
-   load_requested : boolean "false";
+   selected_quiet_menu : boolean;
+   selected_loud_menu : boolean;
 }
 
 locations {
@@ -21,7 +23,7 @@ locations {
             :set_false "force_abort";
             :gosub "abort_sounds";         
             :set_false "allowed_cmd";
-            :if (verb_is "quit" || verb_is "graphics" || verb_is "sound" || verb_is "save" || verb_is "savegame" || verb_is "load" || verb_is "loadgame" || verb_is "savef" || verb_is "loadf" || (verb_is "test" && noun1_is "sound")) {
+            :if (verb_is "defaults" || verb_is "redescribe" || verb_is "init" || verb_is "quit" || verb_is "graphics" || verb_is "sound" || verb_is "save" || verb_is "savegame" || verb_is "load" || verb_is "loadgame" || verb_is "savef" || verb_is "loadf" || verb_is "confirm") {
                :set_true "allowed_cmd";
             }            
             :else_if (first_look_resolved) {
@@ -171,9 +173,12 @@ locations {
 }
 
 strings {
+   nt_msg_defaults_restored : string "The default menu reader settings have been restored.";
    nt_msg_yes_or_no : string "Please enter YES or NO.";
    nt_msg_that_was_that : string "And that, as they say, was that.";
    nt_msg_confirm_forfeit : string "Would you like to forfeit the game?";
+   nt_msg_confirm_screenread_load : string "Would you like the load menu read aloud with the screen reader?";
+   nt_msg_confirm_screenread_save : string "Would you like the save menu read aloud with the screen reader?";   
    nt_msg_disallowed_cmd_1 : string "<No, first you typed LOOK.  I'm sure of it.<#ffa>>";
    nt_msg_disallowed_cmd_2 : string "<No, next you typed EXAMINE MARBLE.<#ffa>>";
    nt_msg_disallowed_cmd_3 : string "<Nope, I'm positive next you typed TAKE BEAN.<#ffa>>";
@@ -186,7 +191,7 @@ strings {
    
 
    intro_safe_description : dynamic_string (
-      first_look_resolved ? "<Thick steel walls and nearly pitch black darkness.  We were trapped in a safe in St. Petersburg!  The only light came from something glowing at my feet." + on_ground_string + "<#ffa>>" : "<It was just you and me locked in a dark room.  You were controlling me by typing words on a keyboard like some kind of adventure game!\n\nFirst, you typed the word LOOK ( or the letter L ) and pressed ENTER so as I could look around and get my bearings.<#ffa>>"
+      first_look_resolved ? "<Thick steel walls and nearly pitch black darkness.  We were trapped in a safe in St. Petersburg! " + (is_present "marble" || is_present "bean"? "The only light came from something at my feet.  " : "") + on_ground_string + "<#ffa>>" : "<It was just you and me locked in a dark room.  You were controlling me by typing words on a keyboard like some kind of adventure game!\n\nFirst, you typed the word LOOK ( or the letter L ) and pressed ENTER so as I could look around and get my bearings.<#ffa>>"
       );
       
       on_ground_string : dynamic_string (
@@ -242,6 +247,9 @@ __na_url= https://joshware.com/sandbox/if/adventuron/ec-e1/assets/sounds/
 
 assets {
    sounds {
+      incidental_na_msg_defaults_restored    : sound_sample "$${__na_url}na_msg_defaults_restored.wav";
+      incidental_na_msg_confirm_screenread_load    : sound_sample "$${__na_url}na_msg_confirm_screenread_load.wav";
+      incidental_na_msg_confirm_screenread_save    : sound_sample "$${__na_url}na_msg_confirm_screenread_save.wav";      
       incidental_na_msg_sound_is_on : sound_sample "$${__na_url}na_msg_sound_is_on.wav";   
       incidental_na_msg_sound_enabled : sound_sample "$${__na_url}na_msg_sound_enabled.wav";
       incidental_na_msg_yes_or_no : sound_sample "$${__na_url}na_msg_yes_or_no.wav";         
@@ -308,38 +316,102 @@ assets {
 
 on_command {
    :mask {
-      :gosub "abort_sounds";
+      :if (!verb_is "init") {
+         :gosub "abort_sounds";
+      }
       :gosub "articulate_command";
       :set_false "tmp_bool";
-      :if (verb_is "quit" || verb_is "graphics" || verb_is "sound" || verb_is "save" || verb_is "savegame" || verb_is "load" || verb_is "loadgame" || verb_is "savef" || verb_is "loadf") {
+      :if (verb_is "defaults" || verb_is "redescribe" || verb_is "init" || verb_is "quit" || verb_is "graphics" || verb_is "sound" || verb_is "save" || verb_is "savegame" || verb_is "load" || verb_is "loadgame" || verb_is "savef" || verb_is "loadf" || verb_is "confirm") {
          :set_true "tmp_bool";
       }
       
-      :match "load _" {
-         :set_sentence "*screenread on";
-         :submit_command "loadgame";
-      }
-      
-      :match "loadgame -" {
-         :load;
-         :set_sentence "*screenread off";
-         :submit_command "l";
-      }
-      
       :match "save _" {
-         :set_sentence "*screenread on";
-         :submit_command "savegame";
+         :if (noun1_is "aloud") {
+            :set_false "selected_quiet_menu";
+            :set_true "selected_loud_menu";            
+         }
+         :if (noun1_is "quiet") {
+            :set_true "selected_quiet_menu";
+            :set_false "selected_loud_menu";
+            :save;
+            :submit_command "redescribe";            
+         }
+         :else {
+            :if (selected_loud_menu) {
+               :set_string var="tmp_string" value="y";
+            }
+            :else_if (selected_quiet_menu) {
+               :set_string var="tmp_string" value="n";            
+            }
+            :else {         
+               :gosub "custom_command_read_save";
+            }
+            :if (tmp_string == "y" || tmp_string == "yes" || tmp_string == "1") {
+               :set_true "selected_loud_menu";
+               :set_false "selected_quiet_menu";
+               :set_sentence "*screenread on";
+               :submit_command "savegame";
+            }
+            :else {
+               :set_true "selected_quiet_menu";
+               :set_false "selected_loud_menu";
+               :save;
+               :set_sentence "redescribe";
+            }
+         }
       }
       
       :match "savegame -" {
          :save;
          :set_sentence "*screenread off";
-         :submit_command "l";
+         :submit_command "redescribe";
+      }
+      
+      :match "load _" {
+         :if (noun1_is "aloud") {
+            :set_false "selected_quiet_menu";
+            :set_true "selected_loud_menu";            
+         }
+         :if (noun1_is "quiet") {
+            :set_true "selected_quiet_menu";
+            :set_false "selected_loud_menu";             
+            :load;
+            :submit_command "redescribe";            
+         }
+         :else {
+            :if (selected_loud_menu) {
+               :set_string var="tmp_string" value="y";
+            }
+            :else_if (selected_quiet_menu) {
+               :set_string var="tmp_string" value="n";            
+            }
+            :else {
+               :gosub "custom_command_read_load";
+            }
+            :if (tmp_string == "y" || tmp_string == "yes" || tmp_string == "1") {
+               :set_true "selected_loud_menu";            
+               :set_false "selected_quiet_menu";
+               :set_sentence "*screenread on";
+               :submit_command "loadgame";
+            }
+            :else {
+               :set_true "selected_quiet_menu";
+               :set_false "selected_loud_menu";             
+               :load;
+               :set_sentence "redescribe";
+            }
+         }
+      }
+      
+      :match "loadgame -" {
+         :load;
+         :set_sentence "*screenread off";
+         :submit_command "redescribe";
       }
       
       :match "sound _" {
          :if (preposition1_is "on") {
-            :submit_command "TEST SOUND";
+            :submit_command "sound confirmed";
          }
          :else_if (preposition1_is "") {
             :if (sysvar_bool "sysvar_sound_enabled") {
@@ -348,7 +420,26 @@ on_command {
          }
       }
    }
-   :match "test sound" {
+   
+   :match "redescribe -" {
+      :gosub "abort_sounds";
+      :redescribe;
+   }
+   
+   :match "init _" {
+      :redescribe;
+      :gosub "abort_command";
+   }
+   
+   :match "defaults _" {
+      :set_false "selected_loud_menu";
+      :set_false "selected_quiet_menu";
+      :play_incidental {("incidental_na_msg_defaults_restored")};
+      :print {(nt_msg_defaults_restored)};
+      :gosub "abort_command";
+   }
+   
+   :match "sound confirmed" {
       :play_incidental "incidental_na_msg_sound_enabled";
       :gosub "abort_command";      
    }   
@@ -454,18 +545,36 @@ subroutines {
       :play_incidental "incidental_na_msg_confirm_forfeit";  
       :set_string var="tmp_string" value="";
       :while (tmp_string == "") {
-         :gosub "custom_command_quit_loop";
+         :gosub "custom_command_yesno_loop";
       }      
-   }   
-   custom_command_quit_loop : subroutine {
-      :ask_string question = "" var = "tmp_string";
-      
       :if (tmp_string == "y" || tmp_string == "yes" || tmp_string == "1") {
             :print {(nt_msg_that_was_that)};
-            :play_incidental "incidental_na_msg_that_was_that";              
+            :play_incidental "incidental_na_msg_that_was_that";
             :lose_game;
-         }
-      :else_if (tmp_string != "n" && tmp_string != "no" && tmp_string != "2") {
+      }      
+   }   
+   
+   custom_command_read_load : subroutine {
+      :print {(nt_msg_confirm_screenread_load)};
+      :play_incidental "incidental_na_msg_confirm_screenread_load";  
+      :set_string var="tmp_string" value="";
+      :while (tmp_string == "") {
+         :gosub "custom_command_yesno_loop";
+      }      
+   }   
+   
+   custom_command_read_save : subroutine {
+      :print {(nt_msg_confirm_screenread_save)};
+      :play_incidental "incidental_na_msg_confirm_screenread_save";  
+      :set_string var="tmp_string" value="";
+      :while (tmp_string == "") {
+         :gosub "custom_command_yesno_loop";
+      }      
+   }   
+
+   custom_command_yesno_loop : subroutine {
+      :ask_string question = "" var = "tmp_string";
+      :if (tmp_string != "n" && tmp_string != "no" && tmp_string != "2" && tmp_string != "y" && tmp_string != "yes" && tmp_string != "1") {
             :print {(nt_msg_yes_or_no)};
             :play_incidental "incidental_na_msg_yes_or_no";
             :set_string var="tmp_string" value="";
@@ -498,6 +607,8 @@ themes {
 }
 
 on_startup {
+   : gosub "abort_sounds";
+   
    : clear_screen;
    : print_graphic "introduction1";
    : print {(nt_introduction1)};
