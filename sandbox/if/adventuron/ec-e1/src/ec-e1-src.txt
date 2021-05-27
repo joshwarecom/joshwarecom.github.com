@@ -6,7 +6,10 @@ booleans {
    first_look_resolved : boolean "false";   
    first_x_resolved : boolean "false";      
    first_take_announced : boolean "false";
-   first_take_resolved : boolean "false";   
+   first_take_resolved : boolean "false";
+   first_i_announced : boolean "false";   
+   first_i_resolved : boolean "false";
+   first_i_finalized : boolean "false";   
    
    tmp_bool : boolean;
    allowed_cmd : boolean;
@@ -48,6 +51,11 @@ locations {
                   :match "take _" {
                      :set_true "allowed_cmd";               
                   }
+                  :if (first_take_resolved && !first_i_resolved) {
+                     :match "inventory _" {
+                        :set_true "allowed_cmd";
+                     }
+                  }
                }
             }
             :match "look -" {
@@ -70,7 +78,10 @@ locations {
             :else_if (!first_take_resolved) {
                :print {(nt_msg_disallowed_cmd_3)};
                :play_incidental "incidental_na_msg_disallowed_cmd_3";
-            }                 
+            }            
+            :else_if (!first_i_resolved) {
+               :print "command rejected";
+            }            
             :gosub "abort_command";
          }
          :else {
@@ -91,6 +102,13 @@ locations {
                         :play_incidental "incidental_na_msg_disallowed_cmd_3";
                         :gosub "abort_command";
                      }
+                  }
+               }
+            }
+            :else {
+               :if (!first_i_resolved) {
+                  :if (verb_is "inventory") {
+                     :set_true "first_i_resolved";
                   }
                }
             }
@@ -144,9 +162,29 @@ locations {
                   }
                }
                :else {
-                  :press_any_key;
-                  :goto "intro_seashore";
-                  :redescribe;
+                  :if (!first_i_resolved) {
+                     :if (!first_i_announced) {     
+                        :set_true "first_i_announced";
+                        :print {("\n"+nt_introduction8)};
+                        :queue_incidental "incidental_0_25_silence";
+                        :queue_incidental "incidental_na_introduction8";                  
+                     }
+                     :else_if (verb_is "look" && noun1_is "" && !first_i_resolved) {
+                        :print {("\n"+nt_introduction8)};
+                        :queue_incidental "incidental_0_25_silence";
+                        :queue_incidental "incidental_na_introduction8";                   
+                     }
+                  }
+                  :else {
+                     :if (!first_i_finalized) {
+                        :set_true "first_i_finalized";
+                        :print {("\n"+nt_msg_that_was_that)};
+                        :queue_incidental "incidental_0_25_silence";
+                        :queue_incidental "incidental_na_msg_that_was_that";
+                        :lose_game;                        
+                        //:print "\ni resolved.";
+                     }
+                  }
                }
             }
          }
@@ -184,6 +222,7 @@ strings {
    nt_msg_disallowed_cmd_3 : string "<Nope, I'm positive next you typed TAKE BEAN.<#ffa>>";
    nt_msg_take_what : string "<Take what?<#ffa>>";
    nt_msg_i_took : string "I took ";
+   nt_msg_no_inventory : string "I wasn't holding anything.";
    
    nt_introduction1 : string "Someone was murdered last night, someone already dead for decades...\n\nWelcome to Elfae Confidential, a magical murder mystery and audio extravaganza.  I am Lord Nigel Straitlaced and I shall be your host.\n\nWhen you see the flashing gold symbol, that means you should press the ENTER key to continue.";
    nt_introduction2 : string "Lovely! And now I am pleased to introduce to you the hero of the hour, the inimitable Detective Egg.";
@@ -191,7 +230,7 @@ strings {
    
 
    intro_safe_description : dynamic_string (
-      first_look_resolved ? "<Thick steel walls and nearly pitch black darkness.  We were trapped in a safe in St. Petersburg! " + (is_present "marble" || is_present "bean"? "The only light came from something at my feet.  " : "") + on_ground_string + "<#ffa>>" : "<It was just you and me locked in a dark room.  You were controlling me by typing words on a keyboard like some kind of adventure game!\n\nFirst, you typed the word LOOK ( or the letter L ) and pressed ENTER so as I could look around and get my bearings.<#ffa>>"
+      first_look_resolved ? "<Thick steel walls and nearly pitch black darkness.  We were trapped in a safe in St. Petersburg! " + (is_beside "marble" || is_beside "bean"? "The only light came from something at my feet.  " : "") + on_ground_string + "<#ffa>>" : "<It was just you and me locked in a dark room.  You were controlling me by typing words on a keyboard like some kind of adventure game!\n\nFirst, you typed the word LOOK ( or the letter L ) and pressed ENTER so as I could look around and get my bearings.<#ffa>>"
       );
       
       on_ground_string : dynamic_string (
@@ -209,6 +248,7 @@ strings {
    nt_introduction4 : string "<You typed EXAMINE MARBLE or X MARBLE so as I could take a closer look.<#ffa>>";
    nt_introduction6 : string "<Next you typed TAKE BEAN or GET BEAN, instructing me to pick it up.<#ffa>>";
    nt_introduction7 : string "<No marbles here, just a magic bean.<#ffa>>";
+   nt_introduction8 : string "<After that, I wanted to know what all I was holding, so you typed INVENTORY or I.<#ffa>>";
    
    intro_seashore_description : string "The seashore.";
 
@@ -223,13 +263,13 @@ strings {
       + ".") : ""
    );
    inventory_string : dynamic_string (
-      (carried() > 0) ? ("You are holding "+ construct_string{ 
+      (carried() > 0) ? ("I had "+ construct_string{ 
          from      -> ("_inventory")
          sep       -> (", ")
          final_sep -> (" and ")
          mutate    -> (d(item()))
       }
-      + ".") : "You find your lack of possessions disturbing."
+      + ".") : nt_msg_no_inventory
    );   
    
    tmp_string;
@@ -247,6 +287,8 @@ __na_url= https://joshware.com/sandbox/if/adventuron/ec-e1/assets/sounds/
 
 assets {
    sounds {
+      incidental_na_snd_paused : sound_sample "$${__na_url}na_snd_paused.wav";                     
+   
       incidental_na_msg_defaults_restored    : sound_sample "$${__na_url}na_msg_defaults_restored.wav";
       incidental_na_msg_confirm_screenread_load    : sound_sample "$${__na_url}na_msg_confirm_screenread_load.wav";
       incidental_na_msg_confirm_screenread_save    : sound_sample "$${__na_url}na_msg_confirm_screenread_save.wav";      
@@ -258,7 +300,9 @@ assets {
       incidental_na_msg_on_the_ground_i_saw : sound_sample "$${__na_url}na_msg_on_the_ground_i_saw.wav";
       incidental_na_msg_I_was_already_holding : sound_sample "$${__na_url}na_msg_i_was_already_holding.wav";
       incidental_na_msg_take_what : sound_sample "$${__na_url}na_msg_take_what.wav";
-      incidental_na_msg_i_took : sound_sample "$${__na_url}na_msg_i_took.wav";                  
+      incidental_na_msg_i_took : sound_sample "$${__na_url}na_msg_i_took.wav";
+      incidental_na_msg_i_had : sound_sample "$${__na_url}na_msg_i_had.wav";                 
+      incidental_na_msg_and : sound_sample "$${__na_url}na_msg_and.wav";                     
    
       incidental_na_introduction1 : sound_sample "$${__na_url}na_introduction1.wav";
       incidental_na_introduction2 : sound_sample "$${__na_url}na_introduction2.wav";
@@ -272,7 +316,8 @@ assets {
       incidental_na_introduction4 : sound_sample "$${__na_url}na_introduction4.wav";
       incidental_na_introduction5 : sound_sample "$${__na_url}na_introduction5.wav";
       incidental_na_introduction6 : sound_sample "$${__na_url}na_introduction6.wav";
-      incidental_na_introduction7 : sound_sample "$${__na_url}na_introduction7.wav";                  
+      incidental_na_introduction7 : sound_sample "$${__na_url}na_introduction7.wav";
+      incidental_na_introduction8 : sound_sample "$${__na_url}na_introduction8.wav";                        
       
       incidental_na_name_a_marble : sound_sample "$${__na_url}na_name_a_marble.wav";      
       incidental_na_name_a_bean : sound_sample "$${__na_url}na_name_a_bean.wav";
@@ -467,18 +512,17 @@ on_command {
       :gosub "abort_command";
    }   
    :match "i -" {
-      :print {(inventory_string)};
+      :print {("<"+inventory_string + "<#ffa>>")};
       :if (carried() == 0) {
          :queue_incidental "incidental_msg_no_inventory"; 
       }
       :else {
-            :queue_incidental "incidental_msg_you_are_holding";         
+            :queue_incidental "incidental_na_msg_i_had";         
             : iterate "_inventory" {
                :if (is_final_iteration() && !is_first_iteration()) {
-                  :queue_incidental "incidental_msg_and";               
+                  :queue_incidental "incidental_na_msg_and";               
                }
-               :queue_incidental "incidental_msg_uh";
-               :queue_incidental {("incidental_name_" + item())};
+               :queue_incidental {("incidental_na_name_a_" + item())};
             }         
       }
       :gosub "abort_command";      
@@ -580,6 +624,10 @@ subroutines {
             :set_string var="tmp_string" value="";
       }         
    }
+   custom_pause : subroutine {
+      :queue_incidental "incidental_na_snd_paused";
+      :press_any_key;
+   }
 }
 
 game_settings {
@@ -613,19 +661,19 @@ on_startup {
    : print_graphic "introduction1";
    : print {(nt_introduction1)};
    : play_incidental "incidental_na_introduction1";
-   : press_any_key;
+   : gosub "custom_pause";
 
    : clear_screen;
    : print_graphic "introduction2";
    : print {(nt_introduction2)};
    : play_incidental "incidental_na_introduction2";
-   : press_any_key;
+   : gosub "custom_pause";
    
    : clear_screen;
    : print_graphic "introduction3";
    : print {(nt_introduction3)};
    : play_incidental "incidental_na_introduction3";
-   : press_any_key;
+   : gosub "custom_pause";
    
    : gosub "abort_sounds";
 }
