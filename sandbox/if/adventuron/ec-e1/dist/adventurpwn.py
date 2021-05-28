@@ -55,6 +55,11 @@ script_8 = "/*@CEC remove savegame */null";
 
 script_9 = "/*@CEC remove loadgame text*/null";
 
+script_10 = """
+	var cec_audio = new Audio('https://joshware.com/sandbox/if/adventuron/ec-e1/assets/sounds/na_snd_paused.wav');
+	cec_audio.play();
+""";
+
 #print("Enter path to compiled game HTML file: ")
 #game = input();
 game = "game.html";
@@ -105,6 +110,12 @@ htmldata = updated_data;
 updated_data = "";
 
 updated_data = htmldata.replace("'Load Game'",script_9);
+htmldata = updated_data;
+updated_data = "";
+
+updated_data += (htmldata[0:htmldata.index("a.a.a.a.k.ne('Setting runtime state ramsave name (2) : '+c);")])
+updated_data += script_10
+updated_data += (htmldata[htmldata.index("a.a.a.a.k.ne('Setting runtime state ramsave name (2) : '+c);"):])
 htmldata = updated_data;
 
 f = open(f"{game}.hacked.html", "w")

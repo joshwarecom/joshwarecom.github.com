@@ -1,0 +1,35 @@
+Constant Story "Hello, Inform 6 Vorple World";
+Include "vorple.h";
+Include "parser.h";
+Include "verblib.h";
+Include "vorple-multimedia.h";
+Include "grammar.h";
+
+Array jump_table table 1;
+Array sing_string string "sing.mp3";
+
+[ Initialise ;
+    location = room;
+    VorpleInitialise();
+    jump_table-->1 = "jump.mp3";
+];
+
+Object room "The Room"
+    with description "You're in a nondescript room.",
+    before [;
+      Sing:
+        SingRoutine();
+        "Command successful.";
+      Jump:
+        JumpRoutine();
+        "Command successful.";
+    ],
+has light;
+
+[ JumpRoutine;
+  VorpleStartPlaylist(jump_table, PLAYLIST_FROM_START);
+];
+
+[ SingRoutine;
+  VorplePlaySoundEffect("sing.mp3");
+];
