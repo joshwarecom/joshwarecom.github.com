@@ -1,0 +1,37 @@
+﻿loading_screen = blank
+start_at = entrance
+
+locations {
+   entrance : location "You stand at the entrance.";
+   exit : location "You stand at the exit.";   
+}
+
+objects {
+   rose : object "a Pennyworth rose" at = "entrance";
+}
+
+connections {
+   from, direction, to = [
+      entrance, north, exit
+   ]
+}
+   
+__na_url= https://joshware.com/sandbox/if/adventuron/
+
+assets {
+   graphics {
+      blank : base64_png "iVBORw0KGgoAAAANSUhEUgAAAQAAAABQCAYAAAD2i6slAAABg2lDQ1BJQ0MgcHJvZmlsZQAAKM+VkTlIA0EYhT8TxQPFwggiFluolYKoiKVEMQgKkkSIR+HuxkQhuwm7CTaWgq1g4dF4FTbW2lrYCoLgAWJnZ6VoI7L+sxEShAgODPPxZt5j5g0EDjKm5Vb3gWXnnWgkrCVm57TaZ2qop5U6WnTTzU3FxuNUHB+3VKn1pldl8b/RlFxyTajShEfMnJMXXhQeWs3nFO8Ih8xlPSl8KtzjyAWF75VuFPlFcdrngMoMOfHoqHBIWEuXsVHG5rJjCQ8KdyYtW/IDiSInFa8ptjIF8+ee6oWNS/ZMTOkyO4gwwRTTaBgUWCFDnl5ZbVFcorIfruBv9/3T4jLEtYIpjjGyWOi+H/UHv7t1UwP9xaTGMNQ8ed5bF9Ruwdem530eet7XEQQf4cIu+bMHMPwu+mZJ69yH5nU4uyxpxjacb0DbQ053dF8KygykUvB6It80Cy3X0DBf7O1nn+M7iEtXk1ewuwfdacleqPDuuvLe/jzj90f4Gye/colK4GQsAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAB3RJTUUH5QUJFQwqUlYHKgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAEOSURBVHhe7dQxAcAwDMCwdMQDvX3GwtJjBj67ewdI+v4CQQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAYQYAWTMPTakDHPEiizkAAAAASUVORK5CYII=";
+   }
+}
+
+
+game_information {
+   game_name         = Safe File Load Test
+   game_version      = 0.0.1
+   game_shortname    = SFLT
+   written_by        = JOSHUA WILSON
+   uuid              = 0cddea4b-fc79-4c99-a2c2-52b80336e76a
+   year_of_release   = 2021
+   copyright_message = Copyright 2021 Joshua Wilson
+   short_synopsis    = Test game testing LOADF function recovery.
+}
