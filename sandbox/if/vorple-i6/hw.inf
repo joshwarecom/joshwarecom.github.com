@@ -92,7 +92,7 @@ Object AudioNarration
     na_name-->NULL_ID = "null.wav";
 
     nt_desc-->CELL_ID = "You are standing in a cell.  The only way out is down.";
-    na_desc-->CELL_ID = "na_desc_cell.mp3";
+    na_desc-->CELL_ID = "na_desc_cell.wav";
     nt_name-->CELL_ID = "!";
     na_name-->CELL_ID = "!";
 
