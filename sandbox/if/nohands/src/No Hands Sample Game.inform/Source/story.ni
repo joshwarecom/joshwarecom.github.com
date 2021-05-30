@@ -4,9 +4,6 @@ Release along with an interpreter.
 
 Include version 10/161003 of Simple Graphical Window by Emily Short.
 
-When play begins:
-	now the player has the collectable cards;
-
 A coin is a kind of thing.
 
 A passb is a kind of thing.
