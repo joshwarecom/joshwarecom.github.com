@@ -4,6 +4,8 @@
     <dict>
         <key>Graphics</key>
         <dict>
+            <key>1</key>
+            <string>E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.materials\Cover.jpg</string>
             <key>3</key>
             <string>Figures\cards-picture.jpg</string>
             <key>4</key>

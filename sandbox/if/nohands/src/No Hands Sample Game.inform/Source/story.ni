@@ -1,6 +1,6 @@
 "Loud House 'game on'" by Caleb Wilson
 
-Release along with an interpreter.
+Release along with an interpreter and cover art ("Loud House 'game on'").
 
 Include version 10/161003 of Simple Graphical Window by Emily Short.
 

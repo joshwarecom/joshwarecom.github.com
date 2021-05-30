@@ -13,10 +13,8 @@ release to "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample
 storyfile leafname "Loud House 'game on'.gblorb"
 storyfile "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.inform\Build\output.ulx" include
 ifiction "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.inform\Metadata.iFiction" include
-cover "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Cover.jpg"
-picture 1 "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Cover.jpg"
-release file "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Cover.jpg"
-release file "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Small Cover.jpg"
+cover "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.materials\Cover.jpg"
+picture 1 "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.materials\Cover.jpg"
 picture 3 "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.materials\Figures\cards-picture.jpg"
 picture 4 "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.materials\Figures\lower-room-picture.jpg"
 picture 5 "E:\git\joshwarecom.github.com\sandbox\if\nohands\src\No Hands Sample Game.materials\Figures\lionel-picture.jpg"
@@ -52,7 +50,6 @@ template path "C:\Program Files (x86)\Inform 7\Internal\Templates"
 css
 website "Standard"
 status instruction ||&nbsp;<a href="source:story.ni#line3"><img border=0 src=inform:/doc_images/Reveal.png></a>||
-status alternative ||Using 'Release along with cover art', to provide something more distinctive than the default artwork above&nbsp;<a href=inform:/doc403.html><img border=0 src=inform:/doc_images/help.png></a>||
 status alternative ||Using 'Release along with a file of "Such-and-Such" called "whatever.pdf"', perhaps to add a manual, or a welcoming note&nbsp;<a href=inform:/doc401.html><img border=0 src=inform:/doc_images/help.png></a>||
 status alternative ||Using 'Release along with the source text'&nbsp;<a href=inform:/doc412.html><img border=0 src=inform:/doc_images/help.png></a>||
 status alternative ||Using 'Release along with a solution'&nbsp;<a href=inform:/doc411.html><img border=0 src=inform:/doc_images/help.png></a>||
