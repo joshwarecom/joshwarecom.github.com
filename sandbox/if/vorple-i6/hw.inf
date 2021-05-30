@@ -1,32 +1,100 @@
-Constant Story "Hello, Inform 6 Vorple World";
+Constant Story "Welcome to Port 'L'";
 Include "vorple.h";
 Include "min-parser.h";
 Include "min-verblib.h";
-Include "vorple-multimedia.h";
+Include "extended-vorple-multimedia.h";
+
+[ BeforeParsing;
+  AudioNarration.reset();
+];
+
+[ AfterPrompt;
+  AudioNarration.play();
+];
+
 Include "min-grammar.h";
 
-Array jump_table table 2;
-Array sing_string string "sing.wav";
+Array na_sequence table 255;
+Array na_prefix table 255;
+Array na_prefixes_list table 255;
+Constant NA_PREFIX_A = 1;
+Constant NA_PREFIX_THE = 2;
+Constant NA_PREFIX_AND = 3;
+
+Array na_msg_list table 255;
+Constant NA_MSG_AND = 1;
+Constant NA_MSG_SORRY = 2;
+Constant NA_MSG_NO_INVENTORY = 3;
+Constant NA_MSG_YOU_ARE_HOLDING = 4;
+Constant NA_MSG_YOU_TAKE = 5;
+Constant NA_MSG_YOU_DROP = 6;
+Constant NA_MSG_ALREADY_HAVE = 7;
+Constant NA_MSG_GAME_OVER = 8;
 
 Array nt_desc table 255;
 Array na_desc table 255;
 Array nt_name table 255;
 Array na_name table 255;
+Constant NULL_ID = 1;
+Constant CELL_ID = 2;
+Constant CUBE_ID = 3;
+Constant PISTOL_ID = 4;
 
-Constant CELL_ID = 1;
-Constant CUBE_ID = 2;
-Constant PISTOL_ID = 3;
+[ CompareStrings bufA bufB
+    i;
+    if (bufA-->0 ~= bufB-->0) rfalse;
+    for (i=0 : i<bufA-->0 : i++)
+        if ((bufA->(i+WORDSIZE)) ~= (bufB->(i+WORDSIZE))) rfalse;
+    rtrue;
+];
+
+Object AudioNarration
+  with
+    length 0,
+    audio_table na_sequence,
+    prefix_table na_prefix,
+    reset [;
+      VorpleStopMusic();
+      VorpleClearPlaylist();
+      self.length = 0;
+    ],
+    add [ file prefix;
+      self.length++;
+      self.audio_table-->self.length = file;
+      self.prefix_table-->self.length = prefix;
+    ],
+    play [;
+      VorpleClearPlaylist();
+      VorpleStartPlaylist(self.audio_table);
+    ];
 
 [ Initialise ;
     location = room;
-    VorpleInitialise();
-    jump_table-->1 = "na_msg_i_took.wav";
-    jump_table-->2 = "na_name_the_bean.wav";
+    inventory_style = FULLINV_BIT + ENGLISH_BIT + RECURSE_BIT;
 
-    nt_desc-->CELL_ID = "You're in a nondescript room.";
-    na_desc-->CELL_ID = "na_desc_cell.wav";
-    nt_name-->CELL_ID = "Cell";
-    na_name-->CELL_ID = "cell.wav";
+    VorpleInitialise();
+
+    na_prefixes_list-->NA_PREFIX_A = "na_name_a_";
+    na_prefixes_list-->NA_PREFIX_THE = "na_name_the_";
+
+    na_msg_list-->NA_MSG_AND = "na_msg_and.wav";
+    na_msg_list-->NA_MSG_SORRY = "na_msg_sorry.wav";
+    na_msg_list-->NA_MSG_NO_INVENTORY = "na_msg_no_inventory.wav";
+    na_msg_list-->NA_MSG_YOU_ARE_HOLDING = "na_msg_you_are_holding.wav";
+    na_msg_list-->NA_MSG_YOU_TAKE = "na_msg_you_take.wav";
+    na_msg_list-->NA_MSG_YOU_DROP = "na_msg_you_drop.wav";
+    na_msg_list-->NA_MSG_ALREADY_HAVE = "na_msg_already_have.wav";
+    na_msg_list-->NA_MSG_GAME_OVER = "na_msg_game_over.wav";
+
+    nt_desc-->NULL_ID = "It's a null object.";
+    na_desc-->NULL_ID = "na_desc_null.wav";
+    nt_name-->NULL_ID = "Null";
+    na_name-->NULL_ID = "null.wav";
+
+    nt_desc-->CELL_ID = "You are standing in a cell.  The only way out is down.";
+    na_desc-->CELL_ID = "na_desc_cell.mp3";
+    nt_name-->CELL_ID = "!";
+    na_name-->CELL_ID = "!";
 
     nt_desc-->CUBE_ID = "A solid block of mistreated metal.";
     na_desc-->CUBE_ID = "na_desc_cube.wav";
@@ -39,29 +107,39 @@ Constant PISTOL_ID = 3;
     na_name-->PISTOL_ID = "pistol.wav";
 ];
 
-Object room "Cell"
+Class ArticulatedObject
     with
+      id NULL_ID,
       description [;
-        PrintStringOrArray(nt_desc-->CELL_ID);
+        PrintStringOrArray(nt_desc-->self.id);
       ],
       name [;
-        PrintStringOrArray(nt_name-->CELL_ID);
+        PrintStringOrArray(nt_name-->self.id);
       ],
-has light;
+      before [;
+      ],
+      after [;
+      ];
 
-Object -> cube "steel cube"
+ArticulatedObject room ""
   with
-    description [;
-      PrintStringOrArray(nt_desc-->CUBE_ID);
+    id CELL_ID,
+    before [;
+      Go:
+        AudioNarration.add(na_msg_list-->NA_MSG_GAME_OVER);
+        print "Indeed, for you will not go gently into that good night. Game over, for now.";
+        AudioNarration.play();
+        KeyCharPrimitive();
+        quit;
     ],
-    name [;
-      PrintStringOrArray(nt_name-->CUBE_ID);
-    ];
+  has light;
 
-[ JumpRoutine;
-  VorpleStartPlaylist(jump_table, PLAYLIST_LOOP);
-];
+ArticulatedObject -> cube "steel cube"
+  with
+    name 'steel' 'cube',
+    id CUBE_ID;
 
-[ SingRoutine;
-  VorplePlaySoundEffect("sing.mp3");
-];
+ArticulatedObject -> pistol "strange pistol"
+  with
+    name 'strange' 'pistol',
+    id PISTOL_ID;

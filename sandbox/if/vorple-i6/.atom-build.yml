@@ -2,6 +2,7 @@ cmd: "E:\\tools\\inform\\inform6.exe"
 name: "E:\\git\\joshwarecom.github.com\\sandbox\\if\\vorple-i6\\{FILE_ACTIVE_NAME}"
 args:
   - +include_path=E:\\Progra~2\\Imaginate\\Projects\\Inform\\pristine\\inform6\\lib,E:\\Progra~2\\Imaginate\\Projects\\Inform\\pristine\\vorple-i6
+  - +language_name=min-english
   - $MAX_STATIC_DATA=180000
   - -s
   - -G
