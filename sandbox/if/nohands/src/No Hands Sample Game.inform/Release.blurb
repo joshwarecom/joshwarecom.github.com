@@ -1,0 +1,61 @@
+! Blurb file created by Inform build 6M62
+
+status "C:\Program Files (x86)\Inform 7\Internal\Miscellany\CblorbModel.html" "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.inform\Build\StatusCblorb.html"
+
+
+! Identification
+
+project folder "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.inform"
+release to "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Release"
+
+! Blorb instructions
+
+storyfile leafname "Loud House 'game on'.gblorb"
+storyfile "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.inform\Build\output.ulx" include
+ifiction "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.inform\Metadata.iFiction" include
+cover "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Cover.jpg"
+picture 1 "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Cover.jpg"
+release file "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Cover.jpg"
+release file "C:\Program Files (x86)\Inform 7\Internal\Miscellany\Small Cover.jpg"
+picture 3 "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Figures\cards-picture.jpg"
+picture 4 "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Figures\lower-room-picture.jpg"
+picture 5 "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Figures\lionel-picture.jpg"
+picture 6 "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Figures\Royal-Woods-Main-Street-picture.png"
+
+! Placeholder variables
+
+placeholder [IFID] = "AB516E44-B401-4261-8C71-7495C0771D3E"
+placeholder [RELEASE] = "1"
+placeholder [YEAR] = "2021"
+placeholder [TITLE] = "Loud House 'game on'"
+placeholder [AUTHOR] = "Caleb Wilson"
+placeholder [BLURB] = "A work of interactive fiction."
+
+! Other material to release
+
+
+! Website instructions
+
+placeholder [ENCODEDSTORYFILE] = "Loud House 'game on'.gblorb.js"
+template path "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Templates"
+template path "C:\Users\kindl\Documents\Inform\Templates"
+template path "C:\Program Files (x86)\Inform 7\Internal\Templates"
+placeholder [INTERPRETERSCRIPTS] = " "
+interpreter "Edgecase Parchment" "g"
+base64 "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.inform\Build\output.ulx" to "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Release\interpreter\Loud House 'game on'.gblorb.js"
+
+! Website instructions
+
+template path "C:\Users\kindl\Documents\Inform\Projects\No Hands Sample Game.materials\Templates"
+template path "C:\Users\kindl\Documents\Inform\Templates"
+template path "C:\Program Files (x86)\Inform 7\Internal\Templates"
+css
+website "Standard"
+status instruction ||&nbsp;<a href="source:story.ni#line3"><img border=0 src=inform:/doc_images/Reveal.png></a>||
+status alternative ||Using 'Release along with cover art', to provide something more distinctive than the default artwork above&nbsp;<a href=inform:/doc403.html><img border=0 src=inform:/doc_images/help.png></a>||
+status alternative ||Using 'Release along with a file of "Such-and-Such" called "whatever.pdf"', perhaps to add a manual, or a welcoming note&nbsp;<a href=inform:/doc401.html><img border=0 src=inform:/doc_images/help.png></a>||
+status alternative ||Using 'Release along with the source text'&nbsp;<a href=inform:/doc412.html><img border=0 src=inform:/doc_images/help.png></a>||
+status alternative ||Using 'Release along with a solution'&nbsp;<a href=inform:/doc411.html><img border=0 src=inform:/doc_images/help.png></a>||
+status alternative ||Using 'Release along with the library card'&nbsp;<a href=inform:/doc412.html><img border=0 src=inform:/doc_images/help.png></a>||
+status alternative ||Using 'Release along with the introductory booklet'&nbsp;<a href=inform:/doc404.html><img border=0 src=inform:/doc_images/help.png></a>||
+status alternative ||Using 'Release along with the introductory postcard'&nbsp;<a href=inform:/doc404.html><img border=0 src=inform:/doc_images/help.png></a>||

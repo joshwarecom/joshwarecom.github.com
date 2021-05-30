@@ -1,0 +1,3685 @@
+Start of a transcript of
+
+Loud House 'game on'
+An Interactive Fiction by Caleb Wilson
+Release 1 / Serial number 210514 / Inform 7 build 6M62 (I6/v6.33 lib 6/12N) 
+Identification number: //AB516E44-B401-4261-8C71-7495C0771D3E//
+Interpreter version 0.5.4 / VM 3.1.2 / Library serial number 080126
+Standard Rules version 3/120430 by Graham Nelson
+
+>l
+Your Room
+You need money to buy a video game.  You can go north to the hallway.
+
+>i
+You are carrying nothing.
+
+>n
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>* GRAMMAR "north for northern hallway"
+That's not a verb I recognise.
+
+>* GRAMMAR comma after "Lynn's and Lucy's room"
+That's not a verb I recognise.
+
+>w
+
+Lynn's and Lucy's room
+Now you are in Lynn's and Lucy's room. Only Lucy is inside. The only way out is back east.
+
+You can see a coffin (in which is Quarter 1) here.
+
+>get quarter
+Taken.
+
+>x quarter
+You see nothing special about Quarter 1.
+
+>x lucy
+You can't see any such thing.
+
+>* BUG it says Lucy is inside but I cannot see her
+That's not a verb I recognise.
+
+>x coffin
+Dank.  Dark. And full of bats.
+
+>l in coffin
+The coffin is empty.
+
+>l
+Lynn's and Lucy's room
+Now you are in Lynn's and Lucy's room. Only Lucy is inside. The only way out is back east.
+
+You can see a coffin (empty) here.
+
+>e
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>e
+
+Lisa's and Lily's room
+Now you are in Lisa's and Lily's room. You see Lisa working on a device and Lily in her crib.
+
+You can see Lisa and Locked safe (closed) here.
+
+>* GRAMMAR Locked is upper case
+That's not a verb I recognise.
+
+>* GRAMMAR should probably be "a locked safe"
+That's not a verb I recognise.
+
+>x lily
+You can't see any such thing.
+
+>* BUG description sayd Lily is here but I cannot X her
+That's not a verb I recognise.
+
+>* BUG Lisa is listed twice, in the room description, and in the object list.
+You seem to want to talk to someone, but I can't see whom.
+
+>x lisa
+She is wearing glasses and a light green jacket.
+
+>talk to lisa
+"I am working on a device to turn a regular kid into an athlete! It requires DNA from someone who's good at sports, though." Now where can you find an athlete kid that's good at sports?
+
+>ask lisa about me
+(To communicate in Loud House 'game on', TALK TO a character.) 
+
+>* VERY GOOD
+That's not a verb I recognise.
+
+>l
+Lisa's and Lily's room
+Now you are in Lisa's and Lily's room. You see Lisa working on a device and Lily in her crib.
+
+You can see Lisa and Locked safe (closed) here.
+
+>x safe
+You see nothing special about Locked safe.
+
+>open safe
+It seems to be locked.
+
+>unlock safe
+(with Quarter 1)
+That doesn't seem to fit the lock.
+
+>x crib
+You can't see any such thing.
+
+>* BUG cannot X crib
+That's not a verb I recognise.
+
+>l
+Lisa's and Lily's room
+Now you are in Lisa's and Lily's room. You see Lisa working on a device and Lily in her crib.
+
+You can see Lisa and Locked safe (closed) here.
+
+>l
+Lisa's and Lily's room
+Now you are in Lisa's and Lily's room. You see Lisa working on a device and Lily in her crib.
+
+You can see Lisa and Locked safe (closed) here.
+
+>e
+You can't go that way.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>w
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>n
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>* GRAMMAR sentences start with capital letters
+That's not a verb I recognise.
+
+>* GRAMMAR "hallway to the south" should have an article
+That's not a verb I recognise.
+
+>* GRAMMAR so should far north hall
+That's not a verb I recognise.
+
+>l
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>* GOOD COMMAS IN THIS ROOM :)
+That's not a verb I recognise.
+
+>w
+
+Luan's and Luna's room
+You are in Luan's and Luna's room. You see north hall to the east.
+
+You can see Luan, Luna, a puppet and a speaker here.
+
+>* GRAMMAR "north hall" needs article
+That's not a verb I recognise.
+
+>x luan
+She is wearing a dress with a  yellow bottom to it and a squirt flower at the top of the dress.
+
+>talk to luan
+You try to ask Luan for advice on how to make money, but she inturupts with a joke. "why did the chicken cross the road? To prove it wasn't a chicken!" She laughs at her own joke.
+
+>talk to luna
+You ask Luna for advice on how to make money, and she says, "You know, if I were you, I'd try searching the ENTIRE house for clues and Quarters." She goes back to playing her guitar.
+
+>l
+Luan's and Luna's room
+You are in Luan's and Luna's room. You see north hall to the east.
+
+You can see Luan, Luna, a puppet and a speaker here.
+
+>x speaker
+You check every inch of the speaker, but no loose change found.
+
+>get speaker
+Taken.
+
+>w
+You can't go that way.
+
+>i
+You are carrying:
+  a speaker
+  Quarter 1
+
+>e
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>w
+
+Luan's and Luna's room
+You are in Luan's and Luna's room. You see north hall to the east.
+
+You can see Luan, Luna and a puppet here.
+
+>x luan
+She is wearing a dress with a  yellow bottom to it and a squirt flower at the top of the dress.
+
+>talk to luna
+You ask Luna for advice on how to make money, and she says, "You know, if I were you, I'd try searching the ENTIRE house for clues and Quarters." She goes back to playing her guitar.
+
+>* SUGGESTION Have Luna react if you take the speaker?
+That's not a verb I recognise.
+
+>i
+You are carrying:
+  a speaker
+  Quarter 1
+
+>e
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>e
+
+Lori's and Leni's room
+ You see north hall to the west.
+
+All you see are Leni's bed, Lori's bed and a dresser.
+
+>* GRAMMAR watch out for missing articles: "you see north hall" should be "you see the north hall"
+That's not a verb I recognise.
+
+>x dresser
+In the dresser is Quarter 2.
+
+>get quarter
+(Quarter 2)
+Taken.
+
+>x bed
+Which do you mean, Leni's bed or Lori's bed?
+
+>1
+(Leni's bed)
+You check Leni's bed, but all you see are clothes and dolls.
+
+>x lori's bed
+You check Lori's bed, and you find Lori's phone.
+
+On Lori's bed is Lori's phone.
+
+>get phone
+Taken.
+
+>x phone
+You turn on Lori's phone, and you see an advertisement for proffessional kids football. It says that only athletes 10 to 15 (of course, you're 11) can enter. it's a $1 entry fee, and if you win, you'll earn $500! You should keep that in mind. Just collect 4 Quarters and become an athlete to enter.
+
+>* GRAMMAR check capitalization
+That's not a verb I recognise.
+
+>i
+You are carrying:
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>l
+Lori's and Leni's room
+ You see north hall to the west.
+
+All you see are Leni's bed, Lori's bed and a dresser (empty).
+
+>x phone
+You turn on Lori's phone, and you see an advertisement for proffessional kids football. It says that only athletes 10 to 15 (of course, you're 11) can enter. it's a $1 entry fee, and if you win, you'll earn $500! You should keep that in mind. Just collect 4 Quarters and become an athlete to enter.
+
+>w
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>s
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>n
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>e
+
+Lori's and Leni's room
+ You see north hall to the west.
+
+All you see are Leni's bed, Lori's bed and a dresser (empty).
+
+>w
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>w
+
+Luan's and Luna's room
+You are in Luan's and Luna's room. You see north hall to the east.
+
+You can see Luan, Luna and a puppet here.
+
+>x puppet
+You check the puppet, and it's full of loose change! Slight problem: It's not LOOSE change- It's actually Luan's "wallet". You can't take that.
+
+>* VERY GOOD
+That's not a verb I recognise.
+
+>e
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>n
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>w
+
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+You can see a mirror, a teacup, a frog cage and Locked safe 2 (closed) here.
+
+>w
+You can't go that way.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>e
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>s
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>s
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>w
+
+Lynn's and Lucy's room
+Now you are in Lynn's and Lucy's room. Only Lucy is inside. The only way out is back east.
+
+You can see a coffin (empty) here.
+
+>e
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>e
+
+Lisa's and Lily's room
+Now you are in Lisa's and Lily's room. You see Lisa working on a device and Lily in her crib.
+
+You can see Lisa and Locked safe (closed) here.
+
+>w
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>s
+
+Your Room
+You need money to buy a video game.  You can go north to the hallway.
+
+>e
+You can't go that way.
+
+>n
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>n
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>n
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>n
+You can't go that way.
+
+>e
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>w
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>w
+
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+You can see a mirror, a teacup, a frog cage and Locked safe 2 (closed) here.
+
+>x mirror
+You look in the mirror, and... Bingo! You see a coin in the frog cage, and a bundle of cash in the teacup!
+
+>x teacup
+You check the teacup, and you find a bundle of cash! But you can't take that. It's Lola's, and if she found out, she would do anything to make your life miserable.
+
+>get cash
+You can't see any such thing.
+
+>* BUG cash is described but I cannot X it
+That's not a verb I recognise.
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+You can see a mirror, a teacup, a frog cage and Locked safe 2 (closed) here.
+
+>x cage
+You look in the frog cage and find a Quarter! But Hops the frog won't let you take it. Mabey you should check a place that IS'NT a pet cage.
+
+>* GRAMMAR Mabye misspelled
+That's not a verb I recognise.
+
+>* GRAMMAR IS'NT should be ISN'T
+That's not a verb I recognise.
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+You can see a mirror, a teacup, a frog cage and Locked safe 2 (closed) here.
+
+>*GRAMMAR locked safe capitalization, and missing article
+You seem to want to talk to someone, but I can't see whom.
+
+>open safe
+It seems to be locked.
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+You can see a mirror, a teacup, a frog cage and Locked safe 2 (closed) here.
+
+>i
+You are carrying:
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>x safe
+You see nothing special about Locked safe 2.
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+You can see a mirror, a teacup, a frog cage and Locked safe 2 (closed) here.
+
+>get mirror
+Taken.
+
+>get teacup
+Taken.
+
+>get cage
+Taken.
+
+>get safe
+Taken.
+
+>i
+You are carrying:
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+>n
+You can't go that way.
+
+>w
+You can't go that way.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>w
+You can't go that way.
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+>u
+You can't go that way.
+
+>* HEADS UP EVERYTHING IS TAKEABLE
+That's not a verb I recognise.
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+>e
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>n
+You can't go that way.
+
+>s
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>s
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>s
+
+Your Room
+You need money to buy a video game.  You can go north to the hallway.
+
+>n
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>w
+
+Lynn's and Lucy's room
+Now you are in Lynn's and Lucy's room. Only Lucy is inside. The only way out is back east.
+
+You can see a coffin (empty) here.
+
+>e
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>e
+
+Lisa's and Lily's room
+Now you are in Lisa's and Lily's room. You see Lisa working on a device and Lily in her crib.
+
+You can see Lisa and Locked safe (closed) here.
+
+>get safe
+(Locked safe)
+Taken.
+
+>get lisa
+I don't suppose Lisa would care for that.
+
+>w
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>l
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>n
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>n
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>w
+
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+>l
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+>e
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>e
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>w
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>e
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>* GRAMMAR make the capitalization of room names consistent
+That's not a verb I recognise.
+
+>x lynn
+You can't see any such thing.
+
+>n
+
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn and Lynn's hair here.
+
+>x lynn
+She is wearing her sports uniform, which her player number is 1( which stands for her being number 1 at all the sports ).
+
+>get hair
+Taken.
+
+>i
+You are carrying:
+  Lynn's hair
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>l
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>* SPELLING excercises should be exercises
+That's not a verb I recognise.
+
+>n
+
+North Living room
+You can see Lynn to the south.
+
+You can see Couch 1 (in which is Quarter 4) here.
+
+>get quarter
+(Quarter 4)
+Taken.
+
+>x lynn
+You can't see any such thing.
+
+>l
+North Living room
+You can see Lynn to the south.
+
+You can see Couch 1 (empty) here.
+
+>s
+
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>e
+You can't go that way.
+
+>s
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>s
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>* GRAMMAR make sure common nouns have articles, "you see Living room" should be "you see the living room"
+You seem to want to talk to someone, but I can't see whom.
+
+>x lola
+She is wearing a pink dress and a tiara.
+
+>talk to lola
+She says, "I don't have much time to talk right now- I'm getting my go-kart repaired. But if you have four Quarters to trade with me for a dollar, then I'm listening."
+
+>x tiara
+You can't see any such thing.
+
+>l
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>x lana
+Lana is wearing muddy overalls (she must have been eating mud pies again) and a dirty cap.
+
+>talk to lana
+She says, "You know, I learned how to plumb, like the taste of mud, and how to repair cars through Lori's phone- maybey you should check her phone, too." She goes back to repairing Lola's go-kart.
+
+>*GRAMMAR maybey should be maybe
+That's not a verb I recognise.
+
+>l
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>n
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>n
+
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>talk to lynn
+She says, "I'm trying to excercise for my football game. I've been excercising for about 5 hours streight." You ask her both how she hasn't gotten tired, and why she hasn't used the bathroom for 5 hours. She answers with "1, I don't really get tired unless it's night time, and 2, it's bad luck to use the bathroom before a football game- if I go number 2, I can't be number 1." You see her excercise so hard that a bit of her hair falls off.
+
+>*GRAMMAR streight should be straight
+That's not a verb I recognise.
+
+>l
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>i
+You are carrying:
+  Quarter 4
+  Lynn's hair
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>l
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>n
+
+North Living room
+You can see Lynn to the south.
+
+You can see Couch 1 (empty) here.
+
+>s
+
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>s
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>s
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>s
+
+Basement
+You see Lola and Lana to the north.
+
+You can see Couch 2 and a Video game console here.
+
+>x couch
+You examine the entire couch, but no loose change found.
+
+>x video
+The Video game console has Nickolodeon written on the side and you need to save up to buy the video game for it.
+
+>* GRAMMAR check capitalization in Basement: "Video game console" should be "video game console"
+That's not a verb I recognise.
+
+>l
+Basement
+You see Lola and Lana to the north.
+
+You can see Couch 2 and a Video game console here.
+
+>x couch
+You examine the entire couch, but no loose change found.
+
+>sit on couch
+That's not something you can sit down on.
+
+>l
+Basement
+You see Lola and Lana to the north.
+
+You can see Couch 2 and a Video game console here.
+
+>sit
+What do you want to sit on?
+
+>sit couch
+I didn't understand that sentence.
+
+>sit on couch
+That's not something you can sit down on.
+
+>* HEADS UP, consider making the couch something you can sit on
+You seem to want to talk to someone, but I can't see whom.
+
+>l
+Basement
+You see Lola and Lana to the north.
+
+You can see Couch 2 and a Video game console here.
+
+>n
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>n
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>i
+You are carrying:
+  Quarter 4
+  Lynn's hair
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>l
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>e
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>n
+
+video game shop
+You are in the video game shop. Here you can buy that video game + collectable rare cards for just $45!
+
+You can see an owner and Locked safe 4 (closed) here.
+
+>get safe
+(Locked safe 4)
+Taken.
+
+>x owner
+You see nothing special about the owner.
+
+>talk to owner
+>* BUG talk to owner has no response.
+That's not a verb I recognise.
+
+>l
+video game shop
+You are in the video game shop. Here you can buy that video game + collectable rare cards for just $45!
+
+You can see an owner here.
+
+>s
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>s
+
+Royal Woods School Grounds
+These bullies come to stop you from entering unless you give them money. You see the inside of the school to the south, and Royal Woods Main Street to the north.
+
+You can see Bully and Locked safe 3 (closed) here.
+
+>get safe
+(Locked safe 3)
+Taken.
+
+>x bully
+He is holding a jar of money, and he wants you to give him a dollar bill to pass through.
+
+>talk to bully
+>*BUG talk to bully has blank response
+That's not a verb I recognise.
+
+>l
+Royal Woods School Grounds
+These bullies come to stop you from entering unless you give them money. You see the inside of the school to the south, and Royal Woods Main Street to the north.
+
+You can see Bully here.
+
+>s
+You can't go that way.
+
+>* BUG description says "you see inside of the school to the south" but it says "You can't go that way" when I try to go south
+That's not a verb I recognise.
+
+>e
+You can't go that way.
+
+>l
+Royal Woods School Grounds
+These bullies come to stop you from entering unless you give them money. You see the inside of the school to the south, and Royal Woods Main Street to the north.
+
+You can see Bully here.
+
+>n
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>w
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>i
+You are carrying:
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Quarter 4
+  Lynn's hair
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>l
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>l
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>w
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>w
+
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+>s
+You can't go that way.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>w
+You can't go that way.
+
+>n
+You can't go that way.
+
+>e
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>s
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>s
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>e
+
+Lisa's and Lily's room
+Now you are in Lisa's and Lily's room. You see Lisa working on a device and Lily in her crib.
+
+You can see Lisa here.
+
+>give hair
+(to Lisa)
+Lisa is excited that you gave her Lynn's hair, and she blasts you with the athlete ray. She also gives you a Quarter.
+
+>i
+You are carrying:
+  Quarter 3
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Quarter 4
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  Quarter 2
+  a speaker
+  Quarter 1
+
+>w
+
+hallway
+Now you are in the hallway.  You can go back south, or west to Lynn's and Lucy's room or east to Lisa's and Lily's room or north for northern hallway.
+
+>n
+
+north hall
+You are in north hall. you see Lori's and Leni's room to the east, Luan's and Luna's room to the west, hallway to the south, and far north hall to the north.
+
+>n
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>e
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>e
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>s
+
+Royal Woods School Grounds
+These bullies come to stop you from entering unless you give them money. You see the inside of the school to the south, and Royal Woods Main Street to the north.
+
+You can see Bully here.
+
+>n
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>w
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>s
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>n
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>n
+
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>s
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>s
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>give quarters
+Whom do you want to give Quarter 1 to?
+
+>give quarters to lola
+Lola is excited and hands you a dollar bill.
+
+>i
+You are carrying:
+  a Dollar Bill
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>n
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>e
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>e
+You can't go that way.
+
+>s
+
+Royal Woods School Grounds
+These bullies come to stop you from entering unless you give them money. You see the inside of the school to the south, and Royal Woods Main Street to the north.
+
+You can see Bully here.
+
+>give dollar to bully
+"Come on in," said the Bully. "Oh, and, the football stadium is above here."
+
+You aren't holding the Dollar Bill.
+
+>* BUG after I give the dollar to the bully, he accepts it, but it says "You aren't holding the Dollar Bill."
+You seem to want to talk to someone, but I can't see whom.
+
+>* GRAMMAR check capitalization of everything (Dollar Bill should be dollar bill)
+That's not a verb I recognise.
+
+>u
+
+Football Stadium
+The Football game is about to start, and guess who your playing against- Lynn! She says "Wow, Lincoln! I didn't know that you were coming to the same football game as me!"
+
+You can see a ball and a Scoring post here.
+
+>get ball
+Taken.
+
+>throw ball at scoring post
+You throw the ball into the scoring post, and you won the game! The same bully from earlier hands you $500. You decide to split it evenly between your ten sisters- that means $45 each- exactly enough!
+
+You aren't holding the ball.
+
+>*BUG after throwing the ball, it says "You aren't holding the ball" for no reason
+You seem to want to talk to someone, but I can't see whom.
+
+>i
+You are carrying:
+  $45
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Football Stadium
+The Football game is about to start, and guess who your playing against- Lynn! She says "Wow, Lincoln! I didn't know that you were coming to the same football game as me!"
+
+You can see a Scoring post here.
+
+>x post
+You see nothing special about the Scoring post.
+
+>i
+You are carrying:
+  $45
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>d
+
+Royal Woods School Grounds
+These bullies come to stop you from entering unless you give them money. You see the inside of the school to the south, and Royal Woods Main Street to the north.
+
+You can see Bully here.
+
+>n
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>n
+
+video game shop
+You are in the video game shop. Here you can buy that video game + collectable rare cards for just $45!
+
+You can see an owner here.
+
+>give $45
+(to the owner)
+"Thank you for buying from Royal Woods Video Game shop," said the owner. "oh, and don't forget that you can play your video game in the room under the room under the basement."
+
+You aren't holding $45.
+
+>* BUG after giving money to owner, it says You aren't holding $45 for no reason
+You seem to want to talk to someone, but I can't see whom.
+
+>* BUG "said the owner" is past tense but everything else in the game has been present tense
+That's not a verb I recognise.
+
+>l
+video game shop
+You are in the video game shop. Here you can buy that video game + collectable rare cards for just $45!
+
+You can see an owner here.
+
+>i
+You are carrying:
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>s
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>w
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>w
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>w
+
+Lola's and Lana's room
+You enter Lola's and Lana's room. You see far north hall to the east.
+
+>s
+You can't go that way.
+
+>n
+You can't go that way.
+
+>n
+You can't go that way.
+
+>e
+
+far north hall
+You are in far north hall. You see Lola's and Lana's room to the west, stairs to the east, and north hall to the south.
+
+>n
+You can't go that way.
+
+>n
+You can't go that way.
+
+>e
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>n
+
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>n
+
+North Living room
+You can see Lynn to the south.
+
+You can see Couch 1 (empty) here.
+
+>s
+
+Lynn's area
+You entered the area where Lynn excercises. You see the Living room to the south, and a couch to the north.
+
+You can see Lynn here.
+
+>s
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>s
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>s
+
+Basement
+You see Lola and Lana to the north.
+
+You can see Couch 2 and a Video game console here.
+
+>d
+
+Secret Passageway
+So, I guess you found my secret room. Either you beat the game, or you found a hack to it. If the first one, good job! Well, you know where to go from here.
+
+>* I LOVE THE SECRET PASSAGEWAY
+That's not a verb I recognise.
+
+>d
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>x game gate
+You see nothing special about Game Gate.
+
+>get gate
+That's fixed in place.
+
+>open gate
+It seems to be locked.
+
+>unlock gate
+What do you want to unlock Game Gate with?
+
+>i
+You are carrying:
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>n
+
+Pineapple house
+You can go north.
+
+You can see Gary here.
+
+>x gary
+He is a snail with a spiral shell.
+
+>get gary
+I don't suppose Gary would care for that.
+
+>l
+Pineapple house
+You can go north.
+
+You can see Gary here.
+
+>talk to gary
+>*BUG talk to gary has blankr esponse
+That's not a verb I recognise.
+
+>l
+Pineapple house
+You can go north.
+
+You can see Gary here.
+
+>n
+
+Bikini Bottom
+you  see your Pineapple house to the south and the Krusty Krab to the north.
+
+You can see Plankton's robot here.
+
+>x robot
+You see nothing special about Plankton's robot.
+
+>get robot
+I don't suppose Plankton's robot would care for that.
+
+>talk to robot
+>*BUG blank response talk to robot
+That's not a verb I recognise.
+
+>l
+Bikini Bottom
+you  see your Pineapple house to the south and the Krusty Krab to the north.
+
+You can see Plankton's robot here.
+
+>n
+
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs, Locked safe 5 (closed) and Krabby Patty dresser (in which is Dollar Bill 2) here.
+
+>x krabs
+You see nothing special about mister Krabs.
+
+>*BUG check mister Krabs capitalization
+That's not a verb I recognise.
+
+>get safe
+(Locked safe 5)
+Taken.
+
+>x dresser
+In Krabby Patty dresser is Dollar Bill 2.
+
+>get bill
+Taken.
+
+>i
+You are carrying:
+  Dollar Bill 2
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs and Krabby Patty dresser (empty) here.
+
+>get dresser
+Taken.
+
+>i
+You are carrying:
+  Krabby Patty dresser
+  Dollar Bill 2
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs here.
+
+>i
+You are carrying:
+  Krabby Patty dresser
+  Dollar Bill 2
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs here.
+
+>s
+
+Bikini Bottom
+you  see your Pineapple house to the south and the Krusty Krab to the north.
+
+You can see Plankton's robot here.
+
+>n
+
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs here.
+
+>give dollar to krabs
+mister Krabs's eyes show dollar sighns and he hands you a Krabby Patty.
+
+You aren't holding Dollar Bill 2.
+
+>*SPELLING sighns should be signs
+That's not a verb I recognise.
+
+>* FREQUENT BUG after giving something it says "You aren't holding" it, fix that everywhere.
+You seem to want to talk to someone, but I can't see whom.
+
+>l
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs here.
+
+>i
+You are carrying:
+  Krabby Patty
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>x patty
+Which do you mean, Krabby Patty or Krabby Patty dresser?
+
+>1
+(Krabby Patty)
+You see nothing special about Krabby Patty.
+
+>eat patty
+Which do you mean, Krabby Patty or Krabby Patty dresser?
+
+>1
+(Krabby Patty)
+That's plainly inedible.
+
+>l
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs here.
+
+>i
+You are carrying:
+  Krabby Patty
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Krusty Krab
+You see Bikini Bottom to the south.
+
+You can see mister Krabs here.
+
+>s
+
+Bikini Bottom
+you  see your Pineapple house to the south and the Krusty Krab to the north.
+
+You can see Plankton's robot here.
+
+>x robot
+You see nothing special about Plankton's robot.
+
+>give patty to robot
+Which do you mean, Krabby Patty or Krabby Patty dresser?
+
+>1
+(Krabby Patty to Plankton's robot)
+you throw the Krabby Patty at the robot, and you've saved Bikini Bottom!
+
+You aren't holding Krabby Patty.
+
+>l
+Bikini Bottom
+you  see your Pineapple house to the south and the Krusty Krab to the north.
+
+You can see Plankton's robot here.
+
+>e
+You can't go that way.
+
+>s
+
+Pineapple house
+You can go north.
+
+You can see Gary here.
+
+>s
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>i
+You are carrying:
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>* SUGGESTION when the player gets a Gamer Pass, tell them they have one
+You seem to want to talk to someone, but I can't see whom.
+
+>i
+You are carrying:
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>go gate
+(first opening Game Gate)
+It seems to be locked.
+
+>unlock gate with pass
+That doesn't seem to fit the lock.
+
+>e
+
+Sewer
+You are in the sewer. You see the City above you.
+
+You can see Locked safe 6 (closed), Leo's sword and Mike's nun-chucks here.
+
+>get safe
+(Locked safe 6)
+Taken.
+
+>get sword
+Taken.
+
+>get nun-chucks
+Taken.
+
+>l
+Sewer
+You are in the sewer. You see the City above you.
+
+>e
+You can't go that way.
+
+>s
+You can't go that way.
+
+>n
+You can't go that way.
+
+>w
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>
+I beg your pardon?
+
+>e
+
+Sewer
+You are in the sewer. You see the City above you.
+
+>i
+You are carrying:
+  Mike's nun-chucks
+  Leo's sword
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Sewer
+You are in the sewer. You see the City above you.
+
+>l
+Sewer
+You are in the sewer. You see the City above you.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>l
+Sewer
+You are in the sewer. You see the City above you.
+
+>u
+
+City
+You are in the city. You see a sai target to the east and your sewer under you.
+
+You can see a Guard here.
+
+>attack guard
+Violence isn't the answer to this one.
+
+>kill guard
+Violence isn't the answer to this one.
+
+>hit guard
+Violence isn't the answer to this one.
+
+>give sword to guard
+The Guard doesn't seem interested.
+
+>give nun-chucks to guard
+You knock him out and win your sai back.
+
+You aren't holding Mike's nun-chucks.
+
+>* HEADS UP consider implementing "hit guard with nun-chucks", they probably won't guess throwing
+You seem to want to talk to someone, but I can't see whom.
+
+>i
+You are carrying:
+  Raph's sai
+  Leo's sword
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+City
+You are in the city. You see a sai target to the east and your sewer under you.
+
+You can see a Guard here.
+
+>x guard
+He has completely sword-proof armor, but his head looks easy to hit.
+
+>*NEVER MIND, IF YOU PREFER THROWING IT'S FINE
+You seem to want to talk to someone, but I can't see whom.
+
+>l
+City
+You are in the city. You see a sai target to the east and your sewer under you.
+
+You can see a Guard here.
+
+>e
+
+Target gate
+You are in the City. You see Shredder's Castle to the east.
+
+You can see Castle Gate and a sai target here.
+
+>throw sai at target
+(Raph's sai at the sai target)
+You throw the sai and hit the target, scoring the key to the gate!
+
+You aren't holding Raph's sai.
+
+>i
+You are carrying:
+  a Skull Key
+  Leo's sword
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Target gate
+You are in the City. You see Shredder's Castle to the east.
+
+You can see Castle Gate and a sai target here.
+
+>x gate
+You see nothing special about Castle Gate.
+
+>open gate
+It seems to be locked.
+
+>unlock gate
+What do you want to unlock Castle Gate with?
+
+>key
+You unlock Castle Gate.
+
+>l
+Target gate
+You are in the City. You see Shredder's Castle to the east.
+
+You can see Castle Gate and a sai target here.
+
+>e
+(first opening Castle Gate)
+
+Shredder's Castle
+You are in Shredder's Castle! You see Target gate to the west.
+
+You can see Castle Gate and Shredder here.
+
+>x shredder
+He is wearing armor that is proof to all metals except iron.
+
+>throw sword at shredder
+You throw the sword, and it cuts through Shredder's armor, killing him.
+
+You aren't holding Leo's sword.
+
+>* SUGGESTION consider implementing hitting or attacking when holding the sword
+That's not a verb I recognise.
+
+>l
+Shredder's Castle
+You are in Shredder's Castle! You see Target gate to the west.
+
+You can see Castle Gate and Shredder here.
+
+>i
+You are carrying:
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>* SUGGESTION let the player know when they have earned a gamer pass
+That's not a verb I recognise.
+
+>l
+Shredder's Castle
+You are in Shredder's Castle! You see Target gate to the west.
+
+You can see Castle Gate and Shredder here.
+
+>w
+
+Target gate
+You are in the City. You see Shredder's Castle to the east.
+
+You can see Castle Gate and a sai target here.
+
+>e
+
+Shredder's Castle
+You are in Shredder's Castle! You see Target gate to the west.
+
+You can see Castle Gate and Shredder here.
+
+>w
+
+Target gate
+You are in the City. You see Shredder's Castle to the east.
+
+You can see Castle Gate and a sai target here.
+
+>e
+
+Shredder's Castle
+You are in Shredder's Castle! You see Target gate to the west.
+
+You can see Castle Gate and Shredder here.
+
+>i
+You are carrying:
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Shredder's Castle
+You are in Shredder's Castle! You see Target gate to the west.
+
+You can see Castle Gate and Shredder here.
+
+>* BUG "Target gate" doesn't make sense
+That's not a verb I recognise.
+
+>w
+
+Target gate
+You are in the City. You see Shredder's Castle to the east.
+
+You can see Castle Gate and a sai target here.
+
+>l
+Target gate
+You are in the City. You see Shredder's Castle to the east.
+
+You can see Castle Gate and a sai target here.
+
+>w
+
+City
+You are in the city. You see a sai target to the east and your sewer under you.
+
+You can see a Guard here.
+
+>w
+You can't go that way.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>d
+
+Sewer
+You are in the sewer. You see the City above you.
+
+>w
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>n
+
+Pineapple house
+You can go north.
+
+You can see Gary here.
+
+>s
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>w
+
+Man-cave
+You can leave the Man-cave by going up.
+
+You can see a space key here.
+
+>get key
+(the space key)
+Taken.
+
+>u
+
+Swellview
+Oh no! There's now an alien invasion from Mars! Go down to enter the Man-Cave, or go west to enter the rocket and get to Mars.
+
+You can see a rocket and Marty here.
+
+>w
+(first opening the rocket)
+It seems to be locked.
+
+>unlock rocket
+What do you want to unlock the rocket with?
+
+>i
+You are carrying:
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>unlock rocket with space key
+You unlock the rocket.
+
+>w
+(first opening the rocket)
+
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket and a Translater here.
+
+>* CAPITALIZATION "Canyon"
+That's not a verb I recognise.
+
+>get translater
+Taken.
+
+>x rocket
+You see nothing special about the rocket.
+
+>x translater
+You see nothing special about the Translater.
+
+>*SUGGESTION CONSIDER ADDING DESCRIPTIONS TO EVERY ITEM
+That's not a verb I recognise.
+
+>l
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>w
+
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>x rover
+You see nothing special about the rover.
+
+>get rover
+I don't suppose the rover would care for that.
+
+>talk to rover
+the rover says "Beep Boop Beep."
+
+>*GRAMMAR "the rover says" should be "The rover says"
+That's not a verb I recognise.
+
+>l
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>get rover
+I don't suppose the rover would care for that.
+
+>climb on rover
+You can't see any such thing.
+
+>get on rover
+He's not something you can enter.
+
+>l
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>e
+
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>w
+
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>*BUG room is a Canyon, but I'm on a Mountain? Also, check spelling of Mountain
+You seem to want to talk to someone, but I can't see whom.
+
+>l
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>e
+
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>i
+You are carrying:
+  a Translater
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>l
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>w
+
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>i
+You are carrying:
+  a Translater
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>use translater
+That's not a verb I recognise.
+
+>l
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>talk to translater
+>*BUG blank response talk to translater
+That's not a verb I recognise.
+
+>i
+You are carrying:
+  a Translater
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>talk to mirror
+>talk to phone
+>*BUG shouldn't have blank response for "talk to" anything, there should be a message
+You seem to want to talk to someone, but I can't see whom.
+
+>l
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>x rover
+You see nothing special about the rover.
+
+>kill rover
+Violence isn't the answer to this one.
+
+>i
+You are carrying:
+  a Translater
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>throw speaker at rover
+You lack the nerve when it comes to the crucial moment.
+
+>talk to rover
+the rover says "Beep Boop Beep."
+
+>say beep
+(To communicate in Loud House 'game on', TALK TO a character.) 
+
+>l
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>i
+You are carrying:
+  a Translater
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>hint
+That's not a verb I recognise.
+
+>l
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>e
+
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>e
+
+Swellview
+Oh no! There's now an alien invasion from Mars! Go down to enter the Man-Cave, or go west to enter the rocket and get to Mars.
+
+You can see a rocket and Marty here.
+
+>talk to marty
+the Martian says "I shall destroy earth! And nothing can stop me except the Omega Grenade!
+
+>w
+
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>w
+
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>w
+
+Valley
+You are in the Valley. You see the Canyon to the east.
+
+You can see an Alien Bug here.
+
+>w
+You can't go that way.
+
+>e
+
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>w
+
+Valley
+You are in the Valley. You see the Canyon to the east.
+
+You can see an Alien Bug here.
+
+>e
+
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>give translater to rover
+The rover can now say stuff in english. it says "Oh, Wow! I can speak human language! Hey, I need you to give me this special alien bug in the valley to the west so my human controllers can finally stop searching and take me off this planet once and for all!"
+
+You aren't holding the Translater.
+
+>w
+
+Valley
+You are in the Valley. You see the Canyon to the east.
+
+You can see an Alien Bug here.
+
+>get bug
+Taken.
+
+>x ;bug
+You can't see any such thing.
+
+>x bug
+Quite a strange creature, really.
+
+>l
+Valley
+You are in the Valley. You see the Canyon to the east.
+
+>w
+You can't go that way.
+
+>n
+You can't go that way.
+
+>e
+
+Canyon
+You are now on the Mountian. You can see Mars to the east.
+
+You can see a rover here.
+
+>give bug to rover
+You give the Alien Bug to the rover and it says "Oooh! Now I can report it to NASA!" He hands you an Omega Grenade.
+
+You aren't holding the Alien Bug.
+
+>i
+You are carrying:
+  an Omega Grenade
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>e
+
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>e
+
+Swellview
+Oh no! There's now an alien invasion from Mars! Go down to enter the Man-Cave, or go west to enter the rocket and get to Mars.
+
+You can see a rocket and Marty here.
+
+>throw grenade at marty
+You did it! You blew up the alien invaders and saved swellview!
+
+You aren't holding the Omega Grenade.
+
+>i
+You are carrying:
+  Gamer Pass 3
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>s
+You can't go that way.
+
+>e
+You can't go that way.
+
+>s
+You can't go that way.
+
+>n
+You can't go that way.
+
+>l
+Swellview
+Oh no! There's now an alien invasion from Mars! Go down to enter the Man-Cave, or go west to enter the rocket and get to Mars.
+
+You can see a rocket and Marty here.
+
+>e
+You can't go that way.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>w
+
+Mars
+You are now on Mars. You can go west to the Canyon or east to get back to earth.
+
+You can see a rocket here.
+
+>n
+You can't go that way.
+
+>s
+You can't go that way.
+
+>e
+
+Swellview
+Oh no! There's now an alien invasion from Mars! Go down to enter the Man-Cave, or go west to enter the rocket and get to Mars.
+
+You can see a rocket and Marty here.
+
+>u
+You can't go that way.
+
+>n
+You can't go that way.
+
+>l
+Swellview
+Oh no! There's now an alien invasion from Mars! Go down to enter the Man-Cave, or go west to enter the rocket and get to Mars.
+
+You can see a rocket and Marty here.
+
+>e
+You can't go that way.
+
+>s
+You can't go that way.
+
+>n
+You can't go that way.
+
+>e
+You can't go that way.
+
+>d
+
+Man-cave
+You can leave the Man-cave by going up.
+
+>l
+Man-cave
+You can leave the Man-cave by going up.
+
+>u
+
+Swellview
+Oh no! There's now an alien invasion from Mars! Go down to enter the Man-Cave, or go west to enter the rocket and get to Mars.
+
+You can see a rocket and Marty here.
+
+>d
+
+Man-cave
+You can leave the Man-cave by going up.
+
+>e
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>s
+
+Chipmunk house
+You can see the exit to the south or you can leave the game by going north.
+
+You can see Dave here.
+
+>talk to dave
+Dave asks "Have you seen my computer?"
+
+>i
+You are carrying:
+  Gamer Pass 3
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Chipmunk house
+You can see the exit to the south or you can leave the game by going north.
+
+You can see Dave here.
+
+>s
+
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>x robot
+You see nothing special about evil robot.
+
+>talk to robot
+>l
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>x robot
+You see nothing special about evil robot.
+
+>get robot
+I don't suppose evil robot would care for that.
+
+>l
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>* BUG can't talk to robot
+That's not a verb I recognise.
+
+>l
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>s
+
+Tree house
+You are in The Tree house. You can leave to the north.
+
+You can see Dave's computer here.
+
+>n
+
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>s
+
+Tree house
+You are in The Tree house. You can leave to the north.
+
+You can see Dave's computer here.
+
+>x computer
+You see nothing special about Dave's computer.
+
+>get computer
+Taken.
+
+>i
+You are carrying:
+  Dave's computer
+  Gamer Pass 3
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>n
+
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>n
+
+Chipmunk house
+You can see the exit to the south or you can leave the game by going north.
+
+You can see Dave here.
+
+>give computer to dave
+Dave is excited and gives you a squirt gun as a reward. Maybe you could use this to fight the evil robot.
+
+You aren't holding Dave's computer.
+
+>s
+
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>squirt robot
+That's not a verb I recognise.
+
+>i
+You are carrying:
+  a squirt gun
+  Gamer Pass 3
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>attack robot
+Violence isn't the answer to this one.
+
+>* CONSIDER IMPLEMENTING "squirt" or "attack" when holding the squirt gun
+That's not a verb I recognise.
+
+>give gun to robot
+you throw the squirt gun at the robot, and the water tank explodes, getting water into the robots systems, shutting it down.
+
+You aren't holding the squirt gun.
+
+>i
+You are carrying:
+  Gamer Pass 2
+  Gamer Pass 3
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>l
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>s
+
+Tree house
+You are in The Tree house. You can leave to the north.
+
+>n
+
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>n
+
+Chipmunk house
+You can see the exit to the south or you can leave the game by going north.
+
+You can see Dave here.
+
+>n
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>x gate
+You see nothing special about Game Gate.
+
+>give pass to gate
+Which do you mean, Gamer Pass 2, Gamer Pass 3, Gamer Pass 4 or Gamer Pass 1?
+
+>1
+You can only do that to something animate.
+
+>i
+You are carrying:
+  Gamer Pass 2
+  Gamer Pass 3
+  a space key
+  Gamer Pass 4
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Gamer Pass 1
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>
+I beg your pardon?
+
+>n
+
+Pineapple house
+You can go north.
+
+You can see Gary here.
+
+>u
+You can't go that way.
+
+>s
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>w
+
+Man-cave
+You can leave the Man-cave by going up.
+
+>e
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>u
+
+Secret Passageway
+So, I guess you found my secret room. Either you beat the game, or you found a hack to it. If the first one, good job! Well, you know where to go from here.
+
+>u
+
+Basement
+You see Lola and Lana to the north.
+
+You can see Couch 2 and a Video game console here.
+
+>u
+You can't go that way.
+
+>e
+You can't go that way.
+
+>n
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>e
+You can't go that way.
+
+>n
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>e
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>n
+
+video game shop
+You are in the video game shop. Here you can buy that video game + collectable rare cards for just $45!
+
+You can see an owner here.
+
+>give passes to owner
+You can't see any such thing.
+
+>give pass to owner
+Which do you mean, Gamer Pass 2, Gamer Pass 3, Gamer Pass 4 or Gamer Pass 1?
+
+>1
+(Gamer Pass 2 to the owner)
+the owner says, "I see you've played your new game." He hands you a game key. "This should unlock a secret level. It is below the menu."
+
+>l
+video game shop
+You are in the video game shop. Here you can buy that video game + collectable rare cards for just $45!
+
+You can see an owner here.
+
+>s
+
+Royal Woods Main Street
+You can see a video game shop to the north, your house to the west, and the schools to the south.
+
+>w
+
+Living room
+You are in the Living room. You see Lynn to the north, Lola and Lana to the south, stairs to the west, and the exit to the east.
+
+>s
+
+South Living room
+You see Living room to the north and the basement stairs to the south.
+
+You can see Lola and Lana here.
+
+>s
+
+Basement
+You see Lola and Lana to the north.
+
+You can see Couch 2 and a Video game console here.
+
+>d
+
+Secret Passageway
+So, I guess you found my secret room. Either you beat the game, or you found a hack to it. If the first one, good job! Well, you know where to go from here.
+
+>d
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>s
+
+Chipmunk house
+You can see the exit to the south or you can leave the game by going north.
+
+You can see Dave here.
+
+>s
+
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>s
+
+Tree house
+You are in The Tree house. You can leave to the north.
+
+>n
+
+Neighborhood
+You can see your house to the north, and The Tree house to the south.
+
+You can see evil robot here.
+
+>n
+
+Chipmunk house
+You can see the exit to the south or you can leave the game by going north.
+
+You can see Dave here.
+
+>n
+
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>unlock gate with key
+Which do you mean, the Game Key, the space key or the Skull Key?
+
+>game
+You unlock Game Gate.
+
+>l
+Nickolodeon game
+You can play the Spongebob game to the north, Alvin and the chipmunks to the south, Henry Danger to the west, and Teenage Mutant Ninja Turtles to the east. Go up twice to leave.
+
+You can see Game Gate here.
+
+>go gate
+(first opening Game Gate)
+
+Slime Boss
+You can go up to the menu, or west once you get your first Key.
+
+You can see Game Gate 2, Game Gate, a Slime monster, a dinosaur, a skateboard and a Lion here.
+
+>* GRAMMAR correct the capitilization and articles
+That's not a verb I recognise.
+
+>i
+You are carrying:
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Slime Boss
+You can go up to the menu, or west once you get your first Key.
+
+You can see Game Gate 2, Game Gate, a Slime monster, a dinosaur, a skateboard and a Lion here.
+
+>w
+(first opening Game Gate 2)
+It seems to be locked.
+
+>e
+You can't go that way.
+
+>kill monster
+Violence isn't the answer to this one.
+
+>x monster
+You see nothing special about the Slime monster.
+
+>talk to monster
+The Slime monster says, "Here's your first riddle. Now this is something that roars- and it's called a ________. Throw the answer at me to recieve your first key.
+
+>get lion
+Taken.
+
+>throw lion at monster
+The Slime monster doesn't seem interested.
+
+>i
+You are carrying:
+  a Lion
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>l
+Slime Boss
+You can go up to the menu, or west once you get your first Key.
+
+You can see Game Gate 2, Game Gate, a Slime monster, a dinosaur and a skateboard here.
+
+>get dinosaur
+Taken.
+
+>throw dinosaur at monster
+You throw the dinosaur at the Slime monster, and it's impressed. "Here's your first key," he says.
+
+You aren't holding the dinosaur.
+
+>talk to monster
+The Slime monster says, "Here's your first riddle. Now this is something that roars- and it's called a ________. Throw the answer at me to recieve your first key.
+
+>l
+Slime Boss
+You can go up to the menu, or west once you get your first Key.
+
+You can see Game Gate 2, Game Gate, a Slime monster and a skateboard here.
+
+>* SUGGESTION consider updating slime monster speech so that he does not repeat the riddle after it is solved.
+That's not a verb I recognise.
+
+>l
+Slime Boss
+You can go up to the menu, or west once you get your first Key.
+
+You can see Game Gate 2, Game Gate, a Slime monster and a skateboard here.
+
+>get skateboard
+Taken.
+
+>w
+(first opening Game Gate 2)
+It seems to be locked.
+
+>unlock gate
+Which do you mean, Game Gate 2 or Game Gate?
+
+>2
+What do you want to unlock Game Gate 2 with?
+
+>key
+Which do you mean, Game Key 2, the Game Key, the space key or the Skull Key?
+
+>1
+(Game Key 2)
+You unlock Game Gate 2.
+
+>l
+Slime Boss
+You can go up to the menu, or west once you get your first Key.
+
+You can see Game Gate 2, Game Gate and a Slime monster here.
+
+>l
+Slime Boss
+You can go up to the menu, or west once you get your first Key.
+
+You can see Game Gate 2, Game Gate and a Slime monster here.
+
+>w
+(first opening Game Gate 2)
+
+Slime Boss 2
+You can go east than up to leave the Boss, or go west once you have the Key.
+
+You can see Game Gate 3, Game Gate 2, Slime monster 2, a Charged wire and a Fire here.
+
+>x monster
+You see nothing special about Slime monster 2.
+
+>talk to monster
+The Slime monster says, "Here's your second riddle- and it won't be easy like the last one. Now, this object will destroy me: Kaboom! Kabwire! and this is called a ____. Throw the answer at me to earn your second key.
+
+>* SIMILAR FEEDBACK FOR ALL ROOMS: check capitalization and articles
+That's not a verb I recognise.
+
+>l
+Slime Boss 2
+You can go east than up to leave the Boss, or go west once you have the Key.
+
+You can see Game Gate 3, Game Gate 2, Slime monster 2, a Charged wire and a Fire here.
+
+>get wire
+Taken.
+
+>give wire to monster
+Slime monster 2 doesn't seem interested.
+
+>get fire
+Taken.
+
+>throw fire at monster
+You throw the Fire at the Slime monster, Causing him to scream in pain as half of him burns off.
+
+You aren't holding the Fire.
+
+>i
+You are carrying:
+  Game Key 3
+  a Charged wire
+  a skateboard
+  Game Key 2
+  a Lion
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>l
+Slime Boss 2
+You can go east than up to leave the Boss, or go west once you have the Key.
+
+You can see Game Gate 3, Game Gate 2 and Slime monster 2 here.
+
+>i
+You are carrying:
+  Game Key 3
+  a Charged wire
+  a skateboard
+  Game Key 2
+  a Lion
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>
+I beg your pardon?
+
+>l
+Slime Boss 2
+You can go east than up to leave the Boss, or go west once you have the Key.
+
+You can see Game Gate 3, Game Gate 2 and Slime monster 2 here.
+
+>unlock gate
+Which do you mean, Game Gate 3 or Game Gate 2?
+
+>1
+What do you want to unlock Game Gate 3 with?
+
+>key
+I didn't understand that sentence.
+
+>unlock game gate 3 with game key 3
+You unlock Game Gate 3.
+
+>w
+(first opening Game Gate 3)
+
+Slime Boss 3
+You can go east twice than up to leave the Boss, or go west once you have the key to end the game.
+
+You can see Game Gate 4, Game Gate 3, Slime monster 3, Pringle Chips, a Knife and Citric acid here.
+
+>x monster
+You see nothing special about Slime monster 3.
+
+>talk to monster
+The Slime monster says, "Here's your final riddle: use your Logic and Science- which one will completly destroy me?
+
+>get acid
+Taken.
+
+>throw acid at monster
+Slime monster 3 doesn't seem interested.
+
+>give chips
+(to Slime monster 3)
+(first taking Pringle Chips)
+You throw the Chips at the Slime monster, and the vinegar is making him disintegrate. He drops the final key, and you take it.
+
+You aren't holding Pringle Chips.
+
+>l
+Slime Boss 3
+You can go east twice than up to leave the Boss, or go west once you have the key to end the game.
+
+You can see Game Gate 4, Game Gate 3, Slime monster 3 and a Knife here.
+
+>w
+(first opening Game Gate 4)
+It seems to be locked.
+
+>unlock game gate 4 with gate key 4
+You can't see any such thing.
+
+>l
+Slime Boss 3
+You can go east twice than up to leave the Boss, or go west once you have the key to end the game.
+
+You can see Game Gate 4, Game Gate 3, Slime monster 3 and a Knife here.
+
+>i
+You are carrying:
+  Citric acid
+  Game Key 3
+  a Charged wire
+  a skateboard
+  Game Key 2
+  a Lion
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>w
+(first opening Game Gate 4)
+It seems to be locked.
+
+>l
+Slime Boss 3
+You can go east twice than up to leave the Boss, or go west once you have the key to end the game.
+
+You can see Game Gate 4, Game Gate 3, Slime monster 3 and a Knife here.
+
+>i
+You are carrying:
+  Citric acid
+  Game Key 3
+  a Charged wire
+  a skateboard
+  Game Key 2
+  a Lion
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>i
+You are carrying:
+  Citric acid
+  Game Key 3
+  a Charged wire
+  a skateboard
+  Game Key 2
+  a Lion
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>unlock game gate 4 with game key 4
+You can't see any such thing.
+
+>l
+Slime Boss 3
+You can go east twice than up to leave the Boss, or go west once you have the key to end the game.
+
+You can see Game Gate 4, Game Gate 3, Slime monster 3 and a Knife here.
+
+>w
+(first opening Game Gate 4)
+It seems to be locked.
+
+>w
+(first opening Game Gate 4)
+It seems to be locked.
+
+>w
+(first opening Game Gate 4)
+It seems to be locked.
+
+>w
+(first opening Game Gate 4)
+It seems to be locked.
+
+>w
+(first opening Game Gate 4)
+It seems to be locked.
+
+>l
+Slime Boss 3
+You can go east twice than up to leave the Boss, or go west once you have the key to end the game.
+
+You can see Game Gate 4, Game Gate 3, Slime monster 3 and a Knife here.
+
+>x monster
+You see nothing special about Slime monster 3.
+
+>give knife
+(to Slime monster 3)
+(first taking the Knife)
+Slime monster 3 doesn't seem interested.
+
+>i
+You are carrying:
+  a Knife
+  Citric acid
+  Game Key 3
+  a Charged wire
+  a skateboard
+  Game Key 2
+  a Lion
+  a Game Key
+  a space key
+  a Skull Key
+  Locked safe 6 (closed and locked)
+  Krabby Patty dresser
+  Locked safe 5 (closed and locked)
+  collectable cards
+  Locked safe 3 (closed and locked)
+  Locked safe 4 (closed and locked)
+  Locked safe (closed and locked)
+  Locked safe 2 (closed and locked)
+  a frog cage
+  a teacup
+  a mirror
+  Lori's phone
+  a speaker
+
+>
+I beg your pardon?
+
+>
+I beg your pardon?
+
+>l
+Slime Boss 3
+You can go east twice than up to leave the Boss, or go west once you have the key to end the game.
+
+You can see Game Gate 4, Game Gate 3 and Slime monster 3 here.
+
+>transcript
+Transcripting is already on.
+
+>transcript off
+
+End of transcript.
+Start of a transcript of
+
+Loud House 'game on'
+An Interactive Fiction by Caleb Wilson
+Release 1 / Serial number 210514 / Inform 7 build 6M62 (I6/v6.33 lib 6/12N) 
+Identification number: //AB516E44-B401-4261-8C71-7495C0771D3E//
+Interpreter version 0.5.4 / VM 3.1.2 / Library serial number 080126
+Standard Rules version 3/120430 by Graham Nelson
+
+>transcript off
+
+End of transcript.
