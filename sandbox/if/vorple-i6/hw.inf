@@ -150,3 +150,24 @@ extend 'examine' first
 [ ExamineWhatSub;
   "Examine what?";
 ];
+
+Verb 'ogg'
+  * -> Ogg;
+[ OggSub;
+  print "OGG TEST";
+  VorplePlaySoundEffect("test.ogg");
+];
+
+Verb 'mp3'
+  * -> Mp3;
+[ Mp3Sub;
+  print "MP3 TEST";
+  VorplePlaySoundEffect("test.mp3");
+];
+
+Verb 'wav'
+  * -> Wav;
+[ WavSub;
+  print "WAV TEST";
+  VorplePlaySoundEffect("test.wav");
+];
