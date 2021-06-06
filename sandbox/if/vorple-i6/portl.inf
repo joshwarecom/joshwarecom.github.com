@@ -1,0 +1,137 @@
+Constant Story "Welcome to Port 'L'";
+Constant MAX_CARRIED = 1;
+Include "vorple.h";
+Include "portl-parser.h";
+Include "portl-verblib.h";
+Include "vorple-multimedia.h";
+
+!FIXME Need to set client side boolean on restore if narration is disabled.
+
+[ ClearNarration;
+  VorpleExecuteJavaScriptCommand("CancelTTS();");
+  VorpleStopMusic();
+  VorpleClearPlaylist();
+];
+
+[ BeforeParsing;
+  ClearNarration();
+];
+
+[ AfterPrompt;
+  if (System.audioEnabled == 0) {
+    ClearNarration();
+  }
+  else {
+    switch (action) {
+      ##Look:
+      ##Examine:
+      ##Inv:
+      ##Go:
+      default:
+          VorpleExecuteJavaScriptCommand("CancelBin();");
+    }
+    VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
+  }
+];
+
+Include "grammar.h";
+
+Object System
+  with
+    audioEnabled 0,
+    FlushBinOrTTSIfNarrationEnabled [;
+      if (self.audioEnabled) {
+        VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
+      }
+    ],
+    RestartBackgroundLoop [ f;
+      VorpleStopAudio();
+      if (self.audioEnabled) {
+        VorplePlaySoundEffect(f,true);
+      }
+    ];
+
+[ Initialise o;
+    location = room;
+    inventory_style = FULLINV_BIT + ENGLISH_BIT + RECURSE_BIT;
+    no_implicit_actions = true;
+    VorpleInitialise();
+    objectloop(o provides articles) {
+      if (isVorpleSupported() == 0) {
+        o.&articles-->0 = "The ";
+        o.&articles-->1 = "the ";
+        o.&articles-->2 = "a ";
+      }
+    }
+];
+
+[ QueueBinOutput f;
+  if (isVorpleSupported()) {
+    print "=";
+    PrintStringOrArray(f);
+    print ";";
+  }
+];
+
+Object room "Cell"
+  with
+    description [;
+      QueueBinOutput("na_desc_cell");
+      QueueBinOutput("0_25_silence");
+      "You are standing in a cell.  The only way out is down.";
+    ],
+    before [;
+      Go:
+        if (noun == d_obj) {
+          if (System.audioEnabled) {
+            VorpleExecuteJavaScriptCommand("PlayNowAsList('na_msg_game_over');");
+          }
+          print "Indeed, for you will not go gently into that good night.  Game over, for now.";
+          KeyCharPrimitive();
+          quit;
+        }
+    ],
+  has light;
+
+Object -> cube "steel cube"
+  with
+    name 'steel' 'cube',
+    articles "=na_name_the_cube;The " "=na_name_the_cube;the " "=na_name_a_cube;a ",
+    short_name "steel cube",
+    description [;
+      QueueBinOutput("na_desc_cube");
+      "A solid block of mistreated metal.";
+    ];
+
+Object -> pistol "strange pistol"
+  with
+    name 'strange' 'pistol',
+    articles "=na_name_the_pistol;The " "=na_name_the_pistol;the " "=na_name_a_pistol;a ",
+    short_name "strange pistol",
+    description [;
+      QueueBinOutput("na_desc_pistol");
+      "There's no trigger.  You can't tell how to fire it.";
+    ],
+  has clothing;
+
+
+Verb 'ogg'
+  * -> Ogg;
+[ OggSub;
+  print "OGG TEST";
+  VorplePlaySoundEffect("../test.ogg");
+];
+
+Verb 'mp3'
+  * -> Mp3;
+[ Mp3Sub;
+  print "MP3 TEST";
+  VorplePlaySoundEffect("../test.mp3",true);
+];
+
+Verb 'wav'
+  * -> Wav;
+[ WavSub;
+  print "WAV TEST";
+  System.RestartBackgroundLoop("music_loop_1.wav");
+];

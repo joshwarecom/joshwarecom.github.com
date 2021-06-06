@@ -1,0 +1,18 @@
+cmd: "E:\\tools\\inform\\inform6.exe"
+name: "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\{FILE_ACTIVE_NAME}"
+args:
+  - +include_path=E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\ilib\\,E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\vlib\\
+  - +language_name=uoai-english
+  - $MAX_STATIC_DATA=180000
+  - -s
+  - -G
+  - "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\{FILE_ACTIVE_NAME}"
+  - "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\{FILE_ACTIVE_NAME_BASE}.ulx"
+  - "&& copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\tts-config.html E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\ && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\{FILE_ACTIVE_NAME_BASE}-play.html E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.html && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\{FILE_ACTIVE_NAME_BASE}.ulx E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.ulx && start E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\pserve.bat && start http://localhost:8000/dist/output.html"
+sh: true,
+cwd: "E:\\tools\\inform\\"
+errorMatch:
+  - "(?<file>([a-zA-Z]:.+))\\((?<line>(\\d+))\\): Error: (?<message>(.+))"
+  - "(?<file>([a-zA-Z]:.+))\\((?<line>(\\d+))\\): Fatal error: (?<message>(.+))"
+warningMatch:
+  - "(?<file>([a-zA-Z]:.+))\\((?<line>(\\d+))\\): Warning: (?<message>(.+))"

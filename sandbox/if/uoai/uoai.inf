@@ -1,0 +1,247 @@
+Constant Story "The Uninvited Opera of Augustus Interruptus";
+Constant Headline "^Written and directed by Joshua Wilson^";
+Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
+Release 1;
+
+Constant MAX_CARRIED = 1;
+Include "vorple.h";
+Include "uoai-parser.h";
+Include "uoai-verblib.h";
+Include "vorple-multimedia.h";
+Include "vorple-hyperlinks.h";
+Include "vorple-screen-effects.h";
+
+!FIXME Need to set client side boolean on restore if narration is disabled.
+
+[ ClearNarration;
+  VorpleExecuteJavaScriptCommand("CancelTTS();");
+  VorpleStopMusic();
+  VorpleClearPlaylist();
+];
+
+[ BeforeParsing;
+  ClearNarration();
+];
+
+[ AfterPrompt;
+  if (System.audioEnabled == 0) {
+    ClearNarration();
+  }
+  else {
+    switch (action) {
+      ##Look:
+      ##Examine:
+      ##Inv:
+      ##Go:
+      default:
+          VorpleExecuteJavaScriptCommand("CancelBin();");
+    }
+    VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
+  }
+];
+
+Include "grammar.h";
+
+Constant AUDIOEXT_OGG 0;
+Constant AUDIOEXT_MP3 1;
+Constant AUDIOEXT_NULL 2;
+Object System
+  with
+    audioEnabled 0,
+    audioExt AUDIOEXT_NULL,
+    FlushBinOrTTSIfNarrationEnabled [;
+      if (self.audioEnabled) {
+        VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
+      }
+    ],
+    RestartBackgroundLoop [ f;
+      VorpleStopAudio();
+      if (self.audioEnabled) {
+        VorplePlaySoundEffect(f,true);
+      }
+    ],
+    SyncBrowserAudioExtension [;
+      switch (self.audioExt) {
+        AUDIOEXT_OGG:
+          VorpleExecuteJavaScriptCommand("document.audioExt = 'ogg';");
+        AUDIOEXT_MP3:
+          VorpleExecuteJavaScriptCommand("document.audioExt = 'mp3';");
+        default:
+          VorpleExecuteJavaScriptCommand("document.audioExt = null;");
+      }
+    ],
+    SyncSystemAudioExtension [ tmp;
+      VorpleExecuteJavaScriptCommand("return IsPlayingMP3s();");
+      tmp = VorpleWhatNumberWasReturned();
+      if (tmp == 1) {
+        self.audioExt = AUDIOEXT_MP3;
+      }
+      else {
+        VorpleExecuteJavaScriptCommand("return IsPlayingOGGs();");
+        tmp = VorpleWhatNumberWasReturned();
+        if (tmp == 1) {
+          self.audioExt = AUDIOEXT_OGG;
+        }
+        else {
+          self.audioExt = AUDIOEXT_NULL;
+        }
+      }
+    ],
+    VorpleClearScreen [;
+      ClearScreen();
+      VorpleExecuteJavaScriptCommand("$('#window0 *:not(.turn.current), .turn.current').empty()");
+    ],
+    MsgYesOrNo [;
+      print "Please answer ";
+      VorpleLinkCommand("yes");
+      print " or ";
+      VorpleLinkCommand("no");
+      print ".";
+    ];
+
+[ Initialise o;
+    location = room;
+    inventory_style = FULLINV_BIT + ENGLISH_BIT + RECURSE_BIT;
+    no_implicit_actions = true;
+    VorpleInitialise();
+    objectloop(o provides articles) {
+      if (isVorpleSupported() == 0) {
+        o.&articles-->0 = "The ";
+        o.&articles-->1 = "the ";
+        o.&articles-->2 = "a ";
+      }
+    }
+];
+
+[ InteractiveIntroduction tmp v;
+  if (isVorpleSupported()) {
+    VorpleExecuteJavaScriptCommand("return IsTTSSupported();");
+    tmp = VorpleWhatNumberWasReturned();
+    if (tmp == 1) {
+      v = true;
+      print "^Would you like to enable audio? ";
+      System.MsgYesOrNo();
+      System.audioEnabled = YesOrNo();
+      if (System.audioEnabled) {
+        ClearNarration();
+        VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1');");
+        print "^Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
+        VorpleLinkCommand("yes",);
+        print " / ";
+        VorpleLinkCommand("no");
+        print ")";
+        tmp = YesOrNo();
+        if (tmp) {
+          System.SyncSystemAudioExtension();
+        }
+        else {
+          VorpleExecuteJavaScriptCommand("ToggleAudioExtension();");
+          ClearNarration();
+          VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1b');");
+          print "^Oh, how about now then? (";
+          VorpleLinkCommand("yes",);
+          print " / ";
+          VorpleLinkCommand("no");
+          print ")";
+          tmp = YesOrNo();
+          if (tmp) {
+            System.SyncSystemAudioExtension();
+          }
+        }
+        if (tmp) {
+          ClearNarration();
+          print "^On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.  Press a key to hear a sample.^";
+          VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_2');");
+          tmp = KeyCharPrimitive();
+          ClearNarration();
+          print "^This is some sample text-to-speech.  Would you like to customize the voice? (";
+          VorpleLinkCommand("yes",);
+          print " / ";
+          VorpleLinkCommand("no");
+          print ")^";
+          System.FlushBinOrTTSIfNarrationEnabled();
+          tmp = YesOrNo();
+          if (tmp) {
+            ClearNarration();
+            print "^So would I.  Alas, not today.  Press a key to start the game.^";
+            System.FlushBinOrTTSIfNarrationEnabled();
+            tmp = KeyCharPrimitive();
+          }
+          else {
+            ClearNarration();
+            VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_3');");
+            print "^Excellent! Press a key to begin the game.^";
+            tmp = KeyCharPrimitive();
+          }
+        }
+        else {
+          print "^Never mind about the audio.  Press a key to begin the game!";
+          System.audioEnabled = 0;
+          tmp = KeyCharPrimitive();
+        }
+      }
+    }
+    else {
+      v = false;
+    }
+  }
+  else {
+    v = false;
+  }
+  if (v == false) {
+    print "^Audio disabled, as this interpreter does not support it.^^Press a key to begin the game!";
+    tmp = KeyCharPrimitive();
+  }
+  ClearNarration();
+  System.VorpleClearScreen();
+];
+
+
+[ QueueBinOutput f;
+  if (isVorpleSupported()) {
+    print "=";
+    PrintStringOrArray(f);
+    print ";";
+  }
+];
+
+Object room "Cell"
+  with
+    description [;
+      QueueBinOutput("na_desc_cell");
+      QueueBinOutput("0_25_silence");
+      "You are standing in a cell.  The only way out is down.";
+    ],
+    before [;
+      Go:
+        if (noun == d_obj) {
+          if (System.audioEnabled) {
+            VorpleExecuteJavaScriptCommand("PlayNowAsList('na_msg_game_over');");
+          }
+          print "Indeed, for you will not go gently into that good night.  Game over, for now.";
+          KeyCharPrimitive();
+          quit;
+        }
+    ],
+  has light;
+
+Object -> cube "steel cube"
+  with
+    name 'steel' 'cube',
+    articles "=na_name_the_cube;The " "=na_name_the_cube;the " "=na_name_a_cube;a ",
+    short_name "steel cube",
+    description [;
+      QueueBinOutput("na_desc_cube");
+      "A solid block of mistreated metal.";
+    ];
+
+Object -> pistol "strange pistol"
+  with
+    name 'strange' 'pistol',
+    articles "=na_name_the_pistol;The " "=na_name_the_pistol;the " "=na_name_a_pistol;a ",
+    short_name "strange pistol",
+    description [;
+      QueueBinOutput("na_desc_pistol");
+      "There's no trigger.  You can't tell how to fire it.";
+    ],
+  has clothing;

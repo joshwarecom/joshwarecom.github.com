@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+<head>
+    <title>Vorple</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="interpreter/roboto.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/jquery.powertip.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/toastr.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vex.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vex-theme-plain.css">
+
+    <link rel="stylesheet" type="text/css" href="interpreter/haven.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vorple.css">
+</head>
+<body>
+<main id="haven">
+    <div id="loader">
+        <h2 id="loader-message">Loading scripts</h2>
+        <div id="spinner">V</div>
+    </div>
+</main>
+<script>
+  document.cecPauseBetweenTracks = 0;
+  document.cecFadeOut = 0;
+  document.audioExt = 'mp3';
+  var audio = new Audio();
+  if (audio.canPlayType("audio/ogg") != "") {
+    document.audioExt = 'ogg';
+  }
+  else {
+    document.audioExt = 'mp3';
+  }
+</script>
+<script src="interpreter/vorple.uoai.js"></script>
+
+<script>
+    audio_root = "resources/audio/";
+    vorple.debug.on();
+    vorple.options = {
+        autosave: false,
+        engineColors: false,
+        resource_paths: {
+            images: "resources/images/",
+            audio: audio_root+document.audioExt+"/"
+        },
+
+        // URL to the game file
+        story: "output.ulx"
+    };
+
+    function IsPlayingMP3s() {
+      if (document.audioExt == 'mp3') return 1;
+      return 0;
+    }
+
+    function IsPlayingOGGs() {
+      if (document.audioExt == 'mp3') return 1;
+      return 0;
+    }
+
+    function ToggleAudioExtension() {
+      if (document.audioExt == 'mp3') document.audioExt = 'ogg';
+      else if (document.audioExt == 'ogg') document.audioExt = 'mp3';
+      vorple.options.resource_paths.audio = audio_root+document.audioExt+"/";
+    }
+
+    function IsTTSSupported() {
+      if ('speechSynthesis' in window) {
+        return 1;
+      }
+      return 0;
+    }
+
+    function PlayNowAsList(str) {
+      var pn = vorple.options.resource_paths.audio+str+"."+document.audioExt;
+      var pl = new Array();
+      pl[0] = pn;
+      pl[1] = '';
+      pl.pop();
+      vorple.audio.setPlaylist(pl,{looping: false, restart: true, shuffled: false});
+    }
+    function CancelTTS(str) {
+      window.speechSynthesis.cancel();
+      document.ttsOutput = "";
+    }
+    function AddTTS(str) {
+      document.ttsOutput += str + "  ";
+    }
+    function CancelBin(str) {
+      document.binOutput = new Array();
+    }
+    function AddBin(str) {
+      if (document.binOutput.indexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0);
+      else
+      document.binOutput[document.binOutput.length] = vorple.options.resource_paths.audio+str+"."+document.audioExt;
+    }
+    function FlushTTS() {
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance(document.ttsOutput));
+      document.ttsOutput = "";
+    }
+    function FlushBin() {
+      var pl = new Array();
+      for (j = 0; j < document.binOutput.length; j++) {
+        pl[j] = document.binOutput[j];
+      }
+      pl[j] = '';
+      pl.pop();
+      vorple.audio.setPlaylist(pl,{looping: false, restart: true, shuffled: false});
+      document.binOutput = new Array();
+    }
+    function FlushBinOrTTS() {
+      if (document.binOutput.length > 0) {
+        FlushBin();
+        document.ttsOutput = "";
+      }
+      else {
+        FlushTTS();
+      }
+    }
+    vorple.debug.off();
+
+    document.firstInteraction = false;
+    document.audioNarrationLength = 0;
+    document.ttsOutput = "";
+    document.binOutput = new Array();
+
+    function narratedOutputFilter( output, meta ) {
+        if (document.audioNarrationLength == 0) {
+          if (output != '\n') {
+            var re = /(.*?)=(.*?);(.*)/;
+            stop = false;
+            while (!stop) {
+              var ma = re.exec(output);
+              if (ma) {
+                output = ma[1] + ma[3] + '\n';
+                AddBin(ma[2]);
+              }
+              else stop = true;
+            }
+            AddTTS(output);
+            return output;
+          }
+        }
+    }
+    vorple.output.addOutputFilter( narratedOutputFilter );
+    vorple.init();
+</script>
+</body>
+</html>

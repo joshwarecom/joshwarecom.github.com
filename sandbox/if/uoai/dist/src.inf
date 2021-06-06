@@ -9,7 +9,6 @@ Include "extended-vorple-multimedia.h";
 ];
 
 [ AfterPrompt;
-  print AudioNarration.enabled;
   AudioNarration.play();
 ];
 
@@ -54,33 +53,19 @@ Object AudioNarration
     length 0,
     audio_table na_sequence,
     prefix_table na_prefix,
-    enabled true,
     reset [;
       VorpleStopMusic();
       VorpleClearPlaylist();
-      VorpleExecuteJavaScriptCommand("CancelTTS();");
-      VorpleExecuteJavaScriptCommand("document.audioNarrationLength = 0;");
       self.length = 0;
     ],
     add [ file prefix;
-      if (self.enabled) {
-        self.length++;
-        VorpleExecuteJavaScriptCommand("document.audioNarrationLength++;");
-        self.audio_table-->self.length = file;
-        self.prefix_table-->self.length = prefix;
-      }
-    ],
-    disable [;
-      self.enabled = false;
-    ],
-    enable [;
-      self.enabled = true;
+      self.length++;
+      self.audio_table-->self.length = file;
+      self.prefix_table-->self.length = prefix;
     ],
     play [;
       VorpleClearPlaylist();
-      if (self.enabled) {
-        VorpleStartPlaylist(self.audio_table);
-      }
+      VorpleStartPlaylist(self.audio_table);
     ];
 
 [ Initialise ;
@@ -164,25 +149,4 @@ extend 'examine' first
 
 [ ExamineWhatSub;
   "Examine what?";
-];
-
-Verb 'ogg'
-  * -> Ogg;
-[ OggSub;
-  print "OGG TEST";
-  VorplePlaySoundEffect("test.ogg");
-];
-
-Verb 'mp3'
-  * -> Mp3;
-[ Mp3Sub;
-  print "MP3 TEST";
-  VorplePlaySoundEffect("test.mp3");
-];
-
-Verb 'wav'
-  * -> Wav;
-[ WavSub;
-  print "WAV <code></code>TEST";
-  VorplePlaySoundEffect("test.wav");
 ];

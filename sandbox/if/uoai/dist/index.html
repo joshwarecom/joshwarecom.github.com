@@ -41,25 +41,8 @@
         // URL to the game file
         story: "output.ulx"
     };
-    function CancelTTS(str) {
-      window.speechSynthesis.cancel();
-    }
-    function SpeakTTS(str) {
-      window.speechSynthesis.speak(new SpeechSynthesisUtterance(str));
-    }
+
     vorple.debug.off();
-
-    document.firstInteraction = false;
-    document.audioNarrationLength = 0;
-
-    function ttsOutputFilter( output, meta ) {
-      if (document.firstInteraction == true) {
-        if (document.audioNarrationLength == 0) {
-          SpeakTTS(output);
-        }
-      }
-    }
-    vorple.output.addOutputFilter( ttsOutputFilter );
     vorple.init();
 </script>
 </body>
