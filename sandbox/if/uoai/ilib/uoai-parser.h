@@ -5339,7 +5339,7 @@ Object  InformLibrary "(Inform Library)"
 ! ----------------------------------------------------------------------------
 ! Routines called before and after main 'play' loop
 
-[ GamePrologue i j yn;
+[ GamePrologue i j;
     before_first_turn = true;
     for (i=1 : i<=100 : i++) j = random(i);
 
@@ -6490,7 +6490,9 @@ Object  InformLibrary "(Inform Library)"
 [ DrawStatusLine width posa posb posc;
     #Ifdef TARGET_GLULX;
 		!JW this removes the status line from glulx.
-		return;
+		if (true) {
+			return;
+		}
     ! If we have no status window, we must not try to redraw it.
     if (gg_statuswin == 0)
         return;

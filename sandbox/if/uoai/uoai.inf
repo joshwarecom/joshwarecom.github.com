@@ -3,10 +3,30 @@ Constant Headline "^Written and directed by Joshua Wilson^";
 Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
 Release 1;
 
+!-----------------------------------------------------------------------------
+!
+! This file is a test suite for Inform Markup.  For more information on
+! Inform Markup, see the header commentary in the file Markup.h.
+!
+! Here's a suitable PIC1 file for image tests:
+!
+! begin 664 PIC1
+! MB5!.1PT*&@H````-24A$4@```"`````@`@,````.%))G````#%!,5$4```#.
+! MSJ/DYOS__]UOK-:X````H$E$051XG'7/L0K",!0%T`NA%+(X.6?O/TBEHXLN
+! MG?V4ULG?2+:0KW!S5>N'9.C8<LTK%:KBFPZ\R\T+PCQ8PO^@U7]7I_<JKR;8
+! MPCQLD9!MRYA5`=X\F_YX"[`<S9U#`4?NKQPG=&9&+&?TC<"2`R7L&T$O/8+4
+! M$W(`*C6'EBFB$UP$-O*H79$7@2/4*#B#@]HMPWY=UX?IYA;07W__Q`NHM)Z\
+! 0,;6D%`````!)14Y$KD)@@@``
+! `
+! end
+!
+!-----------------------------------------------------------------------------
+
 Constant MAX_CARRIED = 1;
 Include "vorple.h";
 Include "uoai-parser.h";
 Include "uoai-verblib.h";
+Include "markup.h";
 Include "vorple-multimedia.h";
 Include "vorple-hyperlinks.h";
 Include "vorple-screen-effects.h";
@@ -45,6 +65,13 @@ Include "grammar.h";
 Constant AUDIOEXT_OGG 0;
 Constant AUDIOEXT_MP3 1;
 Constant AUDIOEXT_NULL 2;
+
+Constant CODENAME_HERO 'hero';
+Constant CODENAME_HEROINE 'heroine';
+Constant CODENAME_HERETIC 'heretic';
+Constant CODENAME_HELLION 'hellion';
+Constant CODENAME_HONEYBADGER 'honeybadger';
+
 Object System
   with
     audioEnabled 0,
@@ -97,6 +124,17 @@ Object System
       print " or ";
       VorpleLinkCommand("no");
       print ".";
+    ],
+    WaitForEnter [;
+      KeyboardPrimitive(buffer, parse);
+    ],
+    GraceNote [ channel;
+      if (isVorpleSupported()) {
+        VorpleImage("gracenotes.png", "MUSICAL INTERLUDE");
+      }
+      else {
+        print (markup) "<IMG SRC=100 ALT='MUSICAL INTERLUDE' WIDTH=500 HEIGHT=30><br>";
+      }
     ];
 
 [ Initialise o;
@@ -113,7 +151,8 @@ Object System
     }
 ];
 
-[ InteractiveIntroduction tmp v;
+[ InteractiveIntroduction tmp v key;
+  key = 0;
   if (isVorpleSupported()) {
     VorpleExecuteJavaScriptCommand("return IsTTSSupported();");
     tmp = VorpleWhatNumberWasReturned();
@@ -125,9 +164,10 @@ Object System
       if (System.audioEnabled) {
         ClearNarration();
         VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1');");
-        print "^Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
-        VorpleLinkCommand("yes",);
-        print " / ";
+        print "^NARRATOR:^";
+        print "Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
+        VorpleLinkCommand("yes");
+        print " or ";
         VorpleLinkCommand("no");
         print ")";
         tmp = YesOrNo();
@@ -138,9 +178,10 @@ Object System
           VorpleExecuteJavaScriptCommand("ToggleAudioExtension();");
           ClearNarration();
           VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1b');");
-          print "^Oh, how about now then? (";
-          VorpleLinkCommand("yes",);
-          print " / ";
+          print "^NARRATOR:^";
+          print "Oh, how about now then? (";
+          VorpleLinkCommand("yes");
+          print " or ";
           VorpleLinkCommand("no");
           print ")";
           tmp = YesOrNo();
@@ -150,34 +191,35 @@ Object System
         }
         if (tmp) {
           ClearNarration();
-          print "^On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.  Press a key to hear a sample.^";
+          print "^On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.  Press enter to hear a sample.^";
           VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_2');");
-          tmp = KeyCharPrimitive();
+          System.WaitForEnter();
           ClearNarration();
           print "^This is some sample text-to-speech.  Would you like to customize the voice? (";
-          VorpleLinkCommand("yes",);
-          print " / ";
+          VorpleLinkCommand("yes");
+          print " or ";
           VorpleLinkCommand("no");
           print ")^";
           System.FlushBinOrTTSIfNarrationEnabled();
           tmp = YesOrNo();
           if (tmp) {
             ClearNarration();
-            print "^So would I.  Alas, not today.  Press a key to start the game.^";
+            print "^So would I.  Alas, not today.  Press enter to start the game.^";
             System.FlushBinOrTTSIfNarrationEnabled();
-            tmp = KeyCharPrimitive();
+            key = 1;
           }
           else {
             ClearNarration();
             VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_3');");
-            print "^Excellent! Press a key to begin the game.^";
-            tmp = KeyCharPrimitive();
+            print "^Excellent! Press enter to begin the game.^";
+            key = 1;
           }
         }
         else {
-          print "^Never mind about the audio.  Press a key to begin the game!";
+          ClearNarration();
+          print "Never mind about the audio then.  Press enter to begin the game!";
+          key = 1;
           System.audioEnabled = 0;
-          tmp = KeyCharPrimitive();
         }
       }
     }
@@ -189,11 +231,25 @@ Object System
     v = false;
   }
   if (v == false) {
-    print "^Audio disabled, as this interpreter does not support it.^^Press a key to begin the game!";
-    tmp = KeyCharPrimitive();
+    print "^NARRATOR:^";
+    print "Please note that there will be no audio playing, as this interpreter does not support it.  Press a key to begin the game!";
+    key = 1;
+  }
+  if (key == 1) {
+    System.WaitForEnter();
   }
   ClearNarration();
   System.VorpleClearScreen();
+
+  !FIXME Improve concision and humor
+  !QueueBinOutput("na_prologue_1");
+  print "Your people have known nothing but tyranny for one thousand years.  Healthcare is free, yes, but only for ones who are sick! Pointless war and carnage is long forbidden, blanching the countryside with the sickly pallor of peace and prosperity.  And worst of all, excessive overdue library fines - pennies per day! All that changes tonight, and you shall be the changer!^";
+  print "^Yet no one shall ever know your name.  Indeed, if you even have a true name it is lost to time.  You were raised by the Order of Humble Pride, a cabal of freedom fighters masquerading as learned monks.  'Twas twenty-four years ago they found you abandoned at the gates and assigned to you a random nom de guerre - a code name otherwise known only to the elders.^";
+  print "^What was it again? Something that started with H I believe. Hero? Heroine? Heretic? Hellion? Or perhaps Honeybadger? You can tell me.  I'm the narrator, after all.^";
+  System.FlushBinOrTTSIfNarrationEnabled();
+  System.WaitForEnter();
+  ClearNarration();
+  quit;
 ];
 
 
