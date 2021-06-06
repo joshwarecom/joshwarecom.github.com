@@ -178,8 +178,7 @@ Object System
           VorpleExecuteJavaScriptCommand("ToggleAudioExtension();");
           ClearNarration();
           VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1b');");
-          print "^NARRATOR:^";
-          print "Oh, how about now then? (";
+          print "^Oh, how about now then? (";
           VorpleLinkCommand("yes");
           print " or ";
           VorpleLinkCommand("no");
@@ -242,7 +241,7 @@ Object System
   System.VorpleClearScreen();
 
   !FIXME Improve concision and humor
-  !QueueBinOutput("na_prologue_1");
+  QueueBinOutput("na_prologue_1");
   print "Your people have known nothing but tyranny for one thousand years.  Healthcare is free, yes, but only for ones who are sick! Pointless war and carnage is long forbidden, blanching the countryside with the sickly pallor of peace and prosperity.  And worst of all, excessive overdue library fines - pennies per day! All that changes tonight, and you shall be the changer!^";
   print "^Yet no one shall ever know your name.  Indeed, if you even have a true name it is lost to time.  You were raised by the Order of Humble Pride, a cabal of freedom fighters masquerading as learned monks.  'Twas twenty-four years ago they found you abandoned at the gates and assigned to you a random nom de guerre - a code name otherwise known only to the elders.^";
   print "^What was it again? Something that started with H I believe. Hero? Heroine? Heretic? Hellion? Or perhaps Honeybadger? You can tell me.  I'm the narrator, after all.^";
