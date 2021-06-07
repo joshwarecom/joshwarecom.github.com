@@ -1,14 +1,14 @@
 cmd: "E:\\tools\\inform\\inform6.exe"
-name: "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\{FILE_ACTIVE_NAME}"
+name: "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\uoai.inf"
 args:
   - +include_path=E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\ilib\\,E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\vlib\\
   - +language_name=uoai-english
   - $MAX_STATIC_DATA=360000
   - -s
   - -G
-  - "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\{FILE_ACTIVE_NAME}"
-  - "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\{FILE_ACTIVE_NAME_BASE}.ulx"
-  - "&& dir && python build-uoai-local.py && e:\\tools\\inform\\cblorb {FILE_ACTIVE_NAME_BASE}.blurb bin\\{FILE_ACTIVE_NAME_BASE}.gblorb && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\tts-config.html E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\ && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\{FILE_ACTIVE_NAME_BASE}-play.html E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.html && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\{FILE_ACTIVE_NAME_BASE}.ulx E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.ulx && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\{FILE_ACTIVE_NAME_BASE}.gblorb E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.gblorb && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\{FILE_ACTIVE_NAME_BASE}.ulx.js E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.ulx.js && start E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.html"
+  - "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\uoai.inf"
+  - "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\uoai.ulx"
+  - "&& dir && python build-uoai-local.py && e:\\tools\\inform\\cblorb uoai.blurb bin\\uoai.gblorb && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\tts-config.html E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\ && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\uoai.html E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.html && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\uoai.ulx E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.ulx && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\uoai.gblorb E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.gblorb && copy E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\bin\\uoai.ulx.js E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.ulx.js && start E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\dist\\output.html"
 sh: true,
 cwd: "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\"
 errorMatch:

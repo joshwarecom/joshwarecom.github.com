@@ -119,6 +119,10 @@ Constant AUDIOEXT_OGG 0;
 Constant AUDIOEXT_MP3 1;
 Constant AUDIOEXT_NULL 2;
 
+Array INPUT_QUIT buffer "quit";
+Array INPUT_RESTART buffer "restart";
+Array INPUT_RESTORE buffer "restore";
+
 Array CODENAME_HERO buffer "hero";
 Array CODENAME_HEROINE buffer "heroine";
 Array CODENAME_HERETIC buffer "heretic";
@@ -138,6 +142,7 @@ Object System
   with
     audioEnabled 0,
     audioExt AUDIOEXT_NULL,
+    codeNameLinkId 0,
     FlushBinOrTTSIfNarrationEnabled [;
       if (self.audioEnabled) {
         VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
@@ -188,9 +193,17 @@ Object System
       print "";
       bp_output_stream(-3);
     ],
-    VorpleClearScreen [;
-      ClearScreen();
-      VorpleExecuteJavaScriptCommand("$('#window0 *:not(.turn.current), .turn.current').empty()");
+    ClearNonIpadScreen [ ipad;
+      if (isVorpleSupported()) {
+        VorpleExecuteJavaScriptCommand("return IsIpad();");
+        ipad = VorpleWhatNumberWasReturned();
+        if (ipad == 0) {
+          VorpleExecuteJavaScriptCommand("$('#window0 *:not(.turn.current), .turn.current').empty()");
+        }
+      }
+      else {
+        ClearScreen();
+      }
     ],
     MsgYesOrNo [;
       print "Please answer ";
@@ -224,7 +237,7 @@ Object System
       }
       else {
         glk_set_hyperlink(LINKID_CONTINUE);
-        print (markup) "<IMG SRC=101 ALIGN='RIGHT' ALT='CLICK TO CONTINUE' WIDTH=240 HEIGHT=60><br>";
+        print (markup) "<IMG SRC=101 ALIGN='RIGHT' ALT='CLICK TO CONTINUE' WIDTH=240 HEIGHT=43><br>";
         glk_set_hyperlink(0);
       }
       self.WaitForEnter();
@@ -305,7 +318,7 @@ Object System
           print "If you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
-          System.VorpleClearScreen();
+          System.ClearNonIpadScreen();
           ClearNarration();
           QueueBinOutput("na_intro_2");
           QueueBinOutput("se_pause");
@@ -313,7 +326,7 @@ Object System
           print "On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
-          System.VorpleClearScreen();
+          System.ClearNonIpadScreen();
           ClearNarration();
           print "^This is some sample text-to-speech.  Would you like to customize the voice? (";
           System.InlineLink("yes",LINKID_YES);
@@ -364,7 +377,7 @@ Object System
   }
   ClearNarration();
   VorpleStopAudio();
-  System.VorpleClearScreen();
+  System.ClearNonIpadScreen();
 
   !FIXME Improve concision and humor
   if (isVorpleSupported()) {
@@ -393,84 +406,89 @@ Object System
   print "? You can tell me.  I'm the narrator, after all.^";
   System.FlushBinOrTTSIfNarrationEnabled();
   if (true) {
-  tmp = false;
-  while (tmp == false) {
-    KeyboardPrimitive(buffer, parse);
-    StringToLower(buffer);
+    tmp = false;
+    while (tmp == false) {
+      KeyboardPrimitive(buffer, parse);
+      StringToLower(buffer);
 
+      if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
+        tmp = true;
+      }
+      else if (CompareStrings(buffer,CODENAME_HERETIC)) {
+        tmp = true;
+      }
+      else if (CompareStrings(buffer,CODENAME_HELLION)) {
+        tmp = true;
+      }
+      else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
+        tmp = true;
+      }
+      else {
+        ClearNarration();
+        QueueBinOutput("na_prologue_1_rejection");
+        print "^No no no, it can't be that.  Please enter ";
+        System.InlineLink("Hero",LINKID_HERO);
+        print ", ";
+        System.InlineLink("Heroine",LINKID_HEROINE);
+        print ", ";
+        System.InlineLink("Heretic",LINKID_HERETIC);
+        print ", ";
+        System.InlineLink("Hellion",LINKID_HELLION);
+        print ", or ";
+        System.InlineLink("Honeybadger",LINKID_HONEYBADGER);
+        print ".^";
+        System.FlushBinOrTTSIfNarrationEnabled();
+      }
+    }
+    System.RestartBackgroundLoop("music_loop_1.ogg",1000);
+    ClearNarration();
+    QueueBinOutput("na_prologue_1_ahyes");
+    print "^Ah yes - ";
     if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
-      tmp = true;
-    }
-    else if (CompareStrings(buffer,CODENAME_HERETIC)) {
-      tmp = true;
-    }
-    else if (CompareStrings(buffer,CODENAME_HELLION)) {
-      tmp = true;
-    }
-    else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
-      tmp = true;
-    }
-    else {
-      ClearNarration();
-      QueueBinOutput("na_prologue_1_rejection");
-      print "^No no no, it can't be that.  Please enter ";
-      System.InlineLink("Hero",LINKID_HERO);
-      print ", ";
-      System.InlineLink("Heroine",LINKID_HEROINE);
-      print ", ";
-      System.InlineLink("Heretic",LINKID_HERETIC);
-      print ", ";
-      System.InlineLink("Hellion",LINKID_HELLION);
-      print ", or ";
-      System.InlineLink("Honeybadger",LINKID_HONEYBADGER);
-      print ".^";
+      if (CompareStrings(buffer,CODENAME_HERO)) {
+        System.codeNameLinkId = LINKID_HERO;
+        QueueBinOutput("na_prologue_1_hero");
+        print "Hero! ";
+      }
+      else {
+        System.codeNameLinkId = LINKID_HEROINE;
+        QueueBinOutput("na_prologue_1_heroine");
+        print "Heroine! ";
+      }
+      QueueBinOutput("na_prologue_1_hero_fate");
+      QueueBinOutput("se_pause");
+      print "Destined to save your nation and change the world!^";
       System.FlushBinOrTTSIfNarrationEnabled();
     }
-  }
-  System.RestartBackgroundLoop("music_loop_1.ogg",1000);
-  ClearNarration();
-  QueueBinOutput("na_prologue_1_ahyes");
-  print "^Ah yes - ";
-  if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
-    if (CompareStrings(buffer,CODENAME_HERO)) {
-      QueueBinOutput("na_prologue_1_hero");
-      print "Hero! ";
+    else if (CompareStrings(buffer,CODENAME_HERETIC)) {
+      System.codeNameLinkId = LINKID_HERETIC;
+      QueueBinOutput("na_prologue_1_heretic");
+      QueueBinOutput("na_prologue_1_heretic_fate");
+      QueueBinOutput("se_pause");
+      print "Heretic! Ever ready to trample the trappings of fear and falsehood beneath your two bare feet.^";
+      System.FlushBinOrTTSIfNarrationEnabled();
     }
-    else {
-      QueueBinOutput("na_prologue_1_heroine");
-      print "Heroine! ";
+    else if (CompareStrings(buffer,CODENAME_HELLION)) {
+      System.codeNameLinkId = LINKID_HELLION;
+      QueueBinOutput("na_prologue_1_hellion");
+      QueueBinOutput("na_prologue_1_hellion_fate");
+      QueueBinOutput("se_pause");
+      print "Hellion! Angrily spitting in the face of fickle fate!^";
+      System.FlushBinOrTTSIfNarrationEnabled();
     }
-    QueueBinOutput("na_prologue_1_hero_fate");
-    QueueBinOutput("se_pause");
-    print "Destined to save your nation and change the world!^";
-    System.FlushBinOrTTSIfNarrationEnabled();
-  }
-  else if (CompareStrings(buffer,CODENAME_HERETIC)) {
-    QueueBinOutput("na_prologue_1_heretic");
-    QueueBinOutput("na_prologue_1_heretic_fate");
-    QueueBinOutput("se_pause");
-    print "Heretic! Ever ready to trample the trappings of fear and falsehood beneath your two bare feet.^";
-    System.FlushBinOrTTSIfNarrationEnabled();
-  }
-  else if (CompareStrings(buffer,CODENAME_HELLION)) {
-    QueueBinOutput("na_prologue_1_hellion");
-    QueueBinOutput("na_prologue_1_hellion_fate");
-    QueueBinOutput("se_pause");
-    print "Hellion! Angrily spitting in the face of fickle fate!^";
-    System.FlushBinOrTTSIfNarrationEnabled();
-  }
-  else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
-    QueueBinOutput("na_prologue_1_honeybadger");
-    QueueBinOutput("na_prologue_1_honeybadger_fate");
-    QueueBinOutput("se_pause");
-    print "Honeybadger! The soul of a wolverine in the body of a...wolverinish...badger body!^";
-    System.FlushBinOrTTSIfNarrationEnabled();
-  }
+    else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
+      System.codeNameLinkId = LINKID_HONEYBADGER;
+      QueueBinOutput("na_prologue_1_honeybadger");
+      QueueBinOutput("na_prologue_1_honeybadger_fate");
+      QueueBinOutput("se_pause");
+      print "Honeybadger! The soul of a wolverine in the body of a...wolverinish...badger body!^";
+      System.FlushBinOrTTSIfNarrationEnabled();
+    }
   }
   System.Pause();
   ClearNarration();
   VorpleStopAudio();
-  System.VorpleClearScreen();
+  System.ClearNonIpadScreen();
 ];
 
 

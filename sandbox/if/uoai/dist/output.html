@@ -71,6 +71,13 @@
       vorple.options.resource_paths.audio = audio_root+document.audioExt+"/";
     }
 
+    function IsIpad() {
+      if (navigator.userAgent.indexOf('iPad;') > 0) {
+        return 1;
+      }
+      return 0;
+    }
+
     function IsTTSSupported() {
       if ('speechSynthesis' in window) {
         return 1;
