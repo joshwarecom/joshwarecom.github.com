@@ -26,8 +26,9 @@ Constant MAX_CARRIED = 1;
 Include "vorple.h";
 Include "uoai-parser.h";
 Include "uoai-verblib.h";
+Include "infglk.h";
 Include "markup.h";
-Include "vorple-multimedia.h";
+Include "uoai-vorple-multimedia.h";
 Include "vorple-hyperlinks.h";
 Include "vorple-screen-effects.h";
 
@@ -80,6 +81,38 @@ Include "vorple-screen-effects.h";
   }
 ];
 
+[ HandleGlkEvent ev context abortres newcmd cmdlen;
+  if (isVorpleSupported()) {
+  }
+  else {
+    switch (ev-->0)
+    {
+    evtype_hyperlink:
+      glk_request_hyperlink_event(gg_mainwin);
+      glk_set_style(style_Input);
+      switch (ev-->2) {
+        LINKID_YES: newcmd = "yes";
+        LINKID_NO: newcmd = "no";
+        LINKID_HERO: newcmd = "Hero";
+        LINKID_HEROINE: newcmd = "Heroine";
+        LINKID_HERETIC: newcmd = "Heretic";
+        LINKID_HELLION: newcmd = "Hellion";
+        LINKID_HONEYBADGER: newcmd = "Honeybadger";
+        LINKID_CONTINUE: newcmd = "";
+        default: newcmd = 0;
+      }
+      if (newcmd ~= 0) {
+    		PrintStringOrArray(newcmd);
+    		glk_set_style(style_Normal);
+    		glk_cancel_line_event(gg_mainwin,0);
+    		cmdlen=PrintAnyToArray(abortres+WORDSIZE,INPUT_BUFFER_LEN-WORDSIZE,newcmd);
+    		abortres-->0=cmdlen;
+    		return 2;
+      }
+    }
+  }
+];
+
 Include "grammar.h";
 
 Constant AUDIOEXT_OGG 0;
@@ -92,6 +125,15 @@ Array CODENAME_HERETIC buffer "heretic";
 Array CODENAME_HELLION buffer "hellion";
 Array CODENAME_HONEYBADGER buffer "honeybadger";
 
+Constant LINKID_YES 1;
+Constant LINKID_NO 2;
+Constant LINKID_HERO 3;
+Constant LINKID_HEROINE 4;
+Constant LINKID_HERETIC 5;
+Constant LINKID_HELLION 6;
+Constant LINKID_HONEYBADGER 7;
+Constant LINKID_CONTINUE 8;
+
 Object System
   with
     audioEnabled 0,
@@ -101,10 +143,10 @@ Object System
         VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
       }
     ],
-    RestartBackgroundLoop [ f;
+    RestartBackgroundLoop [ f delay;
       VorpleStopAudio();
       if (self.audioEnabled) {
-        VorplePlaySoundEffect(f,true);
+        VorplePlaySoundEffect(f,true,delay);
       }
     ],
     SyncBrowserAudioExtension [;
@@ -140,14 +182,38 @@ Object System
     ],
     MsgYesOrNo [;
       print "Please answer ";
-      VorpleLinkCommand("yes");
+      self.InlineLink("yes",LINKID_YES);
       print " or ";
-      VorpleLinkCommand("no");
+      self.InlineLink("no",LINKID_NO);
       print ".";
+    ],
+    InlineLink [ text id;
+      if (isVorpleSupported()) {
+        VorpleLinkCommand(text);
+      }
+      else if (glk_gestalt(gestalt_Hyperlinks, 0) && id > 0) {
+        glk_set_hyperlink(id);
+        PrintStringOrArray(text);
+        glk_set_hyperlink(0);
+      }
+      else {
+        PrintStringOrArray(text);
+      }
     ],
     WaitForEnter [;
       KeyboardPrimitive(buffer, parse);
       return parse;
+    ],
+    Pause [;
+      if (isVorpleSupported()) {
+        VorpleImage("pause.png", "CLICK TO CONTINUE", 0, 0, "");
+      }
+      else {
+        glk_set_hyperlink(LINKID_CONTINUE);
+        print (markup) "<IMG SRC=101 ALT='CLICK TO CONTINUE' WIDTH=500 HEIGHT=30><br>";
+        glk_set_hyperlink(0);
+      }
+      self.WaitForEnter();
     ],
     GraceNote [ channel;
       if (isVorpleSupported()) {
@@ -162,6 +228,7 @@ Object System
     location = room;
     inventory_style = FULLINV_BIT + ENGLISH_BIT + RECURSE_BIT;
     no_implicit_actions = true;
+    glk_request_hyperlink_event(gg_mainwin);
     VorpleInitialise();
     objectloop(o provides articles) {
       if (isVorpleSupported() == 0) {
@@ -187,9 +254,9 @@ Object System
         VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1');");
         print "^NARRATOR:^";
         print "Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
-        VorpleLinkCommand("yes");
+        System.InlineLink("yes",LINKID_YES);
         print " or ";
-        VorpleLinkCommand("no");
+        System.InlineLink("no",LINKID_NO);
         print ")";
         tmp = YesOrNo();
         if (tmp) {
@@ -200,9 +267,9 @@ Object System
           ClearNarration();
           VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1b');");
           print "^Oh, how about now then? (";
-          VorpleLinkCommand("yes");
+          System.InlineLink("yes",LINKID_YES);
           print " or ";
-          VorpleLinkCommand("no");
+          System.InlineLink("no",LINKID_NO);
           print ")";
           tmp = YesOrNo();
           if (tmp) {
@@ -213,12 +280,12 @@ Object System
           ClearNarration();
           print "^On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.  Press enter to hear a sample.^";
           VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_2');");
-          System.WaitForEnter();
+          System.Pause();
           ClearNarration();
           print "^This is some sample text-to-speech.  Would you like to customize the voice? (";
-          VorpleLinkCommand("yes");
+          System.InlineLink("yes",LINKID_YES);
           print " or ";
-          VorpleLinkCommand("no");
+          System.InlineLink("no",LINKID_NO);
           print ")^";
           System.FlushBinOrTTSIfNarrationEnabled();
           tmp = YesOrNo();
@@ -252,11 +319,11 @@ Object System
   }
   if (v == false) {
     print "^NARRATOR:^";
-    print "Please note that there will be no audio playing, as this interpreter does not support it.  Press a key to begin the game!";
+    print "Please note that there will be no audio playing, as this interpreter does not support it.  Press a key to begin the game!^";
     key = 1;
   }
   if (key == 1) {
-    System.WaitForEnter();
+    System.Pause();
   }
   ClearNarration();
   System.VorpleClearScreen();
@@ -267,18 +334,19 @@ Object System
   print "Your people have known nothing but tyranny for one thousand years.  Healthcare is free, yes, but only for ones who are sick! Pointless war and carnage is long forbidden, blanching the countryside with the sickly pallor of peace and prosperity.  And worst of all, excessive overdue library fines - pennies per day! All that changes tonight, and you shall be the changer!^";
   print "^Yet no one shall ever know your name.  Indeed, if you even have a true name it is lost to time.  You were raised by the Order of Humble Pride, a cabal of freedom fighters masquerading as learned monks.  'Twas twenty-four years ago they found you abandoned at the gates and assigned to you a random nom de guerre - a code name otherwise known only to the elders.^";
   print "^What was it again? Something that started with H I believe. ";
-  VorpleLinkCommand("Hero");
+  System.InlineLink("Hero",LINKID_HERO);
   print "? ";
-  VorpleLinkCommand("Heroine");
+  System.InlineLink("Heroine",LINKID_HEROINE);
   print "? ";
-  VorpleLinkCommand("Heretic");
+  System.InlineLink("Heretic",LINKID_HERETIC);
   print "? ";
-  VorpleLinkCommand("Hellion");
+  System.InlineLink("Hellion",LINKID_HELLION);
   print "? ";
   print "Or perhaps ";
-  VorpleLinkCommand("Honeybadger");
+  System.InlineLink("Honeybadger",LINKID_HONEYBADGER);
   print "? You can tell me.  I'm the narrator, after all.^";
   System.FlushBinOrTTSIfNarrationEnabled();
+  while (true) {
   tmp = false;
   while (tmp == false) {
     KeyboardPrimitive(buffer, parse);
@@ -300,23 +368,23 @@ Object System
       ClearNarration();
       QueueBinOutput("na_prologue_1_rejection");
       print "^No no no, it can't be that.  Please enter ";
-      VorpleLinkCommand("Hero");
+      System.InlineLink("Hero",LINKID_HERO);
       print ", ";
-      VorpleLinkCommand("Heroine");
+      System.InlineLink("Heroine",LINKID_HEROINE);
       print ", ";
-      VorpleLinkCommand("Heretic");
+      System.InlineLink("Heretic",LINKID_HERETIC);
       print ", ";
-      VorpleLinkCommand("Hellion");
+      System.InlineLink("Hellion",LINKID_HELLION);
       print ", or ";
-      VorpleLinkCommand("Honeybadger");
+      System.InlineLink("Honeybadger",LINKID_HONEYBADGER);
       print ".^";
       System.FlushBinOrTTSIfNarrationEnabled();
     }
   }
+  System.RestartBackgroundLoop("music_loop_1.ogg",1000);
   ClearNarration();
   QueueBinOutput("na_prologue_1_ahyes");
   print "^Ah yes - ";
-  System.RestartBackgroundLoop("music_loop_1.ogg");    
   if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
     if (CompareStrings(buffer,CODENAME_HERO)) {
       QueueBinOutput("na_prologue_1_hero");
@@ -348,9 +416,9 @@ Object System
     print "Honeybadger! The soul of a wolverine in the body of a...wolverinish...badger body!^";
     System.FlushBinOrTTSIfNarrationEnabled();
   }
+  }
   System.WaitForEnter();
   ClearNarration();
-  quit;
 ];
 
 
@@ -367,6 +435,7 @@ Object room "Cell"
     description [;
       QueueBinOutput("na_desc_cell");
       QueueBinOutput("0_25_silence");
+      System.MsgYesOrNo();
       "You are standing in a cell.  The only way out is down.";
     ],
     before [;

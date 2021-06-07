@@ -11,7 +11,7 @@ Include "vorple.h";
 !===================================
 ! Images
 
-[ VorpleImageInElement file desc classes      id ;
+[ VorpleImageInElement file desc classes command      id ;
         if (desc == 0) { desc = ""; }
         if (classes == 0) { classes = ""; }
         if (isVorpleSupported()) {
@@ -19,7 +19,14 @@ Include "vorple.h";
             VorplePlaceDivElement(BuildCommand(id, " vorple-image ", classes), "");
             ! two vorple escapes -> can't use buildcommand (TODO: fix this?)
             bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
-            print "$('<img>', {src: vorple.file.resourceUrl(vorple.options.resource_paths.images+'";
+            if (command == 0) {
+              print "$('<img>', {src: vorple.file.resourceUrl(vorple.options.resource_paths.images+'";
+            }
+            else {
+              print "$('<img>', {onclick: 'vorple.prompt.queueCommand(~";
+              PrintStringOrArray(command);
+              print "~,false)', src: vorple.file.resourceUrl(vorple.options.resource_paths.images+'";
+            }
             PrintStringOrArray(VorpleEscape(file));
             print "'), alt: '";
             PrintStringOrArray(VorpleEscape(desc));
@@ -40,26 +47,26 @@ Constant IMAGE_RIGHT_ALIGNED = 3;
 Constant IMAGE_LEFT_FLOATING = 4;
 Constant IMAGE_RIGHT_FLOATING = 5;
 
-[ VorpleImage file desc alignment classes ;
+[ VorpleImage file desc alignment classes command;
         if (desc == 0) { desc = ""; }
         if (classes == 0) { classes = ""; }
         if (classes == "") {
             switch(alignment) {
-		IMAGE_CENTERED: VorpleImageInElement(file, desc, "centered");
-		IMAGE_LEFT_ALIGNED: VorpleImageInElement(file, desc, "left-aligned");
-		IMAGE_RIGHT_ALIGNED: VorpleImageInElement(file, desc, "right-aligned");
-		IMAGE_LEFT_FLOATING: VorpleImageInElement(file, desc, "left-floating");
-		IMAGE_RIGHT_FLOATING: VorpleImageInElement(file, desc, "right-floating");
-		default: VorpleImageInElement(file, desc, classes);
+		IMAGE_CENTERED: VorpleImageInElement(file, desc, "centered", command);
+		IMAGE_LEFT_ALIGNED: VorpleImageInElement(file, desc, "left-aligned", command);
+		IMAGE_RIGHT_ALIGNED: VorpleImageInElement(file, desc, "right-aligned", command);
+		IMAGE_LEFT_FLOATING: VorpleImageInElement(file, desc, "left-floating", command);
+		IMAGE_RIGHT_FLOATING: VorpleImageInElement(file, desc, "right-floating", command);
+		default: VorpleImageInElement(file, desc, classes, command);
             }
         } else {
             switch(alignment) {
-		IMAGE_CENTERED: VorpleImageInElement(file, desc, BuildCommand("centered", " ", classes));
-		IMAGE_LEFT_ALIGNED: VorpleImageInElement(file, desc, BuildCommand("left-aligned", " ", classes));
-		IMAGE_RIGHT_ALIGNED: VorpleImageInElement(file, desc, BuildCommand("right-aligned", " ", classes));
-		IMAGE_LEFT_FLOATING: VorpleImageInElement(file, desc, BuildCommand("left-floating", " ", classes));
-		IMAGE_RIGHT_FLOATING: VorpleImageInElement(file, desc, BuildCommand("right-floating", " ", classes));
-		default: VorpleImageInElement(file, classes, desc);
+		IMAGE_CENTERED: VorpleImageInElement(file, desc, BuildCommand("centered", " ", classes), command);
+		IMAGE_LEFT_ALIGNED: VorpleImageInElement(file, desc, BuildCommand("left-aligned", " ", classes), command);
+		IMAGE_RIGHT_ALIGNED: VorpleImageInElement(file, desc, BuildCommand("right-aligned", " ", classes), command);
+		IMAGE_LEFT_FLOATING: VorpleImageInElement(file, desc, BuildCommand("left-floating", " ", classes), command);
+		IMAGE_RIGHT_FLOATING: VorpleImageInElement(file, desc, BuildCommand("right-floating", " ", classes), command);
+		default: VorpleImageInElement(file, classes, desc, command);
             }
         }
 ];
@@ -82,15 +89,20 @@ Constant IMAGE_RIGHT_FLOATING = 5;
 
 Constant SOUND_LOOP = 1;
 
-[ VorplePlaySoundEffect file loop;
+[ VorplePlaySoundEffect file loop delay;
     bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+    if (delay > 0) {
+      print "setTimeout(~";
+    }
     print "vorple.audio.playSound(vorple.options.resource_paths.audio+'";
     PrintStringOrArray(VorpleEscape(file));
     print "', {looping: ";
     if (loop == SOUND_LOOP) { print "true"; } else { print "false"; }
     print "})";
+    if (delay > 0) {
+      print "~, ", delay, ");";
+    }
     bp_output_stream(-3);
-    PrintStringOrArray(hugehugestr);
     VorpleExecuteJavaScriptCommand(hugehugestr);
 ];
 
