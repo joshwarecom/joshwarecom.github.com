@@ -1,0 +1,16 @@
+MacOS Safari:
+VorplePlaySoundEffect doesn't play any audio.
+
+iOS Safari (iPad):
+VorplePlaySoundEffect doesn't play any audio.
+VorpleStartPlaylist only plays the first sound.
+Clearing the screen makes it akward to read due to keyboard displacement
+
+Android Chrome (moto e6)
+TTS needs to be initialized or else it delays on the first attempt
+The second TTS sentence doesn't play during the intro.
+
+All:
+Lower the profile of the continue button
+Fix intro to allow for:
+  QUIT, RESTART at arbitrary prompts
