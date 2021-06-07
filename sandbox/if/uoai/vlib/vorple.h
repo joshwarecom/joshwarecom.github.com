@@ -491,7 +491,7 @@ Array strcloseresult --> 2;
 	if (strcloseresult-->0 ~= 0)
 		VorpleThrowRuntimeError("Memory stream records more than zero characters read");
 	! strcloseresult-->1 is now the length of the stream
-	
+
 	! Transform into a byte array (so, de-Unicode here)
 	bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
         for (i=0: i<LEN_HUGEHUGESTR: i++) {
@@ -503,7 +503,7 @@ Array strcloseresult --> 2;
 			print (char) 92; print "u";  ! \u
 			Unicode(c);
 			continue;
-		} 
+		}
 
 		print (char) c;
 	}
@@ -648,7 +648,7 @@ Array uniarray --> (BUFLEN+1);
 			print (char) 92; print "u";  ! \u
 			Unicode(c);
 			continue;
-		} 
+		}
 
 		print (char) c;
 	}

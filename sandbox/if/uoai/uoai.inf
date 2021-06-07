@@ -176,6 +176,18 @@ Object System
         }
       }
     ],
+    StandardPrompt [;
+      VorpleExecuteJavaScriptCommand("vorple.prompt.setPrefix('>')");
+      bp_output_stream(3, current_prompt, BUFLEN-1);
+      print ">";
+      bp_output_stream(-3);
+    ],
+    BlankPrompt [;
+      VorpleExecuteJavaScriptCommand("vorple.prompt.setPrefix('')");
+      bp_output_stream(3, current_prompt, BUFLEN-1);
+      print "";
+      bp_output_stream(-3);
+    ],
     VorpleClearScreen [;
       ClearScreen();
       VorpleExecuteJavaScriptCommand("$('#window0 *:not(.turn.current), .turn.current').empty()");
@@ -201,16 +213,18 @@ Object System
       }
     ],
     WaitForEnter [;
+      self.BlankPrompt();
       KeyboardPrimitive(buffer, parse);
+      self.StandardPrompt();
       return parse;
     ],
     Pause [;
       if (isVorpleSupported()) {
-        VorpleImage("pause.png", "CLICK TO CONTINUE", 0, 0, "");
+        VorpleImage("continue.png", "CLICK TO CONTINUE", IMAGE_RIGHT_ALIGNED, 0, "");
       }
       else {
         glk_set_hyperlink(LINKID_CONTINUE);
-        print (markup) "<IMG SRC=101 ALT='CLICK TO CONTINUE' WIDTH=500 HEIGHT=30><br>";
+        print (markup) "<IMG SRC=101 ALIGN='RIGHT' ALT='CLICK TO CONTINUE' WIDTH=240 HEIGHT=60><br>";
         glk_set_hyperlink(0);
       }
       self.WaitForEnter();
@@ -241,6 +255,7 @@ Object System
 
 [ InteractiveIntroduction tmp v key;
   key = 0;
+  System.StandardPrompt();
   if (isVorpleSupported()) {
     VorpleExecuteJavaScriptCommand("return IsTTSSupported();");
     tmp = VorpleWhatNumberWasReturned();
@@ -251,13 +266,15 @@ Object System
       System.audioEnabled = YesOrNo();
       if (System.audioEnabled) {
         ClearNarration();
-        VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1');");
-        print "^NARRATOR:^";
+        QueueBinOutput("na_intro_1");
+        print "^";
+        print "NARRATOR:^";
         print "Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
         System.InlineLink("yes",LINKID_YES);
         print " or ";
         System.InlineLink("no",LINKID_NO);
-        print ")";
+        print ")^";
+        System.FlushBinOrTTSIfNarrationEnabled();
         tmp = YesOrNo();
         if (tmp) {
           System.SyncSystemAudioExtension();
@@ -265,12 +282,14 @@ Object System
         else {
           VorpleExecuteJavaScriptCommand("ToggleAudioExtension();");
           ClearNarration();
-          VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_1b');");
-          print "^Oh, how about now then? (";
+          QueueBinOutput("na_intro_1b");
+          print "^";
+          print "Oh, how about now then? (";
           System.InlineLink("yes",LINKID_YES);
           print " or ";
           System.InlineLink("no",LINKID_NO);
-          print ")";
+          print ")^";
+          System.FlushBinOrTTSIfNarrationEnabled();
           tmp = YesOrNo();
           if (tmp) {
             System.SyncSystemAudioExtension();
@@ -278,9 +297,23 @@ Object System
         }
         if (tmp) {
           ClearNarration();
-          print "^On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.  Press enter to hear a sample.^";
-          VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_2');");
+          QueueBinOutput("na_intro_1c");
+          QueueBinOutput("se_pause");
+          QueueBinOutput("na_intro_1d");
+          QueueBinOutput("se_pause");
+          print "^";
+          print "If you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
+          System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
+          System.VorpleClearScreen();
+          ClearNarration();
+          QueueBinOutput("na_intro_2");
+          QueueBinOutput("se_pause");
+          print "^";
+          print "On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.^";
+          System.FlushBinOrTTSIfNarrationEnabled();
+          System.Pause();
+          System.VorpleClearScreen();
           ClearNarration();
           print "^This is some sample text-to-speech.  Would you like to customize the voice? (";
           System.InlineLink("yes",LINKID_YES);
@@ -291,20 +324,24 @@ Object System
           tmp = YesOrNo();
           if (tmp) {
             ClearNarration();
-            print "^So would I.  Alas, not today.  Press enter to start the game.^";
+            print "^So would I.  Alas, not today.";
+            PunctuateTTS();
             System.FlushBinOrTTSIfNarrationEnabled();
             key = 1;
           }
           else {
             ClearNarration();
-            VorpleExecuteJavaScriptCommand("PlayNowAsList('na_intro_3');");
-            print "^Excellent! Press enter to begin the game.^";
+            QueueBinOutput("na_intro_3");
+            QueueBinOutput("se_pause");
+            print "^";
+            print "Excellent! Press enter to begin the game.^";
+            System.FlushBinOrTTSIfNarrationEnabled();
             key = 1;
           }
         }
         else {
           ClearNarration();
-          print "Never mind about the audio then.  Press enter to begin the game!";
+          print "Never mind about the audio then.";
           key = 1;
           System.audioEnabled = 0;
         }
@@ -319,16 +356,25 @@ Object System
   }
   if (v == false) {
     print "^NARRATOR:^";
-    print "Please note that there will be no audio playing, as this interpreter does not support it.  Press a key to begin the game!^";
+    print "Please note that there will be no audio playing, as this interpreter does not support it.  When you see the continue symbol, tap it or press enter to proceed.  Enjoy the game!^^";
     key = 1;
   }
   if (key == 1) {
     System.Pause();
   }
   ClearNarration();
+  VorpleStopAudio();
   System.VorpleClearScreen();
 
   !FIXME Improve concision and humor
+  if (isVorpleSupported()) {
+    VorpleImage("title.png", "The Uninvited Opera Of Augustus Interruptus");
+  }
+  else {
+    print (markup) "<IMG SRC=102 ALT='The Uninvited Opera of Augustus Interruptus'<br>";
+    print "^";
+  }
+
   QueueBinOutput("na_prologue_1");
   print "NARRATOR:^";
   print "Your people have known nothing but tyranny for one thousand years.  Healthcare is free, yes, but only for ones who are sick! Pointless war and carnage is long forbidden, blanching the countryside with the sickly pallor of peace and prosperity.  And worst of all, excessive overdue library fines - pennies per day! All that changes tonight, and you shall be the changer!^";
@@ -346,7 +392,7 @@ Object System
   System.InlineLink("Honeybadger",LINKID_HONEYBADGER);
   print "? You can tell me.  I'm the narrator, after all.^";
   System.FlushBinOrTTSIfNarrationEnabled();
-  while (true) {
+  if (true) {
   tmp = false;
   while (tmp == false) {
     KeyboardPrimitive(buffer, parse);
@@ -395,30 +441,36 @@ Object System
       print "Heroine! ";
     }
     QueueBinOutput("na_prologue_1_hero_fate");
+    QueueBinOutput("se_pause");
     print "Destined to save your nation and change the world!^";
     System.FlushBinOrTTSIfNarrationEnabled();
   }
   else if (CompareStrings(buffer,CODENAME_HERETIC)) {
     QueueBinOutput("na_prologue_1_heretic");
     QueueBinOutput("na_prologue_1_heretic_fate");
+    QueueBinOutput("se_pause");
     print "Heretic! Ever ready to trample the trappings of fear and falsehood beneath your two bare feet.^";
     System.FlushBinOrTTSIfNarrationEnabled();
   }
   else if (CompareStrings(buffer,CODENAME_HELLION)) {
     QueueBinOutput("na_prologue_1_hellion");
     QueueBinOutput("na_prologue_1_hellion_fate");
+    QueueBinOutput("se_pause");
     print "Hellion! Angrily spitting in the face of fickle fate!^";
     System.FlushBinOrTTSIfNarrationEnabled();
   }
   else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
     QueueBinOutput("na_prologue_1_honeybadger");
     QueueBinOutput("na_prologue_1_honeybadger_fate");
+    QueueBinOutput("se_pause");
     print "Honeybadger! The soul of a wolverine in the body of a...wolverinish...badger body!^";
     System.FlushBinOrTTSIfNarrationEnabled();
   }
   }
-  System.WaitForEnter();
+  System.Pause();
   ClearNarration();
+  VorpleStopAudio();
+  System.VorpleClearScreen();
 ];
 
 
@@ -430,12 +482,18 @@ Object System
   }
 ];
 
+[ PunctuateTTS;
+  if (isVorpleSupported()) {
+    print "=!;^";
+  }
+];
+
+
 Object room "Cell"
   with
     description [;
       QueueBinOutput("na_desc_cell");
       QueueBinOutput("0_25_silence");
-      System.MsgYesOrNo();
       "You are standing in a cell.  The only way out is down.";
     ],
     before [;

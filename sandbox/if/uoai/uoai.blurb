@@ -1,4 +1,5 @@
 storyfile leafname "output.gblorb"
 storyfile "bin/uoai.ulx" include
 picture 100 "dist/resources/images/gracenotes.png"
-picture 101 "dist/resources/images/pause.png"
+picture 101 "dist/resources/images/continue.png"
+picture 102 "dist/resources/images/title.png"

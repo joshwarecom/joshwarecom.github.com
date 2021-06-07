@@ -86,23 +86,39 @@
       pl.pop();
       vorple.audio.setPlaylist(pl,{looping: false, restart: true, shuffled: false});
     }
+    function PlayNowAsEffect(str) {
+      vorple.audio.playSound(vorple.options.resource_paths.audio+str+"."+document.audioExt, {looping: false});
+    }
     function CancelTTS(str) {
       window.speechSynthesis.cancel();
       document.ttsOutput = "";
+      document.ttsPunctuate = false;
     }
-    function AddTTS(str) {
+    function AddTTS(str, punctuate) {
       document.ttsOutput += str + "  ";
+      if (punctuate) {
+        document.ttsPunctuate = true;
+      }
     }
     function CancelBin(str) {
       document.binOutput = new Array();
     }
     function AddBin(str) {
-      if (document.binOutput.indexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0);
-      else
+      //if (document.binOutput.indexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0);
+      //else
       document.binOutput[document.binOutput.length] = vorple.options.resource_paths.audio+str+"."+document.audioExt;
     }
     function FlushTTS() {
-      window.speechSynthesis.speak(new SpeechSynthesisUtterance(document.ttsOutput));
+      var u;
+      window.speechSynthesis.speak(u = new SpeechSynthesisUtterance(document.ttsOutput));
+      if (document.ttsPunctuate) {
+        u.onend = function(event) {
+          if (document.ttsPunctuate) {
+            PlayNowAsEffect('se_pause');
+            document.ttsPunctuate = false;
+          }
+        }
+      }
       document.ttsOutput = "";
     }
     function FlushBin() {
@@ -129,22 +145,29 @@
     document.firstInteraction = false;
     document.audioNarrationLength = 0;
     document.ttsOutput = "";
+    document.ttsPunctuate = false;
     document.binOutput = new Array();
 
     function narratedOutputFilter( output, meta ) {
         if (document.audioNarrationLength == 0) {
           if (output != '\n') {
+            var punctuate = false;
             var re = /(.*?)=(.*?);(.*)/;
             stop = false;
             while (!stop) {
               var ma = re.exec(output);
               if (ma) {
                 output = ma[1] + ma[3] + '\n';
-                AddBin(ma[2]);
+                if (ma[2] == '!') {
+                  punctuate = true;
+                }
+                else {
+                  AddBin(ma[2]);
+                }
               }
               else stop = true;
             }
-            AddTTS(output);
+            AddTTS(output, punctuate);
             return output;
           }
         }
