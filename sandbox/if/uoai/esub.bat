@@ -1,0 +1,2 @@
+subst e: c:\
+pause
