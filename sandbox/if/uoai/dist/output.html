@@ -35,8 +35,12 @@
   }
 </script>
 <script src="interpreter/vorple.uoai.js"></script>
-
 <script>
+    if (location.protocol === "file:") {
+      var interpolation = document.createElement('script');
+      interpolation.setAttribute('src','output.ulx.js');
+      document.head.appendChild(interpolation);
+    }
     audio_root = "resources/audio/";
     vorple.debug.on();
     vorple.options = {

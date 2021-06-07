@@ -39,6 +39,26 @@ Include "vorple-screen-effects.h";
   VorpleClearPlaylist();
 ];
 
+[ CompareStrings bufA bufB
+    i;
+    if (bufA-->0 ~= bufB-->0) rfalse;
+    for (i=0 : i<bufA-->0 : i++) {
+        if ((bufA->(i+WORDSIZE)) ~= (bufB->(i+WORDSIZE))) rfalse;
+      }
+    rtrue;
+];
+
+[ StringToLower bufA
+    i;
+    for (i=0 : i<bufA-->0 : i++) {
+        if ((bufA->(i+WORDSIZE)) >= 'A' && (bufA->(i+WORDSIZE)) <= 'Z') {
+          (bufA->(i+WORDSIZE)) = (bufA->(i+WORDSIZE))-('A' - 'a');
+        }
+      }
+    rtrue;
+];
+
+
 [ BeforeParsing;
   ClearNarration();
 ];
@@ -66,11 +86,11 @@ Constant AUDIOEXT_OGG 0;
 Constant AUDIOEXT_MP3 1;
 Constant AUDIOEXT_NULL 2;
 
-Constant CODENAME_HERO 'hero';
-Constant CODENAME_HEROINE 'heroine';
-Constant CODENAME_HERETIC 'heretic';
-Constant CODENAME_HELLION 'hellion';
-Constant CODENAME_HONEYBADGER 'honeybadger';
+Array CODENAME_HERO buffer "hero";
+Array CODENAME_HEROINE buffer "heroine";
+Array CODENAME_HERETIC buffer "heretic";
+Array CODENAME_HELLION buffer "hellion";
+Array CODENAME_HONEYBADGER buffer "honeybadger";
 
 Object System
   with
@@ -127,6 +147,7 @@ Object System
     ],
     WaitForEnter [;
       KeyboardPrimitive(buffer, parse);
+      return parse;
     ],
     GraceNote [ channel;
       if (isVorpleSupported()) {
@@ -242,10 +263,91 @@ Object System
 
   !FIXME Improve concision and humor
   QueueBinOutput("na_prologue_1");
+  print "NARRATOR:^";
   print "Your people have known nothing but tyranny for one thousand years.  Healthcare is free, yes, but only for ones who are sick! Pointless war and carnage is long forbidden, blanching the countryside with the sickly pallor of peace and prosperity.  And worst of all, excessive overdue library fines - pennies per day! All that changes tonight, and you shall be the changer!^";
   print "^Yet no one shall ever know your name.  Indeed, if you even have a true name it is lost to time.  You were raised by the Order of Humble Pride, a cabal of freedom fighters masquerading as learned monks.  'Twas twenty-four years ago they found you abandoned at the gates and assigned to you a random nom de guerre - a code name otherwise known only to the elders.^";
-  print "^What was it again? Something that started with H I believe. Hero? Heroine? Heretic? Hellion? Or perhaps Honeybadger? You can tell me.  I'm the narrator, after all.^";
+  print "^What was it again? Something that started with H I believe. ";
+  VorpleLinkCommand("Hero");
+  print "? ";
+  VorpleLinkCommand("Heroine");
+  print "? ";
+  VorpleLinkCommand("Heretic");
+  print "? ";
+  VorpleLinkCommand("Hellion");
+  print "? ";
+  print "Or perhaps ";
+  VorpleLinkCommand("Honeybadger");
+  print "? You can tell me.  I'm the narrator, after all.^";
   System.FlushBinOrTTSIfNarrationEnabled();
+  tmp = false;
+  while (tmp == false) {
+    KeyboardPrimitive(buffer, parse);
+    StringToLower(buffer);
+
+    if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
+      tmp = true;
+    }
+    else if (CompareStrings(buffer,CODENAME_HERETIC)) {
+      tmp = true;
+    }
+    else if (CompareStrings(buffer,CODENAME_HELLION)) {
+      tmp = true;
+    }
+    else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
+      tmp = true;
+    }
+    else {
+      ClearNarration();
+      QueueBinOutput("na_prologue_1_rejection");
+      print "^No no no, it can't be that.  Please enter ";
+      VorpleLinkCommand("Hero");
+      print ", ";
+      VorpleLinkCommand("Heroine");
+      print ", ";
+      VorpleLinkCommand("Heretic");
+      print ", ";
+      VorpleLinkCommand("Hellion");
+      print ", or ";
+      VorpleLinkCommand("Honeybadger");
+      print ".^";
+      System.FlushBinOrTTSIfNarrationEnabled();
+    }
+  }
+  ClearNarration();
+  QueueBinOutput("na_prologue_1_ahyes");
+  print "^Ah yes - ";
+  System.RestartBackgroundLoop("music_loop_1.ogg");    
+  if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
+    if (CompareStrings(buffer,CODENAME_HERO)) {
+      QueueBinOutput("na_prologue_1_hero");
+      print "Hero! ";
+    }
+    else {
+      QueueBinOutput("na_prologue_1_heroine");
+      print "Heroine! ";
+    }
+    QueueBinOutput("na_prologue_1_hero_fate");
+    print "Destined to save your nation and change the world!^";
+    System.FlushBinOrTTSIfNarrationEnabled();
+  }
+  else if (CompareStrings(buffer,CODENAME_HERETIC)) {
+    QueueBinOutput("na_prologue_1_heretic");
+    QueueBinOutput("na_prologue_1_heretic_fate");
+    print "Heretic! Ever ready to trample the trappings of fear and falsehood beneath your two bare feet.^";
+    System.FlushBinOrTTSIfNarrationEnabled();
+  }
+  else if (CompareStrings(buffer,CODENAME_HELLION)) {
+    QueueBinOutput("na_prologue_1_hellion");
+    QueueBinOutput("na_prologue_1_hellion_fate");
+    print "Hellion! Angrily spitting in the face of fickle fate!^";
+    System.FlushBinOrTTSIfNarrationEnabled();
+  }
+  else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
+    QueueBinOutput("na_prologue_1_honeybadger");
+    QueueBinOutput("na_prologue_1_honeybadger_fate");
+    print "Honeybadger! The soul of a wolverine in the body of a...wolverinish...badger body!^";
+    System.FlushBinOrTTSIfNarrationEnabled();
+  }
   System.WaitForEnter();
   ClearNarration();
   quit;
