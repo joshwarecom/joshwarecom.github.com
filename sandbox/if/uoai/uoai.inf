@@ -241,6 +241,7 @@ Object System
         glk_set_hyperlink(0);
       }
       self.WaitForEnter();
+      VorpleExecuteJavaScriptCommand("try { document.getElementById(document.currentContinueId).style.display=~none~ } catch(e) {};");
     ],
     GraceNote [ channel;
       if (isVorpleSupported()) {
@@ -318,7 +319,6 @@ Object System
           print "If you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
-          System.ClearNonIpadScreen();
           ClearNarration();
           QueueBinOutput("na_intro_2");
           QueueBinOutput("se_pause");
@@ -326,7 +326,6 @@ Object System
           print "On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
-          System.ClearNonIpadScreen();
           ClearNarration();
           print "^This is some sample text-to-speech.  Would you like to customize the voice? (";
           System.InlineLink("yes",LINKID_YES);
@@ -337,7 +336,7 @@ Object System
           tmp = YesOrNo();
           if (tmp) {
             ClearNarration();
-            print "^So would I.  Alas, not today.";
+            print "^So would I.  Alas, not today.  Enjoy the game!";
             PunctuateTTS();
             System.FlushBinOrTTSIfNarrationEnabled();
             key = 1;
@@ -376,8 +375,8 @@ Object System
     System.Pause();
   }
   ClearNarration();
-  VorpleStopAudio();
   System.ClearNonIpadScreen();
+  VorpleStopAudio();
 
   !FIXME Improve concision and humor
   if (isVorpleSupported()) {
@@ -488,7 +487,6 @@ Object System
   System.Pause();
   ClearNarration();
   VorpleStopAudio();
-  System.ClearNonIpadScreen();
 ];
 
 

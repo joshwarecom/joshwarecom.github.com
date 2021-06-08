@@ -23,9 +23,13 @@ Include "vorple.h";
               print "$('<img>', {src: vorple.file.resourceUrl(vorple.options.resource_paths.images+'";
             }
             else {
-              print "$('<img>', {onclick: 'vorple.prompt.queueCommand(~";
+              print "$('<img>', {id:'img";
+              PrintStringOrArray(id);
+              print "', onload: 'document.currentContinueId=~img";
+              PrintStringOrArray(id);
+              print "~;', onclick: 'vorple.prompt.queueCommand(~";
               PrintStringOrArray(command);
-              print "~,false)', src: vorple.file.resourceUrl(vorple.options.resource_paths.images+'";
+              print "~,false);document.getElementById(document.currentContinueId).style.display=~none~;document.currentContinueId=null;', src: vorple.file.resourceUrl(vorple.options.resource_paths.images+'";
             }
             PrintStringOrArray(VorpleEscape(file));
             print "'), alt: '";
