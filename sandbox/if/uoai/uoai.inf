@@ -34,6 +34,20 @@ Include "vorple-screen-effects.h";
 
 !FIXME Need to set client side boolean on restore if narration is disabled.
 
+[ AfterRestore;
+  ClearNarration();
+  VorpleStopAudio();
+  QueueBinOutput("na_msg_restoresuccessful");
+  QueueBinOutput("se_pause");
+  print "Restore successful!^";
+  System.FlushBinOrTTSIfNarrationEnabled();
+  System.Pause();
+  ClearNarration();
+  VorpleStopAudio();
+  !FIXME add logic to restart background effects properly
+];
+
+
 [ ClearNarration;
   VorpleExecuteJavaScriptCommand("CancelTTS();");
   VorpleStopMusic();
@@ -91,14 +105,17 @@ Include "vorple-screen-effects.h";
       glk_request_hyperlink_event(gg_mainwin);
       glk_set_style(style_Input);
       switch (ev-->2) {
-        LINKID_YES: newcmd = "yes";
-        LINKID_NO: newcmd = "no";
+        LINKID_YES: newcmd = "Yes";
+        LINKID_NO: newcmd = "No";
         LINKID_HERO: newcmd = "Hero";
         LINKID_HEROINE: newcmd = "Heroine";
         LINKID_HERETIC: newcmd = "Heretic";
         LINKID_HELLION: newcmd = "Hellion";
         LINKID_HONEYBADGER: newcmd = "Honeybadger";
         LINKID_CONTINUE: newcmd = "";
+        LINKID_NEW: newcmd = "New";
+        LINKID_RESTORE: newcmd = "Restore";
+        LINKID_COLOR: newcmd = "Color";
         default: newcmd = 0;
       }
       if (newcmd ~= 0) {
@@ -120,8 +137,10 @@ Constant AUDIOEXT_MP3 1;
 Constant AUDIOEXT_NULL 2;
 
 Array INPUT_QUIT buffer "quit";
+Array INPUT_NEW buffer "new";
 Array INPUT_RESTART buffer "restart";
 Array INPUT_RESTORE buffer "restore";
+Array INPUT_COLOR buffer "COLOR";
 
 Array CODENAME_HERO buffer "hero";
 Array CODENAME_HEROINE buffer "heroine";
@@ -137,6 +156,9 @@ Constant LINKID_HERETIC 5;
 Constant LINKID_HELLION 6;
 Constant LINKID_HONEYBADGER 7;
 Constant LINKID_CONTINUE 8;
+Constant LINKID_NEW 9;
+Constant LINKID_RESTORE 10;
+Constant LINKID_COLOR 11;
 
 Object System
   with
@@ -184,7 +206,7 @@ Object System
     StandardPrompt [;
       VorpleExecuteJavaScriptCommand("vorple.prompt.setPrefix('>')");
       bp_output_stream(3, current_prompt, BUFLEN-1);
-      print ">";
+      print "???";
       bp_output_stream(-3);
     ],
     BlankPrompt [;
@@ -207,9 +229,9 @@ Object System
     ],
     MsgYesOrNo [;
       print "Please answer ";
-      self.InlineLink("yes",LINKID_YES);
+      self.InlineLink("Yes",LINKID_YES);
       print " or ";
-      self.InlineLink("no",LINKID_NO);
+      self.InlineLink("No",LINKID_NO);
       print ".";
     ],
     InlineLink [ text id;
@@ -267,6 +289,48 @@ Object System
     }
 ];
 
+[ InitialQuery tmp;
+  print "^It's a good thing that foul play is your forte.  Otherwise, your twilight mission to topple a tyrant (while a second-rate songsmith intrusively observes) may not end well...^^";
+  print "Please enter ";
+  System.InlineLink("New",LINKID_NEW);
+  print " to start a new game, or ";
+  System.InlineLink("Restore",LINKID_RESTORE);
+  print " to resume a previously saved session.  In addition to the traditional command prompt, this game offers clickable command words highlighted in this ";
+  System.InlineLink("Color",LINKID_COLOR);
+  print ".^";
+  tmp = 0;
+  while (tmp == 0) {
+    Keyboard(buffer, parse);
+    StringToLower(buffer);
+    if (CompareStrings(buffer,INPUT_COLOR)) {
+      print "Don't be silly.  ";
+      System.InlineLink("Color",LINKID_COLOR);
+      print " is just an example, not a valid command.^";
+    }
+    if (CompareStrings(buffer,INPUT_RESTORE) || CompareStrings(buffer,INPUT_NEW)) {
+      if (CompareStrings(buffer,INPUT_RESTORE)) {
+        tmp = 0;
+        RestoreSub();
+        print "^Please enter ";
+        System.InlineLink("New",LINKID_NEW);
+        print " to start a new game, or ";
+        System.InlineLink("Restore",LINKID_RESTORE);
+        print " to resume a previously saved session.^";
+      }
+      else {
+        tmp = 1;
+      }
+    }
+    else {
+      print "^Please enter ";
+      System.InlineLink("New",LINKID_NEW);
+      print " to start a new game, or ";
+      System.InlineLink("Restore",LINKID_RESTORE);
+      print " to resume a previously saved session.^";
+    }
+  }
+];
+
 [ InteractiveIntroduction tmp v key;
   key = 0;
   System.StandardPrompt();
@@ -275,6 +339,8 @@ Object System
     tmp = VorpleWhatNumberWasReturned();
     if (tmp == 1) {
       v = true;
+      !FIXME add a compelling and funny first line
+      InitialQuery();
       print "^Would you like to enable audio? ";
       System.MsgYesOrNo();
       System.audioEnabled = YesOrNo();
@@ -284,9 +350,9 @@ Object System
         print "^";
         print "NARRATOR:^";
         print "Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
-        System.InlineLink("yes",LINKID_YES);
+        System.InlineLink("Yes",LINKID_YES);
         print " or ";
-        System.InlineLink("no",LINKID_NO);
+        System.InlineLink("No",LINKID_NO);
         print ")^";
         System.FlushBinOrTTSIfNarrationEnabled();
         tmp = YesOrNo();
@@ -299,9 +365,9 @@ Object System
           QueueBinOutput("na_intro_1b");
           print "^";
           print "Oh, how about now then? (";
-          System.InlineLink("yes",LINKID_YES);
+          System.InlineLink("Yes",LINKID_YES);
           print " or ";
-          System.InlineLink("no",LINKID_NO);
+          System.InlineLink("No",LINKID_NO);
           print ")^";
           System.FlushBinOrTTSIfNarrationEnabled();
           tmp = YesOrNo();
@@ -316,7 +382,8 @@ Object System
           QueueBinOutput("na_intro_1d");
           QueueBinOutput("se_pause");
           print "^";
-          print "If you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
+          !FIXME implement SOUND ON / SOUND OFF
+          print "During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
           ClearNarration();
@@ -346,7 +413,7 @@ Object System
             QueueBinOutput("na_intro_3");
             QueueBinOutput("se_pause");
             print "^";
-            print "Excellent! Press enter to begin the game.^";
+            print "Excellent.  You are ready to begin.  Enjoy the game!^";
             System.FlushBinOrTTSIfNarrationEnabled();
             key = 1;
           }
@@ -367,6 +434,8 @@ Object System
     v = false;
   }
   if (v == false) {
+    InitialQuery();
+
     print "^NARRATOR:^";
     print "Please note that there will be no audio playing, as this interpreter does not support it.  When you see the continue symbol, tap it or press enter to proceed.  Enjoy the game!^^";
     key = 1;
@@ -375,6 +444,7 @@ Object System
     System.Pause();
   }
   ClearNarration();
+  print "^^";
   System.ClearNonIpadScreen();
   VorpleStopAudio();
 
@@ -388,6 +458,7 @@ Object System
   }
 
   QueueBinOutput("na_prologue_1");
+  print "^";
   print "NARRATOR:^";
   print "Your people have known nothing but tyranny for one thousand years.  Healthcare is free, yes, but only for ones who are sick! Pointless war and carnage is long forbidden, blanching the countryside with the sickly pallor of peace and prosperity.  And worst of all, excessive overdue library fines - pennies per day! All that changes tonight, and you shall be the changer!^";
   print "^Yet no one shall ever know your name.  Indeed, if you even have a true name it is lost to time.  You were raised by the Order of Humble Pride, a cabal of freedom fighters masquerading as learned monks.  'Twas twenty-four years ago they found you abandoned at the gates and assigned to you a random nom de guerre - a code name otherwise known only to the elders.^";
@@ -407,7 +478,7 @@ Object System
   if (true) {
     tmp = false;
     while (tmp == false) {
-      KeyboardPrimitive(buffer, parse);
+      Keyboard(buffer, parse);
       StringToLower(buffer);
 
       if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
@@ -439,7 +510,7 @@ Object System
         System.FlushBinOrTTSIfNarrationEnabled();
       }
     }
-    System.RestartBackgroundLoop("music_loop_1.ogg",1000);
+    System.RestartBackgroundLoop("music_loop_1.ogg",250);
     ClearNarration();
     QueueBinOutput("na_prologue_1_ahyes");
     print "^Ah yes - ";
@@ -510,6 +581,7 @@ Object room "Cell"
     description [;
       QueueBinOutput("na_desc_cell");
       QueueBinOutput("0_25_silence");
+
       "You are standing in a cell.  The only way out is down.";
     ],
     before [;
