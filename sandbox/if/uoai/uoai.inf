@@ -4,7 +4,7 @@ Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
 Release 1;
 
 Attribute custom_listing;
-Global TEST_MODE = true;
+!Global TEST_MODE = true;
 
 !-----------------------------------------------------------------------------
 !
