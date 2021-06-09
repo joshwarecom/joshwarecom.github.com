@@ -4,7 +4,7 @@ Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
 Release 1;
 
 Attribute custom_listing;
-!Global TEST_MODE = true;
+Global TEST_MODE = true;
 
 !-----------------------------------------------------------------------------
 !
@@ -94,11 +94,13 @@ Include "vorple-screen-effects.h";
   switch (action) {
     ##Look:
     ##Examine:
+    ##Search:
     ##UOAIInv:
     ##Go:
     ##Open:
     ##Close:
-    default: System.currentCmdSupportsPlayback = 0;
+    default:
+      System.currentCmdSupportsPlayback = 0;
   }
   return false;
 ];
@@ -116,6 +118,9 @@ Include "vorple-screen-effects.h";
       System.RestartBackgroundLoop();
     }
     System.FlushBinOrTTSIfNarrationEnabled();
+  }
+  if (parent(convenience) == parent(player)) {
+    remove convenience;
   }
 ];
 
@@ -155,6 +160,11 @@ Include "vorple-screen-effects.h";
         LINKID_BACK: newcmd = "examine my back";
         LINKID_HOOD: newcmd = "examine hood";
         LINKID_CARD: newcmd = "examine laminated parchment card";
+        LINKID_AUGUSTUS: newcmd = "examine Augustus";
+        LINKID_WATCHMAN: newcmd = "examine watchman";
+        LINKID_OWTOWER: newcmd = "examine outer watch tower";
+        LINKID_TREES: newcmd = "examine trees";
+        LINKID_SOUTH: newcmd = "go south";
 
         default: newcmd = 0;
       }
@@ -196,6 +206,10 @@ Extend 'remove' first
   PlaceInScope(body);
   PlaceInScope(back);
   PlaceInScope(narrator);
+  if (player in clearing) {
+    PlaceInScope(distant_tower);
+    PlaceInScope(distant_watchman);
+  }
 ];
 
 [GetFirstListedInventory o;
@@ -358,6 +372,11 @@ Constant LINKID_FACE 23;
 Constant LINKID_BODY 24;
 Constant LINKID_BACK 25;
 Constant LINKID_CARD 26;
+Constant LINKID_AUGUSTUS 27;
+Constant LINKID_WATCHMAN 28;
+Constant LINKID_OWTOWER 29;
+Constant LINKID_TREES 30;
+Constant LINKID_SOUTH 31;
 
 Object System
   with
@@ -877,7 +896,13 @@ Object clearing "Shadowy Clearing..."
     ],
     description [;
       QueueBinOutput("na_desc_clearing");
-      "Immediately to the south, the outer watch tower rises high above the trees.";
+      print "Immediately to the ";
+      System.InlineLinkText("go south","south",LINKID_SOUTH);
+      print ", the ";
+      distant_tower.short_name();
+      print " rises high above the ";
+      trees.short_name();
+      "";
     ],
     before [;
       Jump:
@@ -894,16 +919,85 @@ Object clearing "Shadowy Clearing..."
     ],
   has light;
 
+  Object -> trees "trees"
+    with
+      name 'trees' 'tree',
+      short_name [;
+        System.InlineLinkText("examine trees", "trees", LINKID_TREES);
+        return true;
+      ],
+      description [;
+        print "Just some ";
+        self.short_name();
+        ".";
+      ],
+    has scenery;
+
+  Object -> distant_tower "outer watch tower"
+    with
+      name 'outer' 'watch' 'tower',
+      short_name [;
+        System.InlineLinkText("examine outer watch tower", "outer watch tower", LINKID_OWTOWER);
+        return true;
+      ],
+      description [;
+        print "You can just make out a single ";
+        distant_watchman.short_name();
+        print " standing atop the ";
+        self.short_name();
+        "";
+      ],
+    has scenery;
+
+  Object -> distant_watchman "watchman"
+    with
+      name 'guard' 'watchman',
+      short_name [;
+        System.InlineLinkText("examine watchman", "watchman", LINKID_WATCHMAN);
+        return true;
+      ],
+      description [;
+        print "You cannot see the ";
+        self.short_name();
+        " very well from here.";
+      ],
+    has scenery;
+
   Object -> augustus "Augustus"
     with
-      short_name "Augustus",
+      short_name [;
+        System.InlineLinkText("examine Augustus", "Augustus", LINKID_AUGUSTUS);
+        return true;
+      ],
       name 'augustus',
       description "What does he look like?",
       initial [;
         QueueBinOutput("na_desc_augustus_1");
-        "Augustus is here attentively playing a lute and obliviously blocking your path.";
+        self.short_name();
+        " is here attentively playing a lute and obliviously blocking your path.";
       ],
   has proper animate;
+
+  Object -> convenience
+    with
+      state 1,
+      output [;
+        switch (self.state) {
+          1:
+             QueueBinOutput("na_convenience_1");
+             print "You draw your ";
+             cloak.short_name();
+             print " closed against the chill.  You adjust your ";
+             harness.short_name();
+             print " and your ";
+             satchel.short_name();
+             print " of supplies.  Time to topple a tyrant.";
+        }
+      ],
+      initial [;
+        self.output();
+        "";
+      ];
 
 Object harness "supple satin lined weapons harness"
   with
@@ -1144,7 +1238,8 @@ Object shoulders "shoulders"
     short_name [;
       System.InlineLinkText("examine my shoulders", "shoulders", LINKID_SHOULDERS);
       return true;
-    ];
+    ],
+  has scenery;
 
 Object face "face"
   with
@@ -1153,7 +1248,8 @@ Object face "face"
     short_name [;
       System.InlineLinkText("examine my face", "face", LINKID_FACE);
       return true;
-    ];
+    ],
+  has scenery;
 
 Object body "body"
   with
@@ -1162,7 +1258,8 @@ Object body "body"
     short_name [;
       System.InlineLinkText("examine my body", "body", LINKID_BODY);
       return true;
-    ];
+    ],
+  has scenery;
 
 Object back "back"
   with
@@ -1171,7 +1268,8 @@ Object back "back"
     short_name [;
       System.InlineLinkText("examine my back", "back", LINKID_BACK);
       return true;
-    ];
+    ],
+  has scenery;
 
 Object narrator "narrator"
   with
