@@ -568,8 +568,7 @@ Object System
     if (tmp == 1) {
       v = true;
       !FIXME add a compelling and funny first line
-      TestMode();
-      return true;
+      !return TestMode();
       InitialQuery();
       print "^Would you like to enable audio? ";
       System.MsgYesOrNo();
@@ -668,8 +667,7 @@ Object System
     v = false;
   }
   if (v == false) {
-    TestMode();
-    return true;
+    !return TestMode();
     InitialQuery();
 
     print "^NARRATOR:^";
