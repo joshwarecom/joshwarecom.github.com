@@ -825,8 +825,13 @@ Constant LIBRARYV__TX   = " Library v";
             print " not something ", (theActor) actor;
             Tense(" can close", " could have closed");
             ".";
-        2:  CSubjectIs(x1,true); " already closed.";
-        3:  CSubjectVerb(actor,false,false,"close",0,"closes","closed");
+        2:
+						CSubjectIs(x1,true);
+						QueueBinOutput("na_msg_is_already_closed");
+						" already closed.";
+        3:
+						QueueBinOutput("na_msg_you_close");
+						CSubjectVerb(actor,false,false,"close",0,"closes","closed");
             " ", (the) x1, ".";
         4:  "(first closing ", (the) x1, ")";
     }
@@ -1153,7 +1158,9 @@ Constant LIBRARYV__TX   = " Library v";
 						"I beg your pardon?";
         11: "[You can't ~undo~ what hasn't been done!]";
         12: "[Can't ~undo~ twice in succession. Sorry!]";
-        13: "[Previous turn undone.]";
+        13:
+						QueueBinOutput("na_msg_previous_turn_undone");
+						"[Previous turn undone.]";
         14: "Sorry, that can't be corrected.";
         15: "Think nothing of it.";
         16: "~Oops~ can only correct a single word.";
@@ -1176,7 +1183,9 @@ Constant LIBRARYV__TX   = " Library v";
         27: "I didn't understand that sentence.";
         28: print "I only understood you as far as wanting to ";
         29: "I didn't understand that number.";
-        30: CSubjectCant(actor,true); " see any such thing.";
+        30:
+						QueueBinOutput("na_msg_you_cant_see_any");
+						CSubjectCant(actor,true); " see any such thing.";
         31: CSubjectVerb(actor, true, false, "seem", "seem", "seems", "seemed");
             " to have said too little.";
         32: CSubjectIsnt(actor); " holding that.";
@@ -1256,10 +1265,20 @@ Constant LIBRARYV__TX   = " Library v";
             Tense(" can open", " could have opened");
             ".";
         2:  CSubjectVerb(x1,true,false,"seem",0,"seems","seemed"); " to be locked.";
-        3:  CSubjectIs  (x1,true); " already open.";
-        4:  CSubjectVerb(actor,false,false,"open",0,"opens","opened"); print " ", (the) x1;
+        3:
+						!FIXME adjusting for audio output
+						CSubjectIs  (x1,true);
+						QueueBinOutput("na_msg_is_already_open");
+						" already open.";
+        4:
+						QueueBinOutput("na_msg_you_open");
+						CSubjectVerb(actor,false,false,"open",0,"opens","opened"); print " ", (the) x1;
+						QueueBinOutput("na_msg_revealing");
             Tense(", revealing ", " and revealed ");
-                if (WriteListFrom(child(x1), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT) == 0) "nothing.";
+                if (WriteListFrom(child(x1), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT) == 0) {
+									QueueBinOutput("na_msg_nothing");
+									"nothing.";
+								}
                 ".";
         5:  CSubjectVerb(actor,false,false,"open",0,"opens","opened"); " ", (the) x1, ".";
         6:  "(first opening ", (the) x1, ")";
@@ -1436,7 +1455,10 @@ Constant LIBRARYV__TX   = " Library v";
 						!CSubjectCant(actor,true); " see inside, since ", (the) x1, " ", (IsOrAre) x1, " closed.";
 						CSubjectCant(actor,true); " see inside, since the ", (name) x1, " ", (IsOrAre) x1, " closed.";
 
-        6:  "", (The) x1, " ", (IsOrAre) x1, " empty.";
+        6:
+						print (The) x1, " ";
+						QueueBinOutput("na_msg_is_empty");
+						"",(IsOrAre) x1, " empty.";
 
         7:
 						QueueBinOutput("na_msg_in");

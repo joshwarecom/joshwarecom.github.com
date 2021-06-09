@@ -4,7 +4,7 @@ Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
 Release 1;
 
 Attribute custom_listing;
-Global TEST_MODE = true;
+!Global TEST_MODE = true;
 
 !-----------------------------------------------------------------------------
 !
@@ -88,6 +88,21 @@ Include "vorple-screen-effects.h";
     rtrue;
 ];
 
+!FIXME undo can cause currentCmdSupportsPlayback field to be 0 or 1, resulting in TTS playback of room name.
+[ GamePreRoutine;
+  System.currentCmdSupportsPlayback = 1;
+  switch (action) {
+    ##Look:
+    ##Examine:
+    ##UOAIInv:
+    ##Go:
+    ##Open:
+    ##Close:
+    default: System.currentCmdSupportsPlayback = 0;
+  }
+  return false;
+];
+
 [ BeforeParsing;
   ClearNarration();
 ];
@@ -100,17 +115,7 @@ Include "vorple-screen-effects.h";
     if (~~VorpleIsASoundEffectPlaying()) {
       System.RestartBackgroundLoop();
     }
-    switch (action) {
-      ##Look:
-      ##Examine:
-      ##Inv:
-      ##Go:
-      ##Open:
-      ##Close:
-      default:
-          VorpleExecuteJavaScriptCommand("CancelBin();");
-    }
-    VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
+    System.FlushBinOrTTSIfNarrationEnabled();
   }
 ];
 
@@ -190,6 +195,7 @@ Extend 'remove' first
   PlaceInScope(face);
   PlaceInScope(body);
   PlaceInScope(back);
+  PlaceInScope(narrator);
 ];
 
 [GetFirstListedInventory o;
@@ -359,11 +365,14 @@ Object System
     audioExt AUDIOEXT_NULL,
     codeNameLinkId 0,
     currentBackgroundLoop 0,
-    disableGuessing 1,
+    currentCmdSupportsPlayback 1,
     SetCurrentBackgroundLoop [ f;
       self.currentBackgroundLoop = f;
     ],
     FlushBinOrTTSIfNarrationEnabled [;
+      if (self.currentCmdSupportsPlayback ~= 1) {
+        VorpleExecuteJavaScriptCommand("CancelBin();");
+      }
       if (self.audioEnabled) {
         VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
       }
@@ -594,7 +603,7 @@ Object System
         ClearNarration();
         QueueBinOutput("na_intro_1");
         print "^";
-        print "NARRATOR:^";
+        print "^NARRATOR:^";
         print "Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
         System.InlineLink("Yes",LINKID_YES);
         print " or ";
@@ -610,7 +619,7 @@ Object System
           ClearNarration();
           QueueBinOutput("na_intro_1b");
           print "^";
-          print "Oh, how about now then? (";
+          print "^Oh, how about now then? (";
           System.InlineLink("Yes",LINKID_YES);
           print " or ";
           System.InlineLink("No",LINKID_NO);
@@ -629,14 +638,14 @@ Object System
           QueueBinOutput("se_pause");
           print "^";
           !FIXME implement SOUND ON / SOUND OFF
-          print "During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
+          print "^During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
           ClearNarration();
           QueueBinOutput("na_intro_2");
           QueueBinOutput("se_pause");
           print "^";
-          print "On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.^";
+          print "^On occasion, the game may employ miraculous text-to-speech technology to read some words aloud.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
           ClearNarration();
@@ -659,14 +668,14 @@ Object System
             QueueBinOutput("na_intro_3");
             QueueBinOutput("se_pause");
             print "^";
-            print "Excellent.  You are ready to begin.  Enjoy the game!^";
+            print "^Excellent.  You are ready to begin.  Enjoy the game!^";
             System.FlushBinOrTTSIfNarrationEnabled();
             key = 1;
           }
         }
         else {
           ClearNarration();
-          print "Never mind about the audio then.  During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol you should press the enter key or tap continue when ready to proceed.";
+          print "^Never mind about the audio then.  During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol you should press the enter key or tap continue when ready to proceed.";
           key = 1;
           System.audioEnabled = 0;
         }
@@ -767,6 +776,7 @@ Object System
     System.RestartBackgroundLoop(0,250);
     ClearNarration();
     QueueBinOutput("na_prologue_1_ahyes");
+    print "^";
     print "^Ah yes - ";
     if (CompareStrings(buffer,CODENAME_HERO) || CompareStrings(buffer,CODENAME_HEROINE)) {
       if (CompareStrings(buffer,CODENAME_HERO)) {
@@ -815,6 +825,26 @@ Object System
   }
   System.Pause();
   ClearNarration();
+  QueueBinOutput("na_prologue_1_conclusion");
+  print "^";
+  print "^Well, that's something not seen every day.  A songsmith in full dress - flamboyant tunic, feathered cap and all!^";
+  QueueBinOutput("as_intro_v1");
+  bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+  print "as_intro_v2_";
+  PrintStringOrArray(System.GetCodename(true));
+  bp_output_stream(-3);
+  QueueBinOutput(hugehugestr);
+  QueueBinOutput("as_intro_v3_aside");
+  if (isVorpleSupported()) {
+    print "^";
+  }
+  print "^";
+  print "~Who will fight oppression? Who will save us from our shame?^";
+  print "One rises to the challenge! ";
+  PrintStringOrArray(System.GetCodeName());
+  print " is their name!^";
+  print "^";
+  print "Hello! Call me Augustus - apprentice songsmith.  Don't mind me, go on about your secret mission.  You won't even know I'm here.~^";
 ];
 
 [ QueueBinOutput f;
@@ -842,11 +872,12 @@ Object clearing "Shadowy Clearing..."
       QueueBinOutput("na_room_clearing");
       print "Our ";
       PrintStringOrArray(System.GetCodeName());
-      print " Lingered in a ";
+      print " Lingers in a Shadowy Clearing^";
+      return true;
     ],
     description [;
       QueueBinOutput("na_desc_clearing");
-      "You are in a shadowy clearing.";
+      "Immediately to the south, the outer watch tower rises high above the trees.";
     ],
     before [;
       Jump:
@@ -862,6 +893,17 @@ Object clearing "Shadowy Clearing..."
         rtrue;
     ],
   has light;
+
+  Object -> augustus "Augustus"
+    with
+      short_name "Augustus",
+      name 'augustus',
+      description "What does he look like?",
+      initial [;
+        QueueBinOutput("na_desc_augustus_1");
+        "Augustus is here attentively playing a lute and obliviously blocking your path.";
+      ],
+  has proper animate;
 
 Object harness "supple satin lined weapons harness"
   with
@@ -1079,39 +1121,14 @@ Object -> vial "glaes faeflask"
   with
     specialSeal,
     name 'sealed' 'unsealed' 'glaes' 'faeflask' 'flask',
-    articles "=na_name_the_sealed_vial;The " "=na_name_the_sealed_vial;the " "=na_name_a_sealed_vial;a ",
+    articles "=na_name_the_vial;The " "=na_name_the_vial;the " "=na_name_a_vial;a ",
     description "Smooth and dark.",
-    after [;
-      Open:
-        self.&articles-->0 = "=na_name_the_unsealed_vial;The ";
-        self.&articles-->1 = "=na_name_the_unsealed_vial;the ";
-        self.&articles-->2 = "=na_name_a_unsealed_vial;a ";
-      Close:
-        self.&articles-->0 = "=na_name_the_sealed_vial;The ";
-        self.&articles-->1 = "=na_name_the_sealed_vial;the ";
-        self.&articles-->2 = "=na_name_a_sealed_vial;a ";
-    ],
     short_name [;
-      if (action ~= ##Open || noun ~= self) {
-        if (self has open) {
-          print "unsealed ";
-        }
-        else {
-          print "sealed ";
-        }
-      }
       System.InlineLinkText("examine glaes faeflask", "glaes faeflask", LINKID_FAEFLASK);
       rtrue;
     ],
   has
     ~open openable;
-
-Object -> -> dose "dose of dire devotion"
-  class LiquidClass
-  with
-    short_name "cherry red dose of dire devotion",
-    article "a",
-    name 'cherry' 'red' 'dose' 'dire' 'devotion';
 
 Object shoulders "shoulders"
   with
@@ -1154,6 +1171,14 @@ Object back "back"
     short_name [;
       System.InlineLinkText("examine my back", "back", LINKID_BACK);
       return true;
+    ];
+
+Object narrator "narrator"
+  with
+    name 'narrator',
+    before [;
+      QueueBinOutput("na_msg_narrator_interaction");
+      "Don't be silly - you can't interact with me directly.";
     ];
 
 Object room "Cell"
