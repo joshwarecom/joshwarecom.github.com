@@ -557,7 +557,7 @@ Object System
 ];
 
 [ InitialQuery tmp;
-  print "^It's a good thing that foul play is your forte.  Otherwise, your twilight mission to topple a tyrant (while a second-rate songsmith intrusively observes) may not end well...^^";
+  print "^It's a good thing that foul play is your forte.  Otherwise your twilight mission to ignite revolution may not end well - especially if that mediocre musician won't pipe down or stay down!^^";
 
   VorpleStyle(STYLE_EMPHASIS);
   print (markup) "<U>DIRECTOR'S NOTE:^This game supports clickable command words highlighted in this ";
