@@ -119,7 +119,7 @@ Include "vorple-screen-effects.h";
     }
     System.FlushBinOrTTSIfNarrationEnabled();
   }
-  if (parent(convenience) == parent(player)) {
+  if (parent(convenience) == parent(player) && convenience.state == 0) {
     remove convenience;
   }
 ];
@@ -992,6 +992,7 @@ Object clearing "Shadowy Clearing..."
              print " and your ";
              satchel.short_name();
              print " of supplies.  Time to topple a tyrant.";
+             self.state = 0;
         }
       ],
       initial [;
