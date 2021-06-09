@@ -339,8 +339,14 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
         if (i.plural) k++;
     }
     if (c_style & ISARE_BIT) {
-        if (j == 1 && o hasnt pluralname) Tense(IS__TX, WAS__TX);
-        else                              Tense(ARE__TX, WERE__TX);
+        if (j == 1 && o hasnt pluralname) {
+          QueueBinOutput("na_msg_is");
+          Tense(IS__TX, WAS__TX);
+        }
+        else                              {
+          QueueBinOutput("na_msg_are");
+          Tense(ARE__TX, WERE__TX);
+        }
         if (c_style & NEWLINE_BIT)   print (string) COLON__TX, "^";
         else                         print (char) ' ';
         c_style = c_style - ISARE_BIT;
@@ -565,7 +571,7 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 
         if (c_style & ENGLISH_BIT) {
             if (i == senc-1) {
-              !QueueBinOutput("na_msg_and");
+              QueueBinOutput("na_msg_and");
               print (SerialComma) senc, (string) AND__TX;
             }
             if (i < senc-1) print (string) COMMA__TX;
@@ -687,7 +693,10 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
     }
 
     if (recurse_flag && (c_style & ENGLISH_BIT))
-        if (child_count > 1 || eldest_child has pluralname) Tense(ARE2__TX, WERE2__TX);
+        if (child_count > 1 || eldest_child has pluralname) {
+          QueueBinOutput("na_msg_are");
+          Tense(ARE2__TX, WERE2__TX);
+        }
         else                                                Tense(IS2__TX, WAS2__TX);
 
     if (c_style & NEWLINE_BIT) new_line;
@@ -2256,7 +2265,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 ! objects are not included.
 [ Locale descin text_without_ALSO text_with_ALSO
     o p num_objs must_print_ALSO x flag;
-
     objectloop (o in descin) {
         if (o has scenery && (o has supporter || (o has container && o has open or transparent)) && children(o) > 0) {
 	    flag = 0;
@@ -2272,8 +2280,10 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 
 		if (o has supporter)
 		    print "On ", (the) o;
-		else
+		else {
+        QueueBinOutput("na_msg_in");
 		    print "In ", (the) o;
+      }
 
 		WriteListFrom(child(o), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT+ISARE_BIT);
 		print ".";
@@ -2330,7 +2340,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 	    }
 	}
     }
-
     if (num_objs == 0)
 	return 0;
     if (actor ~= player)

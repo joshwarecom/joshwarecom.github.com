@@ -4,6 +4,7 @@ Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
 Release 1;
 
 Attribute custom_listing;
+Global TEST_MODE = true;
 
 !-----------------------------------------------------------------------------
 !
@@ -104,6 +105,8 @@ Include "vorple-screen-effects.h";
       ##Examine:
       ##Inv:
       ##Go:
+      ##Open:
+      ##Close:
       default:
           VorpleExecuteJavaScriptCommand("CancelBin();");
     }
@@ -198,26 +201,31 @@ Extend 'remove' first
 
 [InvHarnessContents;
   if (truncheon in harness && knife in harness) {
-    print " which secures ", (a)truncheon, " and ", (a)knife, " tightly at the small of your ";
+    QueueBinOutput("na_msg_secured_truncheon_knife");
+    print " which secures a ", (name)truncheon, " and a ", (name)knife, " tightly at the small of your ";
     back.short_name();
     print ".  ";
   }
   else if (truncheon in harness) {
-    print " which secures ", (a)truncheon, " tightly at the small of your ";
+    QueueBinOutput("na_msg_secured_truncheon");
+    print " which secures a ", (name)truncheon, " tightly at the small of your ";
     back.short_name();
     print ".  ";
   }
   else if (knife in harness) {
-    print " which secures ", (a)knife, " tightly at the small of your ";
+    QueueBinOutput("na_msg_secured_knife");
+    print " which secures a ", (name)knife, " tightly at the small of your ";
     back.short_name();
     print ".  ";
   }
   else {
+    QueueBinOutput("na_msg_harness_empty");
     print ".  The harness is empty.  ";
   }
 ];
 [InvDescribeHood;
   if (cloak has general) {
+    QueueBinOutput("na_msg_hood_on");
     print "The ";
     hood.short_name();
     print " of the ";
@@ -227,6 +235,7 @@ Extend 'remove' first
     print ", obscuring your features.  ";
   }
   else {
+    QueueBinOutput("na_msg_hood_off");
     print "The ";
     hood.short_name();
     print " of the ";
@@ -243,24 +252,28 @@ Extend 'remove' first
   if (harness in actor) {
     if (harness has worn) {
       if (cloak in actor && cloak has worn) {
-        print (A)cloak, " conceals ", (a)harness;
+        QueueBinOutput("na_msg_harness_concealed");
+        print "A ", (name)cloak, " conceals a ", (name)harness;
         harnessDescribed = 1;
         cloakDescribed = 1;
         InvHarnessContents();
         InvDescribeHood();
       }
       else {
+        QueueBinOutput("na_msg_harness_visible");
         harnessDescribed = 1;
-        print "You wear ", (a)harness;
+        print "You wear a ", (name)harness;
         InvHarnessContents();
-        InvDescribeHood();
       }
     }
   }
   if (cloakDescribed ~= 1) {
     if (cloak in actor) {
       if (cloak has worn) {
-        print "You are wearing a woven woolen cloak.  ";
+        QueueBinOutput("na_msg_cloak_on");
+        print "You are wearing a ";
+        cloak.short_name();
+        print ".  ";
         cloakDescribed = 1;
         InvDescribeHood();
       }
@@ -268,7 +281,8 @@ Extend 'remove' first
   }
   if (satchel in actor) {
     if (satchel has worn) {
-      print (A)satchel, " hangs loosely across your ";
+      QueueBinOutput("na_msg_satchel_on");
+      print "A ", (name)satchel, " hangs loosely across your ";
       body.short_name();
       print " from your left ";
       System.InlineLinkText("examine my shoulders","shoulder",LINKID_SHOULDERS);
@@ -286,6 +300,7 @@ Extend 'remove' first
   if (harness hasnt worn) give harness custom_listing;
   if (cloak hasnt worn) give cloak custom_listing;
   if (satchel hasnt worn) give satchel custom_listing;
+  System.FlushBinOrTTSIfNarrationEnabled();
 ];
 
 [EasterEggSub;
@@ -568,7 +583,9 @@ Object System
     if (tmp == 1) {
       v = true;
       !FIXME add a compelling and funny first line
-      !return TestMode();
+      #Ifdef TEST_MODE;
+      return TestMode();
+      #Endif;
       InitialQuery();
       print "^Would you like to enable audio? ";
       System.MsgYesOrNo();
@@ -667,7 +684,9 @@ Object System
     v = false;
   }
   if (v == false) {
-    !return TestMode();
+    #Ifdef TEST_MODE;
+    return TestMode();
+    #Endif;
     InitialQuery();
 
     print "^NARRATOR:^";
@@ -815,18 +834,18 @@ Object System
 Object clearing "Shadowy Clearing..."
   with
     short_name [;
+      bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+      print "na_msg_our_";
+      PrintStringOrArray(System.GetCodename(true));
+      bp_output_stream(-3);
+      QueueBinOutput(hugehugestr);
+      QueueBinOutput("na_room_clearing");
       print "Our ";
       PrintStringOrArray(System.GetCodeName());
-      !bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
-      !print "na_prologue_1_";
-      !PrintStringOrArray(System.GetCodename(true));
-      !bp_output_stream(-3);
-      !QueueBinOutput(hugehugestr);
-      !QueueBinOutput("na_room_clearing");
       print " Lingered in a ";
     ],
     description [;
-      !QueueBinOutput("na_desc_clearing");
+      QueueBinOutput("na_desc_clearing");
       "You are in a shadowy clearing.";
     ],
     before [;
@@ -848,6 +867,7 @@ Object harness "supple satin lined weapons harness"
   with
     bulky,
     name 'supple' 'satin' 'lined' 'weapons' 'harness',
+    articles "=na_name_the_harness;The " "=na_name_the_harness;the " "=na_name_a_harness;a ",
     before [;
       Receive:
         if (~~(noun provides weapon)) {
@@ -868,6 +888,7 @@ Object harness "supple satin lined weapons harness"
       bulky,
       weapon,
       name 'trusty' 'truncheon',
+      articles "=na_name_the_truncheon;The " "=na_name_the_truncheon;the " "=na_name_a_truncheon;a ",
       short_name [;
         System.InlineLinkText("examine trusty truncheon", "trusty truncheon", LINKID_TRUNCHEON);
         return true;
@@ -879,6 +900,7 @@ Object harness "supple satin lined weapons harness"
       sharp,
       weapon,
       name 'needle' 'pointed' 'knife',
+      articles "=na_name_the_knife;The " "=na_name_the_knife;the " "=na_name_a_knife;a ",
       short_name [;
         System.InlineLinkText("examine needle pointed knife", "needle pointed knife", LINKID_KNIFE);
         return true;
@@ -889,6 +911,7 @@ Object cloak "woven woolen cloak"
   with
   bulky,
   name 'woven' 'woolen' 'cloak',
+  articles "=na_name_the_cloak;The " "=na_name_the_cloak;the " "=na_name_a_cloak;a ",
   short_name [;
     System.InlineLinkText("examine woven woolen cloak", "woven woolen cloak", LINKID_CLOAK);
     return true;
@@ -902,6 +925,7 @@ Object cloak "woven woolen cloak"
   Object -> hood "hood"
     with
       name 'hood',
+      articles "=na_name_the_hood;The " "=na_name_the_hood;the " "=na_name_a_hood;a ",
       description [;
         print "It's a ";
         self.short_name();
@@ -988,7 +1012,10 @@ Object cloak "woven woolen cloak"
 
 Object satchel "slim leather satchel"
   with
+  specialSeal,
   name 'slim' 'leather' 'satchel',
+  articles "=na_name_the_satchel;The " "=na_name_the_satchel;the " "=na_name_a_satchel;a ",
+  na_article_names "na_name_the_satchel" "na_name_the_satchel" "na_name_a_satchel",
   before [;
     Receive:
       if (noun provides bulky) {
@@ -1018,6 +1045,7 @@ Object satchel "slim leather satchel"
 Object -> pellet "grim green poison pellet"
   with
     name 'grim' 'green' 'pellet' 'poison',
+    articles "=na_name_the_pellet;The " "=na_name_the_pellet;the " "=na_name_a_pellet;a ",
     description "Don't eat it by accident.",
     short_name [;
       System.InlineLinkText("examine grim green poison pellet", "grim green poison pellet", LINKID_PELLET);
@@ -1029,6 +1057,7 @@ Object -> pellet "grim green poison pellet"
 Object -> card "laminated parchment card"
   with
     name 'laminated' 'parchment' 'card',
+    articles "=na_name_the_card;The " "=na_name_the_card;the " "=na_name_a_card;a ",
     description "It's a license to lie.",
     short_name [;
       System.InlineLinkText("examine laminated parchment card", "laminated parchment card", LINKID_CARD);
@@ -1038,6 +1067,7 @@ Object -> card "laminated parchment card"
 Object -> charge "peril powder charge"
   with
     name 'peril' 'powder' 'charge',
+    articles "=na_name_the_charge;The " "=na_name_the_charge;the " "=na_name_a_charge;a ",
     description "Explosive.",
     short_name [;
       System.InlineLinkText("examine peril powder charge", "peril powder charge", LINKID_CHARGE);
@@ -1048,8 +1078,19 @@ Object -> vial "glaes faeflask"
   class  VesselClass DelicateClass
   with
     specialSeal,
-    name 'glaes' 'faeflask' 'flask',
+    name 'sealed' 'unsealed' 'glaes' 'faeflask' 'flask',
+    articles "=na_name_the_sealed_vial;The " "=na_name_the_sealed_vial;the " "=na_name_a_sealed_vial;a ",
     description "Smooth and dark.",
+    after [;
+      Open:
+        self.&articles-->0 = "=na_name_the_unsealed_vial;The ";
+        self.&articles-->1 = "=na_name_the_unsealed_vial;the ";
+        self.&articles-->2 = "=na_name_a_unsealed_vial;a ";
+      Close:
+        self.&articles-->0 = "=na_name_the_sealed_vial;The ";
+        self.&articles-->1 = "=na_name_the_sealed_vial;the ";
+        self.&articles-->2 = "=na_name_a_sealed_vial;a ";
+    ],
     short_name [;
       if (action ~= ##Open || noun ~= self) {
         if (self has open) {

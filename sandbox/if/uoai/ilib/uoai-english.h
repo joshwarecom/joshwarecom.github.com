@@ -922,7 +922,9 @@ Constant LIBRARYV__TX   = " Library v";
     }
   Examine: switch (n) {
         1:  "Darkness, noun.  An absence of light to see by.";
-        2:  CSubjectVerb(actor,true,false,"see",0,"sees","saw");
+        2:
+						QueueBinOutput("na_msg_default_examine");
+						CSubjectVerb(actor,true,false,"see",0,"sees","saw");
             " nothing special about ", (the) x1, ".";
         3:  CSubjectIs(x1,true);
             Tense(" currently");
@@ -976,7 +978,9 @@ Constant LIBRARYV__TX   = " Library v";
         1:  CSubjectWill(actor,true);
             Tense(" have", " have had");
                 " to get ", (nop) SupportObj(x1,"off","out of"), " ", (the) x1, " first.";
-        2:  CSubjectCant(actor,true); " go that way.";
+        2:
+						QueueBinOutput("na_msg_cant_go");
+						CSubjectCant(actor,true); " go that way.";
         3:  CSubjectIs  (actor,true); " unable to climb ", (the) x1, ".";
         4:  CSubjectIs  (actor,true); " unable to descend by ", (the) x1, ".";
         5:  CSubjectCant(actor,true); " since ", (the) x1, " ", (IsOrAre) x1, " in the way.";
@@ -1003,10 +1007,10 @@ Constant LIBRARYV__TX   = " Library v";
     }
   Inv: switch (n) {
         1:
-						!QueueBinOutput("na_msg_youre_carrying_nothing");
+						QueueBinOutput("na_msg_empty_handed");
 						CSubjectIs  (actor,false); " empty handed.";
         2:
-						!QueueBinOutput("na_msg_youre_carrying");
+						QueueBinOutput("na_msg_youre_carrying");
 						CSubjectIs  (actor,false); print " carrying";
         3:  ":";
         4:  ".";
@@ -1094,13 +1098,14 @@ Constant LIBRARYV__TX   = " Library v";
             }
             else {
 							new_line;
-							!QueueBinOutput("na_msg_you_can_see");
+							QueueBinOutput("na_msg_you_can_see");
 							CSubjectCan(actor,false);
 						}
             if (n == 5) print " also";
             print " see ";
-            WriteListFrom(child(x1),
-              ENGLISH_BIT+RECURSE_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+WORKFLAG_BIT);
+						!FIXME don't print contents of items on the ground.
+            !WriteListFrom(child(x1),ENGLISH_BIT+RECURSE_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+WORKFLAG_BIT);
+						WriteListFrom(child(x1),ENGLISH_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+WORKFLAG_BIT);
             if (x1 ~= location) ".";
 						else {
 							!QueueOggOutput("na_msg_here");
@@ -1421,10 +1426,21 @@ Constant LIBRARYV__TX   = " Library v";
                 WriteListFrom(child(x1), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT+ISARE_BIT);
                 ".";
         4:  CSubjectVerb(actor,true,false,"find",0,"finds","found"); " nothing of interest.";
-        5:  CSubjectCant(actor,true); " see inside, since ", (the) x1, " ", (IsOrAre) x1, " closed.";
+        5:
+						!FIXME adjusted for correct audio output
+						if (x1 provides na_article_names) {
+							QueueBinOutput("na_msg_cant_see_inside_since");
+							QueueBinOutput(x1.&na_article_names-->1);
+							QueueBinOutput("na_msg_is_closed");
+						}
+						!CSubjectCant(actor,true); " see inside, since ", (the) x1, " ", (IsOrAre) x1, " closed.";
+						CSubjectCant(actor,true); " see inside, since the ", (name) x1, " ", (IsOrAre) x1, " closed.";
+
         6:  "", (The) x1, " ", (IsOrAre) x1, " empty.";
 
-        7:  print "In ", (the) x1;
+        7:
+						QueueBinOutput("na_msg_in");
+						print "In ", (the) x1;
                 WriteListFrom(child(x1), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT+ISARE_BIT);
                 ".";
     }

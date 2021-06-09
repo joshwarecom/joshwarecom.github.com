@@ -111,7 +111,12 @@
       document.binOutput = new Array();
     }
     function AddBin(str) {
-      if (document.binOutput.indexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0);
+      if (document.binOutput.lastIndexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0) {
+        if (document.binOutput[document.binOutput.length-1] == (vorple.options.resource_paths.audio+str+"."+document.audioExt));
+        else {
+          document.binOutput[document.binOutput.length] = vorple.options.resource_paths.audio+str+"."+document.audioExt;
+        }
+      }
       else
       document.binOutput[document.binOutput.length] = vorple.options.resource_paths.audio+str+"."+document.audioExt;
     }
@@ -173,7 +178,7 @@
             while (!stop) {
               var ma = re.exec(output);
               if (ma) {
-                output = ma[1] + ma[3] + '\n';
+                output = ma[1] + ma[3];// + '\n';
                 if (ma[2] == '!') {
                   punctuate = true;
                 }

@@ -3172,7 +3172,9 @@ Constant UNLIT_BIT  =  32;
         number_matched = 0;  ! ask question for 'take three'
     if (number_matched == 1) i = match_list-->0;
     if (number_matched > 1) {
-        i = Adjudicate(context);
+				!FIXME disable noun guessing
+        !i = Adjudicate(context);
+				i = 0;
         if (i == -1) rfalse;
         if (i == 1) rtrue;       !  Adjudicate has made a multiple
                                  !  object, and we pass it on
