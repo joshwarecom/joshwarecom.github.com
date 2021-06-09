@@ -3492,7 +3492,6 @@ Constant SCORE__DIVISOR     = 20;
         else print "definite object^";
     }
     #Endif; ! DEBUG
-
     j = number_matched-1; good_ones = 0; last = match_list-->0;
     for (i=0 : i<=j : i++) {
         n = match_list-->i;

@@ -1,0 +1,577 @@
+Attribute is_liquid;        ! identifies a liquid
+Attribute is_vessel;        ! identifies something that can hold a liquid
+Attribute is_water;         ! Special type of liquid (freely available);
+                            ! also identifies rooms with supply of water
+Attribute is_liquid_store;  ! stores liquid objects for re-use
+
+Property size 2;                    ! Gross measure of size of object
+Global  quote = 0;
+
+Class   DelicateClass
+ with   before [;
+         ThrowAt:
+            print_ret "Be careful! ", (The) self, " might break.";
+        ];
+
+Class   FlimsyClass
+ with   before [;
+         ThrowAt:
+            print_ret (The) self, " is too flimsy to make a good \
+                missile.";
+        ];
+
+[ InvokeSub; "** Error: Invoke subroutine should never be run **"; ];
+[ SmellThingSub; "You smell nothing unusual."; ];
+[ Futile "Futile!";];
+!--------------------------------------------------------------------------
+! 7 ALCHEMY
+!--------------------------------------------------------------------------
+! Copyright (c) 1995-1996 by Gareth Rees.
+! This file may be copied and distributed under certain conditions.
+! See the file COPYRIGHT for details.
+
+!--------------------------------------------------------------------------
+! 7.1 LIQUIDS
+!--------------------------------------------------------------------------
+! The liquid model is highly simplified.  A liquid object on its own can be
+! manipulated in a limited number of ways; it is happier inside a vessel.
+!
+! Liquids are manipulated by overloading the usual library actions for
+! transferring objects, and by adding a new action for doing the actual
+! work of moving liquids around.
+
+Fake_Action LiquidMove;     ! move a liquid into an open vessel
+
+[ FindOpenEmptyVessel i j;
+  return 0;
+];
+
+[ FillWithSub; <<Insert second noun>>; ];
+
+Verb "pour"
+    * "out" noun            -> Empty
+    * "away" noun           -> Empty
+    * noun "away"           -> Empty
+    * noun "out"            -> Empty
+    * noun "on" noun        -> EmptyT
+    * noun "onto" noun      -> EmptyT
+    * noun "in" noun        -> EmptyT
+    * noun "into" noun      -> EmptyT
+    * noun "over" noun      -> EmptyT;
+
+Verb "add" "mix"
+    * noun "to" noun        -> Insert
+    * noun "with" noun      -> Insert;
+
+Extend "empty"
+    * noun "over" noun      -> EmptyT;
+
+Extend "fill"
+    * noun "with" noun      -> FillWith
+    * noun "from" noun      -> FillWith;
+
+Class   VesselClass
+ has    container is_vessel
+ with   capacity 1,
+        before [;
+         Examine:
+            if (location == thedark) return L__M(##Examine,1);
+            PrintOrRun(self,description,1);
+            if (child(self) ~= 0 && (self has open || self has transparent))
+                print " It contains ", (a) child(self), ".";
+            new_line;
+            rtrue;
+         Drink,Taste,Eat:
+            if (children(self) == 0) print_ret (The) self, " is empty.";
+            <<Drink (child(self))>>;
+         Fill:
+            if (location hasnt is_water)
+                print_ret "You can't see anything from which to fill ",
+                    (the) self, ".";
+            if (self hasnt open) print_ret (The) self, " is closed.";
+            if (child(self) ~= 0 && child(self) hasnt is_liquid)
+                print_ret "But ", (the) self, " already contains ",
+                    (a) child(self), ".";
+            <Invoke WaterStore>;
+            if (child(WaterStore) ~= 0)
+                <<LiquidMove (child(WaterStore)) self>>;
+            rtrue;
+         FillWith:
+            !if (second == River) <<Fill self>>;
+            rfalse;
+         Receive:
+            !if (noun == River) <<Fill self>>;
+            if (noun hasnt is_liquid) {
+                if (noun.size ~= 0)
+                    "That's too large to fit.";
+                rfalse;
+            }
+            if (self hasnt open) print_ret (The) self, " is closed.";
+            if (child(self) ~= 0 && child(self) hasnt is_liquid)
+                print_ret (The) self, " already contains ",
+                    (a) child(self), ".";
+            <<LiquidMove noun self>>;
+         Empty:
+            if (self hasnt open) print_ret (The) self, " is closed.";
+            if (child(self) == 0) print_ret (The) self, " is empty.";
+            if (child(self) hasnt is_water)
+                print_ret "Nothing would be gained by pouring out ",
+                    (the) child(self), ".";
+            remove child(self);
+            print_ret "You empty ", (the) self, ".";
+         EmptyT:
+            if (second == self) "You can't empty something into itself!";
+            if (second has is_liquid) second = parent(second);
+            if (second hasnt is_vessel) <<Empty self>>;
+            if (self hasnt open) print_ret (The) self, " is closed.";
+            if (child(self) == 0) print_ret (The) self, " is empty.";
+            if (second hasnt open) print_ret (The) second, " is closed.";
+            if (child(second) ~= 0 && child(second) hasnt is_liquid)
+                print_ret "But ", (the) second, " already contains ",
+                    (a) child(second), ".";
+            <<LiquidMove (child(self)) second>>;
+        ];
+
+Class   LiquidClass
+ has    is_liquid
+ with   article "some",
+        before [ i j;
+            i = parent(self);
+         Examine: rfalse;
+         Give:
+            if (i has is_vessel) <<Give i second>>;
+         ThrowAt:
+            if (i has is_vessel) <<EmptyT i second>>;
+         Show:
+            if (i has is_vessel) <<Show i second>>;
+         Drink,Taste,Eat,SmellThing,Touch:
+            if (i has is_vessel && i hasnt open)
+                print_ret (The) i, " is closed.";
+            if (AfterRoutines() == 1) rtrue;
+         Take,Remove:
+            if (i has is_vessel)
+                print_ret "Try ~empty ", (the) i, " into thing~, or ~pour \
+                    ", (the) self, " over thing~ instead.";
+            j = FindOpenEmptyVessel();
+            if (j == 0) "You'll have to say what you want to fill.";
+            <<LiquidMove self j>>;
+         Insert,PutOn,Transfer,Empty,EmptyT:
+            j = parent(second);
+            if (i has is_vessel) {
+                if (second has is_liquid && j has is_vessel)
+                    <<EmptyT i j>>;
+                <<EmptyT i second>>;
+            }
+            if (second hasnt is_vessel) { Futile(); rtrue; }
+            if (second hasnt open) print_ret (The) second, " is closed.";
+            <<LiquidMove self second>>;
+         Receive:
+            if (noun has is_liquid)
+                "** Error: Receive action called with noun and second \
+                both liquids **";
+            Futile();
+            rtrue;
+         LiquidMove:
+            if (second hasnt is_vessel || second hasnt open)
+                "** Error: Liquid move failed necessary condition(s) **";
+            if (self in second)
+                "You can't pour something into itself!";
+            if (self has is_water)
+                print "You fill ", (the) second, " with water";
+            else
+                print "You pour ", (the) self, " into ", (the) second;
+            if (child(second) == 0) {
+                move self to second;
+                ".";
+            }
+            if (child(second) hasnt is_liquid)
+                "** Error: Liquid move failed a necessary condition **";
+            i = MixLiquids(self,child(second));
+            if (i has is_liquid_store) {
+                <Invoke i>;
+                i = child(i);
+            }
+            if (i == 0) rtrue;
+            if (keep_silent == 0) {
+                if (i.number~=self.number || i.number~=(child(second)).number)
+                    print ", resulting in ", (a) i;
+                print ".^";
+            }
+            keep_silent = 0;
+            remove self;
+            remove child(second);
+            move i to second;
+            AfterRoutines();
+            rtrue;
+         default:
+            Futile();
+            rtrue;
+        ],
+        after [;
+         Drop:
+            remove self;
+        ];
+
+Class   LiquidStoreClass
+ has    is_liquid_store
+ with   before [ i;
+         Invoke:
+            ! first collect up any objects that have vanished
+            for (i = self.other_obj: i ~= 0: i = i.other_obj)
+                if (parent(i) == 0)
+                    move i to self;
+            if (child(self) == 0)
+                print "** Error: a liquid store is empty **^";
+            rtrue;
+        ];
+
+Class   WaterClass
+ class  LiquidClass
+ has    is_water
+ with   name "water",
+        article "some",
+        number 1,
+        after [;
+         SmellThing: "Water is an odourless liquid.";
+         Taste,Drink,Eat:
+            if (WaterStore hasnt general) {
+                remove self;
+                give WaterStore general;
+                "You drink the water, quenching your thirst.";
+            }
+            "You're not feeling thirsty at the moment.";
+        ];
+
+Object  WaterStore "water store"
+ class  LiquidStoreClass
+        ! general if you've drunk some water
+ with   other_obj WaterA;
+
+Nearby  WaterA "water" class WaterClass with other_obj WaterB;
+Nearby  WaterB "water" class WaterClass with other_obj WaterC;
+Nearby  WaterC "water" class WaterClass with other_obj WaterD;
+Nearby  WaterD "water" class WaterClass with other_obj WaterE;
+Nearby  WaterE "water" class WaterClass with other_obj 0;
+
+Class   CWaterClass
+ class  LiquidClass
+ has    is_water
+ with   name "cloudy" "water",
+        article "some",
+        number 0,
+        after [;
+         SmellThing: "It doesn't smell of anything.";
+         Taste,Drink,Eat:
+            "You take a sip, but it tastes very unpleasant.";
+        ];
+
+Object  CWaterStore "cloudy water store"
+ class  LiquidStoreClass
+ with   other_obj CWaterA;
+
+Nearby  CWaterA "cloudy water" class CWaterClass with other_obj CWaterB;
+Nearby  CWaterB "cloudy water" class CWaterClass with other_obj CWaterC;
+Nearby  CWaterC "cloudy water" class CWaterClass with other_obj CWaterD;
+Nearby  CWaterD "cloudy water" class CWaterClass with other_obj CWaterE;
+Nearby  CWaterE "cloudy water" class CWaterClass with other_obj 0;
+
+
+!--------------------------------------------------------------------------
+! 7.2 TEARS
+!--------------------------------------------------------------------------
+
+Object  TearsA "tears"
+ class  LiquidClass
+ has    concealed
+ with   name "tears" "tear",
+        number 3,
+        after [;
+         Drink,Taste,Eat:
+            remove self;
+            "The tears are salty on your tongue.";
+        ],
+        before [;
+         LiquidMove:
+            remove self;
+            <<LiquidMove TearsB second>>;
+        ],
+        invent [;
+            if (inventory_stage == 1) rtrue;
+        ],
+        time_left 0,
+        time_out [;
+            remove self;
+        ];
+
+!--------------------------------------------------------------------------
+! 7.3 ALCHEMY
+!--------------------------------------------------------------------------
+! Basic ingredients: Water, Honey, Tears, Virgins milk, Myrrh
+! `Error' liquids: Cloudy water, sticky Gunk
+! Alchemical compounds: *1 = vm + honey + heat
+!                       *2 = *1 + myrrh + heat
+!                       *3 = *2 + tears + heat
+!
+! And here's the mixing table (`.' indicates `can't happen'):
+!
+!    a|  0  1  2  3  4  5  6  7  8  9 10 11
+!  b  |  C  W  H  T  V  M  G *1 *2 *3 WW  P
+! ----+------------------------------------
+!  C  |  C
+!  W  |  C  W
+!  H  |  C  C  .
+!  T  |  C  W  H  .
+!  V  |  C  C 1/G V  .
+!  M  |  C  C  G  M  G  .
+!  G  |  C  C  G  G  G  G  .
+! *1  |  C  C  .  G  . 2/G .  .
+! *2  |  C  C  . 3/G .  .  .  .  .
+! *3  |  C  C  .  G  .  .  .  .  .  .
+! WW  |  .  .  .  .  .  .  .  .  .  .  .
+!  P  |  .  .  .  .  .  .  .  .  .  .  .  P
+!
+! Careful analysis of the table suggests that the only liquids we can ever
+! have more than one of are water and cloudy water (because only virgin's
+! milk, honey and myrrh can be involved at some point in the creation of
+! gunk, and to create two gunks we would need four ingredients).
+
+[ MixLiquids a b t;
+    if (a.number > b.number) {
+        t = b; b = a; a = t;
+    }
+    if (a.number == 1 && b.number == 1 or 3)
+        return WaterStore;
+    if (a.number == 0 or 1) return CWaterStore;
+    if (a == Honey && b == TearsB) return Honey;
+    if (a == TearsB && b == PaleLiquid or Myrrh) return b;
+    keep_silent = 1;
+    if (a == Honey && b == PaleLiquid && Honey has general) {
+        quote = 16;
+        print ". The mixture starts to bubble furiously, and you cough \
+            from the vapours.^^Edward coughs too. ~Whatever kind of \
+            chemistry you're doing, I wish you would do it somewhere \
+            else,~ he says.^";
+        return ElixirA;
+    }
+    if (a == Myrrh && b == ElixirA) {
+        quote = 17;
+        print ". The ingredients combine into a sticky mass, which slowly \
+            melts and clarifies, like molten wax. The smell is bitter and \
+            putrid.^";
+        return ElixirB;
+    }
+    if (a == TearsB && b == ElixirB) {
+        print ". There is a loud crackle from the liquid, accompanied by \
+            sparks and flying droplets. When the reaction subsides, you \
+            see that what little is left of the mixture has become \
+            completely clear, and a wonderful perfume starts to pervade \
+            the room. Could this be it, the Elixir?^^~Oh no!~ says \
+            Edward. ~What are you doing? When the dusty comes in on \
+            Monday she'll accuse me of having some trollop in here, and \
+            if she tells the Bursar I shall be in terrible trouble! \
+            Please, take it away!~^";
+        Achieved("brewing an elixir");
+        return ElixirC;
+    }
+    print "** Error: impossible mixture of liquids occurred! **^";
+    return 0;
+];
+
+Object  TearsB "tears"
+ class  LiquidClass
+ with   name "tear" "tears" "crystal" "clear" "liquid" "drop",
+        description "A tiny drop of crystal clear liquid.",
+        number 3,
+        after [;
+         SmellThing: "The tears are odourless.";
+         Drink,Eat,Taste:
+            remove self;
+            "The tears are salty on your tongue.";
+        ];
+
+Object  Honey "honey"
+ class  LiquidClass
+        ! general if from the correct hive
+ with   name "honey",
+        description "A couple of drops of a viscous sweet-smelling cloudy \
+            brown liquid.",
+        number 2,
+        after [;
+         SmellThing: "It smells rich and pungent.";
+         Eat,Drink,Taste:
+            remove self;
+            "The honey is sweet on your lips, but you barely have enough \
+            to whet your appetite.";
+        ];
+
+Object  PaleLiquid "pale liquid"
+ class  LiquidClass
+        ! general if suffering from its effects
+ with   name "pale" "liquid",
+        description "It's a pale liquid, with the consistency of wine.",
+        number 4,
+        after [;
+         Taste,Drink,Eat:
+            if (self has general)
+                "You feel rather nauseous after your earlier sip and \
+                can't bring yourself to drink any more.";
+            give self general;
+            "You take a sip of the pale liquid. It tastes like a very \
+            vinegary wine, but with a disturbing, rotten aftertaste. You \
+            can't bring yourself to drink very much.";
+         SmellThing:
+            "It smells like a very vinegary wine, but with a hint of \
+            rotten eggs. The effect isn't very pleasant.";
+        ];
+
+Object  Myrrh "transparent gum"
+ class  LiquidClass
+ with   name "transparent" "gum" "myrrh" "viscous" "oil" "perfume" "oily",
+        description "The gum is very viscous and oily, and gives off a \
+            powerful, bitter scent.",
+        number 5,
+        after [;
+         SmellThing:
+            "The smell is very heady, made up of a strongly bitter aroma, \
+            but also a powerfully aromatic and refreshing perfume.";
+         Taste,Drink,Eat:
+            "The gum tastes oily and very unpleasant, and you can't bring \
+            yourself to consume more than a drop.";
+        ];
+
+Object  StickyGunk "sticky gunk"
+ class  LiquidClass
+ with   name "sticky" "gunk" "mess" "brown" "thick" "liquid",
+        description "The sticky gunk is a thick brown liquid. It looks \
+            and smells very unpleasant.",
+        number 6,
+        after [;
+         SmellThing: "It smells very odd and unpleasant.";
+         Taste,Drink,Eat: "Yuck! Your gorge rises at the thought of \
+            tasting such an unpleasant compound.";
+        ];
+
+Object  ElixirA "bubbling mixture"
+ class  LiquidClass
+        ! general if tasted
+ with   name "bubbling" "bubble" "bubbles" "mix" "mixture" "liquid"
+            "elixir" "potion",
+        description "The mixture is a hot liquid, bubbling and \
+            fermenting, and giving rise to unpleasant vapours and \
+            smokes.",
+        number 7,
+        after [;
+         SmellThing: "It gives rise to unpleasant vapours that make you \
+             cough.";
+         Taste,Eat,Drink:
+            if (self has general)
+                "You feel too sick to drink any more of the bubbling \
+                mixture.";
+            give self general;
+            "You take a sip, and the hot liquid bubbles and its way into \
+            your stomach and continues to ferment there. You feel \
+            distinctly sick.";
+        ];
+
+Object  ElixirB "waxy liquid"
+ class  LiquidClass
+        ! general if tasted
+ with   name "sticky" "molten" "wax" "waxy" "liquid" "mass" "elixir"
+            "potion",
+        number 8,
+        description "It is a translucent liquid, with the thickness and \
+            consistency of molten wax. It smells very unpleasant.",
+        after [;
+         SmellThing: "It smells bitter and putrid, like rotting cabbage.";
+         Taste,Drink,Eat:
+            if (self has general)
+                "The liquid is much too disgusting to contemplate \
+                drinking any more.";
+            give self general;
+            "You take the smallest of sips of the hot liquid and spit it \
+            out, retching. Rotting vegetables fermented with mouse \
+            droppings would not be so disgusting as this foul liquid.";
+        ];
+
+Object  ElixirC "elixir"
+ class  LiquidClass
+ with   name "elixir" "clear" "liquid" "perfume" "potion",
+        description "A pellucid liquid with the consistency of the finest \
+            sherry.",
+        number 9,
+        state 0,
+        after [;
+         Examine:
+            quote = 18;
+         SmellThing:
+            quote = 18;
+            "Its perfume is compounded of rose petals, violets, musk, \
+            peaches, cinnamon and other ingredients you cannot \
+            distinguish.";
+         Taste,Eat,Drink:
+            print "You swallow the elixir, and suddenly your body seems to \
+                be pervaded by an inner energy. You feel better than you \
+                have ever felt before in your life. You can see light \
+                pouring from yourself, brilliant light, piercing the \
+                darkness of the world. All around you, material forms are \
+                starting to dissolve, and you strain to see the essence \
+                behind them, the form of God...^";
+            print "^Then you wake to find yourself in a hospital bed, \
+                with Edward sitting solicitously by your bedside. ";
+            deadflag = 3;
+            " The doctor says he thinks you were poisoned, but you're \
+            going to be fine...~^^Later, when you learn of your brother \
+            Malcolm's disappearance from Biblioll college never to be \
+            seen again, you wish that you hadn't drunk the elixir and \
+            incapacitated yourself, but by then it is too late.";
+        ];
+
+Object  BottleA "brown glass bottle"
+ class  VesselClass DelicateClass
+ has    open transparent is_vessel
+ with   name "brown" "glass" "bottle",
+        add_to_scope MakersStamp,
+        description "The bottle is made of translucent brown glass, and \
+            on the bottom you can see the stamp of the maker.";
+
+Object  BottleB "green glass bottle"
+ class  VesselClass DelicateClass
+ has    transparent
+ with   name "green" "glass" "bottle" "cork",
+        add_to_scope MakersStamp,
+        description [;
+            print "The bottle is made of translucent green glass, and on \
+                the bottom you can see the stamp of the maker.";
+            if (self hasnt open) print " It is sealed shut with a cork.";
+        ],
+        before [;
+         Open,Unlock:
+            if (self hasnt open && second == 0) {
+                give self open;
+                "You remove the cork, which crumbles into pieces (it must \
+                have been very old). Luckily, not much of the cork has \
+                ended up in the bottle.";
+            }
+         Close:
+            "You have nothing with which to close the bottle.";
+        ];
+
+Object  MakersStamp "maker's stamp"
+ has    scenery
+        ! general once you've examined it
+ with   name "maker" "maker^s" "stamp",
+        description "It's the word ~vau~ and below it, the word ~han~, \
+            fashioned from raised glass.",
+        after [;
+         Examine: give self general;
+        ];
+
+Object  Retort "retort"
+ class  VesselClass DelicateClass
+ has    open transparent is_vessel
+        ! general if contents are hot (hence bubbling)
+ with   name "glass" "flask" "narrow" "neck" "retort" "stained" "soot",
+        description "The retort is made of glass, stained with chemicals \
+            and soot. It's a round flask with a narrow neck and a flat \
+            base, suitable for standing on a ring or stand above a \
+            flame.";

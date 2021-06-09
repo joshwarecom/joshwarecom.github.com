@@ -565,7 +565,7 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 
         if (c_style & ENGLISH_BIT) {
             if (i == senc-1) {
-              !QueueBinOutput("na_msg_and");
+              QueueBinOutput("na_msg_and");
               print (SerialComma) senc, (string) AND__TX;
             }
             if (i < senc-1) print (string) COMMA__TX;
@@ -597,17 +597,15 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 
 [ WriteAfterEntry o depth stack_p
     p recurse_flag parenth_flag eldest_child child_count combo i j;
-
     inventory_stage = 2;
     if (c_style & PARTINV_BIT) {
         if (o.invent && RunRoutines(o, invent))
             if (c_style & NEWLINE_BIT) ""; else rtrue;
 
         combo = 0;
-        !FIXME don't print parenthetical close/open for specialSeal items.
         if (o has light && location hasnt light) combo=combo+1;
-        if (o has container && o hasnt open && ~~(o provides specialSeal))     combo=combo+2;
-        if ((o has container && (o has open || o has transparent) && ~~(o provides specialSeal))) {
+        if (o has container && o hasnt open)     combo=combo+2;
+        if ((o has container && (o has open || o has transparent))) {
             objectloop(i in o) {
                 if (i hasnt concealed && i hasnt scenery) {
                     j = true; break;
@@ -632,8 +630,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 
         if (o has container)
             if (o has openable) {
-              !FIXME don't print open/close parenthetical
-              if (~~(o provides specialSeal)) {
                 if (parenth_flag) print (string) AND__TX;
                 else              L__M(##ListMiscellany, 11, o);
                 if (o has open)
@@ -643,7 +639,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
                     if (o has lockable && o has locked) L__M(##ListMiscellany, 15, o);
                     else                                L__M(##ListMiscellany, 14, o);
                 parenth_flag = true;
-              }
             }
             else
                 if (child(o)==0 && o has transparent)

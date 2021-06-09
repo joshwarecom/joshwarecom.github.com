@@ -1,0 +1,10 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Story	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant Story "The Uninvited Opera of Augustus Interruptus";$/;"	variable	line:1
+Headline	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant Headline "^Written and directed by Joshua Wilson^";$/;"	variable	line:2
+string	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array UUID_ARRAY static string "UUID:\/\/b72c87a5-f92e-4f07-b3e7-ba4b5243611a\/\/";$/;"	variable	line:3	file:
+custom_listing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Attribute custom_listing;$/;"	variable	line:6

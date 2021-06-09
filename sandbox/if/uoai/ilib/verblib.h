@@ -199,8 +199,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
         if (lt_value && o.list_together ~= lt_value) continue;
         if (c_style & WORKFLAG_BIT && odepth==0 && o hasnt workflag) continue;
         if (c_style & CONCEAL_BIT && (o has concealed || o has scenery)) continue;
-        !FIXME excluding custom listing from inventory listing
-        if (o has custom_listing && o in player) continue;
         return o;
     }
 ];
@@ -324,11 +322,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
             o = sibling(o);
             continue;
         }
-        !FIXME excluding custom listing items from default inventory.
-        if (o has custom_listing && parent(o) == player) {
-            o = sibling(o);
-            continue;
-        }
         break;
     }
     classes_p = match_classes + stack_pointer;
@@ -338,6 +331,7 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
         classes_p->j = 0;
         if (i.plural) k++;
     }
+
     if (c_style & ISARE_BIT) {
         if (j == 1 && o hasnt pluralname) Tense(IS__TX, WAS__TX);
         else                              Tense(ARE__TX, WERE__TX);
@@ -345,6 +339,7 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
         else                         print (char) ' ';
         c_style = c_style - ISARE_BIT;
     }
+
     stack_pointer = stack_pointer+j+1;
 
     if (k < 2) jump EconomyVersion;   ! It takes two to plural
@@ -452,6 +447,7 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
         }
 
       .Omit_WL2;
+
         if (WriteBeforeEntry(j, depth, 0, senc) == 1) jump Omit_FL2;
         if (sizes_p->i == 1) {
             if (c_style & NOARTICLE_BIT)  print (name) j;
@@ -485,12 +481,14 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
     rtrue;
 
   .EconomyVersion;
+
     n = j;
     for (i=1,j=o : i<=n : j=NextEntry(j,depth),i++,senc++) {
         if (j.list_together ~= 0 or lt_value && metaclass(j.list_together) == Routine or String &&
             j.list_together==mr) senc--;
         mr = j.list_together;
     }
+
     for (i=1,j=o,mr=0 : i<=senc : j=NextEntry(j,depth),i++) {
         if (j.list_together ~= 0 or lt_value) {
             if (j.list_together == mr) {
@@ -553,6 +551,7 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
         }
 
       .Omit_WL;
+
         if (WriteBeforeEntry(j, depth, i, senc) == 1) jump Omit_FL;
         if (c_style & NOARTICLE_BIT)  print (name) j;
         else {
@@ -561,17 +560,16 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
         }
         if (c_style & ID_BIT)         print " (", j, ")";
         WriteAfterEntry(j, depth, stack_pointer);
+
       .Omit_EL;
 
         if (c_style & ENGLISH_BIT) {
-            if (i == senc-1) {
-              !QueueBinOutput("na_msg_and");
-              print (SerialComma) senc, (string) AND__TX;
-            }
+            if (i == senc-1) print (SerialComma) senc, (string) AND__TX;
             if (i < senc-1) print (string) COMMA__TX;
         }
 
   .Omit_FL;
+
     }
 ]; ! end of WriteListR
 
@@ -604,10 +602,9 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
             if (c_style & NEWLINE_BIT) ""; else rtrue;
 
         combo = 0;
-        !FIXME don't print parenthetical close/open for specialSeal items.
         if (o has light && location hasnt light) combo=combo+1;
-        if (o has container && o hasnt open && ~~(o provides specialSeal))     combo=combo+2;
-        if ((o has container && (o has open || o has transparent) && ~~(o provides specialSeal))) {
+        if (o has container && o hasnt open)     combo=combo+2;
+        if ((o has container && (o has open || o has transparent))) {
             objectloop(i in o) {
                 if (i hasnt concealed && i hasnt scenery) {
                     j = true; break;
@@ -615,9 +612,7 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
             }
             if (~~j) combo=combo+4;
         }
-        if (combo) {
-          L__M(##ListMiscellany, combo, o);
-        }
+        if (combo) L__M(##ListMiscellany, combo, o);
     }   ! end of PARTINV_BIT processing
 
     if (c_style & FULLINV_BIT) {
@@ -632,8 +627,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 
         if (o has container)
             if (o has openable) {
-              !FIXME don't print open/close parenthetical
-              if (~~(o provides specialSeal)) {
                 if (parenth_flag) print (string) AND__TX;
                 else              L__M(##ListMiscellany, 11, o);
                 if (o has open)
@@ -643,7 +636,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
                     if (o has lockable && o has locked) L__M(##ListMiscellany, 15, o);
                     else                                L__M(##ListMiscellany, 14, o);
                 parenth_flag = true;
-              }
             }
             else
                 if (child(o)==0 && o has transparent)
@@ -1220,13 +1212,11 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 [ QuitSub;
     L__M(##Quit, 2);
     if (YesOrNo()) quit;
-    ClearNarration();
 ];
 
 [ RestartSub;
     L__M(##Restart,1);
     if (YesOrNo()) { @restart; L__M(##Restart, 2); }
-    ClearNarration();
 ];
 
 [ RestoreSub res fref;
@@ -1528,8 +1518,6 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
 
 [ InvSub x;
     if (child(actor) == 0)   return L__M(##Inv, 1);
-    if (GetFirstListedInventory() == 0) return L__M(##Inv, 1);
-    !FIXME don't count and list items that have custom listing set
     if (inventory_style == 0)
         if (actor == player) return InvTallSub();
         else                 return InvWideSub();
@@ -2461,11 +2449,13 @@ Constant ID_BIT        $2000;       ! Print object id after each entry
             }
         }
     }
+
     if (visibility_ceiling == location) nl_flag = 1;
 
     if (visibility_levels == 0) Locale(thedark);
     else {
         for (i=player,j=visibility_levels : j>0 : j--,i=parent(i)) give i workflag;
+
         for (j=visibility_levels : j>0 : j--) {
             for (i=player,k=0 : k<j : k++) i=parent(i);
             if (i.inside_description) {

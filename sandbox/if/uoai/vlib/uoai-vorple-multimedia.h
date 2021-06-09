@@ -100,7 +100,7 @@ Constant SOUND_LOOP = 1;
     }
     print "vorple.audio.playSound(vorple.options.resource_paths.audio+'";
     PrintStringOrArray(VorpleEscape(file));
-    print "', {looping: ";
+    print ".'+document.audioExt, {looping: ";
     if (loop == SOUND_LOOP) { print "true"; } else { print "false"; }
     print "})";
     if (delay > 0) {

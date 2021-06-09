@@ -61,7 +61,7 @@
     }
 
     function IsPlayingOGGs() {
-      if (document.audioExt == 'mp3') return 1;
+      if (document.audioExt == 'ogg') return 1;
       return 0;
     }
 
@@ -111,8 +111,8 @@
       document.binOutput = new Array();
     }
     function AddBin(str) {
-      //if (document.binOutput.indexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0);
-      //else
+      if (document.binOutput.indexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0);
+      else
       document.binOutput[document.binOutput.length] = vorple.options.resource_paths.audio+str+"."+document.audioExt;
     }
     function FlushTTS() {
@@ -122,10 +122,15 @@
         u.onend = function(event) {
           if (document.ttsPunctuate) {
             PlayNowAsEffect('se_pause');
+            document.flushedTtsPunctuate = true;
             document.ttsPunctuate = false;
+          }
+          else {
+            document.flushedTtsPunctuate = false;
           }
         }
       }
+      document.flushedTtsOutput = document.ttsOutput;
       document.ttsOutput = "";
     }
     function FlushBin() {
@@ -136,6 +141,7 @@
       pl[j] = '';
       pl.pop();
       vorple.audio.setPlaylist(pl,{looping: false, restart: true, shuffled: false});
+      document.flushedBinOutput = document.binOutput;
       document.binOutput = new Array();
     }
     function FlushBinOrTTS() {
@@ -149,12 +155,14 @@
     }
     vorple.debug.off();
 
-    document.firstInteraction = false;
     document.audioNarrationLength = 0;
+    document.currentContinueId = null;
     document.ttsOutput = "";
     document.ttsPunctuate = false;
-    document.currentContinueId = null;
     document.binOutput = new Array();
+    document.flushedTtsOutput = "";
+    document.flushedTtsPunctuate = false;
+    document.flushedBinOutput = new Array();
 
     function narratedOutputFilter( output, meta ) {
         if (document.audioNarrationLength == 0) {

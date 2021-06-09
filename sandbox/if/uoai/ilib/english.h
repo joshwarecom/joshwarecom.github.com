@@ -1002,12 +1002,8 @@ Constant LIBRARYV__TX   = " Library v";
         9:  CSubjectVerb(actor,false,false,"put",0,"puts","put"); " ", (the) x1, " into ", (the) x2, ".";
     }
   Inv: switch (n) {
-        1:
-						!QueueBinOutput("na_msg_youre_carrying_nothing");
-						CSubjectIs  (actor,false); " empty handed.";
-        2:
-						!QueueBinOutput("na_msg_youre_carrying");
-						CSubjectIs  (actor,false); print " carrying";
+        1:  CSubjectIs  (actor,false); " carrying nothing.";
+        2:  CSubjectIs  (actor,false); print " carrying";
         3:  ":";
         4:  ".";
     }
@@ -1092,21 +1088,12 @@ Constant LIBRARYV__TX   = " Library v";
                 print (the) x1, " ", (theActor) actor, " ";
                 Tense("can", "could");
             }
-            else {
-							new_line;
-							!QueueBinOutput("na_msg_you_can_see");
-							CSubjectCan(actor,false);
-						}
+            else { new_line; CSubjectCan(actor,false); }
             if (n == 5) print " also";
             print " see ";
             WriteListFrom(child(x1),
               ENGLISH_BIT+RECURSE_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+WORKFLAG_BIT);
-            if (x1 ~= location) ".";
-						else {
-							!QueueOggOutput("na_msg_here");
-							!" here.";
-							".";
-						}
+            if (x1 ~= location) "."; else " here.";
         7:  CSubjectVerb(actor,true,false,"see",0,"sees", "saw"); " nothing unexpected in that direction.";
     }
   LookUnder: switch (n) {
@@ -1143,9 +1130,7 @@ Constant LIBRARYV__TX   = " Library v";
             print " pitch dark in ";
             Tense("here", "there");
             ".";
-        10:
-						ClearNarration();
-						"I beg your pardon?";
+        10: "I beg your pardon?";
         11: "[You can't ~undo~ what hasn't been done!]";
         12: "[Can't ~undo~ twice in succession. Sorry!]";
         13: "[Previous turn undone.]";
@@ -1193,12 +1178,9 @@ Constant LIBRARYV__TX   = " Library v";
             if (x1 == 1) print "is"; else print "are";
             " available.";
         43: "Nothing to do.";
-        44:
-						print "What do you want to ";
-						"",(address) x1, "?";
-						!print "There ";
-            !Tense("is", "was");
-            !" nothing to ", (address) x1, ".";
+        44: print "There ";
+            Tense("is", "was");
+            " nothing to ", (address) x1, ".";
         45: print "Who do you mean, ";
         46: print "Which do you mean, ";
         47: "Sorry, you can only have one item here. Which exactly?";
@@ -1325,16 +1307,8 @@ Constant LIBRARYV__TX   = " Library v";
         8:  CSubjectVerb(actor,false,false,"put",0,"puts","put"); " ", (the) x1, " on ", (the) x2, ".";
     }
   Quit: switch (n) {
-        1:
-						ClearNarration();
-						VorpleExecuteJavaScriptCommand("AddTTS('Please answer yes or no.');");
-						System.FlushBinOrTTSIfNarrationEnabled();
-						System.MsgYesOrNo();
-        2:
-						ClearNarration();
-    				VorpleExecuteJavaScriptCommand("AddTTS('Are you sure you want to quit?');");
-						System.FlushBinOrTTSIfNarrationEnabled();
-						print "Are you sure you want to quit? ";
+        1:  print "Please answer yes or no.";
+        2:  print "Are you sure you want to quit? ";
     }
   Remove: switch (n) {
         1:  CSubjectIs  (x1,true); " unfortunately closed.";
@@ -1343,11 +1317,7 @@ Constant LIBRARYV__TX   = " Library v";
         3:  "Removed.";
     }
   Restart: switch (n) {
-        1:
-						ClearNarration();
-						VorpleExecuteJavaScriptCommand("AddTTS('Are you sure you want to restart?');");
-						System.FlushBinOrTTSIfNarrationEnabled();
-						print "Are you sure you want to restart? ";
+        1:  print "Are you sure you want to restart? ";
         2:  "Failed.";
     }
   Restore: switch (n) {

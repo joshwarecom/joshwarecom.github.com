@@ -1,7 +1,7 @@
 cmd: "E:\\tools\\inform\\inform6.exe"
 name: "E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\uoai.inf"
 args:
-  - +include_path=E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\ilib\\,E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\vlib\\
+  - +include_path=E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\ilib\\,E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\vlib\\,E:\\git\\joshwarecom.github.com\\sandbox\\if\\uoai\\
   - +language_name=uoai-english
   - $MAX_STATIC_DATA=360000
   - -s
