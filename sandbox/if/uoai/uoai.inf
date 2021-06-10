@@ -1,29 +1,10 @@
-Constant Story "The Uninvited Opera of Augustus Interruptus";
+Constant Story "The Uninvited Epic of Augustus Interruptus";
 Constant Headline "^Written and directed by Joshua Wilson^";
 Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
 Release 1;
 
 Attribute custom_listing;
 !Global TEST_MODE = true;
-
-!-----------------------------------------------------------------------------
-!
-! This file is a test suite for Inform Markup.  For more information on
-! Inform Markup, see the header commentary in the file Markup.h.
-!
-! Here's a suitable PIC1 file for image tests:
-!
-! begin 664 PIC1
-! MB5!.1PT*&@H````-24A$4@```"`````@`@,````.%))G````#%!,5$4```#.
-! MSJ/DYOS__]UOK-:X````H$E$051XG'7/L0K",!0%T`NA%+(X.6?O/TBEHXLN
-! MG?V4ULG?2+:0KW!S5>N'9.C8<LTK%:KBFPZ\R\T+PCQ8PO^@U7]7I_<JKR;8
-! MPCQLD9!MRYA5`=X\F_YX"[`<S9U#`4?NKQPG=&9&+&?TC<"2`R7L&T$O/8+4
-! M$W(`*C6'EBFB$UP$-O*H79$7@2/4*#B#@]HMPWY=UX?IYA;07W__Q`NHM)Z\
-! 0,;6D%`````!)14Y$KD)@@@``
-! `
-! end
-!
-!-----------------------------------------------------------------------------
 
 Constant MAX_CARRIED = 2;
 Include "vorple.h";
@@ -557,7 +538,7 @@ Object System
 ];
 
 [ InitialQuery tmp;
-  print "^It's a good thing that foul play is your forte.  Otherwise your twilight mission to ignite revolution may not end well - especially if that mediocre musician won't pipe down or stay down!^^";
+  print "^Your twilight mission to ignite revolution may not end well - especially if that mediocre musician won't pipe down or stay down! Good thing foul play is your forte...^^";
 
   VorpleStyle(STYLE_EMPHASIS);
   print (markup) "<U>DIRECTOR'S NOTE:^This game supports clickable command words highlighted in this ";
