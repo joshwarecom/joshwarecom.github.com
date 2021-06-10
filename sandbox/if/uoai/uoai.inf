@@ -146,6 +146,10 @@ Include "vorple-screen-effects.h";
         LINKID_OWTOWER: newcmd = "examine outer watch tower";
         LINKID_TREES: newcmd = "examine trees";
         LINKID_SOUTH: newcmd = "go south";
+        LINKID_INVENTORY: newcmd = "inventory";
+        LINKID_PATH: newcmd = "examine path";
+        LINKID_CHILL: newcmd = "examine chill";
+        LINKID_LUTE: newcmd = "examine lute";
 
         default: newcmd = 0;
       }
@@ -187,10 +191,8 @@ Extend 'remove' first
   PlaceInScope(body);
   PlaceInScope(back);
   PlaceInScope(narrator);
-  if (player in clearing) {
-    PlaceInScope(distant_tower);
-    PlaceInScope(distant_watchman);
-  }
+  PlaceInScope(supplies);
+  PlaceInScope(chill);
 ];
 
 [GetFirstListedInventory o;
@@ -358,6 +360,10 @@ Constant LINKID_WATCHMAN 28;
 Constant LINKID_OWTOWER 29;
 Constant LINKID_TREES 30;
 Constant LINKID_SOUTH 31;
+Constant LINKID_INVENTORY 32;
+Constant LINKID_PATH 33;
+Constant LINKID_CHILL 34;
+Constant LINKID_LUTE 35;
 
 Object System
   with
@@ -914,6 +920,36 @@ Object clearing "Shadowy Clearing..."
       ],
     has scenery;
 
+  Object -> path "path"
+    with
+      name 'path',
+      short_name [;
+        System.InlineLinkText("examine path", "path", LINKID_PATH);
+        return true;
+      ],
+      description [;
+        print "The only ";
+        self.short_name();
+        print " through the dense ";
+        trees.short_name();
+        print " runs ";
+        System.InlineLinkText("go south","south",LINKID_SOUTH);
+        if (parent(augustus) == parent(path)) {
+          if (augustus hasnt general) {
+            print ", but ";
+            augustus.short_name();
+            print " is in the way";
+          }
+          else {
+            print ", and fortunately ";
+            augustus.short_name();
+            print " is no longer in the way";
+          }
+        }
+        ".";
+      ],
+      has scenery;
+
   Object -> distant_tower "outer watch tower"
     with
       name 'outer' 'watch' 'tower',
@@ -955,7 +991,32 @@ Object clearing "Shadowy Clearing..."
       initial [;
         QueueBinOutput("na_desc_augustus_1");
         self.short_name();
-        " is here attentively playing a lute and obliviously blocking your path.";
+        print " is here attentively playing a lute and obliviously blocking your ";
+        path.short_name();
+        ".";
+      ],
+  has proper animate;
+
+  Object -> lute "lute"
+    with
+      short_name [;
+        System.InlineLinkText("examine lute", "lute", LINKID_LUTE);
+        return true;
+      ],
+      name 'lute',
+      description [;
+        print "It's a ";
+        self.short_name();
+        ".";
+      ],
+      initial [;
+        QueueBinOutput("na_desc_augustus_1");
+        self.short_name();
+        print " is here attentively playing a ";
+        lute.short_name();
+        print " and obliviously blocking your ";
+        path.short_name();
+        ".";
       ],
   has proper animate;
 
@@ -968,11 +1029,15 @@ Object clearing "Shadowy Clearing..."
              QueueBinOutput("na_convenience_1");
              print "You draw your ";
              cloak.short_name();
-             print " closed against the chill.  You adjust your ";
+             print " close against the ";
+             chill.short_name();
+             print ".  You adjust your ";
              harness.short_name();
              print " and your ";
              satchel.short_name();
-             print " of supplies.  Time to topple a tyrant.";
+             print " of ";
+             supplies.short_name();
+             print ".  Time to topple a tyrant.";
              self.state = 0;
         }
       ],
@@ -1259,7 +1324,51 @@ Object narrator "narrator"
     before [;
       QueueBinOutput("na_msg_narrator_interaction");
       "Don't be silly - you can't interact with me directly.";
-    ];
+    ],
+  has scenery;
+
+Object chill "chill"
+  with
+    name 'chill',
+    description [;
+      print "It's ";
+      System.InlineLinkText("examine chill", "chilly", LINKID_CHILL);
+      print ".";
+    ],
+    before [;
+      if (action == ##Examine) {
+          return false;
+      }
+      else {
+        "Don't let the cold distract you.  Focus on the task at hand.";
+      }
+    ],
+    short_name [;
+      System.InlineLinkText("examine chill", "chill", LINKID_CHILL);
+      return true;
+    ],
+  has scenery;
+
+Object supplies "supplies"
+  with
+    name 'supplies' 'supply',
+    before [;
+      if (action == ##Examine) {
+          <<UOAIInv>>;
+      }
+      else {
+        print "To interact with a specific supply item, refer to it by name.  The ";
+        System.InlineLinkText("inventory", "Inventory", LINKID_INVENTORY);
+        print " command will list all of your current ";
+        self.short_name();
+        ".";
+      }
+    ],
+    short_name [;
+      System.InlineLinkText("inventory", "supplies", LINKID_INVENTORY);
+      return true;
+    ],
+  has scenery;
 
 Object room "Cell"
   with
