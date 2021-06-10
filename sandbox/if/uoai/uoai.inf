@@ -987,17 +987,19 @@ Object clearing "Shadowy Clearing..."
         return true;
       ],
       name 'augustus',
-      description "What does he look like?",
+      description "A second rate songsmith in full dress.",
       initial [;
         QueueBinOutput("na_desc_augustus_1");
         self.short_name();
-        print " is here attentively playing a lute and obliviously blocking your ";
+        print " is here attentively playing a ";
+        lute.short_name();
+        print " and obliviously blocking your ";
         path.short_name();
         ".";
       ],
-  has proper animate;
+  has transparent proper animate;
 
-  Object -> lute "lute"
+  Object -> -> lute "lute"
     with
       short_name [;
         System.InlineLinkText("examine lute", "lute", LINKID_LUTE);
@@ -1008,17 +1010,7 @@ Object clearing "Shadowy Clearing..."
         print "It's a ";
         self.short_name();
         ".";
-      ],
-      initial [;
-        QueueBinOutput("na_desc_augustus_1");
-        self.short_name();
-        print " is here attentively playing a ";
-        lute.short_name();
-        print " and obliviously blocking your ";
-        path.short_name();
-        ".";
-      ],
-  has proper animate;
+      ];
 
   Object -> convenience
     with
