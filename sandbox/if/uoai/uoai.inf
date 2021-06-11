@@ -37,12 +37,10 @@ Include "vorple-screen-effects.h";
   VorpleStopAudio();
   System.SyncBrowserAudioExtension();
   QueueBinOutput("na_msg_restoresuccessful");
-  QueueBinOutput("se_pause");
   print "Restore successful!^";
   System.FlushBinOrTTSIfNarrationEnabled();
-  System.Pause();
-  ClearNarration();
-  VorpleStopAudio();
+  System.RestartWeatherLoop();
+  System.RestartMusicLoop();
   System.previousExaminedItem = 0;
   System.previouslyLooked = 0;
 ];
@@ -120,9 +118,6 @@ Include "vorple-screen-effects.h";
     ClearNarration();
   }
   else {
-    if (~~VorpleIsASoundEffectPlaying()) {
-      System.RestartBackgroundLoop();
-    }
     System.FlushBinOrTTSIfNarrationEnabled();
   }
   if (parent(convenience) == parent(player) && convenience.state == 0) {
@@ -462,7 +457,9 @@ Object System
     audioEnabled 0,
     audioExt AUDIOEXT_NULL,
     codeNameLinkId 0,
-    currentBackgroundLoop 0,
+    currentWeatherLoop 0,
+    currentMusicLoop 0,
+    currentSingleEffect 0,
     currentCmdSupportsPlayback 1,
     previouslyLooked 0,
     previousExaminedItem 0,
@@ -472,9 +469,6 @@ Object System
     waitingForEnter 0,
     disableHyperlinks 0,
     clickedContextSensitiveLink false,
-    SetCurrentBackgroundLoop [ f;
-      self.currentBackgroundLoop = f;
-    ],
     FlushBinOrTTSIfNarrationEnabled [;
       if (self.currentCmdSupportsPlayback ~= 1) {
         VorpleExecuteJavaScriptCommand("CancelBin();");
@@ -483,14 +477,35 @@ Object System
         VorpleExecuteJavaScriptCommand("FlushBinOrTTS();");
       }
     ],
-    RestartBackgroundLoop [ f delay;
-      VorpleStopSoundEffects();
+    SetCurrentWeatherLoop [ f;
+      self.currentWeatherLoop = f;
+    ],
+    RestartWeatherLoop [ f;
       if (self.audioEnabled) {
-        if (f == 0 && currentBackgroundLoop ~= 0)
-          f = self.currentBackgroundLoop;
+        if (f == 0 && currentWeatherLoop ~= 0)
+          f = self.currentWeatherLoop;
         if (f ~= 0)
-          VorplePlaySoundEffect(f,true,delay);
+          VorpleExecuteJavaScriptCommand(BuildCommand("restartWeatherLoop('",f,"');"));
       }
+    ],
+    ClearWeatherLoop [ f;
+      self.currentWeatherLoop = 0;
+      VorpleExecuteJavaScriptCommand("clearWeatherLoop();");
+    ],
+    SetCurrentMusicLoop [ f;
+      self.currentMusicLoop = f;
+    ],
+    RestartMusicLoop [ f;
+      if (self.audioEnabled) {
+        if (f == 0 && currentMusicLoop ~= 0)
+          f = self.currentMusicLoop;
+        if (f ~= 0)
+          VorpleExecuteJavaScriptCommand(BuildCommand("restartMusicLoop('",f,"');"));
+      }
+    ],
+    ClearMusicLoop [ f;
+      self.currentMusicLoop = 0;
+      VorpleExecuteJavaScriptCommand("clearMusicLoop();");
     ],
     SyncBrowserAudioExtension [;
       switch (self.audioExt) {
@@ -789,7 +804,10 @@ Class HyperLinkedContextQueues
   System.audioEnabled = 1;
   System.SyncSystemAudioExtension();
   System.codeNameLinkId = LINKID_HERO;
-  System.SetCurrentBackgroundLoop("music_loop_1");
+  System.SetCurrentMusicLoop("music_loop_1");
+  System.RestartMusicLoop();
+  System.SetCurrentWeatherLoop("rain-03-short");
+  System.RestartWeatherLoop();
   ClearNarration();
 ];
 
@@ -857,7 +875,11 @@ Class HyperLinkedContextQueues
       System.audioEnabled = YesOrNo();
       if (System.audioEnabled) {
         ClearNarration();
+        QueueBinOutput("3_0_silence");
         QueueBinOutput("na_intro_1");
+        System.SetCurrentWeatherLoop("se_rain30");
+        System.RestartWeatherLoop();
+        VorplePlaySoundEffect("se_thunder_1");
         print "^";
         print "^NARRATOR:^";
         print "Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
@@ -964,7 +986,6 @@ Class HyperLinkedContextQueues
   ClearNarration();
   print "^^";
   System.ClearNonIpadScreen();
-  VorpleStopAudio();
 
   !FIXME Improve concision and humor
   if (isVorpleSupported()) {
@@ -1028,8 +1049,8 @@ Class HyperLinkedContextQueues
         System.FlushBinOrTTSIfNarrationEnabled();
       }
     }
-    System.SetCurrentBackgroundLoop("music_loop_1");
-    System.RestartBackgroundLoop(0,250);
+    System.SetCurrentMusicLoop("music_loop_1");
+    System.RestartMusicLoop();
     ClearNarration();
     QueueBinOutput("na_prologue_1_ahyes");
     print "^";
@@ -1047,44 +1068,40 @@ Class HyperLinkedContextQueues
       }
       QueueBinOutput("na_prologue_1_hero_fate");
       QueueBinOutput("na_prologue_1_wait");
-      QueueBinOutput("se_pause");
       print "Destined to save your nation and change the world! Wait, I'm sorry.  Do you hear that? It sounds like someone is playing a lute - and poorly, I might add...^";
-      System.FlushBinOrTTSIfNarrationEnabled();
     }
     else if (CompareStrings(buffer,CODENAME_HERETIC)) {
       System.codeNameLinkId = LINKID_HERETIC;
       QueueBinOutput("na_prologue_1_heretic");
       QueueBinOutput("na_prologue_1_heretic_fate");
       QueueBinOutput("na_prologue_1_wait");
-      QueueBinOutput("se_pause");
       print "Heretic! Ever ready to trample the trappings of fear and falsehood beneath your two bare feet.  Wait, I'm sorry.  Do you hear that? It sounds like someone is playing a lute - and poorly, I might add...^";
-      System.FlushBinOrTTSIfNarrationEnabled();
     }
     else if (CompareStrings(buffer,CODENAME_HELLION)) {
       System.codeNameLinkId = LINKID_HELLION;
       QueueBinOutput("na_prologue_1_hellion");
       QueueBinOutput("na_prologue_1_hellion_fate");
       QueueBinOutput("na_prologue_1_wait");
-      QueueBinOutput("se_pause");
       print "Hellion! Relentlessly spitting in the face of fickle fate! Wait, I'm sorry.  Do you hear that? It sounds like someone is playing a lute - and poorly, I might add...^";
-      System.FlushBinOrTTSIfNarrationEnabled();
     }
     else if (CompareStrings(buffer,CODENAME_HONEYBADGER)) {
       System.codeNameLinkId = LINKID_HONEYBADGER;
       QueueBinOutput("na_prologue_1_honeybadger");
       QueueBinOutput("na_prologue_1_honeybadger_fate");
       QueueBinOutput("na_prologue_1_wait");
-      QueueBinOutput("se_pause");
       print "Honeybadger! The soul of a wolverine in the body of a...wolverinish...badger body! Wait, I'm sorry.  Do you hear that? It sounds like someone is playing a lute - and poorly, I might add...^";
-      System.FlushBinOrTTSIfNarrationEnabled();
     }
   }
+  QueueBinOutput("na_prologue_1_conclusion");
+  QueueBinOutput("se_pause");
+  !print "^";
+  print "...well, that's something not seen every day.  A songsmith in full dress - flamboyant tunic, feathered cap and all!^";
+
+  System.FlushBinOrTTSIfNarrationEnabled();
   System.promptIsClickable = 1;
   System.Pause();
   ClearNarration();
-  QueueBinOutput("na_prologue_1_conclusion");
-  print "^";
-  print "^Well, that's something not seen every day.  A songsmith in full dress - flamboyant tunic, feathered cap and all!^";
+  System.ClearNonIpadScreen();
   QueueBinOutput("as_intro_v1");
   bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
   print "as_intro_v2_";
@@ -1282,7 +1299,7 @@ Object clearing "Shadowy Clearing..."
              satchel.short_name();
              print " of ";
              supplies.short_name();
-             print ".  Time to topple a tyrant.";
+             print ".  Time to topple a tyrant!";
              self.state = 0;
         }
       ],

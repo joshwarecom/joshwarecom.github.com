@@ -93,8 +93,8 @@
       pl.pop();
       vorple.audio.setPlaylist(pl,{looping: false, restart: true, shuffled: false});
     }
-    function PlayNowAsEffect(str) {
-      vorple.audio.playSound(vorple.options.resource_paths.audio+str+"."+document.audioExt, {looping: false});
+    function PlayNowAsEffect(str, loop) {
+      return vorple.audio.playSound(vorple.options.resource_paths.audio+str+"."+document.audioExt, {looping: loop});
     }
     function CancelTTS(str) {
       window.speechSynthesis.cancel();
@@ -126,7 +126,7 @@
       if (document.ttsPunctuate) {
         u.onend = function(event) {
           if (document.ttsPunctuate) {
-            PlayNowAsEffect('se_pause');
+            PlayNowAsEffect('se_pause',false);
             document.flushedTtsPunctuate = true;
             document.ttsPunctuate = false;
           }
@@ -170,6 +170,30 @@
     document.flushedBinOutput = new Array();
     document.lineInputPrefixElement = null;
     document.menuCommand = 'menu';
+
+    document.weatherLoopAudioElement = null;
+    document.musicLoopAudioElement = null;
+    document.singleEffectAudioElement = null;
+
+    function clearWeatherLoop() {
+      if (document.weatherLoopAudioElement) {
+        vorple.audio.fadeOut(document.weatherLoopAudioElement,0)
+      }
+    }
+    function restartWeatherLoop(f) {
+      clearWeatherLoop();
+      document.weatherLoopAudioElement = PlayNowAsEffect(f,true);
+    }
+
+    function clearMusicLoop() {
+      if (document.musicLoopAudioElement) {
+        vorple.audio.fadeOut(document.musicLoopAudioElement,0)
+      }
+    }
+    function restartMusicLoop(f) {
+      clearMusicLoop();
+      document.musicLoopAudioElement = PlayNowAsEffect(f,true);
+    }
 
     function narratedOutputFilter( output, meta ) {
         if (document.audioNarrationLength == 0) {
