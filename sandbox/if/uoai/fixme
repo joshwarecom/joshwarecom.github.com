@@ -1,6 +1,7 @@
 MacOS Safari:
 - VorplePlaySoundEffect doesn't play any audio. (this appears resolved on later Safari version)
 - "You can't see inside since" does not complete the sentence.
+- Same for "You open"
 
 iOS Safari (iPad):
 VorplePlaySoundEffect doesn't play any audio.
