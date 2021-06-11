@@ -469,7 +469,7 @@ Object System
     currentCommandObject 0,
     promptIsClickable 0,
     waitingForEnter 0,
-    disableHyperlinks 1,
+    disableHyperlinks 0,
     clickedContextSensitiveLink false,
     SetCurrentBackgroundLoop [ f;
       self.currentBackgroundLoop = f;
