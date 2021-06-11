@@ -1338,13 +1338,7 @@ Object  InformParser "(Inform Parser)"
     #Endif; ! V5
 
     KeyboardPrimitive(a_buffer, a_table);
-		!FIXME implement context sensitive glx hyper links
-		if (System.clickedContextSensitiveLink) {
-			CopyStringTo(longstr,a_buffer);
-			System.clickedContextSensitiveLink = false;
-			Tokenise__(a_buffer,a_table);
-		}
-		nw = NumberWords(a_table);
+    nw = NumberWords(a_table);
 
     ! If the line was blank, get a fresh line
     if (nw == 0) {
@@ -1495,7 +1489,6 @@ Object  InformParser "(Inform Parser)"
 ]; ! end of Keyboard
 
 [ PerformUndo i;
-		ClearNarration();
     if (turns == START_MOVE) { L__M(##Miscellany, 11); return 0; }
     if (undo_flag == 0) {      L__M(##Miscellany, 6); return 0; }
     if (undo_flag == 1) {      L__M(##Miscellany, 7); return 0; }
@@ -3178,9 +3171,7 @@ Constant UNLIT_BIT  =  32;
         number_matched = 0;  ! ask question for 'take three'
     if (number_matched == 1) i = match_list-->0;
     if (number_matched > 1) {
-				!FIXME disable noun guessing
-        !i = Adjudicate(context);
-				i = 0;
+        i = Adjudicate(context);
         if (i == -1) rfalse;
         if (i == 1) rtrue;       !  Adjudicate has made a multiple
                                  !  object, and we pass it on
@@ -3500,6 +3491,7 @@ Constant SCORE__DIVISOR     = 20;
         else print "definite object^";
     }
     #Endif; ! DEBUG
+
     j = number_matched-1; good_ones = 0; last = match_list-->0;
     for (i=0 : i<=j : i++) {
         n = match_list-->i;
@@ -5383,9 +5375,6 @@ Object  InformLibrary "(Inform Library)"
     if (lightflag == 0) location = thedark;
 
     if (j ~= 2) Banner();
-
-		InteractiveIntroduction();
-
 #Ifndef NOINITIAL_LOOK;
     <Look>;
 #Endif;
@@ -6496,10 +6485,6 @@ Object  InformLibrary "(Inform Library)"
 #Ifndef DrawStatusLine;
 [ DrawStatusLine width posa posb posc;
     #Ifdef TARGET_GLULX;
-		!JW this removes the status line from glulx.
-		if (true) {
-			return;
-		}
     ! If we have no status window, we must not try to redraw it.
     if (gg_statuswin == 0)
         return;

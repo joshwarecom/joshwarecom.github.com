@@ -572,6 +572,8 @@
                 document.body.classList.remove("safarifix")
             })
         }
+        //FIXME @JW save lineinput object for later use
+		document.lineInputPrefixElement = document.getElementById("lineinput-prefix");
         y.parentNode.removeChild(y)
     }
 

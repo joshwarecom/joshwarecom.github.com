@@ -168,6 +168,8 @@
     document.flushedTtsOutput = "";
     document.flushedTtsPunctuate = false;
     document.flushedBinOutput = new Array();
+    document.lineInputPrefixElement = null;
+    document.menuCommand = 'menu';
 
     function narratedOutputFilter( output, meta ) {
         if (document.audioNarrationLength == 0) {
@@ -195,6 +197,10 @@
     }
     vorple.output.addOutputFilter( narratedOutputFilter );
     vorple.init();
+
+    function jest() {
+      alert(document.lineInputPrefixElement.innerHTML);
+    }
 </script>
 </body>
 </html>

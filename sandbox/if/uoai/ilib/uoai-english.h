@@ -1103,6 +1103,7 @@ Constant LIBRARYV__TX   = " Library v";
             }
             else {
 							new_line;
+							System.BlankVorpleLineIfNoHyperlinks();
 							QueueBinOutput("na_msg_you_can_see");
 							CSubjectCan(actor,false);
 						}
@@ -1292,7 +1293,17 @@ Constant LIBRARYV__TX   = " Library v";
   Pray:     print "Nothing practical ";
             Tense("results", "resulted");
             " from ", (Possessive) actor, " prayer.";
-  Prompt:   print "^>";
+  Prompt:
+					!FIXME prompt is changed here @JW
+	  			print "^";
+					if (~~System.waitingForEnter) {
+						if (System.promptIsClickable) {
+							System.ClickablePrompt();
+						}
+						else {
+							print ">";
+						}
+					}
   Pronouns: switch (n) {
         1:  print "At the moment, ";
         2:  print "means ";

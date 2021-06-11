@@ -469,7 +469,6 @@ Object System
     currentCommandObject 0,
     promptIsClickable 0,
     waitingForEnter 0,
-    disableHyperlinks 1,
     clickedContextSensitiveLink false,
     SetCurrentBackgroundLoop [ f;
       self.currentBackgroundLoop = f;
@@ -550,10 +549,10 @@ Object System
       print ".";
     ],
     InlineLink [ text id;
-      if (isVorpleSupported() && ~~self.disableHyperlinks) {
+      if (isVorpleSupported()) {
         VorpleLinkCommand(text);
       }
-      else if (glk_gestalt(gestalt_Hyperlinks, 0) && id > 0 && ~~self.disableHyperlinks) {
+      else if (glk_gestalt(gestalt_Hyperlinks, 0) && id > 0) {
         glk_set_hyperlink(id);
         PrintStringOrArray(text);
         glk_set_hyperlink(0);
@@ -563,10 +562,10 @@ Object System
       }
     ],
     InlineLinkText [ cmd text id;
-      if (isVorpleSupported() && ~~self.disableHyperlinks) {
+      if (isVorpleSupported()) {
         VorpleLinkCommandText(cmd, text);
       }
-      else if (glk_gestalt(gestalt_Hyperlinks, 0) && id > 0 && ~~self.disableHyperlinks) {
+      else if (glk_gestalt(gestalt_Hyperlinks, 0) && id > 0) {
         glk_set_hyperlink(id);
         PrintStringOrArray(text);
         glk_set_hyperlink(0);
@@ -586,11 +585,11 @@ Object System
       self.currentCommandObject.short_name();
       bp_output_stream(-3);
 
-      if (isVorpleSupported() && ~~self.disableHyperlinks) {
+      if (isVorpleSupported()) {
         self.InlineLinkText(VorpleEscape(hugehugestr), shortstr);
         print " ";
       }
-      else if (glk_gestalt(gestalt_Hyperlinks, 0) && id > 0 && ~~self.disableHyperlinks) {
+      else if (glk_gestalt(gestalt_Hyperlinks, 0) && id > 0) {
         glk_set_hyperlink(id);
         print (address)self.currentCommandWord;
         glk_set_hyperlink(0);
@@ -602,16 +601,14 @@ Object System
       }
     ],
     ClickablePrompt [ id classes;
-      if (isVorpleSupported() && ~~self.disableHyperlinks) {
+      if (isVorpleSupported()) {
         print ">";
         VorpleExecuteJavaScriptCommand("document.lineInputPrefixElement.innerHTML = '<a onclick=~vorple.prompt.queueCommand(document.menuCommand);~>&gt;</a>';");
       }
       else {
-        if (~~self.disableHyperlinks)
-          glk_set_hyperlink(LINKID_MENU);
+        glk_set_hyperlink(LINKID_MENU);
         print ">";
-        if (~~self.disableHyperlinks)
-          glk_set_hyperlink(0);
+        glk_set_hyperlink(0);
       }
     ],
     WaitForEnter [;
@@ -633,13 +630,6 @@ Object System
       }
       self.WaitForEnter();
       VorpleExecuteJavaScriptCommand("try { document.getElementById(document.currentContinueId).style.display=~none~ } catch(e) {};");
-    ],
-    BlankVorpleLineIfNoHyperlinks [;
-      if (isVorpleSupported()) {
-        if (self.disableHyperlinks) {
-          print "^";
-        }
-      }
     ],
     GetCodename [ raw;
       switch (self.codeNameLinkId) {
@@ -1239,7 +1229,6 @@ Object clearing "Shadowy Clearing..."
       name 'augustus',
       description "A second rate songsmith in full dress.",
       initial [;
-        System.BlankVorpleLineIfNoHyperlinks();
         QueueBinOutput("na_desc_augustus_1");
         self.short_name();
         print " is here attentively playing a ";
@@ -1269,7 +1258,6 @@ Object clearing "Shadowy Clearing..."
       output [;
         switch (self.state) {
           1:
-             System.BlankVorpleLineIfNoHyperlinks();
              QueueBinOutput("na_convenience_1");
              print "You draw your ";
              cloak.short_name();

@@ -31,7 +31,6 @@ Constant NOT_SAME_WINDOW = 0;
 	VorpleLinkWebsiteText(url, url, sameWindowOrNot, "");
 ];
 
-
 !=======================================
 ! Link to a parser command
 
