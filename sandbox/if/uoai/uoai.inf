@@ -91,6 +91,7 @@ Include "vorple-screen-effects.h";
   switch (action) {
     ##Look:
     ##Examine:
+    ##Inspect:
     ##Search:
     ##UOAIInv:
     ##Go:
