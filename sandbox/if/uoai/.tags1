@@ -4,7 +4,305 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-Story	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant Story "The Uninvited Opera of Augustus Interruptus";$/;"	variable	line:1
+Story	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant Story "The Uninvited Epic of Augustus Interruptus";$/;"	variable	line:1
 Headline	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant Headline "^Written and directed by Joshua Wilson^";$/;"	variable	line:2
 string	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array UUID_ARRAY static string "UUID:\/\/b72c87a5-f92e-4f07-b3e7-ba4b5243611a\/\/";$/;"	variable	line:3	file:
 custom_listing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Attribute custom_listing;$/;"	variable	line:6
+DEATH_MENTION_UNDO	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Global DEATH_MENTION_UNDO;$/;"	variable	line:7
+TEST_MODE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Global TEST_MODE = true;$/;"	variable	line:8
+MAX_CARRIED	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant MAX_CARRIED = 2;$/;"	variable	line:10
+WORD_NEXTTOHIGHBIT	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant WORD_NEXTTOHIGHBIT = $40000000;$/;"	variable	line:64
+or	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^!FIXME undo can cause currentCmdSupportsPlayback field to be 0 or 1, resulting in TTS playback of room name.$/;"	variable	line:95
+AUDIOEXT_OGG	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant AUDIOEXT_OGG 0;$/;"	variable	line:474
+AUDIOEXT_MP3	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant AUDIOEXT_MP3 1;$/;"	variable	line:475
+AUDIOEXT_NULL	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant AUDIOEXT_NULL 2;$/;"	variable	line:476
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_QUIT buffer "quit";$/;"	variable	line:478
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_NEW buffer "new";$/;"	variable	line:479
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_RESTART buffer "restart";$/;"	variable	line:480
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_RESTORE buffer "restore";$/;"	variable	line:481
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_COLOR buffer "color";$/;"	variable	line:482
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_1 buffer "1";$/;"	variable	line:483
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_2 buffer "2";$/;"	variable	line:484
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_3 buffer "3";$/;"	variable	line:485
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_4 buffer "4";$/;"	variable	line:486
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_5 buffer "5";$/;"	variable	line:487
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_REPEAT buffer "0";$/;"	variable	line:488
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_ONE buffer "One";$/;"	variable	line:489
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_TWO buffer "Two";$/;"	variable	line:490
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_THREE buffer "Three";$/;"	variable	line:491
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_FOUR buffer "Four";$/;"	variable	line:492
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_FIVE buffer "Five";$/;"	variable	line:493
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array INPUT_ZERO buffer "Zero";$/;"	variable	line:494
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array CODENAME_HERO buffer "hero";$/;"	variable	line:496
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array CODENAME_HEROINE buffer "heroine";$/;"	variable	line:497
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array CODENAME_HERETIC buffer "heretic";$/;"	variable	line:498
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array CODENAME_HELLION buffer "hellion";$/;"	variable	line:499
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array CODENAME_HONEYBADGER buffer "honeybadger";$/;"	variable	line:500
+buffer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Array CODENAME_HACKER buffer "hacker";$/;"	variable	line:501
+LINKID_YES	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_YES 1;$/;"	variable	line:503
+LINKID_NO	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_NO 2;$/;"	variable	line:504
+LINKID_HERO	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HERO 3;$/;"	variable	line:505
+LINKID_HEROINE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HEROINE 4;$/;"	variable	line:506
+LINKID_HERETIC	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HERETIC 5;$/;"	variable	line:507
+LINKID_HELLION	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HELLION 6;$/;"	variable	line:508
+LINKID_HONEYBADGER	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HONEYBADGER 7;$/;"	variable	line:509
+LINKID_CONTINUE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_CONTINUE 8;$/;"	variable	line:510
+LINKID_NEW	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_NEW 9;$/;"	variable	line:511
+LINKID_RESTORE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_RESTORE 10;$/;"	variable	line:512
+LINKID_COLOR	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_COLOR 11;$/;"	variable	line:513
+LINKID_HACKER	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HACKER 12;$/;"	variable	line:514
+LINKID_CLOAK	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_CLOAK 13;$/;"	variable	line:515
+LINKID_HARNESS	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HARNESS 14;$/;"	variable	line:516
+LINKID_SATCHEL	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_SATCHEL 15;$/;"	variable	line:517
+LINKID_TRUNCHEON	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_TRUNCHEON 16;$/;"	variable	line:518
+LINKID_KNIFE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_KNIFE 17;$/;"	variable	line:519
+LINKID_HOOD	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HOOD 18;$/;"	variable	line:520
+LINKID_PELLET	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_PELLET 19;$/;"	variable	line:521
+LINKID_FAEFLASK	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_FAEFLASK 20;$/;"	variable	line:522
+LINKID_CHARGE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_CHARGE 21;$/;"	variable	line:523
+LINKID_SHOULDERS	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_SHOULDERS 22;$/;"	variable	line:524
+LINKID_FACE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_FACE 23;$/;"	variable	line:525
+LINKID_BODY	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_BODY 24;$/;"	variable	line:526
+LINKID_BACK	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_BACK 25;$/;"	variable	line:527
+LINKID_CARD	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_CARD 26;$/;"	variable	line:528
+LINKID_AUGUSTUS	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_AUGUSTUS 27;$/;"	variable	line:529
+LINKID_WATCHMAN	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_WATCHMAN 28;$/;"	variable	line:530
+LINKID_OWTOWER	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_OWTOWER 29;$/;"	variable	line:531
+LINKID_TREES	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_TREES 30;$/;"	variable	line:532
+LINKID_SOUTH	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_SOUTH 31;$/;"	variable	line:533
+LINKID_INVENTORY	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_INVENTORY 32;$/;"	variable	line:534
+LINKID_PATH	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_PATH 33;$/;"	variable	line:535
+LINKID_CHILL	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_CHILL 34;$/;"	variable	line:536
+LINKID_LUTE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_LUTE 35;$/;"	variable	line:537
+LINKID_MENU	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_MENU 36;$/;"	variable	line:538
+LINKID_LOOK	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_LOOK 37;$/;"	variable	line:539
+LINKID_REPUTATION	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_REPUTATION 38;$/;"	variable	line:540
+LINKID_SLEEVE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_SLEEVE 39;$/;"	variable	line:541
+LINKID_HANDS	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_HANDS 40;$/;"	variable	line:542
+LINKID_BLOOD	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_BLOOD 41;$/;"	variable	line:543
+LINKID_0	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_0 42;$/;"	variable	line:544
+LINKID_1	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_1 43;$/;"	variable	line:545
+LINKID_2	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_2 44;$/;"	variable	line:546
+LINKID_3	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_3 45;$/;"	variable	line:547
+LINKID_4	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_4 46;$/;"	variable	line:548
+LINKID_5	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant LINKID_5 47;$/;"	variable	line:549
+CSLINKID_MIN	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_MIN 1001;$/;"	variable	line:551
+CSLINKID_MAX	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_MAX 1999;$/;"	variable	line:552
+CSLINKID_INSPECT	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_INSPECT 1001;$/;"	variable	line:553
+CSLINKID_TAKE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_TAKE 1002;$/;"	variable	line:554
+CSLINKID_DROP	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_DROP 1003;$/;"	variable	line:555
+CSLINKID_OPEN	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_OPEN 1004;$/;"	variable	line:556
+CSLINKID_CLOSE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_CLOSE 1005;$/;"	variable	line:557
+CSLINKID_WEAR	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_WEAR 1006;$/;"	variable	line:558
+CSLINKID_REMOVE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_REMOVE 1007;$/;"	variable	line:559
+CSLINKID_EMPTY	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant CSLINKID_EMPTY 1008;$/;"	variable	line:560
+PUGILISTICS_SOLUTION	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant PUGILISTICS_SOLUTION 1;$/;"	variable	line:562
+DRAUGHTISTRY_SOLUTION	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant DRAUGHTISTRY_SOLUTION 2;$/;"	variable	line:563
+BLANDISHMENT_SOLUTION	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant BLANDISHMENT_SOLUTION 3;$/;"	variable	line:564
+SHIRKOLOGY_SOLUTION	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant SHIRKOLOGY_SOLUTION 4;$/;"	variable	line:565
+MARTYRDOM_SOLUTION	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant MARTYRDOM_SOLUTION 5;$/;"	variable	line:566
+FIRST_PUZZLE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant FIRST_PUZZLE 0;$/;"	variable	line:567
+SECOND_PUZZLE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant SECOND_PUZZLE 1;$/;"	variable	line:568
+THIRD_PUZZLE	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^Constant THIRD_PUZZLE 2;$/;"	variable	line:569
+audioEnabled	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    audioEnabled 0,$/;"	variable	line:573
+AUDIOEXT_NULL	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    audioExt AUDIOEXT_NULL,$/;"	variable	line:574
+codeNameLinkId	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    codeNameLinkId 0,$/;"	variable	line:575
+currentWeatherLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    currentWeatherLoop 0,$/;"	variable	line:576
+currentMusicLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    currentMusicLoop 0,$/;"	variable	line:577
+currentSingleEffect	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    currentSingleEffect 0,$/;"	variable	line:578
+currentCmdSupportsPlayback	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    currentCmdSupportsPlayback 1,$/;"	variable	line:579
+previouslyLooked	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    previouslyLooked 0,$/;"	variable	line:580
+previousExaminedItem	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    previousExaminedItem 0,$/;"	variable	line:581
+currentCommandWord	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    currentCommandWord 0,$/;"	variable	line:582
+currentCommandObject	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    currentCommandObject 0,$/;"	variable	line:583
+promptIsClickable	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    promptIsClickable 0,$/;"	variable	line:584
+waitingForEnter	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    waitingForEnter 0,$/;"	variable	line:585
+disableHyperlinks	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    disableHyperlinks 0,$/;"	variable	line:586
+puzzleSolutions	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    puzzleSolutions 0 0 0,$/;"	variable	line:587
+false	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    clickedContextSensitiveLink false,$/;"	variable	line:589
+FlushBinOrTTSIfNarrationEnabled	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    FlushBinOrTTSIfNarrationEnabled [;$/;"	variable	line:590
+SetCurrentWeatherLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    SetCurrentWeatherLoop [ f;$/;"	variable	line:598
+RestartWeatherLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    RestartWeatherLoop [ f;$/;"	variable	line:601
+ClearWeatherLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    ClearWeatherLoop [ f;$/;"	variable	line:609
+SetCurrentMusicLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    SetCurrentMusicLoop [ f;$/;"	variable	line:613
+RestartMusicLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    RestartMusicLoop [ f;$/;"	variable	line:616
+ClearMusicLoop	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    ClearMusicLoop [ f;$/;"	variable	line:624
+SyncBrowserAudioExtension	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    SyncBrowserAudioExtension [;$/;"	variable	line:628
+SyncSystemAudioExtension	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    SyncSystemAudioExtension [ tmp;$/;"	variable	line:638
+StandardPrompt	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    StandardPrompt [;$/;"	variable	line:655
+BlankPrompt	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    BlankPrompt [;$/;"	variable	line:661
+ClearNonIpadScreen	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    ClearNonIpadScreen [ ipad;$/;"	variable	line:667
+MsgYesOrNo	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    MsgYesOrNo [;$/;"	variable	line:679
+InlineLink	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    InlineLink [ text id;$/;"	variable	line:686
+InlineLinkText	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    InlineLinkText [ cmd text id;$/;"	variable	line:699
+InlineContextualCommand	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    InlineContextualCommand [ id;$/;"	variable	line:712
+ClickablePrompt	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    ClickablePrompt [ id classes;$/;"	variable	line:738
+WaitForEnter	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    WaitForEnter [;$/;"	variable	line:751
+Pause	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    Pause [;$/;"	variable	line:759
+BlankVorpleLineIfNoHyperlinks	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    BlankVorpleLineIfNoHyperlinks [;$/;"	variable	line:771
+GetCodename	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    GetCodename [ raw;$/;"	variable	line:778
+GraceNote	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    GraceNote [ channel;$/;"	variable	line:788
+MultipleChoiceQuery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    MultipleChoiceQuery [text r1 r2 r3 r4 r5 loop choice;$/;"	variable	line:796
+GetContextSensitiveLinkID	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    GetContextSensitiveLinkID [cmd;$/;"	variable	line:890
+GetContextSensitiveCommandWord	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    GetContextSensitiveCommandWord [id;$/;"	variable	line:903
+ListCommands	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    ListCommands [ ix it;$/;"	variable	line:916
+basic_commands	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    basic_commands 'inspect' 'take' 'drop';$/;"	variable	line:970	typeref:class:with
+wear_commands	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    wear_commands 'wear' 'remove';$/;"	variable	line:975	typeref:class:with
+open_commands	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    open_commands 'open' 'close';$/;"	variable	line:980	typeref:class:with
+container_commands	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    container_commands 'empty';$/;"	variable	line:985	typeref:class:with
+x	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    x 10,$/;"	variable	line:1330
+y	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    y 9,$/;"	variable	line:1331
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "Safe here for now.",$/;"	variable	line:1332
+clearing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    n_to clearing,$/;"	variable	line:1333
+light	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has light;$/;"	variable	line:1334
+x	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    x 10,$/;"	variable	line:1338
+y	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    y 10,$/;"	variable	line:1339
+tower_base	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    s_to tower_base,$/;"	variable	line:1340
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1341
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description [;$/;"	variable	line:1353
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    before [;$/;"	variable	line:1363
+light	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has light;$/;"	variable	line:1376
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1381
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      description [;$/;"	variable	line:1385
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    has scenery;$/;"	variable	line:1390
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1395
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      description [;$/;"	variable	line:1399
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      has scenery;$/;"	variable	line:1420
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1425
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      description [;$/;"	variable	line:1429
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    has scenery;$/;"	variable	line:1436
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1441
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      description [;$/;"	variable	line:1445
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    has scenery;$/;"	variable	line:1450
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1455
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      name 'augustus',$/;"	variable	line:1459
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      description [;$/;"	variable	line:1460
+RespondToCharge	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      RespondToCharge [;$/;"	variable	line:1468
+QueryAboutCharge	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      QueryAboutCharge [;$/;"	variable	line:1474
+daemon	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      daemon [;$/;"	variable	line:1477
+initial	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      initial [;$/;"	variable	line:1482
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      before [ specified tool o;$/;"	variable	line:1500
+animate	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has transparent proper animate;$/;"	variable	line:1535
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      name 'lute',$/;"	variable	line:1543
+bulky	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      bulky,$/;"	variable	line:1544
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      before [;$/;"	variable	line:1545
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      description [;$/;"	variable	line:1568
+clothing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    has clothing;$/;"	variable	line:1573
+output	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      output [;$/;"	variable	line:1578
+initial	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      initial [;$/;"	variable	line:1597
+HyperLinkedContainer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  class HyperLinkedItem HyperLinkedWearable HyperLinkedContainer,$/;"	variable	line:1603	typeref:class:HyperLinkedWearable
+bulky	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    bulky,$/;"	variable	line:1605	typeref:class:with
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'supple' 'satin' 'lined' 'weapons' 'harness',$/;"	variable	line:1606	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    articles "=na_name_the_harness;The " "=na_name_the_harness;the " "=na_name_a_harness;a ",$/;"	variable	line:1607	typeref:class:
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    before [;$/;"	variable	line:1608	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1617	typeref:class:
+custom_listing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has container worn clothing open custom_listing;$/;"	variable	line:1621	typeref:class:open
+bulky	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      bulky,$/;"	variable	line:1626	typeref:class:with
+weapon	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      weapon,$/;"	variable	line:1627	typeref:class:
+nonlethal	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      nonlethal,$/;"	variable	line:1628	typeref:class:
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      name 'trusty' 'truncheon',$/;"	variable	line:1629	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      articles "=na_name_the_truncheon;The " "=na_name_the_truncheon;the " "=na_name_a_truncheon;a ",$/;"	variable	line:1630	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1631	typeref:class:
+sharp	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      sharp,$/;"	variable	line:1640	typeref:class:with
+weapon	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      weapon,$/;"	variable	line:1641	typeref:class:
+messy	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      messy,$/;"	variable	line:1642	typeref:class:
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      name 'needle' 'pointed' 'knife',$/;"	variable	line:1643	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      articles "=na_name_the_knife;The " "=na_name_the_knife;the " "=na_name_a_knife;a ",$/;"	variable	line:1644	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1645	typeref:class:
+HyperLinkedWearable	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  class HyperLinkedItem HyperLinkedWearable,$/;"	variable	line:1652	typeref:class:HyperLinkedItem
+bulky	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  bulky,$/;"	variable	line:1654	typeref:class:with
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  name 'woven' 'woolen' 'cloak',$/;"	variable	line:1655	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  articles "=na_name_the_cloak;The " "=na_name_the_cloak;the " "=na_name_a_cloak;a ",$/;"	variable	line:1656	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  short_name [;$/;"	variable	line:1657	typeref:class:
+after	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  after [;$/;"	variable	line:1661	typeref:class:
+custom_listing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has transparent worn clothing custom_listing;$/;"	variable	line:1665	typeref:class:clothing
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      name 'hood',$/;"	variable	line:1670	typeref:class:with
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      articles "=na_name_the_hood;The " "=na_name_the_hood;the " "=na_name_a_hood;a ",$/;"	variable	line:1671	typeref:class:
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      description [;$/;"	variable	line:1672	typeref:class:
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      before [;$/;"	variable	line:1692	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1753	typeref:class:
+worn	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    has scenery clothing custom_listing worn;$/;"	variable	line:1757	typeref:class:custom_listing
+HyperLinkedWearable	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  class HyperLinkedItem HyperLinkedWearable,$/;"	variable	line:1760	typeref:class:HyperLinkedItem
+bulky	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      bulky,$/;"	variable	line:1762	typeref:class:with
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      name 'reputation',$/;"	variable	line:1763	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      articles "=na_name_the_reputation;The " "=na_name_the_reputation;the " "=na_name_a_reputation;a ",$/;"	variable	line:1764	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      short_name [;$/;"	variable	line:1765	typeref:class:
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      before [;$/;"	variable	line:1769	typeref:class:
+custom_listing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^      has worn clothing custom_listing;$/;"	variable	line:1773	typeref:class:clothing
+HyperLinkedContainer	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  class HyperLinkedItem HyperLinkedOpenable HyperLinkedWearable HyperLinkedContainer,$/;"	variable	line:1776	typeref:class:HyperLinkedWearable
+specialSeal	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  specialSeal,$/;"	variable	line:1778	typeref:class:with
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  name 'slim' 'leather' 'satchel',$/;"	variable	line:1779	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  articles "=na_name_the_satchel;The " "=na_name_the_satchel;the " "=na_name_a_satchel;a ",$/;"	variable	line:1780	typeref:class:
+na_article_names	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  na_article_names "na_name_the_satchel" "na_name_the_satchel" "na_name_a_satchel",$/;"	variable	line:1781	typeref:class:
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  before [;$/;"	variable	line:1782	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  short_name [nolink;$/;"	variable	line:1802	typeref:class:
+custom_listing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has container openable ~open worn clothing custom_listing;$/;"	variable	line:1810	typeref:class:clothing
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "Don't eat it by accident.",$/;"	variable	line:1817	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1818	typeref:class:
+edible	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    edible;$/;"	variable	line:1823	typeref:class:has
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'laminated' 'parchment' 'card',$/;"	variable	line:1828	typeref:class:with
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    articles "=na_name_the_card;The " "=na_name_the_card;the " "=na_name_a_card;a ",$/;"	variable	line:1829	typeref:class:
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "It's a license to lie.",$/;"	variable	line:1830	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1831	typeref:class:
+countdown	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    countdown 3,$/;"	variable	line:1839	typeref:class:with
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'peril' 'powder' 'charge',$/;"	variable	line:1840	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    articles "=na_name_the_charge;The " "=na_name_the_charge;the " "=na_name_a_charge;a ",$/;"	variable	line:1841	typeref:class:
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description [;$/;"	variable	line:1842	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1845	typeref:class:
+TickTock	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    TickTock [;$/;"	variable	line:1849	typeref:class:
+Explode	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    Explode [l h d gz ml lat lon;$/;"	variable	line:1858	typeref:class:
+specialSeal	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    specialSeal,$/;"	variable	line:1907	typeref:class:with
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'sealed' 'unsealed' 'glaes' 'faeflask' 'flask',$/;"	variable	line:1908	typeref:class:
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    articles "=na_name_the_vial;The " "=na_name_the_vial;the " "=na_name_a_vial;a ",$/;"	variable	line:1909	typeref:class:
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "Smooth and dark.",$/;"	variable	line:1910	typeref:class:
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1911	typeref:class:
+openable	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    ~open openable;$/;"	variable	line:1916	typeref:class:~open
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'sleeve',$/;"	variable	line:1920
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "Some people look casually charming when they fiddle with their sleeve.  You? Not so much.",$/;"	variable	line:1921
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1922
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    before [;$/;"	variable	line:1926
+custom_listing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery worn custom_listing;$/;"	variable	line:1929
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'shoulders' 'shoulder',$/;"	variable	line:1933
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "Broad and strong.  The Order trains you well.",$/;"	variable	line:1934
+parse_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    parse_name [ w1 w2;$/;"	variable	line:1935
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1942
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:1946
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'face',$/;"	variable	line:1950
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "A smooth and unlined forehead crowns eyes of unquenchable fire.  Or so you've been told.",$/;"	variable	line:1951
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1952
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:1956
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'body',$/;"	variable	line:1960
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "Slim, trim and covered in horrific scars that never cease to writhe and itch.",$/;"	variable	line:1961
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1962
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:1966
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'back',$/;"	variable	line:1970
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description "Still aching from this morning's grueling training session.",$/;"	variable	line:1971
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1972
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:1976
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'hands' 'hand',$/;"	variable	line:1980
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description [;$/;"	variable	line:1981
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1984
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:1988
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'blood',$/;"	variable	line:1992
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description [;$/;"	variable	line:1993
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:1996
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:2000
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'narrator',$/;"	variable	line:2004
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    before [;$/;"	variable	line:2005
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:2009
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'chill',$/;"	variable	line:2013
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description [;$/;"	variable	line:2014
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    before [;$/;"	variable	line:2019
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:2027
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:2031
+name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    name 'supplies' 'supply',$/;"	variable	line:2035
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    before [;$/;"	variable	line:2036
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name [;$/;"	variable	line:2048
+scenery	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has scenery;$/;"	variable	line:2052
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description [;$/;"	variable	line:2056
+before	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    before [;$/;"	variable	line:2062
+light	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has light;$/;"	variable	line:2073
+articles	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    articles "=na_name_the_pistol;The " "=na_name_the_pistol;the " "=na_name_a_pistol;a ",$/;"	variable	line:2078
+short_name	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    short_name "strange pistol",$/;"	variable	line:2079
+description	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^    description [;$/;"	variable	line:2080
+clothing	E:\git\joshwarecom.github.com\sandbox\if\uoai\uoai.inf	/^  has clothing;$/;"	variable	line:2084

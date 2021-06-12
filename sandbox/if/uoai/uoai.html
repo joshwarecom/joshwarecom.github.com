@@ -179,6 +179,7 @@
       if (document.weatherLoopAudioElement) {
         vorple.audio.fadeOut(document.weatherLoopAudioElement,0)
       }
+      document.weatherLoopAudioElement = null;
     }
     function restartWeatherLoop(f) {
       clearWeatherLoop();
@@ -189,6 +190,7 @@
       if (document.musicLoopAudioElement) {
         vorple.audio.fadeOut(document.musicLoopAudioElement,0)
       }
+      document.musicLoopAudioElement = null;
     }
     function restartMusicLoop(f) {
       clearMusicLoop();
@@ -222,9 +224,12 @@
     vorple.output.addOutputFilter( narratedOutputFilter );
     vorple.init();
 
-    function jest() {
-      alert(document.lineInputPrefixElement.innerHTML);
+    function quitListener( event ) {
+        clearMusicLoop();
+        clearWeatherLoop();
     }
+    vorple.addEventListener( 'quit', quitListener );
+
 </script>
 </body>
 </html>

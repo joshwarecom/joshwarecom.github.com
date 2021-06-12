@@ -1,3 +1,6 @@
+Vorple:
+Does not like LinkCommand to have numeric input.
+
 MacOS Safari:
 - VorplePlaySoundEffect doesn't play any audio. (this appears resolved on later Safari version)
 - "You can't see inside since" does not complete the sentence.
@@ -20,3 +23,4 @@ Fix intro to allow for:
 
 Game:
 Spoken recording says "You can see" instead of "You can also see";
+Random interactions with body parts: make shoulders plural, drop/take/etc

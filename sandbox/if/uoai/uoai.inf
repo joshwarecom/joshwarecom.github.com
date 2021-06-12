@@ -4,7 +4,8 @@ Array UUID_ARRAY static string "UUID://b72c87a5-f92e-4f07-b3e7-ba4b5243611a//";
 Release 1;
 
 Attribute custom_listing;
-!Global TEST_MODE = true;
+Global DEATH_MENTION_UNDO;
+Global TEST_MODE = true;
 
 Constant MAX_CARRIED = 2;
 Include "vorple.h";
@@ -24,7 +25,7 @@ Include "vorple-screen-effects.h";
       0:              ! Parser is excluding obj from ALL
           ;           ! ... accept parser's decision
       1:              ! Parser is including obj in ALL
-          if (action_to_be == ##Take || action_to_be == ##Drop) retval = 2;
+          if (action_to_be == ##Take || action_to_be == ##Drop || action_to_be == ##Wear) retval = 2;
                       ! ... force exclusion if TAKE; accept otherwise
       2:              ! Parser is asking for 'appropriateness' hint
           ;           ! ... but we don't provide one
@@ -60,6 +61,27 @@ Include "vorple-screen-effects.h";
     rtrue;
 ];
 
+Constant WORD_NEXTTOHIGHBIT = $40000000;
+[ SquareRoot num
+  op res one;
+  op = num;
+  if (num < 0) { return -1; }
+  ! "one" starts at the highest power of four <= the argument.
+  for (one = WORD_NEXTTOHIGHBIT: one > op: one = one/4) ;
+  while (one ~= 0) {
+  !print "Round: op = ", op, " res = ", res, ", res**2 = ", res*res, " one = ", one, "^";
+  if (op >= res + one) {
+  op = op - res - one;
+  res = res + one*2;
+  }
+  res = res/2;
+  one = one/4;
+  }
+  !print "Res is ", res, "^";
+  return res;
+];
+
+
 [ StringToLower bufA
     i;
     for (i=0 : i<bufA-->0 : i++) {
@@ -85,7 +107,6 @@ Include "vorple-screen-effects.h";
     else
       System.previousExaminedItem = noun;
   }
-
   switch (action) {
     ##Look:
     ##Examine:
@@ -111,6 +132,7 @@ Include "vorple-screen-effects.h";
 
 [ BeforeParsing;
   ClearNarration();
+  move hood to parent(cloak);
 ];
 
 [ AfterPrompt;
@@ -122,6 +144,9 @@ Include "vorple-screen-effects.h";
   }
   if (parent(convenience) == parent(player) && convenience.state == 0) {
     remove convenience;
+  }
+  if (deadflag) {
+    System.FlushBinOrTTSIfNarrationEnabled();
   }
 ];
 
@@ -194,6 +219,16 @@ Include "vorple-screen-effects.h";
           LINKID_LUTE: newcmd = "examine lute";
           LINKID_MENU: newcmd = "menu";
           LINKID_LOOK: newcmd = "look";
+          LINKID_REPUTATION: newcmd = "examine my reputation";
+          LINKID_SLEEVE: newcmd = "examine my sleeve";
+          LINKID_HANDS: newcmd = "examine my hands";
+          LINKID_BLOOD: newcmd = "examine blood";
+          LINKID_0: newcmd = "0";
+          LINKID_1: newcmd = "1";
+          LINKID_2: newcmd = "2";
+          LINKID_3: newcmd = "3";
+          LINKID_4: newcmd = "4";
+          LINKID_5: newcmd = "5";
           default: newcmd = 0;
         }
       }
@@ -217,6 +252,58 @@ Extend 'inventory' replace
   *                                           -> UOAIInv
   * 'tall'                                    -> EasterEgg
   * 'wide'                                    -> EasterEgg;
+
+Verb 'kick'
+  * -> Kick
+  * noun -> Kick;
+[ KickSub;
+  if (noun) {
+    "As much as you love to show off your fancy martial monk kicking skills, time is of the essence tonight.  Stick to the tools of the trade.";
+  }
+  else {
+    "You limber up with some vigorous air kicking, doubtless drawing no attention to yourself whatsoever.";
+  }
+];
+
+Extend only 'punch' replace
+  * -> Punch
+  * noun -> Punch;
+[ PunchSub;
+  if (noun) {
+    "Not this time - fisticuffs are a woefully inefficient means of victorious engagement.";
+  }
+  else {
+    "Nothing like a little shadow boxing to get the blood pumping, eh?";
+  }
+];
+
+Verb 'slash' = 'attack';
+Extend 'hit'
+  * noun 'with' held -> Attack;
+
+Verb 'clap'
+  * -> Clap
+  * 'hands' -> Clap
+  * 'my' 'hands' -> Clap;
+[ ClapSub;
+  print "You clap your hands.  ";
+  if (charge notin nothing) {
+    charge.TickTock();
+    if (charge notin nothing) {
+      if (TestScope(player,charge)) {
+        print "The charge pulses ";
+        switch (charge.countdown) {
+          2: print "twice";
+          1: print "once";
+          default: print "several times";
+        }
+        " with a powerful red glow.";
+      }
+    }
+  }
+  print "^";
+];
+
 
 Verb 'menu'
   * -> Interact
@@ -246,24 +333,14 @@ Verb 'inspect'
   ExamineSub();
 ];
 
-
-[ IsHood;
-  return (noun == hood && TestScope(player,hood));
-];
-Extend 'wear' first
-    * noun=IsHood                               -> Wear;
-Extend 'take'
-    * 'off' noun=IsHood                         -> Disrobe;
-Extend 'disrobe'
-    * noun=IsHood                               -> Disrobe;
-Extend 'remove' first
-    * noun=IsHood                               -> Disrobe;
-
 [ PlayerAddToScope;
   PlaceInScope(shoulders);
   PlaceInScope(face);
   PlaceInScope(body);
   PlaceInScope(back);
+  PlaceInScope(hands);
+  PlaceInScope(blood);
+  PlaceInScope(sleeve);
   PlaceInScope(narrator);
   PlaceInScope(supplies);
   PlaceInScope(chill);
@@ -325,7 +402,7 @@ Extend 'remove' first
   }
 ];
 
-[ UOAIInvSub output harnessDescribed cloakDescribed satchelDescribed;
+[ UOAIInvSub output harnessDescribed cloakDescribed satchelDescribed reputationDescribed;
   if (harness in actor) {
     if (harness has worn) {
       if (cloak in actor && cloak has worn) {
@@ -363,21 +440,29 @@ Extend 'remove' first
       body.short_name();
       print " from your left ";
       System.InlineLinkText("examine my shoulders","shoulder",LINKID_SHOULDERS);
-      print ".";
+      print ".  ";
       satchelDescribed = 1;
     }
   }
-  if (harnessDescribed || cloakDescribed || satchelDescribed) {
+  if (reputation in actor) {
+    if (reputation has worn) {
+      QueueBinOutput("na_msg_reputation_on");
+      print "You wear your ", (name)reputation, " on your ", (name)sleeve, ".";
+      reputationDescribed = 1;
+    }
+  }
+  if (harnessDescribed || cloakDescribed || satchelDescribed || reputationDescribed) {
     print "^^";
   }
   if (harness hasnt worn) give harness ~custom_listing;
   if (cloak hasnt worn) give cloak ~custom_listing;
   if (satchel hasnt worn) give satchel ~custom_listing;
+  if (reputation hasnt worn) give reputation ~custom_listing;
   InvSub();
   if (harness hasnt worn) give harness custom_listing;
   if (cloak hasnt worn) give cloak custom_listing;
   if (satchel hasnt worn) give satchel custom_listing;
-  System.FlushBinOrTTSIfNarrationEnabled();
+  if (reputation hasnt worn) give reputation custom_listing;
 ];
 
 [ EasterEggSub;
@@ -395,6 +480,18 @@ Array INPUT_NEW buffer "new";
 Array INPUT_RESTART buffer "restart";
 Array INPUT_RESTORE buffer "restore";
 Array INPUT_COLOR buffer "color";
+Array INPUT_1 buffer "1";
+Array INPUT_2 buffer "2";
+Array INPUT_3 buffer "3";
+Array INPUT_4 buffer "4";
+Array INPUT_5 buffer "5";
+Array INPUT_REPEAT buffer "0";
+Array INPUT_ONE buffer "One";
+Array INPUT_TWO buffer "Two";
+Array INPUT_THREE buffer "Three";
+Array INPUT_FOUR buffer "Four";
+Array INPUT_FIVE buffer "Five";
+Array INPUT_ZERO buffer "Zero";
 
 Array CODENAME_HERO buffer "hero";
 Array CODENAME_HEROINE buffer "heroine";
@@ -440,6 +537,16 @@ Constant LINKID_CHILL 34;
 Constant LINKID_LUTE 35;
 Constant LINKID_MENU 36;
 Constant LINKID_LOOK 37;
+Constant LINKID_REPUTATION 38;
+Constant LINKID_SLEEVE 39;
+Constant LINKID_HANDS 40;
+Constant LINKID_BLOOD 41;
+Constant LINKID_0 42;
+Constant LINKID_1 43;
+Constant LINKID_2 44;
+Constant LINKID_3 45;
+Constant LINKID_4 46;
+Constant LINKID_5 47;
 
 Constant CSLINKID_MIN 1001;
 Constant CSLINKID_MAX 1999;
@@ -451,6 +558,15 @@ Constant CSLINKID_CLOSE 1005;
 Constant CSLINKID_WEAR 1006;
 Constant CSLINKID_REMOVE 1007;
 Constant CSLINKID_EMPTY 1008;
+
+Constant PUGILISTICS_SOLUTION 1;
+Constant DRAUGHTISTRY_SOLUTION 2;
+Constant BLANDISHMENT_SOLUTION 3;
+Constant SHIRKOLOGY_SOLUTION 4;
+Constant MARTYRDOM_SOLUTION 5;
+Constant FIRST_PUZZLE 0;
+Constant SECOND_PUZZLE 1;
+Constant THIRD_PUZZLE 2;
 
 Object System
   with
@@ -468,6 +584,8 @@ Object System
     promptIsClickable 0,
     waitingForEnter 0,
     disableHyperlinks 0,
+    puzzleSolutions 0 0 0,
+    currentPuzzle -1,
     clickedContextSensitiveLink false,
     FlushBinOrTTSIfNarrationEnabled [;
       if (self.currentCmdSupportsPlayback ~= 1) {
@@ -674,6 +792,72 @@ Object System
       else {
         print (markup) "<IMG SRC=100 ALT='MUSICAL INTERLUDE' WIDTH=500 HEIGHT=30><br>";
       }
+    ],
+    MultipleChoiceQuery [text r1 r2 r3 r4 r5 loop choice;
+      .FreshQuery;
+      loop = true;
+      PrintStringOrArray(text);
+      print "^";
+      if (r1) {
+        print "  ";
+        System.InlineLinkText("One","1",LINKID_1);
+        print ". ";
+        PrintStringOrArray(r1);
+        print "^";
+      }
+      if (r2) {
+        print "  ";
+        System.InlineLinkText("Two","2",LINKID_2);
+        print ". ";
+        PrintStringOrArray(r2);
+        print "^";
+      }
+      if (r3) {
+        print "  ";
+        System.InlineLinkText("Three","3",LINKID_3);
+        print ". ";
+        PrintStringOrArray(r3);
+        print "^";
+      }
+      if (r4) {
+        print "  ";
+        System.InlineLinkText("Four","4",LINKID_4);
+        print ". ";
+        PrintStringOrArray(r4);
+        print "^";
+      }
+      if (r5) {
+        print "  ";
+        System.InlineLinkText("Five","5",LINKID_5);
+        print ". ";
+        PrintStringOrArray(r5);
+        print "^";
+      }
+      print "  ";
+      System.InlineLinkText("Zero","0",LINKID_0);
+      print ". Repeat.";
+
+      while (loop) {
+        choice = 0;
+        Keyboard(buffer,parse);
+        ClearNarration();
+        if (r1 && (CompareStrings(buffer,INPUT_1) || CompareStrings(buffer,INPUT_ONE))) choice = 1;
+        else if (r2 && (CompareStrings(buffer,INPUT_2) || CompareStrings(buffer,INPUT_TWO))) choice = 2;
+        else if (r3 && (CompareStrings(buffer,INPUT_3) || CompareStrings(buffer,INPUT_THREE))) choice = 3;
+        else if (r4 && (CompareStrings(buffer,INPUT_4) || CompareStrings(buffer,INPUT_FOUR))) choice = 4;
+        else if (r5 && (CompareStrings(buffer,INPUT_5) || CompareStrings(buffer,INPUT_FIVE))) choice = 5;
+        else if (CompareStrings(buffer,INPUT_REPEAT) || CompareStrings(buffer,INPUT_ZERO)) choice = -1;
+        switch (choice) {
+          -1: jump FreshQuery;
+        }
+        if (choice) {
+          loop = false;
+        }
+        else {
+          print "Please enter the number of your response, or 0 to repeat the question.^";
+        }
+      }
+      return choice;
     ];
 
 [ Initialise o;
@@ -695,7 +879,10 @@ Object System
     move satchel to player;
     move cloak to player;
     move harness to player;
+    move reputation to player;
+    move sleeve to player;
     player.add_to_scope = PlayerAddToScope;
+    StartDaemon(augustus);
 ];
 
 Class HyperLinkedObject
@@ -801,14 +988,16 @@ Class HyperLinkedContextQueues
   class HyperLinkedObject;
 
 [ TestMode;
+  System.promptIsClickable = 1;
   System.audioEnabled = 1;
   System.SyncSystemAudioExtension();
   System.codeNameLinkId = LINKID_HERO;
   System.SetCurrentMusicLoop("music_loop_1");
   System.RestartMusicLoop();
-  System.SetCurrentWeatherLoop("rain-03-short");
+  System.SetCurrentWeatherLoop("se_rain30");
   System.RestartWeatherLoop();
   ClearNarration();
+  System.currentPuzzle = FIRST_PUZZLE;
 ];
 
 [ InitialQuery tmp;
@@ -1119,6 +1308,7 @@ Class HyperLinkedContextQueues
   print " is their name!^";
   print "^";
   print "Hello! Call me Augustus - apprentice songsmith.  Don't mind me, go on about your secret mission.  You won't even know I'm here.~^";
+  System.currentPuzzle = FIRST_PUZZLE;
 ];
 
 [ QueueBinOutput f;
@@ -1135,8 +1325,19 @@ Class HyperLinkedContextQueues
   }
 ];
 
+Object tower_base "Outer Watch Tower..."
+  with
+    x 10,
+    y 9,
+    description "Safe here for now.",
+    n_to clearing,
+  has light;
+
 Object clearing "Shadowy Clearing..."
   with
+    x 10,
+    y 10,
+    s_to tower_base,
     short_name [;
       bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
       print "na_msg_our_";
@@ -1157,7 +1358,7 @@ Object clearing "Shadowy Clearing..."
       distant_tower.short_name();
       print " rises high above the ";
       trees.short_name();
-      "";
+      ".";
     ],
     before [;
       Jump:
@@ -1230,7 +1431,7 @@ Object clearing "Shadowy Clearing..."
         distant_watchman.short_name();
         print " standing atop the ";
         self.short_name();
-        "";
+        ".";
       ],
     has scenery;
 
@@ -1244,27 +1445,91 @@ Object clearing "Shadowy Clearing..."
       description [;
         print "You cannot see the ";
         self.short_name();
-        " very well from here.";
+        " very well from here.  He can likely scan for miles in all directions from his position on ", (the)distant_tower, ".";
       ],
     has scenery;
 
   Object -> augustus "Augustus"
     with
+      chargeQueryChoice 0,
       short_name [;
         System.InlineLinkText("examine Augustus", "Augustus", LINKID_AUGUSTUS);
         return true;
       ],
       name 'augustus',
-      description "A second rate songsmith in full dress.",
+      description [;
+        if (self has general) {
+          "Unconsciousness has improved his music considerably...";
+        }
+        else {
+          "A second rate songsmith in full dress.";
+        }
+      ],
+      RespondToCharge [;
+        if (~~self.chargeQueryChoice) {
+          self.chargeQueryChoice = self.QueryAboutCharge();
+        }
+      ],
+      QueryAboutCharge [;
+        return System.MultipleChoiceQuery("Augustus peaks curiously at your peril powder charge. ~What is that? I've never seen one before.~","Truth", "Lie", "Dismiss", "Ignore");
+      ],
+      daemon [;
+        if (TestScope(self,charge)) {
+          self.RespondToCharge();
+        }
+      ],
       initial [;
         System.BlankVorpleLineIfNoHyperlinks();
-        QueueBinOutput("na_desc_augustus_1");
-        self.short_name();
-        print " is here attentively playing a ";
-        lute.short_name();
-        print " and obliviously blocking your ";
-        path.short_name();
-        ".";
+        if (self hasnt general) {
+          QueueBinOutput("na_desc_augustus_1");
+          self.short_name();
+          print " is here attentively playing a ";
+          lute.short_name();
+          print " and obliviously blocking your ";
+          path.short_name();
+          ".";
+        }
+        else {
+          self.short_name();
+          print " lies at your feet face down and unconcious, his hands curled tightly around the neck of his ";
+          lute.short_name();
+          ".";
+        }
+      ],
+      before [ specified tool o;
+        Attack:
+          if (System.currentPuzzle == FIRST_PUZZLE) {
+            if (second) {
+              tool = second;
+              specified = 1;
+            }
+            if (~~tool) objectloop (o in player && o hasnt worn && o provides weapon && o provides nonlethal && ~~tool) tool = o;
+            if (~~tool) objectloop (o in player && o hasnt worn &&  o provides weapon && o provides messy && ~~tool) tool = o;
+            if (~~tool) objectloop (o in player && o hasnt worn &&  o provides weapon && ~~tool) tool = o;
+            if (~~tool) objectloop (o in player && o hasnt worn && ~~tool) tool = o;
+            if (~~tool) {
+              "Not a bad idea, but assaulting ", (name)augustus, " unarmed may alert bystanders or guards.  You may not want to draw the attention of that ", (name)distant_watchman, " if you can help it.";
+            }
+            if (tool provides messy) {
+              "While ", (the)tool, " will certainly do the job, you may be left covered in the poor man's gore.  That won't be easy to explain to an officer, and your License to Lie has precious few uses left.  Save the blade for despots and their dogs.";
+            }
+            if (tool provides nonlethal) {
+              give augustus general;
+              StopDaemon(augustus);
+              System.currentPuzzle = SECOND_PUZZLE;
+              System.ClearMusicLoop();
+              "",(the)augustus, " is so busy playing that he doesn't even see it coming.  He drops like a stone.";
+            }
+            if (tool provides weapon) {
+              "Perhaps you could learn to wield ", (the)tool, " given sufficient time and practice.  Right now, you have neither.  Choose a more familiar ~friend~ for this work.";
+            }
+            if (~~specified) {
+              "",(The)tool, " is not an effective melee instrument! Arm yourself with something more practical.";
+            }
+            if (specified) {
+              "Having spent your life honing your skills with proper weapons, you are now going to attack ", (the)augustus, " with ", (a)tool, "? Have some pride and think this through!";
+            }
+          }
       ],
   has transparent proper animate;
 
@@ -1275,11 +1540,36 @@ Object clearing "Shadowy Clearing..."
         return true;
       ],
       name 'lute',
+      bulky,
+      before [;
+        Attack:
+          if (System.currentPuzzle == FIRST_PUZZLE) {
+            "Attacking ", (name)augustus, "' prized ", (name)lute, "? You cannot possibly be that cruel.";
+          }
+        Take:
+          if (lute hasnt general) {
+            if (augustus has general) {
+              if (lute in augustus) {
+                move lute to parent(player);
+                <Take lute>;
+                if (lute in player) {
+                  give lute general;
+                  return true;
+                }
+                else {
+                  move lute to augustus;
+                  return true;
+                }
+              }
+            }
+          }
+      ],
       description [;
         print "It's a ";
         self.short_name();
         ".";
-      ];
+      ],
+    has clothing;
 
   Object -> convenience
     with
@@ -1293,9 +1583,9 @@ Object clearing "Shadowy Clearing..."
              cloak.short_name();
              print " close against the ";
              chill.short_name();
-             print ".  You adjust your ";
+             print " and adjust your ";
              harness.short_name();
-             print " and your ";
+             print " and ";
              satchel.short_name();
              print " of ";
              supplies.short_name();
@@ -1334,6 +1624,7 @@ Object harness "supple satin lined weapons harness"
     with
       bulky,
       weapon,
+      nonlethal,
       name 'trusty' 'truncheon',
       articles "=na_name_the_truncheon;The " "=na_name_the_truncheon;the " "=na_name_a_truncheon;a ",
       short_name [;
@@ -1347,6 +1638,7 @@ Object harness "supple satin lined weapons harness"
     with
       sharp,
       weapon,
+      messy,
       name 'needle' 'pointed' 'knife',
       articles "=na_name_the_knife;The " "=na_name_the_knife;the " "=na_name_a_knife;a ",
       short_name [;
@@ -1371,7 +1663,7 @@ Object cloak "woven woolen cloak"
   ],
   has transparent worn clothing custom_listing;
 
-  Object -> hood "hood"
+  Object hood "hood"
     class HyperLinkedWearable,
     with
       name 'hood',
@@ -1397,10 +1689,13 @@ Object cloak "woven woolen cloak"
         print "^";
       ],
       before [;
+        if (action ~= ##Wear && action ~= ##Disrobe && action ~= ##Examine && action ~= ##Inspect && action ~= ##Interact) {
+          "You cannot do much with ", (the)hood, " besides wear it or remove it.";
+        }
         Wear:
           if (cloak has general && cloak has worn && cloak in actor) {
             print "You are already wearing the ";
-            hood.short_name();
+            self.short_name();
             print ".^";
             return true;
           }
@@ -1458,7 +1753,23 @@ Object cloak "woven woolen cloak"
         System.InlineLinkText("examine hood", "hood", LINKID_HOOD);
         return true;
       ],
-    has scenery;
+    has scenery clothing custom_listing worn;
+
+Object reputation "reputation"
+  class HyperLinkedItem HyperLinkedWearable,
+    with
+      bulky,
+      name 'reputation',
+      articles "=na_name_the_reputation;The " "=na_name_the_reputation;the " "=na_name_a_reputation;a ",
+      short_name [;
+        System.InlineLinkText("examine reputation", "reputation", LINKID_REPUTATION);
+        return true;
+      ],
+      before [;
+        Disrobe:
+          "Remove your reputation? Unthinkable! What wouldn't people say?";
+      ],
+      has worn clothing custom_listing;
 
 Object satchel "slim leather satchel"
   class HyperLinkedItem HyperLinkedOpenable HyperLinkedWearable HyperLinkedContainer,
@@ -1497,10 +1808,10 @@ Object satchel "slim leather satchel"
   ],
   has container openable ~open worn clothing custom_listing;
 
-Object -> pellet "grim green poison pellet"
+Object -> pellet "blue-black bottle"
   class HyperLinkedItem,
   with
-    name 'grim' 'green' 'pellet' 'poison',
+    name 'blue' 'black' 'blue-black' 'bottle',
     articles "=na_name_the_pellet;The " "=na_name_the_pellet;the " "=na_name_a_pellet;a ",
     description "Don't eat it by accident.",
     short_name [;
@@ -1524,6 +1835,7 @@ Object -> card "laminated parchment card"
 Object -> charge "peril powder charge"
   class HyperLinkedItem,
   with
+    countdown 3,
     name 'peril' 'powder' 'charge',
     articles "=na_name_the_charge;The " "=na_name_the_charge;the " "=na_name_a_charge;a ",
     description [;
@@ -1532,6 +1844,60 @@ Object -> charge "peril powder charge"
     short_name [;
       System.InlineLinkText("examine peril powder charge", "peril powder charge", LINKID_CHARGE);
       return true;
+    ],
+    TickTock [;
+      if (self.countdown > 0) {
+        self.countdown--;
+      }
+      if (self.countdown <= 0) {
+        self.Explode();
+        remove self;
+      }
+    ],
+    Explode [l h d gz ml lat lon;
+      lat = "";
+      lon = "";
+      gz = charge;
+      ml = real_location;
+      while (parent(gz) ~= nothing) gz = parent(gz);
+      while (parent(ml) ~= nothing) ml = parent(ml);
+      if (gz provides x && ml provides x && gz provides y && ml provides y) {
+        l = gz.x - ml.x;
+        if (l < 0) lat = "west";
+        else if (l > 0) lat = "east";
+        l = l * l;
+        h = gz.y - ml.y;
+        if (h < 0) lon = "south";
+        else if (h > 0) lon = "north";
+        h = h * h;
+        d = SquareRoot(l + h);
+
+        switch (d) {
+          0:
+            deadflag = 1;
+            print "BOOM! ";
+            "Dead now.";
+          1:
+            PrintStringOrArray(lon);
+            PrintStringOrArray(lat);
+            "A deafening explosion.";
+          2:
+            PrintStringOrArray(lon);
+            PrintStringOrArray(lat);
+            "A loud explosion.";
+          3:
+            PrintStringOrArray(lon);
+            PrintStringOrArray(lat);
+            "A distant explosion";
+          default:
+            PrintStringOrArray(lon);
+            PrintStringOrArray(lat);
+            "A low distant rumble.";
+        }
+      }
+      else {
+        "Strange.  You don't hear a detonation.";
+      }
     ];
 
 Object -> vial "glaes faeflask"
@@ -1547,6 +1913,19 @@ Object -> vial "glaes faeflask"
     ],
   has
     ~open openable;
+
+Object sleeve "sleeve"
+  with
+    name 'sleeve',
+    description "Some people look casually charming when they fiddle with their sleeve.  You? Not so much.",
+    short_name [;
+      System.InlineLinkText("examine my sleeve", "sleeve", LINKID_SLEEVE);
+      return true;
+    ],
+    before [;
+      action = ##Examine;
+    ],
+  has scenery worn custom_listing;
 
 Object shoulders "shoulders"
   with
@@ -1591,6 +1970,30 @@ Object back "back"
     description "Still aching from this morning's grueling training session.",
     short_name [;
       System.InlineLinkText("examine my back", "back", LINKID_BACK);
+      return true;
+    ],
+  has scenery;
+
+Object hands "hands"
+  with
+    name 'hands' 'hand',
+    description [;
+      "Calloused and deft with no small amount of ", (name)blood, " on them.  Metaphorically speaking, of course.";
+    ],
+    short_name [;
+      System.InlineLinkText("examine my hands", "hands", LINKID_HANDS);
+      return true;
+    ],
+  has scenery;
+
+Object blood "blood"
+  with
+    name 'blood',
+    description [;
+      "The ", (name)blood, " on your ", (name)hands, " is metaphorical.  They are actually quite clean.";
+    ],
+    short_name [;
+      System.InlineLinkText("examine blood", "blood", LINKID_BLOOD);
       return true;
     ],
   has scenery;

@@ -1142,13 +1142,21 @@ Constant LIBRARYV__TX   = " Library v";
             if (deadflag == 2 && AMUSING_PROVIDED == 0)
                 print ", see some suggestions for AMUSING things to do";
             SerialComma(3); print " or QUIT?";
+						print "^";
+						System.FlushBinOrTTSIfNarrationEnabled();
+
         6:  "[Your interpreter does not provide ~undo~.  Sorry!]";
             #Ifdef TARGET_ZCODE;
         7:  "~Undo~ failed.  [Not all interpreters provide it.]";
             #Ifnot; ! TARGET_GLULX
         7:  "[You cannot ~undo~ any further.]";
             #Endif; ! TARGET_
-        8:  "Please give one of the answers above.";
+        8:
+						ClearNarration();
+						print "Please give one of the answers above.";
+						print "^";
+						System.FlushBinOrTTSIfNarrationEnabled();
+
         9:  print "^It ";
             Tense("is now", "was");
             print " pitch dark in ";
