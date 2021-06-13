@@ -5,7 +5,7 @@ Release 1;
 
 Attribute custom_listing;
 Global DEATH_MENTION_UNDO;
-Global TEST_MODE = true;
+!Global TEST_MODE = true;
 
 Constant MAX_CARRIED = 2;
 Include "vorple.h";
@@ -229,6 +229,7 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
           LINKID_3: newcmd = "3";
           LINKID_4: newcmd = "4";
           LINKID_5: newcmd = "5";
+          LINKID_HELP: newcmd = "Help";
           default: newcmd = 0;
         }
       }
@@ -477,6 +478,7 @@ Constant AUDIOEXT_NULL 2;
 
 Array INPUT_QUIT buffer "quit";
 Array INPUT_NEW buffer "new";
+Array INPUT_HELP buffer "help";
 Array INPUT_RESTART buffer "restart";
 Array INPUT_RESTORE buffer "restore";
 Array INPUT_COLOR buffer "color";
@@ -547,6 +549,7 @@ Constant LINKID_2 44;
 Constant LINKID_3 45;
 Constant LINKID_4 46;
 Constant LINKID_5 47;
+Constant LINKID_HELP 48;
 
 Constant CSLINKID_MIN 1001;
 Constant CSLINKID_MAX 1999;
@@ -798,6 +801,9 @@ Object System
       loop = true;
       PrintStringOrArray(text);
       print "^";
+      VorpleStyle(STYLE_EMPHASIS);
+      print (markup)"^<U>Select your response:</U>^";
+      VorpleEndStyle();
       if (r1) {
         print "  ";
         System.InlineLinkText("One","1",LINKID_1);
@@ -834,8 +840,12 @@ Object System
         print "^";
       }
       print "  ";
+      VorpleStyle(STYLE_EMPHASIS);
+      glk_set_style(style_Alert);
       System.InlineLinkText("Zero","0",LINKID_0);
-      print ". Repeat.";
+      print ". Repeat the question.";
+      glk_set_style(style_Normal);
+      VorpleEndStyle();
 
       while (loop) {
         choice = 0;
@@ -988,6 +998,7 @@ Class HyperLinkedContextQueues
   class HyperLinkedObject;
 
 [ TestMode;
+  System.Pause();
   System.promptIsClickable = 1;
   System.audioEnabled = 1;
   System.SyncSystemAudioExtension();
@@ -1000,15 +1011,23 @@ Class HyperLinkedContextQueues
   System.currentPuzzle = FIRST_PUZZLE;
 ];
 
+[ HelpCommand;
+  print "Help requested. Sound on / sound off.  Clickable prompt, commands.  Double examine.^";
+];
+
 [ InitialQuery tmp;
-  print "^A twilight mission to foment revolution awaits you, but some mediocre musician won't pipe down or stay down! Good thing foul play is your forte...^^";
+  print "^A twilight mission to cripple the crown, but some musician won't pipe down! Good thing foul play is your forte...^^";
 
   VorpleStyle(STYLE_EMPHASIS);
   print (markup) "<U>DIRECTOR'S NOTE:^This game supports clickable command words highlighted in this ";
   System.InlineLink("Color",LINKID_COLOR);
-  print (markup) " as well as traditional typed commands.</U>^^";
+  print (markup) " as well as traditional typed commands.  If this is your first time playing, start with the ";
+  System.InlineLink("Help",LINKID_HELP);
+  print (markup) " command.</U>^^";
   VorpleEndStyle();
   print "Please enter or select ";
+  System.InlineLink("Help",LINKID_HELP);
+  print " for some introductory tips, ";
   System.InlineLink("New",LINKID_NEW);
   print " to start a new game, or ";
   System.InlineLink("Restore",LINKID_RESTORE);
@@ -1022,10 +1041,20 @@ Class HyperLinkedContextQueues
       System.InlineLink("Color",LINKID_COLOR);
       print " is just an example, not a valid command.^";
     }
-    if (CompareStrings(buffer,INPUT_RESTORE) || CompareStrings(buffer,INPUT_NEW)) {
+    if (CompareStrings(buffer,INPUT_RESTORE) || CompareStrings(buffer,INPUT_NEW) || CompareStrings(buffer,INPUT_HELP)) {
       if (CompareStrings(buffer,INPUT_RESTORE)) {
         tmp = 0;
         RestoreSub();
+        print "^Please enter ";
+        System.InlineLink("Help",LINKID_HELP);
+        print " for some introductory tips, ";
+        System.InlineLink("New",LINKID_NEW);
+        print " to start a new game, or ";
+        System.InlineLink("Restore",LINKID_RESTORE);
+        print " to resume a previously saved session.^";
+      }
+      else if (CompareStrings(buffer,INPUT_HELP)) {
+        HelpCommand();
         print "^Please enter ";
         System.InlineLink("New",LINKID_NEW);
         print " to start a new game, or ";
@@ -1038,6 +1067,8 @@ Class HyperLinkedContextQueues
     }
     else {
       print "^Please enter ";
+      System.InlineLink("Help",LINKID_HELP);
+      print " for some introductory tips, ";
       System.InlineLink("New",LINKID_NEW);
       print " to start a new game, or ";
       System.InlineLink("Restore",LINKID_RESTORE);
@@ -1071,7 +1102,7 @@ Class HyperLinkedContextQueues
         VorplePlaySoundEffect("se_thunder_1");
         print "^";
         print "^NARRATOR:^";
-        print "Oh dear - such dreadful weather.  Do you hear me speaking right now? (";
+        print "The crash of thunder and a deluge of life-giving waters - perfect weather for revolution! Do you hear all that? (";
         System.InlineLink("Yes",LINKID_YES);
         print " or ";
         System.InlineLink("No",LINKID_NO);
@@ -1084,6 +1115,10 @@ Class HyperLinkedContextQueues
         else {
           VorpleExecuteJavaScriptCommand("ToggleAudioExtension();");
           ClearNarration();
+          QueueBinOutput("3_0_silence");
+          System.SetCurrentWeatherLoop("se_rain30");
+          System.RestartWeatherLoop();
+          VorplePlaySoundEffect("se_thunder_1");
           QueueBinOutput("na_intro_1b");
           print "^";
           print "^Oh, how about now then? (";
@@ -1105,7 +1140,7 @@ Class HyperLinkedContextQueues
           QueueBinOutput("se_pause");
           print "^";
           !FIXME implement SOUND ON / SOUND OFF
-          print "^During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol or hear the report of musical drums...you should press the enter key or tap continue when ready to proceed.^";
+          print "^When you see the continue symbol or hear the report of musical drums...you should tap continue or press the enter key to proceed.^";
           System.FlushBinOrTTSIfNarrationEnabled();
           System.Pause();
           ClearNarration();
@@ -1142,13 +1177,16 @@ Class HyperLinkedContextQueues
         }
         else {
           ClearNarration();
-          print "^Never mind about the audio then.  During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol you should press the enter key or tap continue when ready to proceed.";
+          System.ClearMusicLoop();
+          System.ClearWeatherLoop();
+          VorpleStopAudio();
+          print "^Never mind about the audio then.  When you see the continue symbol you should tap continue or press the enter key to proceed.";
           key = 1;
           System.audioEnabled = 0;
         }
       }
       else {
-        print "^During the game, you may toggle the audio with the Sound On or Sound Off commands.  Meanwhile, if you see the continue symbol you should press the enter key or tap continue when ready to proceed.";
+        print "^When you see the continue symbol you should tap continue or press the enter key to proceed.";
         key = 1;
       }
     }
@@ -1178,19 +1216,18 @@ Class HyperLinkedContextQueues
 
   !FIXME Improve concision and humor
   if (isVorpleSupported()) {
-    VorpleImage("title.png", "The Uninvited Opera Of Augustus Interruptus");
+    VorpleImage("title.png", "The Uninvited Epic Of Augustus Interruptus");
   }
   else {
-    print (markup) "<IMG SRC=102 ALT='The Uninvited Opera of Augustus Interruptus'<br>";
+    print (markup) "<IMG SRC=102 ALT='The Uninvited Epic of Augustus Interruptus'<br>";
     print "^";
   }
 
   QueueBinOutput("na_prologue_1");
   print "^";
   print "NARRATOR:^";
-  print "Your people have known nothing but tyranny for one thousand years.  Healthcare is free, yes, but only for ones who are sick! Pointless war and carnage is long forbidden, blanching the countryside with the sickly pallor of peace and prosperity.  And worst of all, excessive overdue library fines - pennies per day! All that changes tonight, and you shall be the changer!^";
-  print "^Yet no one shall ever know your name.  Indeed, if you even have a true name it is lost to time.  You were raised by the Order of Humble Pride, a cabal of freedom fighters masquerading as learned monks.  'Twas twenty-four years ago they found you abandoned at the gates and assigned to you your nom de guerre - a code name otherwise known only to the elders.^";
-  print "^What was it again? Something that started with H I believe. ";
+  print "How did it come to this? Look no further than the madness of King Hagberry and Queen Hamada. Their sickly pallor of peace and prosperity blanches the entire countryside.  Unconditionally free healthcare? Prohibition of pointless war? Libraries that charge as much as a penny per day for overdue books? Finally, the hour of liberation approaches.  The crown shall crumble tonight, and you shall be the crumbler!^";
+  print "^Twenty-four years under the grueling guidance of the Order of Humble Pride, a cabal of freedom fighters masquerading as learned monks.  They found you as an abandoned infant wailing in the woods and took you in.  They came to call you...was it ";
   System.InlineLink("Hero",LINKID_HERO);
   print "? ";
   System.InlineLink("Heroine",LINKID_HEROINE);
@@ -1201,7 +1238,7 @@ Class HyperLinkedContextQueues
   print "? ";
   print "Or perhaps ";
   System.InlineLink("Honeybadger",LINKID_HONEYBADGER);
-  print "? You can tell me.  I'm the narrator, after all.^";
+  print "? Please be a dear and remind me.^";
   System.FlushBinOrTTSIfNarrationEnabled();
   if (true) {
     tmp = false;
@@ -1382,6 +1419,10 @@ Object clearing "Shadowy Clearing..."
         System.InlineLinkText("examine trees", "trees", LINKID_TREES);
         return true;
       ],
+      before [;
+        Climb:
+          "Climbing the tree...";
+      ],
       description [;
         print "Just some ";
         self.short_name();
@@ -1452,6 +1493,9 @@ Object clearing "Shadowy Clearing..."
   Object -> augustus "Augustus"
     with
       chargeQueryChoice 0,
+      parchCount 2,
+      parchReset 5,
+
       short_name [;
         System.InlineLinkText("examine Augustus", "Augustus", LINKID_AUGUSTUS);
         return true;
@@ -1468,14 +1512,23 @@ Object clearing "Shadowy Clearing..."
       RespondToCharge [;
         if (~~self.chargeQueryChoice) {
           self.chargeQueryChoice = self.QueryAboutCharge();
+          return true;
         }
       ],
       QueryAboutCharge [;
-        return System.MultipleChoiceQuery("Augustus peaks curiously at your peril powder charge. ~What is that? I've never seen one before.~","Truth", "Lie", "Dismiss", "Ignore");
+        return System.MultipleChoiceQuery("^Augustus peaks curiously at your peril powder charge. ~What is that? I've never seen one before.~","Truth", "Lie", "Dismiss", "Ignore");
       ],
-      daemon [;
+      daemon [ acted;
+        if (self.parchCount > 0) self.parchCount = self.parchCount - 1;
         if (TestScope(self,charge)) {
-          self.RespondToCharge();
+          acted = self.RespondToCharge();
+        }
+        if (~~acted) {
+          if (self.parchCount == 0) {
+            print "^^~Free drinks from the venue! It's in my contract.  Singing is thirsty work.~";
+            self.parchCount = self.parchReset;
+            acted = true;
+          }
         }
       ],
       initial [;
