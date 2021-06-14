@@ -248,6 +248,9 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
           LINKID_BRANCHES: newcmd = "examine branches";
           LINKID_BROWNIES: newcmd = "examine brownies";
           LINKID_KNOTS: newcmd = "examine brownie knots";
+          LINKID_FEATHERCAP: newcmd = "examine feathered cap";
+          LINKID_TUNIC: newcmd = "examine billowing tunic";
+          LINKID_CODPIECE: newcmd = "examine codpiece";
           default: newcmd = 0;
         }
       }
@@ -571,6 +574,9 @@ Constant LINKID_OAK 54;
 Constant LINKID_BRANCHES 55;
 Constant LINKID_BROWNIES 56;
 Constant LINKID_KNOTS 57;
+Constant LINKID_FEATHERCAP 58;
+Constant LINKID_TUNIC 59;
+Constant LINKID_CODPIECE 60;
 
 Constant CSLINKID_MIN 1001;
 Constant CSLINKID_MAX 1999;
@@ -1549,7 +1555,7 @@ Object clearing "Shadowy Clearing"
 
   Object -> knots "brownie knots"
     with
-      name 'brownie' 'knots',
+      name 'brownie' 'knots' 'glowing' 'bubbles',
       short_name [;
         System.InlineLinkText("examine brownie knots", "brownie knots", LINKID_KNOTS);
         return true;
@@ -1577,7 +1583,7 @@ Object clearing "Shadowy Clearing"
 
   Object -> forest "forest"
     with
-      name 'forest' 'woods' 'fiends',
+      name 'forest' 'woods' 'fiends' 'of',
       short_name [;
         System.InlineLinkText("examine forest", "forest", LINKID_FOREST);
         return true;
@@ -1587,7 +1593,7 @@ Object clearing "Shadowy Clearing"
           "Baby steps, my friend.  Try climbing a single tree.";
       ],
       description [;
-        "The aptly named Forest of Fiends boasts a wealth of ", (name)trees, " and it shelters all manner of magical miscreants.  They rarely leave the woods but occasionally trade with shopkeepers.";
+        "The aptly named Forest of Fiends boasts a wealth of ", (name)trees, " and it shelters all manner of magical miscreants.  They rarely leave the ", (name)forest, " but occasionally trade with shopkeepers.";
       ],
     has scenery;
 
@@ -1717,14 +1723,18 @@ Object clearing "Shadowy Clearing"
           "Unconsciousness has improved his music considerably...";
         }
         else {
-          "A second rate songsmith in full dress.";
+          if (augustus hasnt general) {
+            "~And who might be this dashing chap, with maple ", (name)lute, " and ", (name)feathercap, "?^In violet velvet clothes uncreased from ", (name)tunic, " to his ", (name)codpiece, "!^Foresooth! ", (name)Augustus, " I am called! I sing of large! I sing of small!^I'll chronicle each pride and shame to craft the legend of your name!~";
+          }
+          else {
+          }
         }
       ],
       react_before [;
         Go:
           if (System.currentPuzzle == FIRST_PUZZLE) {
             if (actor == player && noun == s_obj) {
-              print "~Augustus, so enrapt in instrumental predilection^";
+              print "~Augustus, so enrapt in instrumental predilection,^";
               print "unknowingly he blocks our ";
               PrintStringOrArray(System.GetCodename());
               print "'s path in that direction!~^";
@@ -1812,6 +1822,33 @@ Object clearing "Shadowy Clearing"
           }
       ],
   has transparent proper animate;
+
+  Object -> -> feathercap "feathered cap"
+    with
+      name 'unfeathered' 'feathered' 'cap',
+      short_name [;
+        System.InlineLinkText("examine feathered cap", "feathered cap", LINKID_FEATHERCAP);
+        return true;
+        ],
+    has transparent;
+
+  Object -> -> tunic "billowing tunic"
+    with
+      name 'clothes' 'billowing' 'tunic',
+      bulky,
+      short_name [;
+        System.InlineLinkText("examine billowing tunic", "billowing tunic", LINKID_TUNIC);
+        return true;
+        ],
+    has clothing;
+
+  Object -> -> codpiece "codpiece"
+    with
+      name 'codpiece',
+      short_name [;
+        System.InlineLinkText("examine codpiece", "codpiece", LINKID_CODPIECE);
+        return true;
+        ];
 
   Object -> -> lute "lute"
     with
