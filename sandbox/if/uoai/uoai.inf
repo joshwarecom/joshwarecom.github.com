@@ -5,6 +5,7 @@ Release 1;
 
 Attribute custom_listing;
 Global DEATH_MENTION_UNDO;
+Constant MAX_SCORE = 1;
 Global TEST_MODE = true;
 
 Constant MAX_CARRIED = 2;
@@ -17,6 +18,14 @@ Include "uoai-vorple-multimedia.h";
 Include "vorple-hyperlinks.h";
 Include "vorple-command-prompt-control.h";
 Include "vorple-screen-effects.h";
+
+[ PrintRank;
+];
+
+[ DeathMessage;
+      if (deadflag == 3)
+          print "But you still have failed.";
+];
 
 [ ChooseObjects obj code
   retval;
@@ -169,6 +178,7 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
         bp_output_stream(-3);
         newcmd = longstr;
         switch (ev-->2) {
+          CSLINKID_EXAMINE:
           CSLINKID_TAKE:
           CSLINKID_DROP:
           CSLINKID_OPEN:
@@ -238,6 +248,9 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
           LINKID_BRANCHES: newcmd = "examine branches";
           LINKID_BROWNIES: newcmd = "examine brownies";
           LINKID_KNOTS: newcmd = "examine brownie knots";
+          LINKID_FEATHERCAP: newcmd = "examine feathered cap";
+          LINKID_TUNIC: newcmd = "examine billowing tunic";
+          LINKID_CODPIECE: newcmd = "examine codpiece";
           default: newcmd = 0;
         }
       }
@@ -345,7 +358,6 @@ Verb 'menu'
   PlaceInScope(blood);
   PlaceInScope(sleeve);
   PlaceInScope(narrator);
-  PlaceInScope(supplies);
   PlaceInScope(chill);
   PlaceInScope(tyrant);
 ];
@@ -562,10 +574,13 @@ Constant LINKID_OAK 54;
 Constant LINKID_BRANCHES 55;
 Constant LINKID_BROWNIES 56;
 Constant LINKID_KNOTS 57;
+Constant LINKID_FEATHERCAP 58;
+Constant LINKID_TUNIC 59;
+Constant LINKID_CODPIECE 60;
 
 Constant CSLINKID_MIN 1001;
 Constant CSLINKID_MAX 1999;
-Constant CSLINKID_INSPECT 1001; !RESUSE THIS VALUE FOR SOMETHING ELSE
+Constant CSLINKID_EXAMINE 1001; !RESUSE THIS VALUE FOR SOMETHING ELSE
 Constant CSLINKID_TAKE 1002;
 Constant CSLINKID_DROP 1003;
 Constant CSLINKID_OPEN 1004;
@@ -582,6 +597,12 @@ Constant MARTYRDOM_SOLUTION 5;
 Constant FIRST_PUZZLE 0;
 Constant SECOND_PUZZLE 1;
 Constant THIRD_PUZZLE 2;
+
+Constant PUGILISTICS_SCORE 0;
+Constant DRAUGHTISTRY_SCORE 1;
+Constant BLANDISHMENT_SCORE 2;
+Constant SHIRKOLOGY_SCORE 3;
+Constant MARTYRDOM_SCORE 4;
 
 Object System
   with
@@ -601,6 +622,7 @@ Object System
     disableHyperlinks 0,
     puzzleSolutions 0 0 0,
     currentPuzzle -1,
+    reputationScores 0 0 0 0 0,
     clickedContextSensitiveLink false,
     FlushBinOrTTSIfNarrationEnabled [;
       if (self.currentCmdSupportsPlayback ~= 1) {
@@ -697,6 +719,9 @@ Object System
       print " or ";
       self.InlineLink("No",LINKID_NO);
       print ".";
+      if (~~isVorpleSupported()) {
+        print "^";
+      }
     ],
     InlineLink [ text id;
       if (isVorpleSupported() && ~~self.disableHyperlinks) {
@@ -808,6 +833,17 @@ Object System
         print (markup) "<IMG SRC=100 ALT='MUSICAL INTERLUDE' WIDTH=500 HEIGHT=30><br>";
       }
     ],
+    ReportReputation [;
+      print "You will be remembered according to the following specific reputation scores:^";
+      print System.&reputationScores-->PUGILISTICS_SCORE, " for Pugilistics, the Sciences of Violences.^";
+      print System.&reputationScores-->DRAUGHTISTRY_SCORE, " for Draughtistry, your Notions for Potions.^";
+      print System.&reputationScores-->BLANDISHMENT_SCORE, " for Blandishment, the Knit of your Wit.^";
+      print System.&reputationScores-->SHIRKOLOGY_SCORE, " for Shirkology, your Mastery of Craven Surrender and Meaningless Death.^";
+      if (System.&reputationScores-->MARTYRDOM_SCORE == 0)
+        print System.&reputationScores-->MARTYRDOM_SCORE, " for Martyrdom, because you're Not Dead Yet.^";
+      else
+        print System.&reputationScores-->MARTYRDOM_SCORE, " for Martyrdom, May You Rest in Peace.^";
+    ],
     MultipleChoiceQuery [text r1 r2 r3 r4 r5 loop choice;
       .FreshQuery;
       loop = true;
@@ -912,6 +948,7 @@ Class HyperLinkedObject
   with
     GetContextSensitiveLinkID [cmd;
       switch (cmd) {
+        'examine': return CSLINKID_EXAMINE;
         'take': return CSLINKID_TAKE;
         'drop': return CSLINKID_DROP;
         'open': return CSLINKID_OPEN;
@@ -924,6 +961,7 @@ Class HyperLinkedObject
     ],
     GetContextSensitiveCommandWord [id;
       switch (id) {
+        CSLINKID_EXAMINE: return 'examine';
         CSLINKID_TAKE: return 'take';
         CSLINKID_DROP: return 'drop';
         CSLINKID_OPEN: return 'open';
@@ -1434,18 +1472,30 @@ Object clearing "Shadowy Clearing"
             print "Discretion is the better part of valor, so they say...^";
             print "Are you sure you wish to bravely run away?~^^";
             System.MsgYesOrNo();
+            if (~~isVorpleSupported()) {
+              print ">";
+            }
           }
           else {
             print "You haven't accomplished your mission yet.  Are you sure you wish to return to the monastery in disgrace? ";
             System.MsgYesOrNo();
+            if (~~isVorpleSupported()) {
+              print "^>";
+            }
           }
           System.FlushBinOrTTSIfNarrationEnabled();
           flee = YesOrNo();
+          ClearNarration();
           if (flee) {
             deadflag = 3;
+            score = score + 1;
+            System.&puzzleSolutions-->System.currentPuzzle = SHIRKOLOGY_SOLUTION;
+            System.&reputationScores-->SHIRKOLOGY_SCORE = System.&reputationScores-->SHIRKOLOGY_SCORE + 1;
           }
           else {
-
+            print "~Our ";
+            PrintStringOrArray(System.GetCodename());
+            print " answers Nay! And continues on their way...~^";
           }
           return true;
         }
@@ -1505,13 +1555,13 @@ Object clearing "Shadowy Clearing"
 
   Object -> knots "brownie knots"
     with
-      name 'brownie' 'knots',
+      name 'brownie' 'knots' 'glowing' 'bubbles',
       short_name [;
         System.InlineLinkText("examine brownie knots", "brownie knots", LINKID_KNOTS);
         return true;
       ],
       description [;
-        "Glowing bubbles of bark that erupt along the entire visible surface of ", (the) oak, "'s trunk.  Perhaps these are doors or windows of some kind.";
+        "Glowing bubbles of bark that erupt along the entire visible surface of ", (the) oak, "'s trunk.  Perhaps these are tiny doors or windows of some kind.";
       ],
     has scenery pluralname;
 
@@ -1533,7 +1583,7 @@ Object clearing "Shadowy Clearing"
 
   Object -> forest "forest"
     with
-      name 'forest' 'woods' 'fiends',
+      name 'forest' 'woods' 'fiends' 'of',
       short_name [;
         System.InlineLinkText("examine forest", "forest", LINKID_FOREST);
         return true;
@@ -1543,7 +1593,7 @@ Object clearing "Shadowy Clearing"
           "Baby steps, my friend.  Try climbing a single tree.";
       ],
       description [;
-        "The aptly named Forest of Fiends boasts a wealth of ", (name)trees, " and shelters all manner of magical miscreants who mostly stay in the woods, terrorizing some while trading with others.";
+        "The aptly named Forest of Fiends boasts a wealth of ", (name)trees, " and it shelters all manner of magical miscreants.  They rarely leave the ", (name)forest, " but occasionally trade with shopkeepers.";
       ],
     has scenery;
 
@@ -1555,9 +1605,7 @@ Object clearing "Shadowy Clearing"
         return true;
       ],
       description [;
-        print "It's a ";
-        self.short_name();
-        ".";
+        "The monastery of the Order of Humble Pride is buried deep within ", (the)forest, ".  You can't see it from here.";
       ],
       has scenery;
 
@@ -1675,14 +1723,18 @@ Object clearing "Shadowy Clearing"
           "Unconsciousness has improved his music considerably...";
         }
         else {
-          "A second rate songsmith in full dress.";
+          if (augustus hasnt general) {
+            "~And who might be this dashing chap, with maple ", (name)lute, " and ", (name)feathercap, "?^In violet velvet clothes uncreased from ", (name)tunic, " to his ", (name)codpiece, "!^Foresooth! ", (name)Augustus, " I am called! I sing of large! I sing of small!^I'll chronicle each pride and shame to craft the legend of your name!~";
+          }
+          else {
+          }
         }
       ],
       react_before [;
         Go:
           if (System.currentPuzzle == FIRST_PUZZLE) {
             if (actor == player && noun == s_obj) {
-              print "~Augustus, so enrapt in instrumental predilection^";
+              print "~Augustus, so enrapt in instrumental predilection,^";
               print "unknowingly he blocks our ";
               PrintStringOrArray(System.GetCodename());
               print "'s path in that direction!~^";
@@ -1771,6 +1823,33 @@ Object clearing "Shadowy Clearing"
       ],
   has transparent proper animate;
 
+  Object -> -> feathercap "feathered cap"
+    with
+      name 'unfeathered' 'feathered' 'cap',
+      short_name [;
+        System.InlineLinkText("examine feathered cap", "feathered cap", LINKID_FEATHERCAP);
+        return true;
+        ],
+    has transparent;
+
+  Object -> -> tunic "billowing tunic"
+    with
+      name 'clothes' 'billowing' 'tunic',
+      bulky,
+      short_name [;
+        System.InlineLinkText("examine billowing tunic", "billowing tunic", LINKID_TUNIC);
+        return true;
+        ],
+    has clothing;
+
+  Object -> -> codpiece "codpiece"
+    with
+      name 'codpiece',
+      short_name [;
+        System.InlineLinkText("examine codpiece", "codpiece", LINKID_CODPIECE);
+        return true;
+        ];
+
   Object -> -> lute "lute"
     with
       short_name [;
@@ -1822,11 +1901,9 @@ Object clearing "Shadowy Clearing"
              print " close against the ";
              chill.short_name();
              print " and adjust your ";
-             harness.short_name();
-             print " and ";
-             satchel.short_name();
-             print " of ";
-             supplies.short_name();
+             System.InlineLink("inventory",LINKID_INVENTORY);
+             print ": ", (a)harness;
+             print " and ", (a)satchel;
              print ".  Time to topple a ";
              tyrant.short_name();
              print "!";
@@ -2290,24 +2367,3 @@ Object tyrant "tyrant"
       return true;
     ],
   has scenery;
-
-Object supplies "supplies"
-  with
-    name 'supplies' 'supply',
-    before [;
-      if (action == ##Examine) {
-          <<UOAIInv>>;
-      }
-      else {
-        print "To interact with a specific supply item, refer to it by name.  The ";
-        System.InlineLinkText("inventory", "Inventory", LINKID_INVENTORY);
-        print " command will list all of your current ";
-        self.short_name();
-        ".";
-      }
-    ],
-    short_name [;
-      System.InlineLinkText("inventory", "supplies", LINKID_INVENTORY);
-      return true;
-    ],
-  has scenery pluralname;
