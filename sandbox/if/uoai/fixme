@@ -20,6 +20,8 @@ All:
 Lower the profile of the continue button
 Fix intro to allow for:
   QUIT, RESTART at arbitrary prompts
+Make sure all description functions end with newline.
+Double check fleeing north once prompts are recorded.
 
 Game:
 Spoken recording says "You can see" instead of "You can also see";

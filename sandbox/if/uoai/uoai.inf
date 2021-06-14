@@ -5,7 +5,7 @@ Release 1;
 
 Attribute custom_listing;
 Global DEATH_MENTION_UNDO;
-!Global TEST_MODE = true;
+Global TEST_MODE = true;
 
 Constant MAX_CARRIED = 2;
 Include "vorple.h";
@@ -99,6 +99,7 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
     if (System.previousExaminedItem)
       if (System.previousExaminedItem == noun)
         if (noun ofclass HyperLinkedObject) {
+          System.previousExaminedItem = 0;
           action = ##Interact;
         }
         else {}
@@ -110,7 +111,6 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
   switch (action) {
     ##Look:
     ##Examine:
-    ##Inspect:
     ##Search:
     ##UOAIInv:
     ##Go:
@@ -169,7 +169,6 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
         bp_output_stream(-3);
         newcmd = longstr;
         switch (ev-->2) {
-          CSLINKID_INSPECT:
           CSLINKID_TAKE:
           CSLINKID_DROP:
           CSLINKID_OPEN:
@@ -230,6 +229,15 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
           LINKID_4: newcmd = "4";
           LINKID_5: newcmd = "5";
           LINKID_HELP: newcmd = "Help";
+          LINKID_NORTH: newcmd = "go north";
+          LINKID_FOREST: newcmd = "examine forest";
+          LINKID_MONASTERY: newcmd = "examine monastery";
+          LINKID_TYRANT: newcmd = "examine tyrant";
+          LINKID_EAGLES: newcmd = "examine eagles";
+          LINKID_OAK: newcmd = "examine tall oak";
+          LINKID_BRANCHES: newcmd = "examine branches";
+          LINKID_BROWNIES: newcmd = "examine brownies";
+          LINKID_KNOTS: newcmd = "examine brownie knots";
           default: newcmd = 0;
         }
       }
@@ -328,12 +336,6 @@ Verb 'menu'
   }
 ];
 
-Verb 'inspect'
-  * noun -> Inspect;
-[ InspectSub;
-  ExamineSub();
-];
-
 [ PlayerAddToScope;
   PlaceInScope(shoulders);
   PlaceInScope(face);
@@ -345,6 +347,7 @@ Verb 'inspect'
   PlaceInScope(narrator);
   PlaceInScope(supplies);
   PlaceInScope(chill);
+  PlaceInScope(tyrant);
 ];
 
 [ GetFirstListedInventory o;
@@ -468,7 +471,7 @@ Verb 'inspect'
 
 [ EasterEggSub;
   System.codeNameLinkId = LINKID_HACKER;
-  "You discovered the super secret command! I hereby dub thee ~Hacker~.^";
+  "You discovered the super secret command! I hereby dub thee ~Hacker~.";
 ];
 
 
@@ -550,10 +553,19 @@ Constant LINKID_3 45;
 Constant LINKID_4 46;
 Constant LINKID_5 47;
 Constant LINKID_HELP 48;
+Constant LINKID_NORTH 49;
+Constant LINKID_FOREST 50;
+Constant LINKID_MONASTERY 51;
+Constant LINKID_TYRANT 52;
+Constant LINKID_EAGLES 53;
+Constant LINKID_OAK 54;
+Constant LINKID_BRANCHES 55;
+Constant LINKID_BROWNIES 56;
+Constant LINKID_KNOTS 57;
 
 Constant CSLINKID_MIN 1001;
 Constant CSLINKID_MAX 1999;
-Constant CSLINKID_INSPECT 1001;
+Constant CSLINKID_INSPECT 1001; !RESUSE THIS VALUE FOR SOMETHING ELSE
 Constant CSLINKID_TAKE 1002;
 Constant CSLINKID_DROP 1003;
 Constant CSLINKID_OPEN 1004;
@@ -893,13 +905,13 @@ Object System
     move sleeve to player;
     player.add_to_scope = PlayerAddToScope;
     StartDaemon(augustus);
+    StartDaemon(distant_watchman);
 ];
 
 Class HyperLinkedObject
   with
     GetContextSensitiveLinkID [cmd;
       switch (cmd) {
-        'inspect': return CSLINKID_INSPECT;
         'take': return CSLINKID_TAKE;
         'drop': return CSLINKID_DROP;
         'open': return CSLINKID_OPEN;
@@ -912,7 +924,6 @@ Class HyperLinkedObject
     ],
     GetContextSensitiveCommandWord [id;
       switch (id) {
-        CSLINKID_INSPECT: return 'inspect';
         CSLINKID_TAKE: return 'take';
         CSLINKID_DROP: return 'drop';
         CSLINKID_OPEN: return 'open';
@@ -977,7 +988,7 @@ Class HyperLinkedObject
 Class HyperLinkedItem
   class HyperLinkedObject,
   with
-    basic_commands 'inspect' 'take' 'drop';
+    basic_commands 'examine' 'take' 'drop';
 
 Class HyperLinkedWearable
   class HyperLinkedObject,
@@ -1012,11 +1023,11 @@ Class HyperLinkedContextQueues
 ];
 
 [ HelpCommand;
-  print "Help requested. Sound on / sound off.  Clickable prompt, commands.  Double examine.^";
+  print "Help requested. Sound on / sound off.  Clickable prompt, commands.  Double examine, Interact command.^";
 ];
 
 [ InitialQuery tmp;
-  print "^A twilight mission to cripple the crown, but some musician won't pipe down! Good thing foul play is your forte...^^";
+  print "^A twilight mission to cripple the crown, but some musician won't pipe down! Fortunately, foul play is your forte...^^";
 
   VorpleStyle(STYLE_EMPHASIS);
   print (markup) "<U>DIRECTOR'S NOTE:^This game supports clickable command words highlighted in this ";
@@ -1341,7 +1352,7 @@ Class HyperLinkedContextQueues
   print "^";
   print "~Who will fight oppression? Who will save us from our shame?^";
   print "One rises to the challenge! ";
-  PrintStringOrArray(System.GetCodeName());
+  PrintStringOrArray(System.GetCodename());
   print " is their name!^";
   print "^";
   print "Hello! Call me Augustus - apprentice songsmith.  Don't mind me, go on about your secret mission.  You won't even know I'm here.~^";
@@ -1366,25 +1377,37 @@ Object tower_base "Outer Watch Tower..."
   with
     x 10,
     y 9,
+    z 0,
     description "Safe here for now.",
     n_to clearing,
   has light;
 
-Object clearing "Shadowy Clearing..."
+
+Object climbed_oak "Tall Oak, Level 1"
   with
     x 10,
     y 10,
+    z 1,
+    description "Safe here for now.",
+    d_to clearing,
+  has light;
+
+Object clearing "Shadowy Clearing"
+  with
+    x 10,
+    y 10,
+    z 0,
     s_to tower_base,
     short_name [;
-      bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
-      print "na_msg_our_";
-      PrintStringOrArray(System.GetCodename(true));
-      bp_output_stream(-3);
-      QueueBinOutput(hugehugestr);
+      !bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+      !print "na_msg_our_";
+      !PrintStringOrArray(System.GetCodename(true));
+      !bp_output_stream(-3);
+      !QueueBinOutput(hugehugestr);
       QueueBinOutput("na_room_clearing");
-      print "Our ";
-      PrintStringOrArray(System.GetCodeName());
-      print " Lingers in a Shadowy Clearing^";
+      !print "Our ";
+      !PrintStringOrArray(System.GetCodename());
+      print "You Linger in a Shadowy Clearing^";
       return true;
     ],
     description [;
@@ -1394,21 +1417,38 @@ Object clearing "Shadowy Clearing..."
       print ", the ";
       distant_tower.short_name();
       print " rises high above the ";
-      trees.short_name();
+      forest.short_name();
+      print ".  A treacherous trek ";
+      System.InlineLinkText("go north","north",LINKID_NORTH);
+      print " will take you back to the ";
+      monastery.short_name();
       ".";
     ],
-    before [;
-      Jump:
-        VorpleStopSoundEffects();
-        QueueBinOutput("na_msg_jump");
-        print "Everything falls silent.^";
-        System.FlushBinOrTTSIfNarrationEnabled();
-        rtrue;
-      Sing:
-        QueueBinOutput("na_msg_jump");
-        print "Everything falls silent.^";
-        System.FlushBinOrTTSIfNarrationEnabled();
-        rtrue;
+    before [flee;
+      Go:
+        if (noun == n_obj) {
+          if (augustus in real_location && augustus hasnt general) {
+            print "~If ";
+            PrintStringOrArray(System.GetCodename());
+            print " goes home now, they surely lose the day!^";
+            print "Discretion is the better part of valor, so they say...^";
+            print "Are you sure you wish to bravely run away?~^^";
+            System.MsgYesOrNo();
+          }
+          else {
+            print "You haven't accomplished your mission yet.  Are you sure you wish to return to the monastery in disgrace? ";
+            System.MsgYesOrNo();
+          }
+          System.FlushBinOrTTSIfNarrationEnabled();
+          flee = YesOrNo();
+          if (flee) {
+            deadflag = 3;
+          }
+          else {
+
+          }
+          return true;
+        }
     ],
   has light;
 
@@ -1421,14 +1461,125 @@ Object clearing "Shadowy Clearing..."
       ],
       before [;
         Climb:
-          "Climbing the tree...";
+          "Is there a specific tree you have in mind?";
       ],
       description [;
-        print "Just some ";
+        "A distinguished variety of deciduous vegetation surrounds you.  A ", (name)oak, ", featuring low, inviting ", (name)branches, " and pockmarked with ", (name)knots, " stands out in particular.";
+      ],
+    has scenery pluralname;
+
+  Object -> oak "tall oak"
+    with
+      name 'tall' 'oak' 'trunk',
+      short_name [;
+        System.InlineLinkText("examine tall oak", "tall oak", LINKID_OAK);
+        return true;
+      ],
+      before [;
+        Climb:
+          PlayerTo(climbed_oak);
+          return true;
+      ],
+      description [;
+        print (The)oak, " easily stands half as high as the ", (name)distant_tower, " itself.  Tiny pairs of bright yellow ";
+        System.InlineLinkText("examine eyes", "eyes", LINKID_BROWNIES);
+        print " sparkle at you from within the many ", (name)knots, " found up and down the trunk.^";
+      ],
+    has scenery;
+
+  Object -> brownies "brownies"
+    with
+      name 'brownies' 'tiny' 'yellow' 'eyes' 'umber' 'tribe',
+      short_name [;
+        System.InlineLinkText("examine brownies", "brownies", LINKID_BROWNIES);
+        return true;
+      ],
+      description [;
+        print "You recognize them from their yellow ";
+        System.InlineLinkText("examine eyes", "eyes", LINKID_BROWNIES);
+        print " - this ";
+        System.InlineLinkText("examine tall oak", "oak", LINKID_OAK);
+        " is claimed by the Umber Tribe, a relatively friendly nation of brownie merchants and artisans.";
+      ],
+    has scenery pluralname;
+
+  Object -> knots "brownie knots"
+    with
+      name 'brownie' 'knots',
+      short_name [;
+        System.InlineLinkText("examine brownie knots", "brownie knots", LINKID_KNOTS);
+        return true;
+      ],
+      description [;
+        "Glowing bubbles of bark that erupt along the entire visible surface of ", (the) oak, "'s trunk.  Perhaps these are doors or windows of some kind.";
+      ],
+    has scenery pluralname;
+
+  Object -> branches "branches"
+    with
+      name 'low' 'inviting' 'branches',
+      short_name [;
+        System.InlineLinkText("examine branches", "branches", LINKID_BRANCHES);
+        return true;
+      ],
+      before [;
+        Climb:
+          <<Climb oak>>;
+      ],
+      description [;
+        "",(The)branches, " of ", (the)oak, " are sturdy and well within reach.";
+      ],
+    has scenery pluralname;
+
+  Object -> forest "forest"
+    with
+      name 'forest' 'woods' 'fiends',
+      short_name [;
+        System.InlineLinkText("examine forest", "forest", LINKID_FOREST);
+        return true;
+      ],
+      before [;
+        Climb:
+          "Baby steps, my friend.  Try climbing a single tree.";
+      ],
+      description [;
+        "The aptly named Forest of Fiends boasts a wealth of ", (name)trees, " and shelters all manner of magical miscreants who mostly stay in the woods, terrorizing some while trading with others.";
+      ],
+    has scenery;
+
+  Object -> monastery "monastery"
+    with
+      name 'monastery',
+      short_name [;
+        System.InlineLinkText("examine monastery", "monastery", LINKID_MONASTERY);
+        return true;
+      ],
+      description [;
+        print "It's a ";
         self.short_name();
         ".";
       ],
-    has scenery;
+      has scenery;
+
+    Object -> eagles "eagles"
+      with
+        name 'eagles',
+        short_name [;
+          System.InlineLinkText("examine eagles", "eagles", LINKID_MONASTERY);
+          return true;
+        ],
+        description [;
+          "Actually, ", (name)eagles, " have been extinct for centuries.  But one never knows.  Perhaps they'll come back, and if they do...you'll be ready.";
+        ],
+        before [;
+          if (action == ##Examine) {
+              return false;
+          }
+          else {
+            "You have no time to fantasize about frolicking with extinct avians.  Back to the business of rebellion!";
+          }
+        ],
+        has scenery pluralname;
 
   Object -> path "path"
     with
@@ -1468,17 +1619,16 @@ Object clearing "Shadowy Clearing..."
         return true;
       ],
       description [;
-        print "You can just make out a single ";
+        print "A ten story sandstone ", (name)distant_tower, " with no known proper enemies to watch for? Foolishness! You can just make out a single ";
         distant_watchman.short_name();
-        print " standing atop the ";
-        self.short_name();
-        ".";
+        " standing at the summit, no doubt wiling away the hours ogling ", (name)eagles, ".";
       ],
     has scenery;
 
   Object -> distant_watchman "watchman"
     with
       name 'guard' 'watchman',
+      facing s_obj,
       short_name [;
         System.InlineLinkText("examine watchman", "watchman", LINKID_WATCHMAN);
         return true;
@@ -1486,8 +1636,27 @@ Object clearing "Shadowy Clearing..."
       description [;
         print "You cannot see the ";
         self.short_name();
-        " very well from here.  He can likely scan for miles in all directions from his position on ", (the)distant_tower, ".";
+        print " very well from here.  He can likely scan for miles in all directions from his position on ", (the)distant_tower, ".  ";
+        print "At present, he faces ";
+        switch (self.facing) {
+          s_obj: print "south, his back turned to you";
+          w_obj: print "west";
+          n_obj: print "north, directly facing the forest and monastery";
+          e_obj: print "east";
+          default: print "south";
+        }
+        ".";
       ],
+      daemon [;
+        switch (self.facing) {
+          s_obj: self.facing = w_obj;
+          w_obj: self.facing = n_obj;
+          n_obj: self.facing = e_obj;
+          e_obj: self.facing = s_obj;
+          default: self.facing = s_obj;
+        }
+      ],
+
     has scenery;
 
   Object -> augustus "Augustus"
@@ -1509,6 +1678,18 @@ Object clearing "Shadowy Clearing..."
           "A second rate songsmith in full dress.";
         }
       ],
+      react_before [;
+        Go:
+          if (System.currentPuzzle == FIRST_PUZZLE) {
+            if (actor == player && noun == s_obj) {
+              print "~Augustus, so enrapt in instrumental predilection^";
+              print "unknowingly he blocks our ";
+              PrintStringOrArray(System.GetCodename());
+              print "'s path in that direction!~^";
+              return true;
+            }
+          }
+      ],
       RespondToCharge [;
         if (~~self.chargeQueryChoice) {
           self.chargeQueryChoice = self.QueryAboutCharge();
@@ -1525,7 +1706,9 @@ Object clearing "Shadowy Clearing..."
         }
         if (~~acted) {
           if (self.parchCount == 0) {
-            print "^^~Free drinks from the venue! It's in my contract.  Singing is thirsty work.~";
+            if (TestScope(self,player)) {
+              print "^~Free drinks from the venue! It's in my contract.  Singing is thirsty work.~^";
+            }
             self.parchCount = self.parchReset;
             acted = true;
           }
@@ -1540,6 +1723,8 @@ Object clearing "Shadowy Clearing..."
           lute.short_name();
           print " and obliviously blocking your ";
           path.short_name();
+          print " ";
+          System.InlineLinkText("go south","south",LINKID_SOUTH);
           ".";
         }
         else {
@@ -1642,7 +1827,9 @@ Object clearing "Shadowy Clearing..."
              satchel.short_name();
              print " of ";
              supplies.short_name();
-             print ".  Time to topple a tyrant!";
+             print ".  Time to topple a ";
+             tyrant.short_name();
+             print "!";
              self.state = 0;
         }
       ],
@@ -1742,7 +1929,7 @@ Object cloak "woven woolen cloak"
         print "^";
       ],
       before [;
-        if (action ~= ##Wear && action ~= ##Disrobe && action ~= ##Examine && action ~= ##Inspect && action ~= ##Interact) {
+        if (action ~= ##Wear && action ~= ##Disrobe && action ~= ##Examine && action ~= ##Interact) {
           "You cannot do much with ", (the)hood, " besides wear it or remove it.";
         }
         Wear:
@@ -1995,7 +2182,7 @@ Object shoulders "shoulders"
       System.InlineLinkText("examine my shoulders", "shoulders", LINKID_SHOULDERS);
       return true;
     ],
-  has scenery;
+  has scenery pluralname;
 
 Object face "face"
   with
@@ -2037,7 +2224,7 @@ Object hands "hands"
       System.InlineLinkText("examine my hands", "hands", LINKID_HANDS);
       return true;
     ],
-  has scenery;
+  has scenery pluralname;
 
 Object blood "blood"
   with
@@ -2066,7 +2253,7 @@ Object chill "chill"
     description [;
       print "It's ";
       System.InlineLinkText("examine chill", "chilly", LINKID_CHILL);
-      print ".";
+      print ".^";
     ],
     before [;
       if (action == ##Examine) {
@@ -2078,6 +2265,28 @@ Object chill "chill"
     ],
     short_name [;
       System.InlineLinkText("examine chill", "chill", LINKID_CHILL);
+      return true;
+    ],
+  has scenery;
+
+Object tyrant "tyrant"
+  with
+    name 'tyrant',
+    description [;
+      print "It's ";
+      self.short_name();
+      print ".^";
+    ],
+    before [;
+      if (action == ##Examine) {
+          return false;
+      }
+      else {
+        "Talk is cheap.  What are you actually going to do about the tyrant?";
+      }
+    ],
+    short_name [;
+      System.InlineLinkText("examine tyrant", "tyrant", LINKID_TYRANT);
       return true;
     ],
   has scenery;
@@ -2101,36 +2310,4 @@ Object supplies "supplies"
       System.InlineLinkText("inventory", "supplies", LINKID_INVENTORY);
       return true;
     ],
-  has scenery;
-
-Object room "Cell"
-  with
-    description [;
-      QueueBinOutput("na_desc_cell");
-      QueueBinOutput("0_25_silence");
-
-      "You are standing in a cell.  The only way out is down.";
-    ],
-    before [;
-      Go:
-        if (noun == d_obj) {
-          if (System.audioEnabled) {
-            VorpleExecuteJavaScriptCommand("PlayNowAsList('na_msg_game_over');");
-          }
-          print "Indeed, for you will not go gently into that good night.  Game over, for now.";
-          KeyCharPrimitive();
-          quit;
-        }
-    ],
-  has light;
-
-Object -> pistol "strange pistol"
-  with
-    name 'strange' 'pistol',
-    articles "=na_name_the_pistol;The " "=na_name_the_pistol;the " "=na_name_a_pistol;a ",
-    short_name "strange pistol",
-    description [;
-      QueueBinOutput("na_desc_pistol");
-      "There's no trigger.  You can't tell how to fire it.";
-    ],
-  has clothing;
+  has scenery pluralname;
