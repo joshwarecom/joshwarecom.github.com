@@ -1825,7 +1825,7 @@ Object clearing "Shadowy Clearing"
 
   Object -> -> feathercap "feathered cap"
     with
-      name 'unfeathered' 'feathered' 'cap',
+      name 'feathered' 'cap',
       short_name [;
         System.InlineLinkText("examine feathered cap", "feathered cap", LINKID_FEATHERCAP);
         return true;
@@ -1839,16 +1839,22 @@ Object clearing "Shadowy Clearing"
       short_name [;
         System.InlineLinkText("examine billowing tunic", "billowing tunic", LINKID_TUNIC);
         return true;
-        ],
+      ],
+      description [;
+        "Just about anyone would cut a dashing figure as this violet velvet tunic billowed in the breeze.";
+      ],
     has clothing;
 
   Object -> -> codpiece "codpiece"
     with
       name 'codpiece',
+      description [;
+        "Comfortable, practical and stylishly stitched from violet velvet.";
+      ],
       short_name [;
         System.InlineLinkText("examine codpiece", "codpiece", LINKID_CODPIECE);
         return true;
-        ];
+      ];
 
   Object -> -> lute "lute"
     with
@@ -1882,9 +1888,7 @@ Object clearing "Shadowy Clearing"
           }
       ],
       description [;
-        print "It's a ";
-        self.short_name();
-        ".";
+        "It looks expensive and delicate.";
       ],
     has clothing;
 

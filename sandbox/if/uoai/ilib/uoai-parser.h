@@ -3350,10 +3350,10 @@ Constant UNLIT_BIT  =  32;
     else                           L__M(##Miscellany, 46);
 
     j = number_of_classes; marker = 0;
+
     for (i=1 : i<=number_of_classes : i++) {
         while (((match_classes-->marker) ~= i) && ((match_classes-->marker) ~= -i)) marker++;
         k = match_list-->marker;
-
         if (match_classes-->marker > 0) print (the) k; else print (a) k;
 
         if (i < j-1)  print (string) COMMA__TX;
