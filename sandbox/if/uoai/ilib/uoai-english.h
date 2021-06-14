@@ -1013,7 +1013,7 @@ Constant LIBRARYV__TX   = " Library v";
   Inv: switch (n) {
         1:
 						QueueBinOutput("na_msg_empty_handed");
-						CSubjectIs  (actor,false); " empty handed.";
+						CSubjectIs  (actor,false); " empty handed.^";
         2:
 						QueueBinOutput("na_msg_youre_carrying");
 						CSubjectIs  (actor,false); print " carrying";
@@ -1437,9 +1437,12 @@ Constant LIBRARYV__TX   = " Library v";
         2:  "Ok.";
     }
   Score: switch (n) {
+				!FIXME implemented custom scoring
         1:  if (deadflag) print "In that game you scored "; else print "You have so far scored ";
-                print score, " out of a possible ", MAX_SCORE, ", in ", turns, " turn";
+                print score, " out of a possible ", MAX_SCORE, " reputation points, in ", turns, " turn";
                 if (turns ~= 1) print "s";
+								print ".^^";
+								System.ReportReputation();
                 return;
         2:  "There is no score in this story.";
     }
