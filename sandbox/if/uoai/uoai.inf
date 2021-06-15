@@ -1710,6 +1710,7 @@ Object clearing "Shadowy Clearing"
   Object -> augustus "Augustus"
     with
       chargeQueryChoice 0,
+      tuningCount 0,
       parchCount 2,
       parchReset 5,
 
@@ -1720,7 +1721,28 @@ Object clearing "Shadowy Clearing"
       name 'augustus',
       description [;
         if (self has general) {
-          "Unconsciousness has improved his music considerably...";
+          if (feathercap in self && feathercap has worn) {
+            print "An elegant ", (name)feathercap, " rests on his head.  ";
+          }
+          print "He is wearing ";
+          if (tunic in self && tunic has worn && codpiece in self && codpiece has worn) {
+            print "a matching violet velvet ", (name)tunic, " and ", (name)codpiece, ".  ";
+          }
+          else
+          if (tunic in self && tunic has worn) {
+            print "a violet velvet ", (name)tunic, ".  ";
+          }
+          else
+          if (codpiece in self && codpiece has worn) {
+            print "a violet velvet ", (name)codpiece, ".  ";
+          }
+          else {
+            print " nothing.  ";
+          }
+          if (lute in self) {
+            print "His hands curl tightly around the neck of his ", (name)lute, ".  ";
+          }
+          "Unconsciousness has improved his music considerably.";
         }
         else {
           if (augustus hasnt general) {
@@ -1824,39 +1846,103 @@ Object clearing "Shadowy Clearing"
   has transparent proper animate;
 
   Object -> -> feathercap "feathered cap"
+    class HyperLinkedItem HyperLinkedWearable,
     with
       name 'feathered' 'cap',
       short_name [;
         System.InlineLinkText("examine feathered cap", "feathered cap", LINKID_FEATHERCAP);
         return true;
         ],
-    has transparent;
+      description [;
+        "There is a shortage of perfect caps in this world.  It would be a shame to damage this one.";
+      ],
+      before [;
+        Take:
+          if (self hasnt general) {
+            if (augustus has general) {
+              if (self in augustus) {
+                move self to parent(player);
+                <Take self>;
+                if (self in player) {
+                  give self general;
+                  return true;
+                }
+                else {
+                  move self to augustus;
+                  return true;
+                }
+              }
+            }
+          }
+      ];
 
   Object -> -> tunic "billowing tunic"
+    class HyperLinkedItem HyperLinkedWearable,
     with
-      name 'clothes' 'billowing' 'tunic',
+      name 'violet' 'velvet' 'clothes' 'billowing' 'tunic',
       bulky,
       short_name [;
         System.InlineLinkText("examine billowing tunic", "billowing tunic", LINKID_TUNIC);
         return true;
       ],
       description [;
-        "Just about anyone would cut a dashing figure as this violet velvet tunic billowed in the breeze.";
+        "Just about anyone would cut an impressive figure as this violet velvet tunic billowed in the breeze.";
       ],
-    has clothing;
+      before [;
+        Take:
+          if (self hasnt general) {
+            if (augustus has general) {
+              if (self in augustus) {
+                move self to parent(player);
+                <Take self>;
+                if (self in player) {
+                  give self general;
+                  return true;
+                }
+                else {
+                  move self to augustus;
+                  return true;
+                }
+              }
+            }
+          }
+      ],
+    has clothing worn;
 
   Object -> -> codpiece "codpiece"
+    class HyperLinkedItem HyperLinkedWearable,
     with
-      name 'codpiece',
+      name 'violet' 'velvet' 'codpiece',
       description [;
         "Comfortable, practical and stylishly stitched from violet velvet.";
       ],
       short_name [;
         System.InlineLinkText("examine codpiece", "codpiece", LINKID_CODPIECE);
         return true;
-      ];
+      ],
+      before [;
+        Take:
+          if (self hasnt general) {
+            if (augustus has general) {
+              if (self in augustus) {
+                move self to parent(player);
+                <Take self>;
+                if (self in player) {
+                  give self general;
+                  return true;
+                }
+                else {
+                  move self to augustus;
+                  return true;
+                }
+              }
+            }
+          }
+      ],
+    has clothing worn;
 
   Object -> -> lute "lute"
+    class HyperLinkedItem,
     with
       short_name [;
         System.InlineLinkText("examine lute", "lute", LINKID_LUTE);
@@ -1870,23 +1956,23 @@ Object clearing "Shadowy Clearing"
             "Attacking ", (name)augustus, "' prized ", (name)lute, "? You cannot possibly be that cruel.";
           }
         Take:
-          if (lute hasnt general) {
+          if (self hasnt general) {
             if (augustus has general) {
-              if (lute in augustus) {
-                move lute to parent(player);
-                <Take lute>;
-                if (lute in player) {
-                  give lute general;
+              if (self in augustus) {
+                move self to parent(player);
+                <Take self>;
+                if (self in player) {
+                  give self general;
                   return true;
                 }
                 else {
-                  move lute to augustus;
+                  move self to augustus;
                   return true;
                 }
               }
             }
           }
-      ],
+        ],
       description [;
         "It looks expensive and delicate.";
       ],
