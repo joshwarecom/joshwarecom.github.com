@@ -6,6 +6,7 @@ Release 1;
 Attribute custom_listing;
 Global DEATH_MENTION_UNDO;
 Constant MAX_SCORE = 1;
+Constant NO_SCORE = 1;
 Global TEST_MODE = true;
 
 Constant MAX_CARRIED = 2;
@@ -23,8 +24,10 @@ Include "vorple-screen-effects.h";
 ];
 
 [ DeathMessage;
-      if (deadflag == 3)
-          print "But you still have failed.";
+      if (deadflag == 3) {
+        QueueBinOutput("na_msg_failure");
+        print "But you still have failed.";
+      }
 ];
 
 [ ChooseObjects obj code
@@ -125,6 +128,9 @@ Constant WORD_NEXTTOHIGHBIT = $40000000;
     ##Go:
     ##Open:
     ##Close:
+    ##Punch:
+    ##Kick:
+    ##Clap:
     default:
       System.currentCmdSupportsPlayback = 0;
   }
@@ -280,9 +286,11 @@ Verb 'kick'
   * noun -> Kick;
 [ KickSub;
   if (noun) {
+    QueueBinOutput("na_msg_kick_target");
     "As much as you love to show off your fancy martial monk kicking skills, time is of the essence tonight.  Stick to the tools of the trade.";
   }
   else {
+    QueueBinOutput("na_msg_kick_air");
     "You limber up with some vigorous air kicking, doubtless drawing no attention to yourself whatsoever.";
   }
 ];
@@ -292,9 +300,11 @@ Extend only 'punch' replace
   * noun -> Punch;
 [ PunchSub;
   if (noun) {
+    QueueBinOutput("na_msg_punch_target");
     "Not this time - fisticuffs are a woefully inefficient means of victorious engagement.";
   }
   else {
+    QueueBinOutput("na_msg_punch_air");
     "Nothing like a little shadow boxing to get the blood pumping, eh?";
   }
 ];
@@ -308,19 +318,20 @@ Verb 'clap'
   * 'hands' -> Clap
   * 'my' 'hands' -> Clap;
 [ ClapSub;
+  QueueBinOutput("na_msg_clap");
   print "You clap your hands.  ";
   if (charge notin nothing) {
     charge.TickTock();
     if (charge notin nothing) {
-      if (TestScope(player,charge)) {
-        print "The charge pulses ";
-        switch (charge.countdown) {
-          2: print "twice";
-          1: print "once";
-          default: print "several times";
-        }
-        " with a powerful red glow.";
-      }
+      !if (TestScope(player,charge)) {
+      !  print "The charge pulses ";
+      !  switch (charge.countdown) {
+      !    2: print "twice";
+      !    1: print "once";
+      !    default: print "several times";
+      !  }
+      !  " with a powerful red glow.";
+      !}
     }
   }
   print "^";
@@ -331,12 +342,14 @@ Verb 'menu'
   * -> Interact
   * noun -> Interact;
 
+!FIXME need to record narration for these.
 [ InteractSub;
   if (noun && noun ofclass HyperLinkedObject) {
     print "You might try: ";
     if (noun provides ListCommands) {
       noun.ListCommands();
     }
+    "";
   }
   else if (noun) {
     "There is no menu of suggestions for ", (the)noun;
@@ -346,6 +359,7 @@ Verb 'menu'
     System.InlineLink("look", LINKID_LOOK );
     print " , ";
     System.InlineLink("inventory", LINKID_INVENTORY);
+    "";
   }
 ];
 
@@ -483,6 +497,7 @@ Verb 'menu'
 
 [ EasterEggSub;
   System.codeNameLinkId = LINKID_HACKER;
+  QueueBinOutput("na_msg_secret_hacker");
   "You discovered the super secret command! I hereby dub thee ~Hacker~.";
 ];
 
@@ -714,6 +729,7 @@ Object System
       }
     ],
     MsgYesOrNo [;
+      QueueBinOutput("ma_msg_yesorno");
       print "Please answer ";
       self.InlineLink("Yes",LINKID_YES);
       print " or ";
@@ -825,14 +841,6 @@ Object System
         default: if (raw) return CODENAME_HACKER; return "Hacker";
       }
     ],
-    GraceNote [ channel;
-      if (isVorpleSupported()) {
-        VorpleImage("gracenotes.png", "MUSICAL INTERLUDE");
-      }
-      else {
-        print (markup) "<IMG SRC=100 ALT='MUSICAL INTERLUDE' WIDTH=500 HEIGHT=30><br>";
-      }
-    ],
     ReportReputation [;
       print "You will be remembered according to the following specific reputation scores:^";
       print System.&reputationScores-->PUGILISTICS_SCORE, " for Pugilistics, the Sciences of Violences.^";
@@ -844,15 +852,17 @@ Object System
       else
         print System.&reputationScores-->MARTYRDOM_SCORE, " for Martyrdom, May You Rest in Peace.^";
     ],
-    MultipleChoiceQuery [text r1 r2 r3 r4 r5 loop choice;
+    MultipleChoiceQuery [text r1 r2 r3 r4 r5 a1 a2 a3 a4 a5 loop choice;
       .FreshQuery;
       loop = true;
+      QueueBinOutput("na_msg_select_response");
       PrintStringOrArray(text);
       print "^";
       VorpleStyle(STYLE_EMPHASIS);
       print (markup)"^<U>Select your response:</U>^";
       VorpleEndStyle();
       if (r1) {
+        if (a1) QueueBinOutput(a1);
         print "  ";
         System.InlineLinkText("One","1",LINKID_1);
         print ". ";
@@ -860,6 +870,7 @@ Object System
         print "^";
       }
       if (r2) {
+        if (a2) QueueBinOutput(a2);
         print "  ";
         System.InlineLinkText("Two","2",LINKID_2);
         print ". ";
@@ -867,6 +878,7 @@ Object System
         print "^";
       }
       if (r3) {
+        if (a3) QueueBinOutput(a3);
         print "  ";
         System.InlineLinkText("Three","3",LINKID_3);
         print ". ";
@@ -874,6 +886,7 @@ Object System
         print "^";
       }
       if (r4) {
+        if (a4) QueueBinOutput(a4);
         print "  ";
         System.InlineLinkText("Four","4",LINKID_4);
         print ". ";
@@ -881,12 +894,14 @@ Object System
         print "^";
       }
       if (r5) {
+        if (a5) QueueBinOutput(a5);
         print "  ";
         System.InlineLinkText("Five","5",LINKID_5);
         print ". ";
         PrintStringOrArray(r5);
         print "^";
       }
+      QueueBinOutput("na_msg_zero_repeat");
       print "  ";
       VorpleStyle(STYLE_EMPHASIS);
       glk_set_style(style_Alert);
@@ -912,6 +927,7 @@ Object System
           loop = false;
         }
         else {
+          QueueBinOutput("na_msg_please_enter_selection");
           print "Please enter the number of your response, or 0 to repeat the question.^";
         }
       }
@@ -1061,7 +1077,7 @@ Class HyperLinkedContextQueues
 ];
 
 [ HelpCommand;
-  print "Help requested. Sound on / sound off.  Clickable prompt, commands.  Double examine, Interact command.^";
+  "Help requested. Sound on / sound off.  Clickable prompt, commands.  Double examine, Interact command.^";
 ];
 
 [ InitialQuery tmp;
@@ -1420,7 +1436,6 @@ Object tower_base "Outer Watch Tower..."
     n_to clearing,
   has light;
 
-
 Object climbed_oak "Tall Oak, Level 1"
   with
     x 10,
@@ -1430,6 +1445,19 @@ Object climbed_oak "Tall Oak, Level 1"
     d_to clearing,
   has light;
 
+  Object -> distant_augustus "Augustus"
+    with
+      name 'augustus',
+      short_name [;
+        System.InlineLinkText("examine Augustus", "Augustus", LINKID_AUGUSTUS);
+        return true;
+      ],
+      description [;
+        QueueBinOutput("na_desc_distant_augustus");
+        "You cannot see Augustus very well from here.";
+      ],
+    has scenery;
+
 Object clearing "Shadowy Clearing"
   with
     x 10,
@@ -1437,14 +1465,7 @@ Object clearing "Shadowy Clearing"
     z 0,
     s_to tower_base,
     short_name [;
-      !bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
-      !print "na_msg_our_";
-      !PrintStringOrArray(System.GetCodename(true));
-      !bp_output_stream(-3);
-      !QueueBinOutput(hugehugestr);
       QueueBinOutput("na_room_clearing");
-      !print "Our ";
-      !PrintStringOrArray(System.GetCodename());
       print "You Linger in a Shadowy Clearing^";
       return true;
     ],
@@ -1466,9 +1487,18 @@ Object clearing "Shadowy Clearing"
       Go:
         if (noun == n_obj) {
           if (augustus in real_location && augustus hasnt general) {
+            bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+            print "as_msg_flee_1_";
+            PrintStringOrArray(System.GetCodename(true));
+            bp_output_stream(-3);
+            QueueBinOutput(hugehugestr);
+            QueueBinOutput("as_msg_flee_2");
             print "~If ";
             PrintStringOrArray(System.GetCodename());
             print " goes home now, they surely lose the day!^";
+            if (isVorpleSupported()) {
+              print "^";
+            }
             print "Discretion is the better part of valor, so they say...^";
             print "Are you sure you wish to bravely run away?~^^";
             System.MsgYesOrNo();
@@ -1477,6 +1507,7 @@ Object clearing "Shadowy Clearing"
             }
           }
           else {
+            QueueBinOutput("na_msg_flee_narrator");
             print "You haven't accomplished your mission yet.  Are you sure you wish to return to the monastery in disgrace? ";
             System.MsgYesOrNo();
             if (~~isVorpleSupported()) {
@@ -1493,9 +1524,14 @@ Object clearing "Shadowy Clearing"
             System.&reputationScores-->SHIRKOLOGY_SCORE = System.&reputationScores-->SHIRKOLOGY_SCORE + 1;
           }
           else {
-            print "~Our ";
-            PrintStringOrArray(System.GetCodename());
-            print " answers Nay! And continues on their way...~^";
+            if (augustus hasnt general) {
+              QueueBinOutput("as_msg_nay");
+              print "~They answer Nay! And continue on their way...~^";
+            }
+            else {
+              QueueBinOutput("na_msg_nay");
+              print "Let's just forget this little conversation then.";
+            }
           }
           return true;
         }
@@ -1775,8 +1811,31 @@ Object clearing "Shadowy Clearing"
       ],
       daemon [ acted;
         if (self.parchCount > 0) self.parchCount = self.parchCount - 1;
-        if (TestScope(self,charge)) {
-          acted = self.RespondToCharge();
+        if (self.tuningCount > 0) {
+          self.tuningCount = self.tuningCount - 1;
+          if (self.tuningCount == 0) {
+            System.SetCurrentMusicLoop("music_loop_1");
+            System.RestartMusicLoop();
+            acted = true;
+            "^~Huzzah! She's back as good as new all thanks to me, no thanks to you!~";
+          }
+        }
+        if (~~acted) {
+          if (TestScope(self,charge)) {
+            acted = self.RespondToCharge();
+          }
+        }
+        if (~~acted) {
+          if (self.tuningCount > 0 && self.tuningCount < 2) {
+            acted = true;
+            print "^~Don't worry darling, I'll repair the damage done by ";
+            PrintStringOrArray(System.GetCodename());
+            " there!~";
+          }
+          else if (self.tuningCount == 2) {
+            System.SetCurrentMusicLoop("mu_tuning");
+            System.RestartMusicLoop();
+          }
         }
         if (~~acted) {
           if (self.parchCount == 0) {
@@ -1826,11 +1885,19 @@ Object clearing "Shadowy Clearing"
               "While ", (the)tool, " will certainly do the job, you may be left covered in the poor man's gore.  That won't be easy to explain to an officer, and your License to Lie has precious few uses left.  Save the blade for despots and their dogs.";
             }
             if (tool provides nonlethal) {
-              give augustus general;
-              StopDaemon(augustus);
-              System.currentPuzzle = SECOND_PUZZLE;
-              System.ClearMusicLoop();
-              "",(the)augustus, " is so busy playing that he doesn't even see it coming.  He drops like a stone.";
+              if (self.tuningCount > 0) {
+                give augustus general;
+                StopDaemon(augustus);
+                System.currentPuzzle = SECOND_PUZZLE;
+                System.ClearMusicLoop();
+                print "~Very clever, ";
+                PrintStringOrArray(System.GetCodename());
+                print " distracting me like so!^";
+                "You crept right up behind me and I didn't even...^ *THRONGMPH* oh...~";
+              }
+              else {
+                "~Raise your hand to strike me while I'm watching? Don't you dare!^I'm more a willing target if you catch me unaware.~";
+              }
             }
             if (tool provides weapon) {
               "Perhaps you could learn to wield ", (the)tool, " given sufficient time and practice.  Right now, you have neither.  Choose a more familiar ~friend~ for this work.";
@@ -1971,7 +2038,18 @@ Object clearing "Shadowy Clearing"
                 }
               }
             }
+            else {
+              if (augustus.tuningCount > 0) {
+                "Still tuning...";
+              }
+              else {
+                augustus.tuningCount = augustus.tuningCount + 3;
+                System.ClearMusicLoop();
+                "~Scoundrel! Unhand now my precious lute, thou greased buffoon!^Your cursed clumsy fingers left her sorely out of tune.~";
+              }
+            }
           }
+
         ],
       description [;
         "It looks expensive and delicate.";
@@ -1992,8 +2070,8 @@ Object clearing "Shadowy Clearing"
              chill.short_name();
              print " and adjust your ";
              System.InlineLink("inventory",LINKID_INVENTORY);
-             print ": ", (a)harness;
-             print " and ", (a)satchel;
+             print ": a ", (name)harness;
+             print " and a ", (name)satchel;
              print ".  Time to topple a ";
              tyrant.short_name();
              print "!";

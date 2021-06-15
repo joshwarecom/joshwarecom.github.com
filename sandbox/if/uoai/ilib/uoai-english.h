@@ -1237,7 +1237,16 @@ Constant LIBRARYV__TX   = " Library v";
             CSubjectVerb(player, false, true, "want", "want", "want", "want");
             if (x1 ~= player && x1 ~= nothing) print " ", (the) x1;
             print " to "; PrintCommand(); "?";
-        50: print "The score has just gone ";
+        50:
+						if (x1 > 0) {
+							QueueBinOutput("na_msg_score_up");
+						}
+						else {
+							QueueBinOutput("na_msg_score_down");
+						}
+						QueueBinOutput("na_msg_points");
+
+						print "The score has just gone ";
             if (x1 > 0) print "up"; else { x1 = -x1; print "down"; }
             print " by ", (number) x1, " point";
             if (x1 > 1) print "s";
@@ -1370,9 +1379,8 @@ Constant LIBRARYV__TX   = " Library v";
   Quit: switch (n) {
         1:
 						ClearNarration();
-						VorpleExecuteJavaScriptCommand("AddTTS('Please answer yes or no.');");
-						System.FlushBinOrTTSIfNarrationEnabled();
 						System.MsgYesOrNo();
+						System.FlushBinOrTTSIfNarrationEnabled();
         2:
 						ClearNarration();
     				VorpleExecuteJavaScriptCommand("AddTTS('Are you sure you want to quit?');");
@@ -1444,7 +1452,9 @@ Constant LIBRARYV__TX   = " Library v";
 								print ".^^";
 								System.ReportReputation();
                 return;
-        2:  "There is no score in this story.";
+        2:
+						QueueBinOutput("na_msg_no_score");
+						"There is no score in this story.";
     }
   ScriptOff: switch (n) {
         1:  "Transcripting is already off.";
