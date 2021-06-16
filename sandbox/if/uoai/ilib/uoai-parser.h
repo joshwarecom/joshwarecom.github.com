@@ -3178,8 +3178,8 @@ Constant UNLIT_BIT  =  32;
         number_matched = 0;  ! ask question for 'take three'
     if (number_matched == 1) i = match_list-->0;
     if (number_matched > 1) {
-				!FIXME disable noun guessing
-        !i = Adjudicate(context);
+        i = Adjudicate(context);
+				!FIXME allow adjudication but disable noun guessing
 				i = 0;
         if (i == -1) rfalse;
         if (i == 1) rtrue;       !  Adjudicate has made a multiple
