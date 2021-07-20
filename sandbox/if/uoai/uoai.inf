@@ -728,8 +728,9 @@ Object System
         ClearScreen();
       }
     ],
-    MsgYesOrNo [;
-      QueueBinOutput("ma_msg_yesorno");
+    MsgYesOrNo [silent;
+      if (~~silent)
+        QueueBinOutput("ma_msg_yesorno");
       print "Please answer ";
       self.InlineLink("Yes",LINKID_YES);
       print " or ";
@@ -1156,8 +1157,8 @@ Class HyperLinkedContextQueues
       #Endif;
       InitialQuery();
       print "^Would you like to enable audio? ";
-      System.MsgYesOrNo();
-      System.audioEnabled = YesOrNo();
+      System.MsgYesOrNo(true);
+      System.audioEnabled = YesOrNo(true);
       if (System.audioEnabled) {
         ClearNarration();
         QueueBinOutput("3_0_silence");
@@ -1180,7 +1181,6 @@ Class HyperLinkedContextQueues
         else {
           VorpleExecuteJavaScriptCommand("ToggleAudioExtension();");
           ClearNarration();
-          QueueBinOutput("3_0_silence");
           System.SetCurrentWeatherLoop("se_rain30");
           System.RestartWeatherLoop();
           VorplePlaySoundEffect("se_thunder_1");
@@ -1703,6 +1703,7 @@ Object clearing "Shadowy Clearing"
         return true;
       ],
       description [;
+        QueueBinOutput("na_desc_distant_tower");
         print "A ten story sandstone ", (name)distant_tower, " with no known proper enemies to watch for? Foolishness! You can just make out a single ";
         distant_watchman.short_name();
         " standing at the summit, no doubt wiling away the hours ogling ", (name)eagles, ".";
@@ -1718,6 +1719,18 @@ Object clearing "Shadowy Clearing"
         return true;
       ],
       description [;
+        QueueBinOutput("na_desc_distant_watchman_1");
+        bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+        print "na_desc_distant_watchman_2_";
+        switch (self.facing) {
+          s_obj: print "south, his back turned to you";
+          w_obj: print "west";
+          n_obj: print "north, directly facing the forest and monastery";
+          e_obj: print "east";
+          default: print "south";
+        }
+        bp_output_stream(-3);
+        QueueBinOutput(hugehugestr);
         print "You cannot see the ";
         self.short_name();
         print " very well from here.  He can likely scan for miles in all directions from his position on ", (the)distant_tower, ".  ";
@@ -1792,7 +1805,16 @@ Object clearing "Shadowy Clearing"
         Go:
           if (System.currentPuzzle == FIRST_PUZZLE) {
             if (actor == player && noun == s_obj) {
+              QueueBinOutput("as_block_1");
+              bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+              print "as_block_2_";
+              PrintStringOrArray(System.GetCodename(true));
+              bp_output_stream(-3);
+              QueueBinOutput(hugehugestr);
               print "~Augustus, so enrapt in instrumental predilection,^";
+              if (isVorpleSupported()) {
+                print "^";
+              }
               print "unknowingly he blocks our ";
               PrintStringOrArray(System.GetCodename());
               print "'s path in that direction!~^";
