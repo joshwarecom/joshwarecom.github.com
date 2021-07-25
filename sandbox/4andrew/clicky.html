@@ -1,0 +1,16 @@
+<span id="myspan"></span>
+<script>
+var e = document.createElement("input");
+e.type = "button";
+e.value = "button";
+e.name = "button";
+e.onclick = function() {
+	alert("KA-CLICK!");
+};
+function clicky() {
+	e.click();
+}
+document.getElementById("myspan").appendChild(e);
+setTimeout(clicky,2000);
+</script>
+<br>Clicking above button in 2 seconds...
