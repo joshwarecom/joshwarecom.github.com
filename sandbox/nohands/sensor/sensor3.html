@@ -1,4 +1,4 @@
-Sensor 3d:<br><br>
+Sensor 3e:<br><br>
 
 Latitude 1: <div id="startLat"></div><br>
 Longitude 1: <div id="startLon"></div><br>
@@ -106,10 +106,14 @@ function success2(pos2) {
 
 
   var seconds = (tme2.getTime() - tme.getTime()) / 1000;
-
+  alert('calculating speed');
+  speed = -1;
   try {
-    var speed = calculateSpeed(0,crd.latitude,crd.longitude,seconds,crd2.latitude,crd2.longitude);
+    alert('before');
+    speed = calculateSpeed(0,crd.latitude,crd.longitude,seconds,crd2.latitude,crd2.longitude);
+    alert('after');
   } catch(e) { alert(e);}
+  alert('speed done');
   document.getElementById('speed').innerHTML = speed;
 }
 
