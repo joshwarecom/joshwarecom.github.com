@@ -1,9 +1,10 @@
-Sensor Draft 1.
+Sensor Draft 1b.
 
 <script>
+  var positionOption = { timeout: 10000, enableHighAccuracy: true };
   function getLocation() {
     if(navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, positionOption);
     }
     else {
       alert("Geolocation is not supported by this browser.");
