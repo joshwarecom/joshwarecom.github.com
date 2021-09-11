@@ -1,3 +1,5 @@
+Sensor 3b:<br><br>
+
 Latitude 1: <div id="startLat"></div><br>
 Longitude 1: <div id="startLon"></div><br>
 Accuracy 1: <div id="accuracy"></div><br>
@@ -39,7 +41,8 @@ Error message: <div id="errMsg"></div><br>
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var distance = R * c;
     // From cletus' answer ends
-
+    alert(distance);
+    alert(t2-t1);
     return distance / (t2 - t1);
   }
 
