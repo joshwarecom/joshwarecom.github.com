@@ -1,7 +1,7 @@
-Sensor Draft 1b.
+Sensor Draft 1c.
 
 <script>
-  var positionOption = { timeout: 10000, enableHighAccuracy: true };
+  var positionOption = {enableHighAccuracy:false,maximumAge:Infinity, timeout:60000};
   function getLocation() {
     if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(geoSuccess, geoError, positionOption);
