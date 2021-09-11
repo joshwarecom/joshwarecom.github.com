@@ -1,21 +1,55 @@
-<meta http-equiv="refresh" content="10">
-Latitude: <div id="startLat"></div><br>
-Longitude: <div id="startLon"></div><br>
-Altitude: <div id="altitude"></div><br>
-Accuracy: <div id="accuracy"></div><br>
-Date code: <div id="dateCode"></div><br>
-Time code: <div id="timeCode"></div><br>
+Latitude 1: <div id="startLat"></div><br>
+Longitude 1: <div id="startLon"></div><br>
+Accuracy 1: <div id="accuracy"></div><br>
+Date code 1: <div id="dateCode"></div><br>
+Time code 1: <div id="timeCode"></div><br>
+Latitude 2: <div id="startLat2"></div><br>
+Longitude 2: <div id="startLon2"></div><br>
+Accuracy 2: <div id="accuracy2"></div><br>
+Date code 2: <div id="dateCode2"></div><br>
+Time code 2: <div id="timeCode2"></div><br>
+
 Speed: <div id="speed"></div><br>
 Error message: <div id="errMsg"></div><br>
 
 <script>
+  function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+  }
+
+  function calculateSpeed(t1, lat1, lng1, t2, lat2, lng2) {
+    // From Caspar Kleijne's answer starts
+    /** Converts numeric degrees to radians */
+    if (typeof(Number.prototype.toRad) === "undefined") {
+      Number.prototype.toRad = function() {
+        return this * Math.PI / 180;
+      }
+    }
+    // From Caspar Kleijne's answer ends
+    // From cletus' answer starts
+    var R = 6371; // km
+    var dLat = (lat2-lat1).toRad();
+    var dLon = (lng2-lng1).toRad();
+    var lat1 = lat1.toRad();
+    var lat2 = lat2.toRad();
+
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) *    Math.cos(lat2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var distance = R * c;
+    // From cletus' answer ends
+
+    return distance / (t2 - t1);
+  }
+
   var options = {
   // enableHighAccuracy can slower response times or increase power consumption
   enableHighAccuracy: true,
   // Maximum length of time (in milliseconds) the device is allowed to return a position
-  timeout: 5000,
+  timeout: 10000,
   // Maximum age in milliseconds of a possible cached position that is acceptable
-  maximumAge: 1000 * 5 * 3
+  maximumAge: 1000
 };
 
 function startGeoLookup() {
@@ -23,29 +57,46 @@ function startGeoLookup() {
 }
 startGeoLookup();
 
-function success(pos) {
-  var crd = pos.coords;
-  var tme = pos.timestamp;
-  var d = new Date(tme);
-  var t = new Date(tme);
+function startGeoLookup2() {
+  navigator.geolocation.getCurrentPosition(success2, error, options);
+}
 
-  // alert("Altitude: " + crd.altitude + " \nAltitudeAccuracy: " + crd.altitudeAccuracy);
+crd = null;
+tme = null;
+d = null;
+t = null;
+
+function success(pos) {
+  crd = pos.coords;
+  tme = pos.timestamp;
+  d = new Date(tme);
+  t = new Date(tme);
+
   var roundAcc = Math.floor(crd.accuracy);
   document.getElementById('startLat').innerHTML = crd.latitude;
   document.getElementById('startLon').innerHTML = crd.longitude;
-  if(!crd.altitude) {
-    document.getElementById('altitude').innerHTML = "Not available on this device."
-  }
-  else {
-    let altitudeInFeet = Math.ceil(crd.altitude * 3.28);
-    document.getElementById('altitude').innerHTML = (altitudeInFeet + "'");
-  }
 
   document.getElementById('accuracy').innerHTML = roundAcc + " Meters";
   document.getElementById('dateCode').innerHTML = d.toLocaleString().slice(0, 10);
   document.getElementById('timeCode').innerHTML = t.toLocaleString().slice(10, 25);
+  setTimeout(function (e) { startGeoLookup2();},5000);
+}
 
-  var speed = pos.coords.speed;
+function success2(pos2) {
+  var crd2 = pos2.coords;
+  var tme2 = pos2.timestamp;
+  var d2 = new Date(tme2);
+  var t2 = new Date(tme2);
+
+  var roundAcc = Math.floor(crd2.accuracy);
+  document.getElementById('startLat2').innerHTML = crd2.latitude;
+  document.getElementById('startLon2').innerHTML = crd2.longitude;
+
+  document.getElementById('accuracy2').innerHTML = roundAcc + " Meters";
+  document.getElementById('dateCode2').innerHTML = d2.toLocaleString().slice(0, 10);
+  document.getElementById('timeCode2').innerHTML = t2.toLocaleString().slice(10, 25);
+
+  var speed = calculateSpeed(1,crd.latitude,crd.longitude,2,crd2.latitude,crd2.longitude);
   document.getElementById('speed').innerHTML = speed;
 }
 
