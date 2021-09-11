@@ -1,4 +1,4 @@
-Sensor 3c:<br><br>
+Sensor 3d:<br><br>
 
 Latitude 1: <div id="startLat"></div><br>
 Longitude 1: <div id="startLon"></div><br>
@@ -23,6 +23,7 @@ Error message: <div id="errMsg"></div><br>
   function calculateSpeed(t1, lat1, lng1, t2, lat2, lng2) {
     // From Caspar Kleijne's answer starts
     /** Converts numeric degrees to radians */
+    alert(1);
     if (typeof(Number.prototype.toRad) === "undefined") {
       Number.prototype.toRad = function() {
         return this * Math.PI / 180;
@@ -35,10 +36,13 @@ Error message: <div id="errMsg"></div><br>
     var dLon = (lng2-lng1).toRad();
     var lat1 = lat1.toRad();
     var lat2 = lat2.toRad();
+    alert(2);
 
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
       Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) *    Math.cos(lat2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    alert(3);
+
     var distance = R * c;
     // From cletus' answer ends
     alert(distance);
