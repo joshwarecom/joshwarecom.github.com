@@ -1,9 +1,11 @@
+<meta http-equiv="refresh" content="10">
 Latitude: <div id="startLat"></div><br>
 Longitude: <div id="startLon"></div><br>
 Altitude: <div id="altitude"></div><br>
 Accuracy: <div id="accuracy"></div><br>
 Date code: <div id="dateCode"></div><br>
 Time code: <div id="timeCode"></div><br>
+Speed: <div id="speed"></div><br>
 Error message: <div id="errMsg"></div><br>
 
 <script>
@@ -42,6 +44,9 @@ function success(pos) {
   document.getElementById('accuracy').innerHTML = roundAcc + " Meters";
   document.getElementById('dateCode').innerHTML = d.toLocaleString().slice(0, 10);
   document.getElementById('timeCode').innerHTML = t.toLocaleString().slice(10, 25);
+
+  var speed = pos.coords.speed;
+  document.getElementById('speed').innerHTML = speed;
 }
 
 /* Error Codes: 1 PERMISSION_DENIED, 2 POSITION_UNAVAILABLE, 3 TIMEOUT */
