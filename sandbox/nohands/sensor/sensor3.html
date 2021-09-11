@@ -1,4 +1,4 @@
-Sensor 3f:<br><br>
+Sensor 3g:<br><br>
 
 Latitude 1: <div id="startLat"></div><br>
 Longitude 1: <div id="startLon"></div><br>
@@ -83,7 +83,7 @@ function success(pos) {
   document.getElementById('accuracy').innerHTML = roundAcc + " Meters";
   document.getElementById('dateCode').innerHTML = d.toLocaleString().slice(0, 10);
   document.getElementById('timeCode').innerHTML = t.toLocaleString().slice(10, 25);
-  setTimeout(function (e) { startGeoLookup2();},5000);
+  setTimeout(function (e) { startGeoLookup2();},15000);
 }
 
 function success2(pos2) {
