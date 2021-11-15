@@ -1,0 +1,25 @@
+Sensor Draft 1c.
+
+<script>
+  var positionOption = {enableHighAccuracy:false,maximumAge:Infinity, timeout:60000};
+  function getLocation() {
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(geoSuccess, geoError, positionOption);
+    }
+    else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  function geoSuccess(position) {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+      alert("lat:" + lat + " lng:" + lng);
+  }
+
+  function geoError() {
+      alert("Geocoder failed.");
+  }
+
+  getLocation();
+</script>
