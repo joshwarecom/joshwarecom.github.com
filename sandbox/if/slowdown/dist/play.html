@@ -22,17 +22,8 @@
         <div id="spinner">V</div>
     </div>
 </main>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="interpreter/vorple.min.js"></script>
-<script>
-    if (location.protocol === "file:") {
-      var interpolation = document.createElement('script');
-      interpolation.setAttribute('src','demo.ulx.js');
-      document.head.appendChild(interpolation);
-    }
-</script>
-
-
 <script>
     vorple.debug.off();
     vorple.options = {
@@ -47,22 +38,34 @@
         story: "demo.ulx"
     };
 
-	function processingEffectFilter( input, meta ) {
-	    // let the effect happen also when input is given programmatically,
-	    // but not when it's completely hidden
-	    if( meta.type !== "line" || meta.silent ) {
-	        return;
-	    }
-	    // toastr is the notification library that's bundled with Vorple.
-	    toastr.info( "Processing...", { timeOut: 3000 } );  // 3000 ms = 3 seconds
-
-	    // when the notification has disappeared, continue with the game
-	    return new Promise( function( resolve ) {
-	        setTimeout( resolve, 3000 );
-	    });
-	}
-	vorple.prompt.addInputFilter( processingEffectFilter );
-
 	vorple.init();
+
+	completeContent = null;
+	splitContent = null;
+	function applyDelays(index) {
+		if (index < splitContent.length-1) {
+			document.getElementById("lineinput").style.display="none";
+
+			document.querySelector(".turn.previous").innerHTML = "";
+			for (i = 0; i <= index; i++)
+				document.querySelector(".turn.previous").innerHTML += splitContent[i] + "</span>";
+
+			setTimeout(applyDelays, 1000, index+1);
+		}
+		else {
+			document.getElementById("lineinput").style.display="";
+			document.getElementById("lineinput-field").focus();
+			document.querySelector(".turn.previous").innerHTML = completeContent;
+		}
+	}
+
+	function htmlListener( event ) {
+		completeContent = document.querySelector(".turn.previous").innerHTML;
+		splitContent = completeContent.split("=!;");
+		completeContent = completeContent.replaceAll("=!;","");
+		setTimeout(applyDelays,0, 0);
+	}
+	vorple.addEventListener( [ "expectCommand", "expectKeypress" ], htmlListener );
+
 </script></body>
 </html>
