@@ -43,6 +43,11 @@
 	completeContent = null;
 	splitContent = null;
 	function applyDelays(index) {
+		e = document.querySelector(".turn");
+		if (e) e.style.color = "black";
+		e = document.querySelector(".turn.previous");
+		if (e) e.style.color = "black";
+
 		if (index < splitContent.length-1) {
 			document.getElementById("lineinput").style.display="none";
 

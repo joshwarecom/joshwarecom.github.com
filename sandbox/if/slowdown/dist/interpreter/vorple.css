@@ -8,6 +8,10 @@ a, a:visited {
     color: #369;
 }
 
+.turn {
+    color: white;
+}
+
 blockquote {
     border: 1px solid #ccc;
     padding: 0.5em 1em;
