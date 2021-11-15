@@ -43,21 +43,29 @@
 	completeContent = null;
 	splitContent = null;
 	function applyDelays(index) {
+		//to avoid HTML flicker, CSS set the text to white-on-white.  When the delay is applied here, we change the color to black so that it is only visible after the delays begin to be proccessed.
 		e = document.querySelector(".turn");
 		if (e) e.style.color = "black";
 		e = document.querySelector(".turn.previous");
 		if (e) e.style.color = "black";
 
+		//loop through the splitContent array; each element represents an item that should be preceded by a pause
 		if (index < splitContent.length-1) {
+			//hide the input field while pausing to prevent the user from entering a command during the pause.
 			document.getElementById("lineinput").style.display="none";
 
 			document.querySelector(".turn.previous").innerHTML = "";
-			for (i = 0; i <= index; i++)
-				document.querySelector(".turn.previous").innerHTML += splitContent[i] + "</span>";
+			freshHTML = "";
+			for (i = 0; i <= index; i++) {
+				freshHTML += splitContent[i]
+			}
+			document.querySelector(".turn.previous").innerHTML = freshHTML;
 
+			//pause before rending the next part of the text.
 			setTimeout(applyDelays, 1000, index+1);
 		}
 		else {
+			//all pauses have been rendered, just render all of the text at once.
 			document.getElementById("lineinput").style.display="";
 			document.getElementById("lineinput-field").focus();
 			document.querySelector(".turn.previous").innerHTML = completeContent;
@@ -66,9 +74,20 @@
 
 	function htmlListener( event ) {
 		completeContent = document.querySelector(".turn.previous").innerHTML;
+		//search the text for token "=!;", if any are found, call applyDelays to render pauses in the text.
 		splitContent = completeContent.split("=!;");
+		//remove the pause tokens from the text so that they do not print.
 		completeContent = completeContent.replaceAll("=!;","");
-		setTimeout(applyDelays,0, 0);
+		if (splitContent.length > 1) {
+			setTimeout(applyDelays,0, 0);
+		}
+		else {
+			//if no pause tokens were found, just render all of the text at once and make sure the color has been updated to black (it was set to white by default in the CSS to avoid flicker when rendering pauses)
+			e = document.querySelector(".turn");
+			if (e) e.style.color = "black";
+			e = document.querySelector(".turn.previous");
+			if (e) e.style.color = "black";
+		}
 	}
 	vorple.addEventListener( [ "expectCommand", "expectKeypress" ], htmlListener );
 

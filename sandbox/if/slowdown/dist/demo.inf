@@ -10,7 +10,7 @@ Include "grammar.h";
 
 Object room "A Slow, Boring Room"
   with
-    description "Just a slow, boring room.",
+    description "You are in an exceedingly quiet room.  You can hear your heart beating.  =!;Thump-thump.  =!;Thump-thump.  =!;Thump-thump.",
   has light;
 
 [ Initialise;
