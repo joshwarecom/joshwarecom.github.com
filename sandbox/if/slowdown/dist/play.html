@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <title>Vorple</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="interpreter/roboto.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/jquery.powertip.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/toastr.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vex.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vex-theme-plain.css">
+
+    <link rel="stylesheet" type="text/css" href="interpreter/haven.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vorple.css">
+</head>
+<body>
+<main id="vorple">
+    <div id="loader">
+        <h2 id="loader-message">Loading scripts</h2>
+        <div id="spinner">V</div>
+    </div>
+</main>
+
+<script src="interpreter/vorple.min.js"></script>
+<script>
+    if (location.protocol === "file:") {
+      var interpolation = document.createElement('script');
+      interpolation.setAttribute('src','demo.ulx.js');
+      document.head.appendChild(interpolation);
+    }
+</script>
+
+
+<script>
+    vorple.debug.off();
+    vorple.options = {
+        autosave: false,
+        engineColors: false,
+        resource_paths: {
+            images: "resources/images/",
+            audio: "resources/audio/"
+        },
+
+        // URL to the game file
+        story: "demo.ulx"
+    };
+
+	function processingEffectFilter( input, meta ) {
+	    // let the effect happen also when input is given programmatically,
+	    // but not when it's completely hidden
+	    if( meta.type !== "line" || meta.silent ) {
+	        return;
+	    }
+	    // toastr is the notification library that's bundled with Vorple.
+	    toastr.info( "Processing...", { timeOut: 3000 } );  // 3000 ms = 3 seconds
+
+	    // when the notification has disappeared, continue with the game
+	    return new Promise( function( resolve ) {
+	        setTimeout( resolve, 3000 );
+	    });
+	}
+	vorple.prompt.addInputFilter( processingEffectFilter );
+
+	vorple.init();
+</script></body>
+</html>

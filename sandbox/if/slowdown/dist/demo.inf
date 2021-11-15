@@ -1,0 +1,19 @@
+Constant Story "Slow and Steady";
+Constant Headline "^by Joshua Wilson^";
+Release 0;
+
+Include "vorple.h";
+Include "parser.h";
+Include "verblib.h";
+Include "vorple-multimedia.h";
+Include "grammar.h";
+
+Object room "A Slow, Boring Room"
+  with
+    description "Just a slow, boring room.",
+  has light;
+
+[ Initialise;
+  location = room;
+  VorpleInitialise();
+];
