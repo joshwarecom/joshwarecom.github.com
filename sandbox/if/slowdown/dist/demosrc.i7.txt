@@ -1,0 +1,11 @@
+"Slow and Steady" by Joshua Wilson
+
+The story headline is "A Garish Hack". 
+The release number is 0 
+
+Include Vorple Element Manipulation by Juhana Leinonen.
+
+When play begins:
+	execute JavaScript command "//initializing vorple, not actually doing anything here.";
+
+Boring Room is a room.  "You are in an exceedingly quiet room.  You can hear your heart beating.  =!;Thump-thump.  =!;Thump-thump.  =!;Thump-thump.".  The printed name of the Boring Room is "A Slow, Boring Room".
