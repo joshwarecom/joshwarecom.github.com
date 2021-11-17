@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+<head>
+    <title>Vorple</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="interpreter/roboto.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/jquery.powertip.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/toastr.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vex.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vex-theme-plain.css">
+
+    <link rel="stylesheet" type="text/css" href="interpreter/haven.css">
+    <link rel="stylesheet" type="text/css" href="interpreter/vorple.css">
+</head>
+<body>
+<main id="vorple">
+    <div id="loader">
+        <h2 id="loader-message">Loading scripts</h2>
+        <div id="spinner">V</div>
+    </div>
+</main>
+
+<script src="interpreter/vorple.min.js"></script>
+<script>
+    if (location.protocol === "file:") {
+      var interpolation = document.createElement('script');
+      interpolation.setAttribute('src','demo.ulx.js');
+      document.head.appendChild(interpolation);
+    }
+</script>
+
+
+<script>
+
+	document.audioEnabled = 0;
+    document.audioExt = 'mp3';
+    var audio = new Audio();
+    if (audio.canPlayType("audio/ogg") != "") {
+      document.audioExt = 'ogg';
+    }
+    else {
+      document.audioExt = 'mp3';
+    }
+
+    function IsPlayingMP3s() {
+      if (document.audioExt == 'mp3') return 1;
+      return 0;
+    }
+
+    function IsPlayingOGGs() {
+      if (document.audioExt == 'ogg') return 1;
+      return 0;
+    }
+
+    function ToggleAudioExtension() {
+      if (document.audioExt == 'mp3') document.audioExt = 'ogg';
+      else if (document.audioExt == 'ogg') document.audioExt = 'mp3';
+      vorple.options.resource_paths.audio = audio_root+document.audioExt+"/";
+    }
+
+    function IsIpad() {
+      if (navigator.userAgent.indexOf('iPad;') > 0) {
+        return 1;
+      }
+      return 0;
+    }
+
+    function IsTTSSupported() {
+      if ('speechSynthesis' in window) {
+        return 1;
+      }
+      return 0;
+    }
+
+    function PlayNowAsList(str) {
+	  if (document.audioEnabled == 0) return;
+      var pn = vorple.options.resource_paths.audio+str+"."+document.audioExt;
+      var pl = new Array();
+      pl[0] = pn;
+      pl[1] = '';
+      pl.pop();
+      vorple.audio.setPlaylist(pl,{looping: false, restart: true, shuffled: false});
+    }
+    function PlayNowAsEffect(str, loop) {
+	  if (document.audioEnabled == 0) return;
+      return vorple.audio.playSound(vorple.options.resource_paths.audio+str+"."+document.audioExt, {looping: loop});
+    }
+    function CancelTTS(str) {
+      window.speechSynthesis.cancel();
+      document.ttsOutput = "";
+      document.ttsPunctuate = false;
+    }
+    function AddTTS(str, punctuate) {
+	  if (document.audioEnabled == 0) return;
+      document.ttsOutput += str + "  ";
+      if (punctuate) {
+        document.ttsPunctuate = true;
+      }
+    }
+    function CancelBin(str) {
+      document.binOutput = new Array();
+    }
+    function AddBin(str) {
+	  if (document.audioEnabled == 0) return;
+      if (document.binOutput.lastIndexOf(vorple.options.resource_paths.audio+str+"."+document.audioExt) >= 0) {
+        if (document.binOutput[document.binOutput.length-1] == (vorple.options.resource_paths.audio+str+"."+document.audioExt));
+        else {
+          document.binOutput[document.binOutput.length] = vorple.options.resource_paths.audio+str+"."+document.audioExt;
+        }
+      }
+      else
+      document.binOutput[document.binOutput.length] = vorple.options.resource_paths.audio+str+"."+document.audioExt;
+    }
+    function FlushTTS() {
+	  if (document.audioEnabled == 0) return;
+      var u;
+      window.speechSynthesis.speak(u = new SpeechSynthesisUtterance(document.ttsOutput));
+      if (document.ttsPunctuate) {
+        u.onend = function(event) {
+          if (document.ttsPunctuate) {
+            PlayNowAsEffect('se_pause',false);
+            document.flushedTtsPunctuate = true;
+            document.ttsPunctuate = false;
+          }
+          else {
+            document.flushedTtsPunctuate = false;
+          }
+        }
+      }
+      document.flushedTtsOutput = document.ttsOutput;
+      document.ttsOutput = "";
+    }
+    function FlushBin() {
+	  if (document.audioEnabled == 0) return;
+      var pl = new Array();
+      for (j = 0; j < document.binOutput.length; j++) {
+        pl[j] = document.binOutput[j];
+      }
+      pl[j] = '';
+      pl.pop();
+      vorple.audio.setPlaylist(pl,{looping: false, restart: true, shuffled: false});
+      document.flushedBinOutput = document.binOutput;
+      document.binOutput = new Array();
+    }
+    function FlushBinOrTTS() {
+	  if (document.audioEnabled == 0) return;
+      if (document.binOutput.length > 0) {
+        FlushBin();
+        document.ttsOutput = "";
+      }
+      else {
+        FlushTTS();
+      }
+    }
+
+    document.audioNarrationLength = 0;
+    document.currentContinueId = null;
+    document.ttsOutput = "";
+    document.ttsPunctuate = false;
+    document.binOutput = new Array();
+    document.flushedTtsOutput = "";
+    document.flushedTtsPunctuate = false;
+    document.flushedBinOutput = new Array();
+    document.lineInputPrefixElement = null;
+    document.menuCommand = 'menu';
+
+    audio_root = "resources/audio/";
+    vorple.debug.off();
+	vorple.audio.defaults.fadeDuration = 0;
+	vorple.audio.defaults.pauseBetweenTracks = 0;
+    vorple.options = {
+        autosave: false,
+        engineColors: false,
+        resource_paths: {
+            images: "resources/images/",
+            audio: audio_root+document.audioExt+"/"
+        },
+
+        // URL to the game file
+        story: "test.ulx"
+    };
+
+    function narratedOutputFilter( output, meta ) {
+        if (document.audioNarrationLength == 0) {
+          if (output != '\n') {
+            var punctuate = false;
+            var re = /(.*?)=(.*?);(.*)/;
+            stop = false;
+            while (!stop) {
+              var ma = re.exec(output);
+              if (ma) {
+                output = ma[1] + ma[3];// + '\n';
+                if (ma[2] == '!') {
+                  punctuate = true;
+                }
+                else {
+                  AddBin(ma[2]);
+                }
+              }
+              else stop = true;
+            }
+            AddTTS(output, punctuate);
+            return output;
+          }
+        }
+    }
+    vorple.output.addOutputFilter( narratedOutputFilter );
+
+	//the first true prompt is never clickable, so apply hack here to fix this.
+	function makeFirstPromptClickable( event ) {
+		e = document.getElementById("lineinput-prefix");
+		if (e.innerHTML == "&gt;") {
+			vorple.removeEventListener(makeFirstPromptClickable);
+			e.innerHTML = '<a onclick="vorple.prompt.queueCommand(document.menuCommand);">&gt;</a>';
+		}
+	}
+	vorple.addEventListener( [ "expectCommand", "expectKeypress" ], makeFirstPromptClickable );
+
+vorple.init();
+</script></body>
+</html>
