@@ -33,7 +33,72 @@
 </script>
 
 
+
+<style>
+#container {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000;
+  position: relative;
+}
+
+.field {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  background: black;
+  border-radius: 50%;
+  padding: 6px;
+}
+</style>
+<div id="container">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+</div>
+
 <script>
+
+function arrangeImagesInCircle(props = {}) {
+  const getWidthHeight = element => {
+    const { width, height } = element.getBoundingClientRect();
+    return [width, height];
+  };
+
+  const container = props.container;
+  const [containerWidth, containerHeight] = getWidthHeight(container);
+  const radius = props.radius || (containerWidth + containerHeight) / 4;
+
+  return imageSelector => {
+    const fields = container.querySelectorAll(imageSelector);
+    const step = (2 * Math.PI) / fields.length;
+    var angle = 0
+    fields.forEach(field => {
+      const [fieldWidth, fieldHeight] = getWidthHeight(field);
+      const x = Math.round(containerWidth / 2 + radius * Math.cos(angle) - fieldWidth / 2);
+      const y = Math.round(containerHeight / 2 + radius * Math.sin(angle) - fieldHeight / 2);
+      if (window.console) console.log(x, y);
+      field.style.left = x + 'px';
+      field.style.top = y + 'px';
+      angle += step;
+    });
+  }
+}
+
+arrangeImagesInCircle({
+  container: document.getElementById('container')
+})('.field')
+
+	function sleep(delay) {
+	    var start = new Date().getTime();
+	    while (new Date().getTime() < start + delay);
+	}
 
 	document.audioEnabled = 0;
     document.audioExt = 'mp3';
@@ -157,19 +222,50 @@
     }
 
     document.audioNarrationLength = 0;
-    document.currentContinueId = null;
     document.ttsOutput = "";
     document.ttsPunctuate = false;
     document.binOutput = new Array();
     document.flushedTtsOutput = "";
     document.flushedTtsPunctuate = false;
     document.flushedBinOutput = new Array();
-    document.lineInputPrefixElement = null;
-    document.menuCommand = 'menu';
+    document.menuCommand = 'z';
+
+    document.ambientAudioElementLoop1 = null;
+	document.ambientAudioCallback1 = null;
+    function clearAmbientAudioElementLoop1() {
+      if (document.ambientAudioElementLoop1) {
+        vorple.audio.fadeOut(document.ambientAudioElementLoop1,0)
+      }
+      document.ambientAudioElementLoop1 = null;
+    }
+    function restartAmbientAudioElementLoop1(f) {
+      clearAmbientAudioElementLoop1();
+      document.ambientAudioElementLoop1 = PlayNowAsEffect(f,true);
+    }
+
+    document.ambientAudioElementLoop2 = null;
+	document.ambientAudioCallback2 = null;
+    function clearAmbientAudioElementLoop2() {
+	  if (document.ambientAudioCallback2) {
+	  	clearTimeout(document.ambientAudioCallback2);
+	  }
+      if (document.ambientAudioElementLoop2) {
+        vorple.audio.fadeOut(document.ambientAudioElementLoop2,0)
+      }
+      document.ambientAudioElementLoop2 = null;
+	  document.ambientAudioCallback2 = null;
+    }
+    function restartAmbientAudioElementLoop2(f, delay) {
+      clearAmbientAudioElementLoop2();
+	  if (delay && delay > 0) {
+	  	document.ambientAudioCallback2 = setTimeout(PlayNowAsEffect, delay, f, true);
+	  }
+	  else document.ambientAudioElementLoop2 = PlayNowAsEffect(f,true);
+    }
 
     audio_root = "resources/audio/";
     vorple.debug.off();
-	vorple.audio.defaults.fadeDuration = 0;
+	vorple.audio.defaults.fadeDuration = 25;
 	vorple.audio.defaults.pauseBetweenTracks = 0;
     vorple.options = {
         autosave: false,
@@ -183,11 +279,18 @@
         story: "demo.ulx"
     };
 
+	function actionMenuOutputFilter( output, meta ) {
+		if (output.indexOf("Action menu:") == 0) {
+			return "";
+		}
+	}
+	vorple.output.addOutputFilter( actionMenuOutputFilter );
+
     function narratedOutputFilter( output, meta ) {
         if (document.audioNarrationLength == 0) {
           if (output != '\n') {
             var punctuate = false;
-            var re = /(.*?)=(.*?);(.*)/;
+            var re = /([\S\s]*?)=(.*?);([\S\s]*)/;
             stop = false;
             while (!stop) {
               var ma = re.exec(output);
@@ -197,11 +300,14 @@
                   punctuate = true;
                 }
                 else {
-                  AddBin(ma[2]);
+				  binlist = ma[2].split("|");
+				  for (k = 0; k < binlist.length; k++) {
+                  	AddBin(binlist[k]);
+				  }
                 }
               }
               else stop = true;
-            }
+			}
             AddTTS(output, punctuate);
             return output;
           }
@@ -217,7 +323,17 @@
 			e.innerHTML = '<a onclick="vorple.prompt.queueCommand(document.menuCommand);">&gt;</a>';
 		}
 	}
-	vorple.addEventListener( [ "expectCommand", "expectKeypress" ], makeFirstPromptClickable );
+	function initializeFirstPrompt() {
+		vorple.addEventListener( [ "expectCommand", "expectKeypress" ], makeFirstPromptClickable );
+	}
+
+    function quitListener( event ) {
+        clearAmbientAudioElementLoop1();
+        clearAmbientAudioElementLoop2();
+
+    }
+    vorple.addEventListener( 'quit', quitListener );
+
 
 vorple.init();
 </script></body>
