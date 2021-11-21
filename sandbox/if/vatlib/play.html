@@ -38,68 +38,19 @@
 #container {
   width: 200px;
   height: 200px;
-  border: 1px solid #000;
   position: relative;
 }
 
 .field {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   position: absolute;
-  background: black;
+  background: yellow;
   border-radius: 50%;
   padding: 6px;
 }
 </style>
-<div id="container">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-  <img class="field" src="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
-</div>
-
 <script>
-
-function arrangeImagesInCircle(props = {}) {
-  const getWidthHeight = element => {
-    const { width, height } = element.getBoundingClientRect();
-    return [width, height];
-  };
-
-  const container = props.container;
-  const [containerWidth, containerHeight] = getWidthHeight(container);
-  const radius = props.radius || (containerWidth + containerHeight) / 4;
-
-  return imageSelector => {
-    const fields = container.querySelectorAll(imageSelector);
-    const step = (2 * Math.PI) / fields.length;
-    var angle = 0
-    fields.forEach(field => {
-      const [fieldWidth, fieldHeight] = getWidthHeight(field);
-      const x = Math.round(containerWidth / 2 + radius * Math.cos(angle) - fieldWidth / 2);
-      const y = Math.round(containerHeight / 2 + radius * Math.sin(angle) - fieldHeight / 2);
-      if (window.console) console.log(x, y);
-      field.style.left = x + 'px';
-      field.style.top = y + 'px';
-      angle += step;
-    });
-  }
-}
-
-arrangeImagesInCircle({
-  container: document.getElementById('container')
-})('.field')
-
-	function sleep(delay) {
-	    var start = new Date().getTime();
-	    while (new Date().getTime() < start + delay);
-	}
-
 	document.audioEnabled = 0;
     document.audioExt = 'mp3';
     var audio = new Audio();
@@ -228,7 +179,7 @@ arrangeImagesInCircle({
     document.flushedTtsOutput = "";
     document.flushedTtsPunctuate = false;
     document.flushedBinOutput = new Array();
-    document.menuCommand = 'z';
+    document.menuCommand = null;
 
     document.ambientAudioElementLoop1 = null;
 	document.ambientAudioCallback1 = null;
@@ -279,8 +230,41 @@ arrangeImagesInCircle({
         story: "demo.ulx"
     };
 
+	actionMenuFlag = false;
+	actionMenuItems = false;
+	actionMenuArray = null;
 	function actionMenuOutputFilter( output, meta ) {
-		if (output.indexOf("Action menu:") == 0) {
+		if (!actionMenuFlag) {
+			if (output.indexOf("Action menu") == 0) {
+				actionMenuFlag = true;
+				actionMenuArray = new Array();
+				return "";
+			}
+		}
+		else {
+			if (output.indexOf(":") >= 0) {
+				actionMenuItems = true;
+			}
+			if (output.indexOf("\n") >=0 || output.indexOf(".") >= 0) {
+				actionMenuFlag = false;
+				actionMenuItems = false;
+				actionMenuArray[actionMenuArray.length] = "cancel";
+				el = document.getElementById("container");
+				el.innerHTML = "";
+
+				for (i = 0; i < actionMenuArray.length; i++) {
+					el.innerHTML += '<div class="field"><a onclick="document.getElementById(\'container\').style.display=\'none\'; vorple.prompt.queueCommand(\'select ' + actionMenuArray[i] + '\');">' + actionMenuArray[i] + '</a></div>'
+				}
+				el.style.display = "";
+
+				arrangeImagesInCircle({
+				  container: document.getElementById('container')
+				})('.field')
+			}
+			if (actionMenuFlag && actionMenuItems)
+				if (output != " " && output != ": " && !(output.indexOf(".") >= 0)) {
+					actionMenuArray[actionMenuArray.length] = output;
+				}
 			return "";
 		}
 	}
@@ -336,5 +320,39 @@ arrangeImagesInCircle({
 
 
 vorple.init();
-</script></body>
+</script>
+<div id="container" style="display: none; width: 250px; height: 250px; position: fixed; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+</div>
+<script>
+function arrangeImagesInCircle(props = {}) {
+  const getWidthHeight = element => {
+    const { width, height } = element.getBoundingClientRect();
+    return [width, height];
+  };
+
+  const container = document.getElementById("container");
+  const [containerWidth, containerHeight] = getWidthHeight(container);
+  const radius = props.radius || (containerWidth + containerHeight) / 4;
+
+  return imageSelector => {
+    const fields = container.querySelectorAll(imageSelector);
+    const step = (2 * Math.PI) / fields.length;
+    var angle = 0
+    fields.forEach(field => {
+      const [fieldWidth, fieldHeight] = getWidthHeight(field);
+      const x = Math.round(containerWidth / 2 + radius * Math.cos(angle) - fieldWidth / 2);
+      const y = Math.round(containerHeight / 2 + radius * Math.sin(angle) - fieldHeight / 2);
+      if (window.console) console.log(x, y);
+      field.style.left = x + 'px';
+      field.style.top = y + 'px';
+      angle += step;
+    });
+  }
+}
+
+arrangeImagesInCircle({
+  container: document.getElementById('container')
+})('.field')
+</script>
+</body>
 </html>
