@@ -231,13 +231,22 @@
     };
 
 	actionMenuFlag = false;
+	commonMenuFlag = false;
 	actionMenuItems = false;
 	actionMenuArray = null;
+	commonArray = null;
 	function actionMenuOutputFilter( output, meta ) {
 		if (!actionMenuFlag) {
-			if (output.indexOf("Action menu") == 0) {
+			if (output.indexOf("Common actions") == 0) {
 				actionMenuFlag = true;
+				commonMenuFlag = true;
 				actionMenuArray = new Array();
+				commonArray = new Array();
+				return "";
+			}
+			if (output.indexOf("Other actions") == 0) {
+				actionMenuFlag = true;
+				commonMenuFlag = false;
 				return "";
 			}
 		}
@@ -248,12 +257,13 @@
 			if (output.indexOf("\n") >=0 || output.indexOf(".") >= 0) {
 				actionMenuFlag = false;
 				actionMenuItems = false;
-				actionMenuArray[actionMenuArray.length] = "cancel";
 				el = document.getElementById("container");
 				el.innerHTML = "";
 
 				for (i = 0; i < actionMenuArray.length; i++) {
-					el.innerHTML += '<div class="field"><a onclick="document.getElementById(\'container\').style.display=\'none\'; vorple.prompt.queueCommand(\'select ' + actionMenuArray[i] + '\');">' + actionMenuArray[i] + '</a></div>'
+					style = '';
+					if (commonArray.indexOf(actionMenuArray[i]) >= 0) style = 'background-color: pink;';
+					el.innerHTML += '<div class="field" style="' + style + '"><a onclick="document.getElementById(\'container\').style.display=\'none\'; vorple.prompt.queueCommand(\'select ' + actionMenuArray[i] + '\');">' + actionMenuArray[i] + '</a></div>'
 				}
 
 				el.innerHTML += `
@@ -280,6 +290,9 @@
 			if (actionMenuFlag && actionMenuItems)
 				if (output != " " && output != ": " && !(output.indexOf(".") >= 0)) {
 					actionMenuArray[actionMenuArray.length] = output;
+					if (commonMenuFlag) {
+						commonArray[commonArray.length] = output;
+					}
 				}
 			return "";
 		}
@@ -337,7 +350,7 @@
 
 vorple.init();
 </script>
-<div id="container" style="display: none; width: 250px; height: 250px; position: fixed; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+<div id="container" style="display: none; width: 550px; height: 550px; position: fixed; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
 </div>
 <script>
 function arrangeImagesInCircle(props = {}) {
