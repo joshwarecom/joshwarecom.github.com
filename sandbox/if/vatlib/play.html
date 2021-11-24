@@ -232,94 +232,142 @@
 
 	actionMenuFlag = false;
 	commonMenuFlag = false;
+	complexMenuFlag = false;
 	actionMenuItems = false;
 	actionMenuArray = null;
+	actionItemName = null;
 	commonArray = null;
+	complexArray = null;
+	activeArray = null;
+
+	function rotateCommandSelection() {
+		ddbs = document.getElementById('ddbs');
+		if (ddbs)
+			if (ddbs.innerHTML == "0 - -") {
+				ddbs.innerHTML = "- 0 -";
+				document.ddbsStatus = ddbs.innerHTML;
+				activeArray = complexArray;
+			}
+			else if (ddbs.innerHTML == "- 0 -") {
+				ddbs.innerHTML = "- - 0";
+				document.ddbsStatus = ddbs.innerHTML;
+				activeArray = actionMenuArray;
+			}
+			else {
+				ddbs.innerHTML = "0 - -";
+				document.ddbsStatus = ddbs.innerHTML;
+				activeArray = commonArray;
+			}
+		updateCommandAssistant('container');
+	}
+
+	function updateCommandAssistant(containerId) {
+		el = document.getElementById("container");
+		el.innerHTML = "";
+
+		tmpArray = activeArray;
+		verb = 'select ';
+		if (tmpArray == complexArray) verb = 'selectc ';
+		for (i = 0; i < tmpArray.length; i++) {
+			style = 'display: flex; justify-content: center; align-items: center;';
+			el.innerHTML += '<div class="field" style="' + style + '"><a onclick="document.getElementById(\'container\').style.display=\'none\'; vorple.prompt.queueCommand(\'' + verb + tmpArray[i] + '\');">' + tmpArray[i] + '</a></div>'
+		}
+
+		freshHTML = el.innerHTML;
+		freshHTML += `
+			<div id="container2" style="width: 100px; height: 50px; position: fixed; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+			<div>
+			  <button style="width:80px; height: 75px;" id='ddb' onclick='rotateCommandSelection();'>@AIN</button><br>
+			  <button style="width:80px; height: 20px;" id='ddbs'>@STATUS</button><br>
+			</div>
+			</div>
+		`;
+		freshHTML  = freshHTML.replace("@AIN","common " + actionItemName + " commands");
+		if (document.ddbsStatus) {
+			freshHTML  = freshHTML.replace("@STATUS",document.ddbsStatus);
+		}
+		else {
+			freshHTML  = freshHTML.replace("@STATUS","0 - -");
+		}
+
+		el.innerHTML = freshHTML;
+		el.style.display = "";
+		nodeList = container.querySelectorAll(".field");
+	  	const getWidthHeight = element => {
+		  const { width, height } = element.getBoundingClientRect();
+		  return [width, height];
+		};
+
+		angle = 0;
+		for (n = 0; n < nodeList.length; n++) {
+			[w, h] = getWidthHeight(container);
+			[w2, h2] = getWidthHeight(nodeList[n]);
+
+			radius = (875) / 4;
+			step = (2 * Math.PI) / 24;
+			if (n < 8) {
+				radius = 80;
+				step = (2 * Math.PI) / 8;
+			}
+			else if (n < 24) {
+				radius = 150;
+				step = (2 * Math.PI) / 16;
+			}
+
+	      	const x = Math.round(w / 2 + radius * Math.cos(angle) - w2 / 2)-10;
+	      	const y = Math.round(h / 2 + radius * Math.sin(angle) - h2 / 2)+25;
+
+			nodeList[n].style.left = x+'px';
+			nodeList[n].style.top = y+'px';
+			angle += step;
+		}
+
+	}
+
 	function actionMenuOutputFilter( output, meta ) {
 		if (!actionMenuFlag) {
-			if (output.indexOf("Common actions") == 0) {
+			if (output.indexOf("Common actions with ") == 0) {
+				actionMenuItems = true;
 				actionMenuFlag = true;
 				commonMenuFlag = true;
+				complexMenuFlag = false;
 				actionMenuArray = new Array();
 				commonArray = new Array();
-				return "";
-			}
-			if (output.indexOf("Other actions") == 0) {
-				actionMenuFlag = true;
-				commonMenuFlag = false;
+				complexArray = new Array();
+				activeArray = commonArray;
+				actionItemName = output.substring(20, output.length-2);
 				return "";
 			}
 		}
 		else {
-			if (output.indexOf(":") >= 0) {
-				actionMenuItems = true;
+			if (output.indexOf("Other actions with ") >= 0) {
+				actionMenuFlag = true;
+				commonMenuFlag = false;
+				complexMenuFlag = false;
+				return "";
 			}
-			if (output.indexOf("\n") >=0 || output.indexOf(".") >= 0) {
+			if (output.indexOf("Complex actions with ") >= 0) {
+				actionMenuFlag = true;
+				commonMenuFlag = false;
+				complexMenuFlag = true;
+				return "";
+			}
+			if (output.indexOf(".") >= 0) {
 				actionMenuFlag = false;
 				actionMenuItems = false;
-				el = document.getElementById("container");
-				el.innerHTML = "";
-
-				for (i = 0; i < actionMenuArray.length; i++) {
-					style = 'display: flex; justify-content: center; align-items: center;';
-					if (commonArray.indexOf(actionMenuArray[i]) >= 0) style += 'background-color: pink;';
-					el.innerHTML += '<div class="field" style="' + style + '"><a onclick="document.getElementById(\'container\').style.display=\'none\'; vorple.prompt.queueCommand(\'select ' + actionMenuArray[i] + '\');">' + actionMenuArray[i] + '</a></div>'
-				}
-
-				el.innerHTML += `
-					<div id="container2" style="width: 100px; height: 50px; position: fixed; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
-					<div class="dropdown">
-					  <button class="dropbtn" style="width:100px; height: 50px;" id='ddb'>Single Object</button>
-					  <div class="dropdown-content">
-					  	<a onclick='selectCommandGroup(this);'>System</a>
-						<a onclick='selectCommandGroup(this);'>Common</a>
-					    <a onclick='selectCommandGroup(this);'>Single Object</a>
-						<a onclick='selectCommandGroup(this);'>Multi Object</a>
-					    <a onclick='selectCommandGroup(this);'>Social</a>
-						<a onclick='selectCommandGroup(this);'>Other</a>
-					  </div>
-					</div>
-					</div>
-				`;
-				el.style.display = "";
-
-				nodeList = container.querySelectorAll(".field");
-			  	const getWidthHeight = element => {
-				  const { width, height } = element.getBoundingClientRect();
-				  return [width, height];
-				};
-
-				angle = 0;
-				for (n = 0; n < nodeList.length; n++) {
-					[w, h] = getWidthHeight(container);
-					[w2, h2] = getWidthHeight(nodeList[n]);
-
-	  				radius = (875) / 4;
-					step = (2 * Math.PI) / 24;
-					if (n < 8) {
-						radius = 80;
-						step = (2 * Math.PI) / 8;
-					}
-					else if (n < 24) {
-						radius = 150;
-						step = (2 * Math.PI) / 16;
-					}
-
-			      	const x = Math.round(w / 2 + radius * Math.cos(angle) - w2 / 2);
-			      	const y = Math.round(h / 2 + radius * Math.sin(angle) - h2 / 2);
-
-					nodeList[n].style.left = x+'px';
-					nodeList[n].style.top = y+'px';
-
-					angle += step;
-				}
-
+				document.ddbsStatus = null;
+				updateCommandAssistant('container');
 			}
 			if (actionMenuFlag && actionMenuItems)
-				if (output != " " && output != ": " && !(output.indexOf(".") >= 0)) {
-					actionMenuArray[actionMenuArray.length] = output;
+				if (output != " \n" && output != " " && output != ": " && !(output.indexOf(".") >= 0)) {
 					if (commonMenuFlag) {
 						commonArray[commonArray.length] = output;
+					}
+					else if (complexMenuFlag) {
+						complexArray[complexArray.length] = output;
+					}
+					else {
+						actionMenuArray[actionMenuArray.length] = output;
 					}
 				}
 			return "";
