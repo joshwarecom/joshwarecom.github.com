@@ -1,0 +1,59 @@
+<head>
+    <title>Legitimate Opportunities</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="lib/crafty.js"></script>
+    <script src="src/dice.js"></script>
+    <script src="src/scenes.js"></script>
+</head>
+<article>
+<section id="fullscreen">
+<img src="assets/marioprank.webp" id="gif">
+</section>
+</article>
+<div id="dice">
+<input type="image" id="image" alt="Form" src="page.png?rnd=0003" width="100%" onclick="go();">
+</div>
+<script>
+var e = document.getElementById("fullscreen");
+function go() {
+if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
+RunPrefixMethod(document, "CancelFullScreen");
+}
+else {
+RunPrefixMethod(e, "RequestFullScreen");
+}
+e = document.getElementById('gif');
+e.src = "assets/marioprank.webp";
+e.style.width = "100%";
+e.style.height="100%";
+toggleDisplay("dice",0);
+Crafty.audio.play('laugh',-1);
+}
+function toggleDisplay(id, displayvalue)
+{
+if ( displayvalue == 1 ) {
+document.getElementById(id).style.display = 'block';
+} else if ( displayvalue == 0 ) {
+document.getElementById(id).style.display = 'none';
+}
+}
+var pfx = ["webkit", "moz", "ms", "o", ""];
+function RunPrefixMethod(obj, method) {	
+var p = 0, m, t;
+while (p < pfx.length && !obj[m]) {
+m = method;
+if (pfx[p] == "") {
+m = m.substr(0,1).toLowerCase() + m.substr(1);
+}
+m = pfx[p] + m;
+t = typeof obj[m];
+if (t != "undefined") {
+pfx = [pfx[p]];
+return (t == "function" ? obj[m]() : obj[m]);
+}
+p++;
+}
+}
+window.addEventListener('load', Game.start);
+</script>
