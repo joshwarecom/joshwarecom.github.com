@@ -1,0 +1,11 @@
+:root {
+  --strTestField: "value";
+}
+
+
+div.menuButton {
+	padding: 3px;
+	background: var(--default_menu_color);;
+	&:hover { background: var(--highlight_menu_color);}
+	text-align: center;
+}
