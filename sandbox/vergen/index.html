@@ -1,0 +1,33 @@
+height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team1[0]] + "<br>" + characters[Object.keys(characters)[document.game_params.team1[0]]][document.game_params.team1_power[0]]+
+"</font>";
+
+document.getElementById("t1p2").innerHTML = "<img src='" + character_bk[Object.keys(characters)[document.game_params.team1[1]]] + "' width=100 height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team1[1]] + "<br>" + characters[Object.keys(characters)[document.game_params.team1[1]]][document.game_params.team1_power[1]]+
+"</font>";
+
+document.getElementById("t1p3").innerHTML = "<img src='" + character_bk[Object.keys(characters)[document.game_params.team1[2]]] + "' width=100 height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team1[2]] + "<br>" + characters[Object.keys(characters)[document.game_params.team1[2]]][document.game_params.team1_power[2]]+
+"</font>";
+
+document.getElementById("t2p1").innerHTML = "<img src='" + character_bk[Object.keys(characters)[document.game_params.team2[0]]] + "' width=100 height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team2[0]] + "<br>" + characters[Object.keys(characters)[document.game_params.team2[0]]][document.game_params.team2_power[0]]+
+"</font>";
+
+document.getElementById("t2p2").innerHTML = "<img src='" + character_bk[Object.keys(characters)[document.game_params.team2[1]]] + "' width=100 height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team2[1]] + "<br>" + characters[Object.keys(characters)[document.game_params.team2[1]]][document.game_params.team2_power[1]]+
+"</font>";
+
+document.getElementById("t2p3").innerHTML = "<img src='" + character_bk[Object.keys(characters)[document.game_params.team2[2]]] + "' width=100 height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team2[2]] + "<br>" + characters[Object.keys(characters)[document.game_params.team2[2]]][document.game_params.team2_power[2]]+
+"</font>";
+ 
+}
+
+generate();
+
+
+param_output = document.getElementById("params");
+param_output.innerHTML =
+"Level: <b>" + document.game_params.level + "</b><br>" +
+"Items: <b> " + document.game_params.item + "</b><br>" +
+"Turn Length: <b> " + document.game_params.tlength + "</b><br>" +
+"Max Turns: <b> " + document.game_params.maxt + "</b><br>" +
+"Showtime: <b> " + document.game_params.showt + "</b><br>"  +
+"Goes First: <b> " + document.game_params.goesf + "</b><br>" +
+"Health Bonus: <b> " + document.game_params.healthb + "</b><br>"
+</script>
