@@ -1,4 +1,258 @@
-height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team1[0]] + "<br>" + characters[Object.keys(characters)[document.game_params.team1[0]]][document.game_params.team1_power[0]]+
+
+<style>
+  html * {
+  color: white;
+  }
+  font {
+    background-color: black;
+    size: 55;
+    font-size: 20px;
+    padding: 5px 5px 5px 5px;
+  }
+</style>
+<div id="bk" style="width:800px; height: 500px; background-size: cover; background-color: red; background-image: url('https://i.ytimg.com/vi/2DhS9Lk_JRY/maxresdefault.jpg');">
+  <center>
+    <br>
+  <table>
+    <tr><td><font>LEVEL:</font></td><td><font id="vlevel"></font></td></tr>
+    <tr><td><font>ITEMS?</font></td><td><font id="vitems"></font></td></tr>
+    <tr><td><font>TURN LENGTH?</font></td><td><font id="vtlength"></font></td></tr>
+    <tr><td><font>MAX TURNS?</font></td><td><font id="vmaxt"></font></td></tr>    
+    <tr><td><font>SHOWTIME?</font></td><td><font id="vshowtime"></font></td></tr>    
+    <tr><td><font>GOES FIRST?</font></td><td><font id="vgoesf"></font></td></tr>    
+    <tr><td><font>HEALTH BONUS?</font></td><td><font id="vhealthb"></font></td></tr>    
+  </table>
+  <table cellpadding=5>
+    <tr><td colspan=3 width=400 bgcolor='##00FF00'><center><font>TEAM 1</font></center></td><td colspan=3 width=400 bgcolor='#0000FF'><center><font>TEAM 2</font></center></td></tr>
+    <tr>
+      <td id="t1p1" align=center><center><font>...</font></center></td>
+      <td id="t1p2" align=center><center><font>...</font></center></td>
+      <td id="t1p3" align=center><center><font>...</font></center></td>      
+      <td id="t2p1" align=center><center><font>...</font></center></td>
+      <td id="t2p2" align=center><center><font>...</font></center></td>
+      <td id="t2p3" align=center><center><font>...</font></center></td>      
+    </tr>
+  </table>
+  <br>
+  <input style="color: black; text-align: center; font-size:20px;" type="button" size="55" value="GENERATE NEW SETTINGS" onclick="generate();"><br>
+  </center>
+</div>
+<table style="width: 100%;">
+  <tr style="display: none;"><td id="team1"></td></tr>
+  <tr style="display: none;><td id="team2"></td></tr>
+</table>                                          
+<script>
+const levels = [
+  "Trampoline Alley",
+  "Pipe Up",
+  "Nowhere To Hide",
+  "Make Haste Slowly"
+];
+
+const level_bk = {
+  [levels[0]]: "https://i.ytimg.com/vi/RrBiBPPpPNs/maxresdefault.jpg",
+  [levels[1]]: "https://nintendosoup.com/wp-content/uploads/2017/12/rkb_sc_vs_01_box.jpg",
+  [levels[2]]: "https://i.ytimg.com/vi/O349XSNRNeA/maxresdefault.jpg",
+  [levels[3]]: "https://i.ytimg.com/vi/2DhS9Lk_JRY/maxresdefault.jpg"
+}
+
+const items = [
+  "Off",
+  "On"
+];
+
+const turn_length = [
+  "Off",
+  "Short",
+  "Medium",
+  "Long"
+];
+
+const max_turns = [
+  "Off",
+  "Seven",
+  "Ten"
+];
+
+const showtime = [
+  "Off",
+  "On"
+];
+
+const goes_first = [
+  "Random",
+  "Player 1",
+  "Player 2"
+];
+
+const health_bonus= [
+  "None",
+  "Player 1",
+  "Player 2"
+];
+
+const characters = {
+  "Mario": [
+    "All Purpose",
+    "Big Stomp",
+    "Quick Draw"
+  ],
+  "Rabid Peach": [
+    "All Purpose",
+    "Healer",
+    "Smacker"
+  ],
+  "Rabid Luigi": [
+    "All Purpose",
+    "Vampiric",
+    "Dehabilitator"
+  ],
+  "Luigi": [
+    "All Purpose",
+    "Multidraw",
+    "Inky"
+  ],
+  "Rabid Mario": [
+    "All Purpose",
+    "Medusa",
+    "Explosive"
+  ],
+  "Peach": [
+    "All Purpose",
+    "Protector",
+    "Icy"
+  ],
+  "Rabid Yoshi": [
+    "All Purpose",
+    "Big Dash",
+    "Scary"
+  ],
+  "Yoshi": [
+    "All Purpose",
+    "Quake and Shake",
+    "Happy Fortune"
+  ]
+};
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+document.game_params = Object();
+
+function generate() {
+
+let level = levels[getRandomInt(levels.length)];
+document.game_params.level = level;
+
+let item = items[getRandomInt(items.length)];
+document.game_params.item = item;
+
+let tlength = turn_length[getRandomInt(turn_length.length)];
+document.game_params.tlength = tlength;
+
+let maxt = max_turns[getRandomInt(max_turns.length)];
+document.game_params.maxt = maxt;
+ 
+let showt = showtime[getRandomInt(showtime.length)];
+document.game_params.showt = showt;
+ 
+let goesf = goes_first[getRandomInt(goes_first.length)];
+document.game_params.goesf = goesf;
+ 
+let healthb = health_bonus[getRandomInt(health_bonus.length)];
+document.game_params.healthb = healthb;
+
+ 
+const character_bk = {
+  [Object.keys(characters)[0]]: "https://purepng.com/public/uploads/medium/purepng.com-super-mariomariofictional-charactervideo-gamefranchisenintendodesigner-1701528623526vvuwm.png",
+  [Object.keys(characters)[1]]: "https://mario.wiki.gallery/images/thumb/f/f9/MRSoH_Rabbid_Peach.png/1200px-MRSoH_Rabbid_Peach.png",
+  [Object.keys(characters)[2]]: "https://www.mariowiki.com/images/thumb/a/a6/Rabbid_Luigi_-_RabbidsKingdomBattle.png/600px-Rabbid_Luigi_-_RabbidsKingdomBattle.png",
+  [Object.keys(characters)[3]]: "https://www.downloadclipart.net/large/luigi-png-transparent-image.png",
+  [Object.keys(characters)[4]]: "https://www.models-resource.com/resources/big_icons/61/60505.png?updated=1672964646",
+  [Object.keys(characters)[5]]: "https://clipartcraft.com/images/mario-transparent-peach-3.png",
+  [Object.keys(characters)[6]]: "https://www.pngkey.com/png/full/542-5427084_yoshi-png.png",
+  [Object.keys(characters)[7]]: "https://www.pngarts.com/files/2/Yoshi-Free-PNG-Image.png"
+}
+
+let icharacter = null;
+let alternate = null;
+let team1 = [];
+let team1_power = [];
+
+do {
+icharacter = getRandomInt(Object.keys(characters).length);
+} while (team1.indexOf(icharacter) >= 0);
+team1.push(icharacter);
+
+alternate = getRandomInt(3);
+team1_power.push(alternate);
+document.getElementById('team1').innerHTML += '<div>' + Object.keys(characters)[icharacter] + '<br>' + characters[Object.keys(characters)[icharacter]][alternate] + '</div>';
+ 
+do {
+icharacter = getRandomInt(Object.keys(characters).length);
+} while (team1.indexOf(icharacter) >= 0);
+team1.push(icharacter);
+
+alternate = getRandomInt(3);
+team1_power.push(alternate);
+
+do {
+icharacter = getRandomInt(Object.keys(characters).length);
+} while (team1.indexOf(icharacter) >= 0);
+team1.push(icharacter);
+
+alternate = getRandomInt(3);
+team1_power.push(alternate);
+
+let team2 = [];
+let team2_power = [];
+ 
+do {
+icharacter = getRandomInt(Object.keys(characters).length);
+} while (team2.indexOf(icharacter) >= 0);
+team2.push(icharacter);
+
+alternate = getRandomInt(3);
+team2_power.push(alternate);
+
+do {
+icharacter = getRandomInt(Object.keys(characters).length);
+} while (team2.indexOf(icharacter) >= 0);
+team2.push(icharacter);
+
+alternate = getRandomInt(3);
+team2_power.push(alternate);
+
+do {
+icharacter = getRandomInt(Object.keys(characters).length);
+} while (team2.indexOf(icharacter) >= 0);
+team2.push(icharacter);
+
+alternate = getRandomInt(3);
+team2_power.push(alternate);
+ 
+document.game_params.team1 = team1;
+document.game_params.team2 = team2;
+document.game_params.team1_power = team1_power;
+document.game_params.team2_power = team2_power;
+ 
+document.getElementById("bk").style.backgroundImage = 'url("' + level_bk[document.game_params.level] + '")';
+document.getElementById("vlevel").innerHTML = document.game_params.level;
+
+document.getElementById("vitems").innerHTML = document.game_params.item;
+
+document.getElementById("vtlength").innerHTML = document.game_params.tlength;
+
+document.getElementById("vmaxt").innerHTML = document.game_params.maxt;
+
+document.getElementById("vshowtime").innerHTML = document.game_params.showt;
+
+document.getElementById("vgoesf").innerHTML = document.game_params.goesf;
+
+document.getElementById("vhealthb").innerHTML = document.game_params.healthb;  
+
+document.getElementById("t1p1").innerHTML = "<img src='" + character_bk[Object.keys(characters)[document.game_params.team1[0]]] + "' width=100 height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team1[0]] + "<br>" + characters[Object.keys(characters)[document.game_params.team1[0]]][document.game_params.team1_power[0]]+
 "</font>";
 
 document.getElementById("t1p2").innerHTML = "<img src='" + character_bk[Object.keys(characters)[document.game_params.team1[1]]] + "' width=100 height=150><br>" + "<font>" + Object.keys(characters)[document.game_params.team1[1]] + "<br>" + characters[Object.keys(characters)[document.game_params.team1[1]]][document.game_params.team1_power[1]]+
