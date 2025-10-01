@@ -1,0 +1,1276 @@
+<!--
+- Crackcup, 
+- Quick web-based encoding detector for popular algorithms
+- These are not strong algorithms! Watch out for false positives and collisions and DON'T use them for crypto :)
+-->
+<html>
+<head>
+<title>CRACK CUP!</title>
+<style>
+.center {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+</head>
+<body>
+<div class="center" style="width: 100%; height: 100%; z-index: 1;">
+<form id="fcodec">
+<table style="background-color: #FFFACD;">
+<tr><td>Decode:</td><td>Encode:</td></tr>
+<tr><td>
+<select size="16" id="dcodec" style="width:128px; height: 128px;" onclick="dresolve();" onchange="dresolve();">
+</select>
+</td><td>
+<select size="16" id="ecodec" style="width:128px; height: 128px;" onclick="eresolve();" onchange="eresolve();">
+</select>
+</td></tr>
+<tr><td colspan="2">
+input:<br>
+<input type="text" id="txtin" style="width:100%;"><br>
+</td></tr><tr><td colspan="2">
+output:<br>
+<input type="text" id="txtout" style="width:100%;">
+</td></tr>
+<tr><td colspan="2">
+<input type="button" value="crack-o-matic!" style="width:100%;" onclick="crack(0, 0);">
+</td></tr>
+<tr><td colspan="2">
+<input type="reset" value="reset" style="width:100%;">
+</td></tr>
+</table>
+</form>
+</div>
+
+<div class="center" style="width: 100%; height: 100%; z-index: 0;">
+<table style="background-color: #FFDAB9;"><tr><td>
+<font size="+3"><pre>                       
+                               
+                 ___... ------- -....___
+             .-""                       ""-.
+       .-'``'|-._      CRACK CUP!       _.-|
+      /  .--.|   `""---...........-  ""`   |
+     /  /    |                      \ /    |
+     |  |    |                       |\    |
+      \  \   |                       //    |
+       `\ `\ |                       \|    |
+         `\ `|                        \    |
+         _/ /\                             /
+        (__/  \                           /
+     _..---""` \                         /`""---.._
+  .-'           \                       /          '-.
+ :               `-.__             __.-'              :
+ :                  ) ""---...---"" (                 :
+  '._               `"--...___...--"`              _.'
+    \""--..__                              __..--""/
+     '._     """----.....______.....----"""     _.'
+        `""--..,,_____            _____,,..--""`
+                      `"""----"""`</pre></font></td></tr></table>
+</div>
+
+
+<script>
+var keyStr = "";
+ca = [];
+dct = [];
+
+
+function crack(cipher, dictword) {
+	if (dictword >= dct.length || true) {
+		dictword = 0;
+		cipher++;
+	}
+	if (cipher >= ca.length) {
+		document.getElementById('txtout').value = 'done';	
+	}
+	else {
+		obj = ca[cipher];
+		keyStr = obj.keyStr;
+		//document.getElementById('txtout').value = 'trying ' + obj.desc + ": " + global_decode(document.getElementById("txtin").value) + " == " + dct[dictword];	
+		document.getElementById('txtout').value = 'trying ' + obj.desc + ": " + global_decode(document.getElementById("txtin").value);	
+		if (global_decode(document.getElementById("txtin").value) == dct[dictword]) {
+			alert("Candidate found! " + obj.desc + " decodes to: " + dct[dictword]);
+		}
+		else {
+			str = global_decode(document.getElementById("txtin").value);
+			k = 0;
+			for (;k < str.length; k++) {
+				if ((str[k] >= 'a' && str[k] <= 'z') || (str[k] >= 'A' && str[k] <= 'Z') || (str[k] >= '0' && str[k] <= '9') || (str[k] == ' ')) {
+				}
+				else {
+					break;
+				}
+			}
+			if (k < str.length) {
+				dictword = dct.length;
+			}
+			else {
+				setTimeout(alert,100,"Candidate found! " + obj.desc + " = " + global_decode(document.getElementById("txtin").value));
+			}
+		}
+		setTimeout(crack,250,cipher,dictword+1);
+	}
+}
+
+function dresolve() {
+	codec = document.getElementById("dcodec").selectedIndex;
+	keyStr = ca[codec].keyStr;
+	output = global_decode(document.getElementById("txtin").value);
+	document.getElementById("txtout").value = output;
+}
+
+function eresolve() {
+	codec = document.getElementById("ecodec").selectedIndex;
+	keyStr = ca[codec].keyStr;
+	output = global_encode(document.getElementById("txtin").value);
+	document.getElementById("txtout").value = output;
+}
+
+function global_encode(input) {
+    input = escape(input);
+    var output = "";
+    var chr1, chr2, chr3 = "";
+    var enc1, enc2, enc3, enc4 = "";
+    var i = 0;
+    do {
+        chr1 = input.charCodeAt(i++);
+        chr2 = input.charCodeAt(i++);
+        chr3 = input.charCodeAt(i++);
+        enc1 = chr1 >> 2;
+        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+        enc4 = chr3 & 63;
+        if (isNaN(chr2)) {
+            enc3 = enc4 = 64;
+        } else if (isNaN(chr3)) {
+            enc4 = 64;
+        }
+        output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+        chr1 = chr2 = chr3 = "";
+        enc1 = enc2 = enc3 = enc4 = "";
+    } while (i < input.length);
+    return output;
+}
+
+function global_decode(input) {
+    var output = "";
+    var chr1, chr2, chr3 = "";
+    var enc1, enc2, enc3, enc4 = "";
+    var i = 0;
+    var mimcod = /[^A-Za-z0-9\+\/\=]/g;
+    if (mimcod.exec(input)) {
+        alert("Errors in decoding.");
+    }
+    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+    do {
+        enc1 = keyStr.indexOf(input.charAt(i++));
+        enc2 = keyStr.indexOf(input.charAt(i++));
+        enc3 = keyStr.indexOf(input.charAt(i++));
+        enc4 = keyStr.indexOf(input.charAt(i++));
+        chr1 = (enc1 << 2) | (enc2 >> 4);
+        chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+        chr3 = ((enc3 & 3) << 6) | enc4;
+        output = output + String.fromCharCode(chr1);
+        if (enc3 != 64) {
+            output = output + String.fromCharCode(chr2);
+        }
+        if (enc4 != 64) {
+            output = output + String.fromCharCode(chr3);
+        }
+        chr1 = chr2 = chr3 = "";
+        enc1 = enc2 = enc3 = enc4 = "";
+    } while (i < input.length);
+    return unescape(output);
+}
+
+
+zong22 = new Object();
+zong22.keyStr = keyStr = "ZKj9n+yf0wDVX1s/" + "5YbdxSo=ILaUpPBC" + "Hg8uvNO4klm6iJGh" + "Q7eFrWczAMEq3RTt" + "2";
+zong22.desc = "ZONG-22";
+ca[ca.length] = zong22;
+
+feron74 = new Object();
+feron74.keyStr = keyStr = "75XYTabcS/UVWdef" + "ADqr6RuvN8PBCsQt" + "wx2KLyz+OM3Hk9gh" + "i01ZFlmnjopE=GIJ" + "4";  
+feron74.desc = "FERON-74";
+ca[ca.length] = feron74;
+
+tripo5 = new Object();
+tripo5.keyStr = keyStr = "ghijopE+G78lmnIJ" + "QRXY=abcS/UVWdef" + "ABCs456tDqruvNOP" + "wx2KLyz01M3Hk9ZF" + "T";
+tripo5.desc = "TRIPO-5";
+ca[ca.length] = tripo5;
+
+megan35 = new Object();
+megan35.keyStr = keyStr = "3GHIJKLMNOPQRSTU" + "b=cdefghijklmnop" + "WXYZ/12+406789Va" + "qrstuvwxyzABCDEF" + "5";
+megan35.desc = "MEGAN-35";
+ca[ca.length] = megan35;
+
+atom128 = new Object();
+atom128.keyStr = keyStr = "/128GhIoPQROSTeU" + "bADfgHijKLM+n0pF" + "WXY456xyzB7=39Va" + "qrstJklmNuZvwcdE" + "C";
+atom128.desc = "ATOM-128";
+ca[ca.length] = atom128;
+
+tigo3fx = new Object();
+tigo3fx.keyStr = keyStr = "FrsxyzA8VtuvwDEq" + "WZ/1+4klm67=cBCa" + "5Ybdef0g2hij9nop" + "MNO3GHIRSTJKLPQU" + "X";
+tigo3fx.desc = "TIGO-3FX";
+ca[ca.length] = tigo3fx;
+
+hazz15 = new Object();
+hazz15.keyStr = keyStr = "HNO4klm6ij9n+J2h" + "yf0gzA8uvwDEq3X1" + "Q7ZKeFrWcVTts/MR" +   "GYbdxSo=ILaUpPBC" + "5";
+hazz15.desc = "HAZZ-15";
+ca[ca.length] = hazz15;
+
+gila7 = new Object();
+gila7.keyStr = keyStr = "7ZSTJK+W=cVtBCas" + "yf0gzA8uvwDEq3XH" + "/1RMNOILPQU4klm6" +   "5YbdeFrx2hij9nop" + "G";
+gila7.desc = "GILA7";
+ca[ca.length] = gila7;
+
+jtest = new Object();
+jtest.keyStr = keyStr = "BEHOLDTHEAKAMAIABCENCRYPTIONKEY";
+jtest.desc = "jtest";
+ca[ca.length] = jtest;
+
+
+fa = [
+"a128e=ATOM-128ENC",
+"a128d=ATOM-128DEC",
+"encodo=ZONG22ENC",
+"decodo=ZONG22DEC",
+"eferon=FERON74ENC",
+"dferon=FERON74DEC",
+"etripo5=TRIPO5ENC",
+"dtripo5=TRIPO5DEC",
+"emegan35=MEGAN35ENC",
+"dmegan35=MEGAN35DEC",
+"etigo3fx=TIGO3FXENC",
+"dtigo3fx=TIGO3FXDEC"
+];
+
+dct = [
+"a",
+"ability",
+"able",
+"about",
+"above",
+"accept",
+"according",
+"account",
+"across",
+"act",
+"action",
+"activity",
+"actually",
+"add",
+"address",
+"administration",
+"admit",
+"adult",
+"affect",
+"after",
+"again",
+"against",
+"age",
+"agency",
+"agent",
+"ago",
+"agree",
+"agreement",
+"ahead",
+"air",
+"all",
+"allow",
+"almost",
+"alone",
+"along",
+"already",
+"also",
+"although",
+"always",
+"American",
+"among",
+"amount",
+"analysis",
+"and",
+"animal",
+"another",
+"answer",
+"any",
+"anyone",
+"anything",
+"appear",
+"apply",
+"approach",
+"area",
+"argue",
+"arm",
+"around",
+"arrive",
+"art",
+"article",
+"artist",
+"as",
+"ask",
+"assume",
+"at",
+"attack",
+"attention",
+"attorney",
+"audience",
+"author",
+"authority",
+"available",
+"avoid",
+"away",
+"baby",
+"back",
+"bad",
+"bag",
+"ball",
+"bank",
+"bar",
+"base",
+"be",
+"beat",
+"beautiful",
+"because",
+"become",
+"bed",
+"before",
+"begin",
+"behavior",
+"behind",
+"believe",
+"benefit",
+"best",
+"better",
+"between",
+"beyond",
+"big",
+"bill",
+"billion",
+"bit",
+"black",
+"blood",
+"blue",
+"board",
+"body",
+"book",
+"born",
+"both",
+"box",
+"boy",
+"break",
+"bring",
+"brother",
+"budget",
+"build",
+"building",
+"business",
+"but",
+"buy",
+"by",
+"call",
+"camera",
+"campaign",
+"can",
+"cancer",
+"candidate",
+"capital",
+"car",
+"card",
+"care",
+"career",
+"carry",
+"case",
+"catch",
+"cause",
+"cell",
+"center",
+"central",
+"century",
+"certain",
+"certainly",
+"chair",
+"challenge",
+"chance",
+"change",
+"character",
+"charge",
+"check",
+"child",
+"choice",
+"choose",
+"church",
+"citizen",
+"city",
+"civil",
+"claim",
+"class",
+"clear",
+"clearly",
+"close",
+"coach",
+"cold",
+"collection",
+"college",
+"color",
+"come",
+"commercial",
+"common",
+"community",
+"company",
+"compare",
+"computer",
+"concern",
+"condition",
+"conference",
+"Congress",
+"consider",
+"consumer",
+"contain",
+"continue",
+"control",
+"cost",
+"could",
+"country",
+"couple",
+"course",
+"court",
+"cover",
+"create",
+"crime",
+"cultural",
+"culture",
+"cup",
+"current",
+"customer",
+"cut",
+"dark",
+"data",
+"daughter",
+"day",
+"dead",
+"deal",
+"death",
+"debate",
+"decade",
+"decide",
+"decision",
+"deep",
+"defense",
+"degree",
+"Democrat",
+"democratic",
+"describe",
+"design",
+"despite",
+"detail",
+"determine",
+"develop",
+"development",
+"die",
+"difference",
+"different",
+"difficult",
+"dinner",
+"direction",
+"director",
+"discover",
+"discuss",
+"discussion",
+"disease",
+"do",
+"doctor",
+"dog",
+"door",
+"down",
+"draw",
+"dream",
+"drive",
+"drop",
+"drug",
+"during",
+"each",
+"early",
+"east",
+"easy",
+"eat",
+"economic",
+"economy",
+"edge",
+"education",
+"effect",
+"effort",
+"eight",
+"either",
+"election",
+"else",
+"employee",
+"end",
+"energy",
+"enjoy",
+"enough",
+"enter",
+"entire",
+"environment",
+"environmental",
+"especially",
+"establish",
+"even",
+"evening",
+"event",
+"ever",
+"every",
+"everybody",
+"everyone",
+"everything",
+"evidence",
+"exactly",
+"example",
+"executive",
+"exist",
+"expect",
+"experience",
+"expert",
+"explain",
+"eye",
+"face",
+"fact",
+"factor",
+"fail",
+"fall",
+"family",
+"far",
+"fast",
+"father",
+"fear",
+"federal",
+"feel",
+"feeling",
+"few",
+"field",
+"fight",
+"figure",
+"fill",
+"film",
+"final",
+"finally",
+"financial",
+"find",
+"fine",
+"finger",
+"finish",
+"fire",
+"firm",
+"first",
+"fish",
+"five",
+"floor",
+"fly",
+"focus",
+"follow",
+"food",
+"foot",
+"for",
+"force",
+"foreign",
+"forget",
+"form",
+"former",
+"forward",
+"four",
+"free",
+"friend",
+"from",
+"front",
+"full",
+"fund",
+"future",
+"game",
+"garden",
+"gas",
+"general",
+"generation",
+"get",
+"girl",
+"give",
+"glass",
+"go",
+"goal",
+"good",
+"government",
+"great",
+"green",
+"ground",
+"group",
+"grow",
+"growth",
+"guess",
+"guest",
+"gun",
+"guy",
+"hair",
+"half",
+"hand",
+"hang",
+"happen",
+"happy",
+"hard",
+"have",
+"he",
+"head",
+"health",
+"hear",
+"heart",
+"heat",
+"heavy",
+"help",
+"her",
+"here",
+"herself",
+"high",
+"him",
+"himself",
+"his",
+"history",
+"hit",
+"hold",
+"home",
+"hope",
+"hospital",
+"hot",
+"hotel",
+"hour",
+"house",
+"how",
+"however",
+"huge",
+"human",
+"hundred",
+"husband",
+"I",
+"idea",
+"identify",
+"if",
+"image",
+"imagine",
+"impact",
+"important",
+"improve",
+"in",
+"include",
+"including",
+"increase",
+"indeed",
+"indicate",
+"individual",
+"industry",
+"information",
+"inside",
+"instead",
+"institution",
+"interest",
+"interesting",
+"international",
+"interview",
+"into",
+"investment",
+"involve",
+"issue",
+"it",
+"item",
+"its",
+"itself",
+"job",
+"join",
+"just",
+"keep",
+"key",
+"kid",
+"kill",
+"kind",
+"kitchen",
+"know",
+"knowledge",
+"land",
+"language",
+"large",
+"last",
+"late",
+"later",
+"laugh",
+"law",
+"lawyer",
+"lay",
+"lead",
+"leader",
+"learn",
+"least",
+"leave",
+"left",
+"leg",
+"legal",
+"less",
+"let",
+"letter",
+"level",
+"lie",
+"life",
+"light",
+"like",
+"likely",
+"line",
+"list",
+"listen",
+"little",
+"live",
+"local",
+"long",
+"look",
+"lose",
+"loss",
+"lot",
+"love",
+"low",
+"machine",
+"magazine",
+"main",
+"maintain",
+"major",
+"majority",
+"make",
+"man",
+"manage",
+"management",
+"manager",
+"many",
+"market",
+"marriage",
+"material",
+"matter",
+"may",
+"maybe",
+"me",
+"mean",
+"measure",
+"media",
+"medical",
+"meet",
+"meeting",
+"member",
+"memory",
+"mention",
+"message",
+"method",
+"middle",
+"might",
+"military",
+"million",
+"mind",
+"minute",
+"miss",
+"mission",
+"model",
+"modern",
+"moment",
+"money",
+"month",
+"more",
+"morning",
+"most",
+"mother",
+"mouth",
+"move",
+"movement",
+"movie",
+"Mr",
+"Mrs",
+"much",
+"music",
+"must",
+"my",
+"myself",
+"name",
+"nation",
+"national",
+"natural",
+"nature",
+"near",
+"nearly",
+"necessary",
+"need",
+"network",
+"never",
+"new",
+"news",
+"newspaper",
+"next",
+"nice",
+"night",
+"no",
+"none",
+"nor",
+"north",
+"not",
+"note",
+"nothing",
+"notice",
+"now",
+"n't",
+"number",
+"occur",
+"of",
+"off",
+"offer",
+"office",
+"officer",
+"official",
+"often",
+"oh",
+"oil",
+"ok",
+"old",
+"on",
+"once",
+"one",
+"only",
+"onto",
+"open",
+"operation",
+"opportunity",
+"option",
+"or",
+"order",
+"organization",
+"other",
+"others",
+"our",
+"out",
+"outside",
+"over",
+"own",
+"owner",
+"page",
+"pain",
+"painting",
+"paper",
+"parent",
+"part",
+"participant",
+"particular",
+"particularly",
+"partner",
+"party",
+"pass",
+"past",
+"patient",
+"pattern",
+"pay",
+"peace",
+"people",
+"per",
+"perform",
+"performance",
+"perhaps",
+"period",
+"person",
+"personal",
+"phone",
+"physical",
+"pick",
+"picture",
+"piece",
+"place",
+"plan",
+"plant",
+"play",
+"player",
+"PM",
+"point",
+"police",
+"policy",
+"political",
+"politics",
+"poor",
+"popular",
+"population",
+"position",
+"positive",
+"possible",
+"power",
+"practice",
+"prepare",
+"present",
+"president",
+"pressure",
+"pretty",
+"prevent",
+"price",
+"private",
+"probably",
+"problem",
+"process",
+"produce",
+"product",
+"production",
+"professional",
+"professor",
+"program",
+"project",
+"property",
+"protect",
+"prove",
+"provide",
+"public",
+"pull",
+"purpose",
+"push",
+"put",
+"quality",
+"question",
+"quickly",
+"quite",
+"race",
+"radio",
+"raise",
+"range",
+"rate",
+"rather",
+"reach",
+"read",
+"ready",
+"real",
+"reality",
+"realize",
+"really",
+"reason",
+"receive",
+"recent",
+"recently",
+"recognize",
+"record",
+"red",
+"reduce",
+"reflect",
+"region",
+"relate",
+"relationship",
+"religious",
+"remain",
+"remember",
+"remove",
+"report",
+"represent",
+"Republican",
+"require",
+"research",
+"resource",
+"respond",
+"response",
+"responsibility",
+"rest",
+"result",
+"return",
+"reveal",
+"rich",
+"right",
+"rise",
+"risk",
+"road",
+"rock",
+"role",
+"room",
+"rule",
+"run",
+"safe",
+"same",
+"save",
+"say",
+"scene",
+"school",
+"science",
+"scientist",
+"score",
+"sea",
+"season",
+"seat",
+"second",
+"section",
+"security",
+"see",
+"seek",
+"seem",
+"sell",
+"send",
+"senior",
+"sense",
+"series",
+"serious",
+"serve",
+"service",
+"set",
+"seven",
+"several",
+"sex",
+"sexual",
+"shake",
+"share",
+"she",
+"shoot",
+"short",
+"shot",
+"should",
+"shoulder",
+"show",
+"side",
+"sign",
+"significant",
+"similar",
+"simple",
+"simply",
+"since",
+"sing",
+"single",
+"sister",
+"sit",
+"site",
+"situation",
+"six",
+"size",
+"skill",
+"skin",
+"small",
+"smile",
+"so",
+"social",
+"society",
+"soldier",
+"some",
+"somebody",
+"someone",
+"something",
+"sometimes",
+"son",
+"song",
+"soon",
+"sort",
+"sound",
+"source",
+"south",
+"southern",
+"space",
+"speak",
+"special",
+"specific",
+"speech",
+"spend",
+"sport",
+"spring",
+"staff",
+"stage",
+"stand",
+"standard",
+"star",
+"start",
+"state",
+"statement",
+"station",
+"stay",
+"step",
+"still",
+"stock",
+"stop",
+"store",
+"story",
+"strategy",
+"street",
+"strong",
+"structure",
+"student",
+"study",
+"stuff",
+"style",
+"subject",
+"success",
+"successful",
+"such",
+"suddenly",
+"suffer",
+"suggest",
+"summer",
+"support",
+"sure",
+"surface",
+"system",
+"table",
+"take",
+"talk",
+"task",
+"tax",
+"teach",
+"teacher",
+"team",
+"technology",
+"television",
+"tell",
+"ten",
+"tend",
+"term",
+"test",
+"than",
+"thank",
+"that",
+"the",
+"their",
+"them",
+"themselves",
+"then",
+"theory",
+"there",
+"these",
+"they",
+"thing",
+"think",
+"third",
+"this",
+"those",
+"though",
+"thought",
+"thousand",
+"threat",
+"three",
+"through",
+"throughout",
+"throw",
+"thus",
+"time",
+"to",
+"today",
+"together",
+"tonight",
+"too",
+"top",
+"total",
+"tough",
+"toward",
+"town",
+"trade",
+"traditional",
+"training",
+"travel",
+"treat",
+"treatment",
+"tree",
+"trial",
+"trip",
+"trouble",
+"true",
+"truth",
+"try",
+"turn",
+"TV",
+"two",
+"type",
+"under",
+"understand",
+"unit",
+"until",
+"up",
+"upon",
+"us",
+"use",
+"usually",
+"value",
+"various",
+"very",
+"victim",
+"view",
+"violence",
+"visit",
+"voice",
+"vote",
+"wait",
+"walk",
+"wall",
+"want",
+"war",
+"watch",
+"water",
+"way",
+"we",
+"weapon",
+"wear",
+"week",
+"weight",
+"well",
+"west",
+"western",
+"what",
+"whatever",
+"when",
+"where",
+"whether",
+"which",
+"while",
+"white",
+"who",
+"whole",
+"whom",
+"whose",
+"why",
+"wide",
+"wife",
+"will",
+"win",
+"wind",
+"window",
+"wish",
+"with",
+"within",
+"without",
+"woman",
+"wonder",
+"word",
+"work",
+"worker",
+"world",
+"worry",
+"would",
+"write",
+"writer",
+"wrong",
+"yard",
+"yeah",
+"year",
+"yes",
+"yet",
+"you",
+"young",
+"your",
+"yourself"];
+
+for (i = 0; i < ca.length; i++) {
+	document.getElementById("dcodec").innerHTML += "<option value='" + ca[i].desc + "'>" + ca[i].desc + "</option>";	
+	document.getElementById("ecodec").innerHTML += "<option value='" + ca[i].desc + "'>" + ca[i].desc + "</option>";	
+}
+
+function dc_encrypt(str, key)
+{
+   var ord = []; var res = "";
+
+   var i;
+   for (i = 1; i <= 255; i++) {ord[String.fromCharCode(i)] = i}
+
+   for (i = 0; i < str.length; i++)
+       res += String.fromCharCode(ord[str.substr(i, 1)] ^ ord[key.substr(i %    key.length, 1)]);
+
+   return(res);
+}
+
+//alert(btoa(dc_encrypt("tHIS IS NOT STRONG CRYPTO","BEHOLDTHEAKAMAIABCENCRYPTIONKEY")));
+//alert(atob("IAAAAEkQBhEVBwpDHAFJGhYHSBYEGgocAw=="));
+
+</script>
+</body>
+</html>
