@@ -1,0 +1,163 @@
+2023-07-30-21:37:12	info	HTTP Server running on port 9443
+2023-07-30-21:37:12	info	HTTP Server running on port 9080
+2023-07-30-21:37:14	http	::1 - - [31/Jul/2023:01:37:14 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 5.358 ms
+2023-07-30-21:37:14	http	::1 - - [31/Jul/2023:01:37:14 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 2.719 ms
+2023-07-30-21:37:20	http	::1 - - [31/Jul/2023:01:37:20 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.944 ms
+2023-07-30-21:40:38	info	HTTP Server running on port 9443
+2023-07-30-21:40:38	info	HTTP Server running on port 9080
+2023-07-30-21:40:41	http	::1 - - [31/Jul/2023:01:40:41 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 4.682 ms
+2023-07-30-21:40:41	http	::1 - - [31/Jul/2023:01:40:41 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 2.986 ms
+2023-07-30-21:41:08	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:41:08 +0000] "GET /undefined HTTP/1.1" 404 15 "-" "curl/7.88.1" 0.699 ms
+2023-07-30-21:42:03	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:42:03 +0000] "GET /undefined HTTP/1.1" 404 15 "-" "curl/7.88.1" 0.632 ms
+2023-07-30-21:42:49	info	HTTP Server running on port 9443
+2023-07-30-21:42:49	info	HTTP Server running on port 9080
+2023-07-30-21:42:51	http	::1 - - [31/Jul/2023:01:42:51 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 7.070 ms
+2023-07-30-21:42:57	error	::ffff:127.0.0.1 - ReferenceError: killCode is not defined
+2023-07-30-21:43:58	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:43:58 +0000] "GET /undefined HTTP/1.1" - - "-" "curl/7.88.1" - ms
+2023-07-30-21:44:18	info	HTTP Server running on port 9443
+2023-07-30-21:44:18	info	HTTP Server running on port 9080
+2023-07-30-21:44:21	http	::1 - - [31/Jul/2023:01:44:21 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 7.133 ms
+2023-07-30-21:44:27	error	::ffff:127.0.0.1 - ReferenceError: killCode is not defined
+2023-07-30-21:45:14	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:45:14 +0000] "GET /CMD_KILLCODE HTTP/1.1" - - "-" "curl/7.88.1" - ms
+2023-07-30-21:45:16	error	::ffff:127.0.0.1 - ReferenceError: killCode is not defined
+2023-07-30-21:45:19	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:45:19 +0000] "GET /CMD_KILLCODE HTTP/1.1" - - "-" "curl/7.88.1" - ms
+2023-07-30-21:45:24	error	::ffff:127.0.0.1 - ReferenceError: killCode is not defined
+2023-07-30-21:45:27	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:45:27 +0000] "GET /CMD_KILLCODE HTTP/1.1" - - "-" "curl/7.88.1" - ms
+2023-07-30-21:45:32	http	::1 - - [31/Jul/2023:01:45:32 +0000] "GET /CMD_KILLCODE HTTP/1.1" 403 14 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 1.287 ms
+2023-07-30-21:45:34	http	::1 - - [31/Jul/2023:01:45:34 +0000] "GET /CMD_KILLCODE HTTP/1.1" 403 14 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.266 ms
+2023-07-30-21:45:34	http	::1 - - [31/Jul/2023:01:45:34 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/CMD_KILLCODE" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 1.138 ms
+2023-07-30-21:45:34	http	::1 - - [31/Jul/2023:01:45:34 +0000] "GET /CMD_KILLCODE HTTP/1.1" 403 14 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.392 ms
+2023-07-30-21:45:35	http	::1 - - [31/Jul/2023:01:45:35 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/CMD_KILLCODE" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.784 ms
+2023-07-30-21:45:35	http	::1 - - [31/Jul/2023:01:45:35 +0000] "GET /CMD_KILLCODE HTTP/1.1" 403 14 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.288 ms
+2023-07-30-21:45:35	http	::1 - - [31/Jul/2023:01:45:35 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/CMD_KILLCODE" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.509 ms
+2023-07-30-21:45:35	http	::1 - - [31/Jul/2023:01:45:35 +0000] "GET /CMD_KILLCODE HTTP/1.1" 403 14 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.473 ms
+2023-07-30-21:45:35	http	::1 - - [31/Jul/2023:01:45:35 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/CMD_KILLCODE" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.498 ms
+2023-07-30-21:45:35	http	::1 - - [31/Jul/2023:01:45:35 +0000] "GET /CMD_KILLCODE HTTP/1.1" 403 14 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.468 ms
+2023-07-30-21:45:36	http	::1 - - [31/Jul/2023:01:45:36 +0000] "GET /CMD_KILLCODE HTTP/1.1" 403 14 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.247 ms
+2023-07-30-21:45:45	error	::ffff:127.0.0.1 - ReferenceError: killCode is not defined
+2023-07-30-21:46:42	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:46:42 +0000] "GET /CMD_KILLCODE HTTP/1.1" - - "-" "curl/7.88.1" - ms
+2023-07-30-21:46:43	error	::ffff:127.0.0.1 - ReferenceError: killCode is not defined
+2023-07-30-21:46:45	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:46:45 +0000] "GET /CMD_KILLCODE HTTP/1.1" - - "-" "curl/7.88.1" - ms
+2023-07-30-21:47:21	info	HTTP Server running on port 9443
+2023-07-30-21:47:21	info	HTTP Server running on port 9080
+2023-07-30-21:47:25	http	::1 - - [31/Jul/2023:01:47:25 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 7.860 ms
+2023-07-30-21:47:33	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-30-21:47:33	info	Shutting down gracefully.
+2023-07-30-21:47:33	info	Exiting in 0.5 seconds...
+2023-07-30-21:47:33	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:47:33 +0000] "GET /CMD_KILLCODE HTTP/1.1" 200 22 "-" "curl/7.88.1" 1.901 ms
+2023-07-30-21:50:01	info	HTTP Server running on port 9443
+2023-07-30-21:50:01	info	HTTP Server running on port 9080
+2023-07-30-21:50:04	http	::1 - - [31/Jul/2023:01:50:04 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 5.584 ms
+2023-07-30-21:50:09	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:50:09 +0000] "GET /%e0%a6%a6%e0%a7%88%e0%a6%a8%e0%a6%bf%e0%a6%95%e0%a6%95%e0%a6%b0%e0%a6%a4%e0%a7%8b%e0%a6%af%e0%a6%bc%e0%a6%be HTTP/1.1" 404 15 "-" "curl/7.88.1" 2.203 ms
+2023-07-30-21:51:16	info	HTTP Server running on port 9443
+2023-07-30-21:51:16	info	HTTP Server running on port 9080
+2023-07-30-21:51:19	http	::1 - - [31/Jul/2023:01:51:19 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 7.303 ms
+2023-07-30-21:51:29	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:51:29 +0000] "GET /u09a6u09c8u09a8u09bfu0995u0995u09b0u09a4u09cbu09afu09bcu09be HTTP/1.1" 404 15 "-" "curl/7.88.1" 2.283 ms
+2023-07-30-21:52:31	info	HTTP Server running on port 9443
+2023-07-30-21:52:31	info	HTTP Server running on port 9080
+2023-07-30-21:52:33	http	::1 - - [31/Jul/2023:01:52:33 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 5.058 ms
+2023-07-30-21:52:39	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-30-21:52:39	info	Shutting down gracefully.
+2023-07-30-21:52:39	info	Exiting in 0.5 seconds...
+2023-07-30-21:52:39	http	::ffff:127.0.0.1 - - [31/Jul/2023:01:52:39 +0000] "GET /u09a6u09c8u09a8u09bfu0995u0995u09b0u09a4u09cbu09afu09bcu09be HTTP/1.1" 200 22 "-" "curl/7.88.1" 2.211 ms
+node:events:490
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::7443
+    at Server.setupListenHandle [as _listen2] (node:net:1868:16)
+    at listenInCluster (node:net:1916:12)
+    at Server.listen (node:net:2004:7)
+    at Object.<anonymous> (/Users/jowilson/git/web-service-skeleton/main-project/build/prod/index.js:103:6)
+    at Module._compile (node:internal/modules/cjs/loader:1233:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1287:10)
+    at Module.load (node:internal/modules/cjs/loader:1091:32)
+    at Module._load (node:internal/modules/cjs/loader:938:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)
+    at node:internal/main/run_main_module:23:47
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1895:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 7443
+}
+
+Node.js v20.4.0
+2023-07-30-22:09:53	info	HTTP Server running on port 9443
+2023-07-30-22:09:53	info	HTTP Server running on port 9080
+2023-07-30-22:09:55	http	::1 - - [31/Jul/2023:02:09:55 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 5.982 ms
+2023-07-30-22:09:56	http	::1 - - [31/Jul/2023:02:09:56 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 2.764 ms
+2023-07-30-22:10:00	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-30-22:10:00	info	Shutting down gracefully.
+2023-07-30-22:10:00	info	Exiting in 0.5 seconds...
+2023-07-30-22:10:00	http	::ffff:127.0.0.1 - - [31/Jul/2023:02:10:00 +0000] "GET /9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308 HTTP/1.1" 200 22 "-" "curl/7.88.1" 0.926 ms
+2023-07-30-22:10:46	info	HTTP Server running on port 9443
+2023-07-30-22:10:46	info	HTTP Server running on port 9080
+2023-07-30-22:10:50	http	::1 - - [31/Jul/2023:02:10:50 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 84.343 ms
+2023-07-30-22:10:51	http	::1 - - [31/Jul/2023:02:10:51 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 3.303 ms
+2023-07-30-22:11:38	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-30-22:11:38	info	Shutting down gracefully.
+2023-07-30-22:11:38	info	Exiting in 0.5 seconds...
+2023-07-30-22:11:38	http	::ffff:127.0.0.1 - - [31/Jul/2023:02:11:38 +0000] "GET /9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308 HTTP/1.1" 200 22 "-" "curl/7.88.1" 1.107 ms
+2023-07-30-22:17:45	info	HTTP Server running on port 9443
+2023-07-30-22:17:45	info	HTTP Server running on port 9080
+2023-07-30-22:17:49	http	::1 - - [31/Jul/2023:02:17:49 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 4.508 ms
+2023-07-30-22:18:17	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-30-22:18:17	info	Shutting down gracefully.
+2023-07-30-22:18:17	info	Exiting in 0.5 seconds...
+2023-07-30-22:18:17	http	::ffff:127.0.0.1 - - [31/Jul/2023:02:18:17 +0000] "GET /9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308 HTTP/1.1" 200 22 "-" "curl/7.88.1" 2.371 ms
+2023-07-30-22:18:51	info	HTTP Server running on port 9443
+2023-07-30-22:18:51	info	HTTP Server running on port 9080
+2023-07-30-22:18:53	http	::1 - - [31/Jul/2023:02:18:53 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 6.043 ms
+2023-07-30-22:19:04	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-30-22:19:04	info	Shutting down gracefully.
+2023-07-30-22:19:04	info	Exiting in 0.5 seconds...
+2023-07-30-22:19:04	http	::ffff:127.0.0.1 - - [31/Jul/2023:02:19:04 +0000] "GET /9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308 HTTP/1.1" 200 21 "-" "curl/7.88.1" 1.645 ms
+2023-07-30-22:19:53	info	HTTP Server running on port 9443
+2023-07-30-22:19:53	info	HTTP Server running on port 9080
+2023-07-30-22:19:56	http	::1 - - [31/Jul/2023:02:19:56 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 17.994 ms
+2023-07-30-22:19:57	http	::1 - - [31/Jul/2023:02:19:57 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 2.223 ms
+2023-07-30-22:50:18	http	::1 - - [31/Jul/2023:02:50:18 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 1.574 ms
+2023-07-30-22:50:19	http	::1 - - [31/Jul/2023:02:50:19 +0000] "GET /favicon.ico HTTP/1.1" 404 15 "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.797 ms
+2023-07-30-22:50:23	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-30-22:50:23	info	Shutting down gracefully.
+2023-07-30-22:50:23	info	Exiting in 0.5 seconds...
+2023-07-30-22:50:23	http	::ffff:127.0.0.1 - - [31/Jul/2023:02:50:23 +0000] "GET /9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308 HTTP/1.1" 200 21 "-" "curl/7.88.1" 0.917 ms
+2023-07-31-14:51:13	info	HTTP Server running on port 9443
+2023-07-31-14:51:13	info	HTTP Server running on port 9080
+2023-07-31-14:51:16	http	::1 - - [31/Jul/2023:18:51:16 +0000] "GET / HTTP/1.1" 200 1101 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 6.071 ms
+2023-07-31-14:51:16	http	::1 - - [31/Jul/2023:18:51:16 +0000] "GET /lib/util.js HTTP/1.1" 200 1351 "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 1.977 ms
+2023-07-31-14:51:16	http	::1 - - [31/Jul/2023:18:51:16 +0000] "HEAD /gateinfo.db HTTP/1.1" 200 - "https://localhost:9443/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36" 0.458 ms
+2023-07-31-14:51:30	info	::ffff:127.0.0.1 - Remote kill code received
+2023-07-31-14:51:30	info	Shutting down gracefully.
+2023-07-31-14:51:30	info	Exiting in 0.5 seconds...
+2023-07-31-14:51:30	http	::ffff:127.0.0.1 - - [31/Jul/2023:18:51:30 +0000] "GET /9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308 HTTP/1.1" 200 21 "-" "curl/7.88.1" 2.044 ms
+node:events:490
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::443
+    at Server.setupListenHandle [as _listen2] (node:net:1868:16)
+    at listenInCluster (node:net:1916:12)
+    at Server.listen (node:net:2004:7)
+    at Object.<anonymous> (/Users/jowilson/git/web-service-skeleton/main-project/build/dev/index.js:121:6)
+    at Module._compile (node:internal/modules/cjs/loader:1233:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1287:10)
+    at Module.load (node:internal/modules/cjs/loader:1091:32)
+    at Module._load (node:internal/modules/cjs/loader:938:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:83:12)
+    at node:internal/main/run_main_module:23:47
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1895:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 443
+}
+
+Node.js v20.4.0

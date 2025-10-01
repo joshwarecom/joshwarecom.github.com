@@ -1,0 +1,8 @@
+{
+  "config": {
+    "hostname": "[UPDATE TO YOUR HOSTNAME HERE]",
+    "http_handler": "war-gate",
+    "primary_clear_port": 80,
+    "primary_secure_port": 443
+  }
+}

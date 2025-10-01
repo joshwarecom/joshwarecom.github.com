@@ -1,0 +1,45 @@
+{
+  "name": "main-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "config": {
+    "http_handler": "default",
+    "HOST": "[UPDATE TO YOUR HOSTNAME HERE]",
+    "KILLCODE":   "9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308",
+    "TESTCODE":   "bKnOQUQMxnbny5IOSqUehuDAJR3AlJV8R9VnGdUqwd31Ku9v8nlWz9dvUuWjNDka",
+    "TOGGLEON":  "nkq2z3mr4F19dD9457u8yMMIkxMpk6hl59RvCvbdZIITGoJpQnB4zqSgv5vPKHB1",
+    "TOGGLEOFF": "gIpQkyE1PK64ts7A14eIfALepXcHKdYyosdQagAvswVOLx1z2aRnTAjLxuN26tiX",
+    "mode_toggle": false,
+    "lat": "f2efdd6bc7e999a5339bfbb9c2678ade2c8dd9625cebc18dc2c9776e4a0e7d7d",
+    "SYNCCODE": "nv257l1quwjgilpdm4lo4uvfv74lpiwa0l5ghxm5b8yjguczoohbgr25u2u9g2py",
+    "hostname": "localhost",
+    "base_directory": "/Users/jowilson/git/web-service-skeleton/main-project",
+    "log_directory": "/logs",
+    "terminal_log_level": "silly",
+    "file_log_level": "silly",
+    "primary_clear_port": 80,
+    "primary_secure_port": 443
+  },
+  "dependencies": {
+    "better-sqlite3": "^8.5.0",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "deepmerge": "^4.3.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "ipaddr.js": "^2.1.0",
+    "morgan": "^1.10.0",
+    "net": "^1.0.2",
+    "serve-index": "^1.9.1",
+    "whois": "^2.14.0",
+    "winston": "^3.10.0",
+    "winston-express-request-logger": "^1.0.3"
+  }
+}

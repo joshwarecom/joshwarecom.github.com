@@ -1,0 +1,62 @@
+#!/usr/bin/expect
+
+puts "MANUAL AUTH CHECK"
+puts "pw: [REDACTED]"
+puts "cd dev-wss"
+puts "./stop && sleep 2"
+puts "./start && sleep 2"
+puts "tail nohup.out"
+
+eval spawn ssh -oStrictHostKeyChecking=no -oCheckHostIP=no root@172.233.226.216
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "[REDACTED]"
+interact -o -nobuffer -re $prompt return
+send "echo a\r"
+interact
+
+eval spawn ssh -oStrictHostKeyChecking=no -oCheckHostIP=no root@66.175.222.117
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "[REDACTED]"
+interact -o -nobuffer -re $prompt return
+send "echo a\r"
+interact
+
+eval spawn ssh -oStrictHostKeyChecking=no -oCheckHostIP=no root@139.162.208.27
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "[REDACTED]"
+interact -o -nobuffer -re $prompt return
+send "echo a\r"
+interact
+
+eval spawn ssh -oStrictHostKeyChecking=no -oCheckHostIP=no root@45.79.123.111
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "[REDACTED]"
+interact -o -nobuffer -re $prompt return
+send "echo a\r"
+interact
+
+eval spawn ssh -oStrictHostKeyChecking=no -oCheckHostIP=no root@172.233.0.79
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "[REDACTED]"
+interact -o -nobuffer -re $prompt return
+send "echo a\r"
+interact
+
+eval spawn ssh -oStrictHostKeyChecking=no -oCheckHostIP=no root@139.144.207.131
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "[REDACTED]"
+interact -o -nobuffer -re $prompt return
+send "echo a\r"
+interact

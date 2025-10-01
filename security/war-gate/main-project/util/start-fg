@@ -1,0 +1,15 @@
+#!/usr/bin/expect
+set server [lindex $argv 0];
+set id [lindex $argv 1];
+set pw [lindex $argv 2];
+set destdir [lindex $argv 3];
+set zip [lindex $argv 4];
+
+eval spawn ssh -oStrictHostKeyChecking=no -oCheckHostIP=no $id@$server
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "$pw\r"
+interact -o -nobuffer -re $prompt return
+send "cd $destdir && npm rebuild && node index.js && echo a\r"
+interact

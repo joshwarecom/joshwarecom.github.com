@@ -1,0 +1,11 @@
+{
+  "config": {
+    "cli_macros": {
+        "qstart": "--cmd\tbds\t--prc\tbg\t--env\tdev\t--sys\tlocal",
+        "qstop": "--cmd\tstop\t--env\tdev\t--sys\tlocal",
+        "ui": "--cmd\tbds\t--env\tdev\t--sys\tremote\t--prc\tfg\t--var\tconfig.gate_ui=true",
+        "rc_auth": "--cmd\tbds\t--env\tdev\t--sys\tremote\t--prc\tfg\t--var\tconfig.rc_auth=true",
+        "all": "--cmd\tbds\t--env\tdev\t--sys\tremote\t--prc\tfg\t--var\tconfig.rc_auth=true\t--var\tconfig.gate_ui=true"
+    }
+  }
+}

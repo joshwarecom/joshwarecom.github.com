@@ -1,0 +1,12 @@
+#!/usr/bin/expect
+set server [lindex $argv 0];
+set id [lindex $argv 1];
+set pw [lindex $argv 2];
+set src [lindex $argv 3];
+set dest [lindex $argv 4];
+eval spawn scp -oStrictHostKeyChecking=no -oCheckHostIP=no $src $id@$server:$dest
+# Use the correct prompt
+set prompt ":|#|\\\$"
+interact -o -nobuffer -re $prompt return
+send "$pw\r"
+interact

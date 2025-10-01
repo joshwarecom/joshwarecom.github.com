@@ -1,0 +1,16 @@
+
+#!/bin/bash
+echo "IMPORTANT: Before stopping this service, you must log on as the user and make sure all Rate Combat IPs are removed.  Have you done this?"
+read -p "Enter YES (in all caps) to confirm >" affirmation
+if [ "$affirmation" = "YES" ]; then
+  echo "Attempting to send graceful shutdown kill code..."
+  SUCCESS=`curl https://127.0.0.1/9a68cb1138ac000cc89a1bfa23aebe2c8bce0afe0a9de2590e117d5829ec2308 -k 2>&1 | grep "Shutting down" | wc -l | awk '{print $1}'`
+  if [ $SUCCESS -eq 1 ]
+  then
+    echo "Success!"
+  else
+    echo Signal failed! Log on to the server to investigate.
+  fi
+else
+  echo You must enter YES to stop the service.  The service has not been stopped.
+fi

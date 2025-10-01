@@ -1,0 +1,8 @@
+{
+  "config": {
+    "hostname": "localhost",
+    "http_handler": "war-gate",
+    "primary_clear_port": 2080,
+    "primary_secure_port": 2443
+  }
+}

@@ -1,0 +1,4 @@
+#!/bin/bash
+edgerc=$1;
+tag=$2
+akamai purge --edgerc "$edgerc" delete --tag $tag

@@ -1,0 +1,5 @@
+#!/bin/bash
+edgerc=$1;
+tag=$2
+dir=$3
+python3 $dir/py-purge.py --suppressFileLogging --switchKey B-F-JOGS33 --edgerc $edgerc --section ccu --tag $tag

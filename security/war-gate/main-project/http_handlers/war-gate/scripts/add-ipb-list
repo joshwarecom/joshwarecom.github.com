@@ -1,0 +1,28 @@
+#!/bin/bash
+token=$1;
+firewallid=$2;
+ip4list=$3
+ip6list=$4
+user_idex=$5;
+>&2 echo -n $5
+curl -s -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $token" \
+    -X PUT -d '{
+        "inbound": [
+          {
+            "protocol": "TCP",
+            "ports": "3010",
+            "addresses": {
+              "ipv4": [
+                '"$ip4list"'
+              ],
+              "ipv6": [
+                '"$ip6list"'
+              ]
+            },
+          "action": "ACCEPT",
+          "label": "allow-app-hacking-traffic"
+          }
+        ]
+    }' \
+    https://api.linode.com/v4/networking/firewalls/$firewallid/rules

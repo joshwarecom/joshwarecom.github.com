@@ -1,0 +1,5 @@
+#!/bin/bash
+token=$1;
+host=$2;
+data=$3;
+curl -s -H "Authorization: Bearer $token" https://$host/sync -k -d 'data='"$data"''
