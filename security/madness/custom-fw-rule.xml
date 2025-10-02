@@ -1,0 +1,201 @@
+<match:metadata-stage value="client-request">
+<match:uri.wildcard case="on" result="false" value="/apology_objects/*">
+
+            <assign:variable>
+                <name>CUSER_SECRET_SALT</name>
+                <value>[REDACTED-1]</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:variable>
+
+            <assign:variable>
+                <name>CUSER_PUBLIC_SALT</name>
+                <value>[REDACTED-2]</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:variable>
+
+            <assign:variable>
+                <name>CUSER_CURRENT_TIME_SS</name>
+                <value>%(AK_CURRENT_TIME)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:variable>
+            <comment:note value="End Feature setVariable"/>
+            <comment:note value="Start Feature setVariable"/>
+            <assign:variable>
+                <name>CUSER_CURRENT_TIME_5M</name>
+                <value>%(CUSER_CURRENT_TIME_SS)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <divide>
+                        <value>300</value>
+                    </divide>
+                </transform>
+            </assign:variable>
+            <comment:note value="End Feature setVariable"/>
+            <comment:note value="Start Feature setVariable"/>
+            <assign:variable>
+                <name>CUSER_BASE_TIME_5M</name>
+                <value>%(CUSER_CURRENT_TIME_5M)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <multiply>
+                        <value>300</value>
+                    </multiply>
+                </transform>
+            </assign:variable>
+            <comment:note value="End Feature setVariable"/>
+            <comment:note value="Start Feature setVariable"/>
+            <assign:variable>
+                <name>CUSER_NEXT_TIME_5M</name>
+                <value>%(CUSER_BASE_TIME_5M)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <add>
+                        <value>300</value>
+                    </add>
+                </transform>
+            </assign:variable>
+            <comment:note value="End Feature setVariable"/>
+            <comment:note value="Start Feature setVariable"/>
+            <assign:variable>
+                <name>CUSER_NEXT_TIME_8M</name>
+                <value>%(CUSER_BASE_TIME_5M)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <add>
+                        <value>180</value>
+                    </add>
+                </transform>
+            </assign:variable>
+            <comment:note value="End Feature setVariable"/>
+            <comment:note value="Start Feature setVariable"/>
+            <assign:variable>
+                <name>CUSER_AUTHORIZATION_1</name>
+                <value>%(CUSER_SECRET_SALT)%(CUSER_NEXT_TIME_5M)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <sha256/>
+                </transform>
+            </assign:variable>
+            <comment:note value="End Feature setVariable"/>
+            <comment:note value="Start Feature setVariable"/>
+            <assign:variable>
+                <name>CUSER_AUTHORIZATION_2</name>
+                <value>%(CUSER_SECRET_SALT)%(CUSER_NEXT_TIME_8M)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <sha256/>
+                </transform>
+            </assign:variable>
+
+            <assign:variable>
+                <name>CUSER_EXPECTED_HASH_1</name>
+                <value>%(CUSER_PUBLIC_SALT)%(CUSER_AUTHORIZATION_1)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <sha256/>
+                </transform>
+            </assign:variable>
+
+            <assign:variable>
+                <name>CUSER_EXPECTED_HASH_2</name>
+                <value>%(CUSER_PUBLIC_SALT)%(CUSER_AUTHORIZATION_2)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <sha256/>
+                </transform>
+            </assign:variable>
+
+            <assign:extract-value>
+                <location>Cookie</location>
+                <location-id>authorization_1</location-id>
+                <location-id-prefix-match>off</location-id-prefix-match>
+                <variable-name>CUSER_INCOMING_1</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+
+            <assign:extract-value>
+                <location>Cookie</location>
+                <location-id>authorization_2</location-id>
+                <location-id-prefix-match>off</location-id-prefix-match>
+                <variable-name>CUSER_INCOMING_2</variable-name>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+            </assign:extract-value>
+
+<match:variable name="CUSER_EXPECTED_HASH_1" value="%(CUSER_INCOMING_1)" result="true">
+<assign:variable>
+<name>ABUSE_DETERRENT_STEP_1</name>
+<value>PRIMARY-HASH-VALIDATION-SUCCESS</value>
+                <hidden>on</hidden>
+</assign:variable>
+</match:variable>
+
+<match:variable name="ABUSE_DETERRENT_STEP_1" result="false">
+<match:variable name="CUSER_EXPECTED_HASH_2" value="%(CUSER_INCOMING_2)" result="true">
+
+            <assign:variable>
+                <name>CUSER_8M_DIFFERENCE</name>
+                <value>%(CUSER_NEXT_TIME_8M)</value>
+                <hidden>on</hidden>
+                <sensitive>off</sensitive>
+                <transform>
+                    <subtract>
+                        <value>%(AK_CURRENT_TIME)</value>
+                    </subtract>
+                </transform>
+            </assign:variable>
+
+<match:compare op="gt" arg1="%(CUSER_8M_DIFFERENCE)" arg2="0">
+<assign:variable>
+<name>ABUSE_DETERRENT_STEP_1</name>
+<value>SECONDARY-HASH-VALIDATION-SUCCESS</value>
+                <hidden>on</hidden>
+</assign:variable>
+</match:compare>
+</match:variable>
+</match:variable>
+
+<match:variable name="ABUSE_DETERRENT_STEP_1" result="false">
+            <match:request.cookie name-case="on" name="authorization_1" name-wildcard="off" result="false">
+                <match:request.cookie name-case="on" name="authorization_2" name-wildcard="off" result="false">
+<assign:variable>
+<name>ABUSE_DETERRENT_STEP_1</name>
+<value>PASS-TO-CLIENT-REPUTATION</value>
+                <hidden>on</hidden>
+</assign:variable>
+                </match:request.cookie>
+            </match:request.cookie>
+</match:variable>
+
+<match:variable name="ABUSE_DETERRENT_STEP_1" result="false">
+<assign:variable>
+<name>ABUSE_DETERRENT_STEP_1</name>
+<value>FAILURE</value>
+                <hidden>on</hidden>
+</assign:variable>
+</match:variable>
+
+<match:variable name="ABUSE_DETERRENT_STEP_1" value="FAILURE" result="true">
+			<security:firewall.action>
+				<msg>Abuse Deterrent Step 1 - Custom Rule</msg>
+				<tag>abuse-deterrent-step-1</tag>
+				<id>[REDACTED-3]</id>
+				<data>%(ABUSE_DETERRENT_STEP_1)</data>
+				<!-- advanced action reference  -->
+				<action>%(WAF_CUSTOM_[REDACTED-3]_ACTION)</action>
+			</security:firewall.action>
+</match:variable>
+</match:uri.wildcard>
+</match:metadata-stage>
