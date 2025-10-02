@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configs>
+	<match:metadata-stage value="client-request content-policy">
+		<assign:variable>
+			<name>PMUSER_INCOMING_PATH</name>
+			<value/>
+			<hidden>off</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_AUTH_OUTPUT</name>
+			<value/>
+			<hidden>off</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_BASE_TIME_5M</name>
+			<value/>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_NEXT_TIME_8M</name>
+			<value/>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_NEXT_TIME_5M</name>
+			<value/>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_CURRENT_TIME_5M</name>
+			<value/>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_CURRENT_TIME_SS</name>
+			<value/>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_SECRET_SALT</name>
+			<value>[REDACTED-1]</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_AUTHORIZATION_2</name>
+			<value/>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_AUTHORIZATION_1</name>
+			<value/>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+	</match:metadata-stage>
+	<match:uri.component value="AK_PM_VPATH*" case="off" wildcards="on" result="false">
+		<assign:variable>
+			<name>PMUSER_INCOMING_PATH</name>
+			<value>%(AK_URL)</value>
+			<hidden>off</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<assign:variable>
+			<name>PMUSER_CURRENT_TIME_SS</name>
+			<value>%(AK_CURRENT_TIME)</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="Start Feature setVariable"/>
+		<assign:variable>
+			<name>PMUSER_CURRENT_TIME_5M</name>
+			<value>%(PMUSER_CURRENT_TIME_SS)</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+			<transform>
+				<divide>
+					<value>300</value>
+				</divide>
+			</transform>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="Start Feature setVariable"/>
+		<assign:variable>
+			<name>PMUSER_BASE_TIME_5M</name>
+			<value>%(PMUSER_CURRENT_TIME_5M)</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+			<transform>
+				<multiply>
+					<value>300</value>
+				</multiply>
+			</transform>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="Start Feature setVariable"/>
+		<assign:variable>
+			<name>PMUSER_NEXT_TIME_5M</name>
+			<value>%(PMUSER_BASE_TIME_5M)</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+			<transform>
+				<add>
+					<value>300</value>
+				</add>
+			</transform>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="Start Feature setVariable"/>
+		<assign:variable>
+			<name>PMUSER_NEXT_TIME_8M</name>
+			<value>%(PMUSER_BASE_TIME_5M)</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+			<transform>
+				<add>
+					<value>480</value>
+				</add>
+			</transform>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="Start Feature setVariable"/>
+		<assign:variable>
+			<name>PMUSER_AUTHORIZATION_1</name>
+			<value>%(PMUSER_SECRET_SALT)%(PMUSER_NEXT_TIME_5M)</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+			<transform>
+				<sha256/>
+			</transform>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="Start Feature setVariable"/>
+		<assign:variable>
+			<name>PMUSER_AUTHORIZATION_2</name>
+			<value>%(PMUSER_SECRET_SALT)%(PMUSER_NEXT_TIME_8M)</value>
+			<hidden>on</hidden>
+			<sensitive>off</sensitive>
+			<transform>
+				<sha256/>
+			</transform>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="Start Feature setVariable"/>
+		<assign:variable>
+			<name>PMUSER_AUTH_OUTPUT</name>
+			<value>%(PMUSER_AUTHORIZATION_1)/%(PMUSER_AUTHORIZATION_2)</value>
+			<hidden>off</hidden>
+			<sensitive>off</sensitive>
+		</assign:variable>
+		<comment:note value="End Feature setVariable"/>
+		<comment:note value="end rule: 31799a5e-db4d-4cdd-8f48-44515f0270dd"/>
+		<comment:note value="start rule: dc9cf61d-344c-4dd3-afd1-5f6b53396668"/>
+		<match:hoit result="true" host="csf-abuse-deterrent.justice.gov">
+			<comment:note value="Start Feature rewriteUrl"/>
+			<assign:variable>
+				<name>AKA_PM_OUTCOME_URL</name>
+				<value>/sample-modal-page.html</value>
+			</assign:variable>
+			<comment:note value="End Feature rewriteUrl"/>
+		</match:hoit>
+	</match:uri.component>
+	<edgecomputing:processor>
+		<status>on</status>
+		<allow-esi>on</allow-esi>
+		<value>esi</value>
+		<allow-dca-response-headers>on</allow-dca-response-headers>
+	</edgecomputing:processor>
+</configs>
