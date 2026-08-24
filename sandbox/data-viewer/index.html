@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypted Game Data Viewer</title>
+    <!-- Load CryptoJS for decryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+        #container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        .error { color: #d32f2f; font-weight: bold; }
+        .setup-form { display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
+        input { padding: 8px; font-size: 16px; }
+        button { padding: 10px; font-size: 16px; background-color: #008CBA; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #007B9E; }
+    </style>
+</head>
+<body>
+    <h2>Secure Data Viewer</h2>
+    <div id="container">Loading...</div>
+
+    <script>
+        async function init() {
+            const container = document.getElementById('container');
+            
+            // 1. Grab and automatically decode variables from the query string
+            const params = new URLSearchParams(window.location.search);
+            let csvUrl = params.get('url');
+            let key = params.get('key');
+
+            // 2. If parameters are missing, show the Link Generator UI
+            if (!csvUrl || !key) {
+                container.innerHTML = `
+                    <div class="setup-form">
+                        <h3>Link Generator</h3>
+                        <p>Paste your details below to generate a properly URL-encoded link.</p>
+                        <label>Google Sheets CSV URL:</label>
+                        <input type="text" id="inputUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+                        
+                        <label>Decryption Password:</label>
+                        <input type="password" id="inputKey" placeholder="Your secret key">
+                        
+                        <button onclick="generateLink()">Generate & Load Data</button>
+                    </div>
+                `;
+                return;
+            }
+
+            // 3. Fallback: Catch double-encoded strings just in case
+            if (csvUrl.includes('%')) csvUrl = decodeURIComponent(csvUrl);
+            if (key.includes('%')) key = decodeURIComponent(key);
+
+            container.innerHTML = 'Fetching and decrypting data...';
+
+            // 4. Fetch and Decrypt
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error('Network response failed. Check the URL.');
+                const csvText = await response.text();
+
+                const rows = csvText.trim().split(/\r?\n/);
+                let tableHTML = '<table>';
+
+                rows.forEach((row, rowIndex) => {
+                    tableHTML += '<tr>';
+                    const cells = row.split(','); 
+                    
+                    cells.forEach(cell => {
+                        let decryptedText = "";
+                        
+                        // --- THE FIX: Clean hidden quotes and spaces ---
+                        let cleanCell = cell.trim();
+                        if (cleanCell.startsWith('"') && cleanCell.endsWith('"')) {
+                            cleanCell = cleanCell.substring(1, cleanCell.length - 1);
+                        }
+                        // -----------------------------------------------
+
+                        if (cleanCell) {
+                            try {
+                                const bytes = CryptoJS.AES.decrypt(cleanCell, key);
+                                decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+                                if (!decryptedText) decryptedText = "WRONG_KEY";
+                            } catch (e) {
+                                decryptedText = "DECRYPT_ERROR";
+                            }
+                        }
+                        
+                        if (rowIndex === 0) {
+                            tableHTML += `<th>${decryptedText}</th>`;
+                        } else {
+                            tableHTML += `<td>${decryptedText}</td>`;
+                        }
+                    });
+                    tableHTML += '</tr>';
+                });
+
+                tableHTML += '</table>';
+                
+                // Add a button to go back and generate a new link
+                tableHTML += '<br><a href="' + window.location.pathname + '">← Start Over</a>';
+                
+                container.innerHTML = tableHTML;
+
+            } catch (error) {
+                container.innerHTML = `<span class="error">Failed to load data: ${error.message}</span><br><br><a href="${window.location.pathname}">← Go Back</a>`;
+            }
+        }
+
+        // Helper function for the Link Generator UI
+        window.generateLink = function() {
+            const url = document.getElementById('inputUrl').value.trim();
+            const key = document.getElementById('inputKey').value.trim();
+            
+            if (!url || !key) {
+                alert("Please enter both the URL and the key.");
+                return;
+            }
+
+            // Properly URL-encode both parameters
+            const encodedUrl = encodeURIComponent(url);
+            const encodedKey = encodeURIComponent(key);
+            
+            // Redirect the page to the new encoded URL
+            window.location.search = `?url=${encodedUrl}&key=${encodedKey}`;
+        };
+
+        window.onload = init;
+    </script>
+</body>
+</html>
