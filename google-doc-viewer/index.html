@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Data Viewer</title>
+    <!-- Load CryptoJS for decryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+        #container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        .error { color: #d32f2f; font-weight: bold; }
+        .setup-form { display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
+        input { padding: 8px; font-size: 16px; }
+        button { padding: 10px; font-size: 16px; background-color: #008CBA; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #007B9E; }
+    </style>
+</head>
+<body>
+    <h2>Secure Data Viewer</h2>
+    <div id="container">Loading...</div>
+
+    <script>
+        async function init() {
+            const container = document.getElementById('container');
+            const params = new URLSearchParams(window.location.search);
+            
+            // 1. Check for parameters
+            let csvUrl = params.get('url'); // Fallback for the old long format
+            let docId = params.get('id');
+            let sheetId = params.get('gid');
+            let key = params.get('key');
+
+            // 2. Reconstruct the full Google URL if id and gid are present
+            if (docId && sheetId) {
+                csvUrl = `https://docs.google.com/spreadsheets/d/${docId}/gviz/tq?tqx=out:csv&gid=${sheetId}`;
+            }
+
+            // 3. Show Link Generator if missing data
+            if (!csvUrl || !key) {
+                container.innerHTML = `
+                    <div class="setup-form">
+                        <h3>Compact Link Generator</h3>
+                        <p>Paste the full Google Sheets CSV URL. The script will automatically extract only what it needs to create a shorter link.</p>
+                        <label>Full Google Sheets URL:</label>
+                        <input type="text" id="inputUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+                        
+                        <label>Decryption Password:</label>
+                        <input type="password" id="inputKey" placeholder="Your secret key">
+                        
+                        <button onclick="generateLink()">Generate Compact Link</button>
+                    </div>
+                `;
+                return;
+            }
+
+            // 4. Fallback decode
+            if (csvUrl.includes('%')) csvUrl = decodeURIComponent(csvUrl);
+            if (key.includes('%')) key = decodeURIComponent(key);
+
+            container.innerHTML = 'Fetching and decrypting data...';
+
+            // 5. Fetch and Decrypt
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error('Network response failed. Check the URL.');
+                const csvText = await response.text();
+
+                const rows = csvText.trim().split(/\r?\n/);
+                let tableHTML = '<table>';
+
+                rows.forEach((row, rowIndex) => {
+                    tableHTML += '<tr>';
+                    const cells = row.split(','); 
+                    
+                    cells.forEach(cell => {
+                        let decryptedText = "";
+                        
+                        let cleanCell = cell.trim();
+                        if (cleanCell.startsWith('"') && cleanCell.endsWith('"')) {
+                            cleanCell = cleanCell.substring(1, cleanCell.length - 1);
+                        }
+
+                        if (cleanCell) {
+                            try {
+                                const bytes = CryptoJS.AES.decrypt(cleanCell, key);
+                                decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+                                if (!decryptedText) decryptedText = "WRONG_KEY";
+                            } catch (e) {
+                                decryptedText = "DECRYPT_ERROR";
+                            }
+                        }
+                        
+                        if (rowIndex === 0) tableHTML += `<th>${decryptedText}</th>`;
+                        else tableHTML += `<td>${decryptedText}</td>`;
+                    });
+                    tableHTML += '</tr>';
+                });
+
+                tableHTML += '</table>';
+                tableHTML += '<br><a href="' + window.location.pathname + '">← Start Over</a>';
+                container.innerHTML = tableHTML;
+
+            } catch (error) {
+                container.innerHTML = `<span class="error">Failed to load data: ${error.message}</span><br><br><a href="${window.location.pathname}">← Go Back</a>`;
+            }
+        }
+
+        // Helper function for the Compact Link Generator
+        window.generateLink = function() {
+            const inputUrl = document.getElementById('inputUrl').value.trim();
+            const key = document.getElementById('inputKey').value.trim();
+            
+            if (!inputUrl || !key) {
+                alert("Please enter both the URL and the key.");
+                return;
+            }
+
+            // Use regex to isolate the Document ID and Tab ID from the long URL
+            const idMatch = inputUrl.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            const gidMatch = inputUrl.match(/gid=([0-9]+)/);
+
+            let searchParams = "";
+            
+            if (idMatch && gidMatch) {
+                // Generate the new, compact query string
+                const docId = idMatch[1];
+                const sheetId = gidMatch[1];
+                searchParams = `?id=${docId}&gid=${sheetId}&key=${encodeURIComponent(key)}`;
+            } else {
+                // Fallback to the long URL format if they paste something weird
+                searchParams = `?url=${encodeURIComponent(inputUrl)}&key=${encodeURIComponent(key)}`;
+            }
+            
+            // Redirect the page to the new short URL
+            window.location.search = searchParams;
+        };
+
+        window.onload = init;
+    </script>
+</body>
+</html>
