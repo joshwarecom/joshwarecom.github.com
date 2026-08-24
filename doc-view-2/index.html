@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Data Viewer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; }
+        #container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #4CAF50; color: white; }
+        .error { color: #d32f2f; font-weight: bold; }
+        .setup-form { display: flex; flex-direction: column; gap: 10px; max-width: 500px; }
+        input { padding: 8px; font-size: 16px; }
+        button { padding: 10px; font-size: 16px; background-color: #008CBA; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Secure Data Viewer</h2>
+    <div id="container">Loading...</div>
+
+    <script>
+        // ========================================================
+        // PASTE your "Public Index CSV" URL from cell D2 here ONCE:
+        const PUBLIC_INDEX_URL = "https://docs.google.com/spreadsheets/d/1GjkYlpe4nLCjL1HNIoH_PTByXmNvXZ9gR0ovSd6YQiA/gviz/tq?tqx=out:csv&gid=0";
+        // ========================================================
+
+        async function init() {
+            const container = document.getElementById('container');
+            let docId = null;
+            let key = null;
+            let csvUrl = null;
+            let documentMap = {};
+
+            // 1. Fetch and Parse the Remote Index Map
+            if (PUBLIC_INDEX_URL && PUBLIC_INDEX_URL !== "PASTE_URL_HERE") {
+                try {
+                    const indexRes = await fetch(PUBLIC_INDEX_URL);
+                    let indexText = await indexRes.text();
+                    indexText = indexText.trim();
+                    
+                    // Google CSV wraps cell strings in quotes and escapes inner quotes. We clean that here:
+                    if (indexText.startsWith('"') && indexText.endsWith('"')) {
+                        indexText = indexText.substring(1, indexText.length - 1).replace(/""/g, '"');
+                    }
+                    documentMap = JSON.parse(indexText);
+                } catch (e) {
+                    console.warn("Failed to load or parse the Public Index:", e);
+                }
+            }
+
+            // 2. PRIORITY: Check the Hash Anchor (e.g. #YYYYMMDD~Password)
+            const hashRaw = window.location.hash.substring(1); 
+            if (hashRaw) {
+                const firstTildeIndex = hashRaw.indexOf('~');
+                if (firstTildeIndex !== -1) {
+                    const identifier = hashRaw.substring(0, firstTildeIndex);
+                    key = decodeURIComponent(hashRaw.substring(firstTildeIndex + 1));
+                    
+                    // Route via fetched Dictionary, or fallback to raw ID if someone passed one
+                    docId = documentMap[identifier] || identifier;
+                }
+            }
+
+            // 3. BACKWARDS COMPATIBILITY: Check Query Strings
+            if (!docId || !key) {
+                const params = new URLSearchParams(window.location.search);
+                csvUrl = params.get('url');
+                const qDocId = params.get('id');
+                key = key || params.get('key'); 
+                
+                if (qDocId) docId = qDocId;
+                if (key && key.includes('%')) key = decodeURIComponent(key);
+                if (csvUrl && csvUrl.includes('%')) csvUrl = decodeURIComponent(csvUrl);
+            }
+
+            // 4. Construct Final Target URL
+            if (docId && !csvUrl) {
+                csvUrl = `https://docs.google.com/spreadsheets/d/${docId}/gviz/tq?tqx=out:csv&gid=0`;
+            }
+
+            // 5. Missing parameters UI
+            if (!csvUrl || !key) {
+                container.innerHTML = `
+                    <div class="setup-form">
+                        <h3>Secure Access</h3>
+                        <p>Format: Date~Password (e.g., 20260824~Secret123)</p>
+                        <input type="text" id="inputHash" placeholder="YYYYMMDD~Password">
+                        <button onclick="generateHashLink()">Load Data</button>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = 'Fetching and decrypting securely...';
+
+            // 6. Fetch and Render the Encrypted Data
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error('Network response failed.');
+                const csvText = await response.text();
+
+                const rows = csvText.trim().split(/\r?\n/);
+                let tableHTML = '<table>';
+
+                rows.forEach((row, rowIndex) => {
+                    tableHTML += '<tr>';
+                    const cells = row.split(','); 
+                    cells.forEach(cell => {
+                        let decryptedText = "";
+                        let cleanCell = cell.trim();
+                        if (cleanCell.startsWith('"') && cleanCell.endsWith('"')) {
+                            cleanCell = cleanCell.substring(1, cleanCell.length - 1);
+                        }
+                        if (cleanCell) {
+                            try {
+                                const bytes = CryptoJS.AES.decrypt(cleanCell, key);
+                                decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+                                if (!decryptedText) decryptedText = "WRONG_KEY";
+                            } catch (e) {
+                                decryptedText = "DECRYPT_ERROR";
+                            }
+                        }
+                        if (rowIndex === 0) tableHTML += `<th>${decryptedText}</th>`;
+                        else tableHTML += `<td>${decryptedText}</td>`;
+                    });
+                    tableHTML += '</tr>';
+                });
+                tableHTML += '</table><br><a href="' + window.location.pathname + '">← Start Over</a>';
+                container.innerHTML = tableHTML;
+            } catch (error) {
+                container.innerHTML = `<span class="error">Failed to load data: ${error.message}</span><br><br><a href="${window.location.pathname}">← Go Back</a>`;
+            }
+        }
+
+        window.generateHashLink = function() {
+            const val = document.getElementById('inputHash').value.trim();
+            if (val.includes('~')) {
+                const parts = val.split('~');
+                window.location.href = window.location.pathname + '#' + parts[0] + '~' + encodeURIComponent(parts.slice(1).join('~'));
+                window.location.reload(); 
+            } else {
+                alert("Please use the format Date~Password");
+            }
+        };
+
+        window.onload = init;
+    </script>
+</body>
+</html>
